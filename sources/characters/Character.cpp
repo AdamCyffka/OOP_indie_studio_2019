@@ -7,12 +7,13 @@
 
 #include "Character.hpp"
 
-Character::Character(scene::ISceneManager *sManager, modelInfos_t model, std::string name, int movementSpeed)
-: _sManager(sManager), _model(model), _name(name), _movementSpeed(movementSpeed)
+Character::Character(scene::ISceneManager *sManager, modelInfos_t model, std::string name, int movementSpeed, side orientation)
+: _sManager(sManager), _model(model), _name(name), _movementSpeed(movementSpeed), _orientation(orientation)
 {
     _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str())); 
     setPosition(core::vector3df{0, 0, 0});
     setSize(_model.size);
+    setAnimationSpeed(15);
     setState(Character::state::idle);
 }
 
@@ -41,15 +42,31 @@ void Character::setState(Character::state state)
         case Character::state::moving:
             _mesh->setFrameLoop(_model.movingLoop.first, _model.idleLoop.second);
             break;
-        case Character::state::dying:
-            _mesh->setFrameLoop(_model.dyingLoop.first, _model.idleLoop.second);
+        default:
             break;
-        case Character::state::dead:
-            std::cout <<"j'suis mort" << std::endl;
+    }
+    _state = state;
+}
+
+void Character::setOrientation(side orientation)
+{
+    switch (orientation) {
+        case side::north:
+            _mesh->setRotation(core::vector3df(0, 0, 0));
+            break;
+        case side::south:
+            _mesh->setRotation(core::vector3df(0, 180, 0));
+            break;
+        case side::east:
+            _mesh->setRotation(core::vector3df(0, 90, 0));
+            break;
+        case side::west:
+            _mesh->setRotation(core::vector3df(0, -90, 0));
             break;
         default:
             break;
     }
+    _orientation = orientation;
 }
 
 void Character::setAnimationSpeed(int animationSpeed)
@@ -70,12 +87,17 @@ int Character::getSize() const
 
 core::vector3df Character::getPosition() const
 {
-    return _mesh->getAbsolutePosition();
+    return _mesh->getPosition();
 }
 
 Character::state Character::getState() const
 {
     return _state;
+}
+
+side Character::getOrientation() const
+{
+    return _orientation;
 }
 
 int Character::getAnimationSpeed() const
@@ -89,12 +111,27 @@ int Character::getMovementSpeed() const
 }
 
 //methods
-void Character::moveTo(core::vector3df position, int speed = -1)
+side Character::getOrientationFromPath(core::vector3df posA, core::vector3df posB)
 {
-    scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(getPosition(), position, (speed != -1) ? speed : _movementSpeed, true);
+    if (posA.Y == posB.Y && posA.X != posB.X)
+        return (posA.X > posB.X) ? side::west : side::east;
+    else if (posA.X == posB.X && posA.Y != posB.Y)
+        return (posA.Y > posB.Y) ? side::south : side::north;
+    else
+        return _orientation;
+}
+
+bool Character::moveTo(core::vector3df position, int speed)
+{
+    core::vector3df currentPosition = getPosition();
+    scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (speed != -1) ? speed : _movementSpeed, true);
+    
     if (animation) {
         if (_mesh) {
+            setState(Character::state::moving);
+            setOrientation(getOrientationFromPath(currentPosition, position));
             _mesh->addAnimator(animation);
+
             animation->drop();
         } else {
             animation->drop();
@@ -103,4 +140,5 @@ void Character::moveTo(core::vector3df position, int speed = -1)
     } else {
         throw CharacterException("Cannot create a fly straight animator from the scene manager");
     }
+    return true;
 }
