@@ -10,7 +10,12 @@ find_package(Irrlicht REQUIRED)
 link_libraries(${Irrlicht_LIBRARIES})
 
 include_directories(includes)
+include_directories(includes/core/)
+include_directories(includes/menu/)
 include_directories("${Irrlicht_INCLUDE_DIRS}")
 
 add_executable(bomberman
-        sources/main.cpp)
+        sources/main.cpp
+        sources/core/Core.cpp
+        sources/menu/Menu.cpp
+        )
