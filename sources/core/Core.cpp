@@ -5,13 +5,13 @@
 ** Core
 */
 
-#include <irrlicht.h>
 #include <iostream>
 #include "Core.hpp"
+#include "Character.hpp"
 
 Core::Core()
 {
-	_window = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(1920, 1080));
+	_window = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(1920, 1080), 32, true);
 	if (!_window) {
         std::cerr << "Couldn't open a window" << std::endl;
         return;
@@ -25,13 +25,21 @@ void Core::menuCase()
 {
     if (!_menu)
         _menu = new Menu(_window);
-    //_menu->run(_window);
+    _menu->run(_window);
 }
 
 int Core::run()
 {
-	irr::video::IVideoDriver* driver = _window->getVideoDriver();
-	irr::scene::ISceneManager* scenemgr = _window->getSceneManager();
+	irr::video::IVideoDriver *driver = _window->getVideoDriver();
+	irr::scene::ISceneManager *scenemgr = _window->getSceneManager();
+    irr::gui::IGUIEnvironment *env = _window->getGUIEnvironment();
+
+    // Character *character = new Character(scenemgr, {"resources/models/characters/DryBones/dry_bones.MD3",
+    //                                             {0, 0}, {0, 0}, {0, 0}, 100}, "drybones");
+    //irr::scene::ISceneNode *node = scenemgr->addAnimatedMeshSceneNode(scenemgr->getMesh("resources/models/characters/DryBones/dry_bones.MD3"));
+    // if (node) {
+	// 	node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	// }
 
 	scenemgr->addCameraSceneNodeFPS();
 
@@ -59,9 +67,9 @@ int Core::run()
 		}
 
 	    scenemgr->drawAll();
+        env->drawAll();
 	    driver->endScene();
     }
-
     _window->drop();
     return 0;
 }

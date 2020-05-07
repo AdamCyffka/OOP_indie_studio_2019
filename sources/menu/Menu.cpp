@@ -27,6 +27,8 @@ void Menu::loadButtons(irr::IrrlichtDevice *window)
     
     _buttons["menuExit"]->setImage(_textures["menuExitButton"]);
     _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
+
+    _env->addImage(_driver->getTexture("resources/images/buttons/leave.png"), irr::core::position2d<int>(10,10));
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
@@ -37,5 +39,5 @@ std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 void Menu::run(irr::IrrlichtDevice *window)
 {
     _driver->draw2DImage(_textures["menuBackground"], irr::core::position2d<irr::s32>(0, 0),
-            irr::core::rect<irr::s32>(0, 0, 1920, 1080), nullptr, irr::video::SColor(255, 255, 255, 255), true);
+        irr::core::rect<irr::s32>(0, 0, 1920, 1080), nullptr, irr::video::SColor(255, 255, 255, 255), true);
 }
