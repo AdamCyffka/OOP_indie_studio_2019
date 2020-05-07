@@ -1,8 +1,40 @@
-*.o
-.vs
+# editors folders
 .vscode
+.vs
+.idea
+
+# executable and files linked to executable
+bomberman*
+a.out
+
+# dll at the root of the repository
+/*.dll
+
+# compilation files
+*.o
+*.gcda
+*.gcno
+
+# tmp files
+vgcore*
+*~
+*#
+
+# editors folders
+.vscode
+.vs
+.idea
+
+# build files and folders
+Makefile
+CMakeSettings.json
+CMakeFiles
+cmake-build-*
+cmake_install.cmake
+CMakeCache.txt
 out/
 build/*
 cmake-build-debug
 .idea/
+bin/*
 cmake/Modules/FindIrrklang.cmake

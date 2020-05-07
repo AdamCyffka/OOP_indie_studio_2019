@@ -15,13 +15,20 @@ find_package(Irrlicht REQUIRED)
 
 add_executable(bomberman
         sources/main.cpp
-        sources/map/map.cpp)
+        sources/core/Core.cpp
+        sources/menu/Menu.cpp
+        sources/map/map.cpp
+        sources/characters/Character.cpp
+        )
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
 target_link_libraries(bomberman Threads::Threads)
 
 include_directories(includes)
 include_directories(includes/map)
+include_directories(includes/core/)
+include_directories(includes/menu/)
+include_directories(includes/characters/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST
