@@ -9,7 +9,7 @@
 #define CHARACTER_HPP_
 
 #include <iostream>
-#include <../../cmake/Modules/include/irrlicht.h>
+#include <irrlicht.h>
 #include "CharacterException.hpp"
 #include "modelinfos.hpp"
 #include "side.hpp"
