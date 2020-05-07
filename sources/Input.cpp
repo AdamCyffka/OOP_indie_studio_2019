@@ -11,7 +11,7 @@
 
 using namespace irr;
 
-int getInput(IrrlichtDevice* device, Input receiver)
+void Joystick (IrrlichtDevice* device, Input receiver) //Fonction de l'exemple
 {
     core::array<SJoystickInfo> joystickInfo;
     
@@ -19,8 +19,7 @@ int getInput(IrrlichtDevice* device, Input receiver)
     {
         std::cout << "Joystick support is enabled and " << joystickInfo.size() << " joystick(s) are present." << std::endl;
 
-        for(u32 joystick = 0; joystick < joystickInfo.size(); ++joystick)
-        {
+        for (u32 joystick = 0; joystick < joystickInfo.size(); ++joystick) {
             std::cout << "Joystick " << joystick << ":" << std::endl;
             std::cout << "\tName: '" << joystickInfo[joystick].Name.c_str() << "'" << std::endl;
             std::cout << "\tAxes: " << joystickInfo[joystick].Axes << std::endl;
@@ -90,8 +89,30 @@ int getInput(IrrlichtDevice* device, Input receiver)
             else if(povDegrees > 270 || povDegrees < 90)
                 moveVertical = +1.f;
         }
-
     }
+}
+
+Key_mouvement keyBoard (Input receiver)
+{
+    if(receiver.IsKeyDown(irr::KEY_KEY_Z))
+        return (Up);
+    else if(receiver.IsKeyDown(irr::KEY_KEY_S))
+        return (Down);
+    if(receiver.IsKeyDown(irr::KEY_KEY_Q))
+        return (Left);
+    else if(receiver.IsKeyDown(irr::KEY_KEY_D))
+        return (Right);
+
+}
+
+Key_mouvement getInput(IrrlichtDevice* device, Input receiver)
+{
+    return (keyBoard(receiver));
+}
+
+bool Input::IsKeyDown(EKEY_CODE keyCode)
+{
+    return KeyIsDown[keyCode];
 }
 
 const SEvent::SJoystickEvent &Input::GetJoystickState(void) const
@@ -104,12 +125,16 @@ bool Input::OnEvent(const SEvent& event)
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
         JoystickState = event.JoystickEvent;
     }
+    if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+            KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+    }
     return false;
 }
 
 Input::Input()
 {
-
+    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
+            KeyIsDown[i] = false;
 }
 
 Input::~Input()

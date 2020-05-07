@@ -20,10 +20,13 @@ class Input : public IEventReceiver
 {
     public:
         virtual bool OnEvent(const SEvent& event);
+        virtual bool IsKeyDown(EKEY_CODE keyCode);
         const SEvent::SJoystickEvent &GetJoystickState(void) const;
         Input();
         ~Input();
     private:
         SEvent::SJoystickEvent JoystickState;
+        bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
 #endif /* !input */
+    
