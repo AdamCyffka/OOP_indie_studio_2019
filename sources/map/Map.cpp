@@ -6,7 +6,7 @@
 */
 
 #include "map/Map.hpp"
-#include <boost/random.hpp>
+//#include <boost/random.hpp>
 
 Map::Map()
 {
