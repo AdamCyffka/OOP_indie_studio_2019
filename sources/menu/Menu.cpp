@@ -7,37 +7,29 @@
 
 #include "Menu.hpp"
 
-Menu::Menu(irr::IrrlichtDevice *window)
+Menu::Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
-    _driver = window->getVideoDriver();
-    _env = window->getGUIEnvironment();
-    loadTextures(window);
-    loadButtons(window);
+    _driver = driver;
+    _env = env;
+    _smgr = smgr;
+
+    loadTextures();
+    loadButtons();
 }
 
-void Menu::loadTextures(irr::IrrlichtDevice *window)
+void Menu::loadTextures()
 {
-    _textures["menuBackground"] = _driver->getTexture("resources/images/menu/background.jpg");
     _textures["menuExitButton"] = _driver->getTexture("resources/images/buttons/leave.png");
 }
 
-void Menu::loadButtons(irr::IrrlichtDevice *window)
+void Menu::loadButtons()
 {
-    _buttons["menuExit"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_QUIT_BUTTON, L"test");
+    _buttons["menuExit"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_QUIT_BUTTON, L"");
     
     _buttons["menuExit"]->setImage(_textures["menuExitButton"]);
     _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
-
-    _env->addImage(_driver->getTexture("resources/images/buttons/leave.png"), irr::core::position2d<int>(10,10));
 }
 
-std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
+void Menu::run()
 {
-    return _buttons;
-}
-
-void Menu::run(irr::IrrlichtDevice *window)
-{
-    _driver->draw2DImage(_textures["menuBackground"], irr::core::position2d<irr::s32>(0, 0),
-        irr::core::rect<irr::s32>(0, 0, 1920, 1080), nullptr, irr::video::SColor(255, 255, 255, 255), true);
 }
