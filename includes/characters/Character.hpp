@@ -17,14 +17,17 @@
 using namespace irr;
 class Character {
     public:
-        Character(scene::ISceneManager *sManager, modelInfos_t model,
-                  std::string name = "Player", int movementSpeed = 100,
-                  side orientation = side::west);
+        Character(scene::ISceneManager *sManager, video::IVideoDriver *driver,modelInfos_t model,
+                  std::string name = "Player", int travelingTime = 1000,
+                  side orientation = side::north);
         ~Character();
 
         enum state {
             idle,
-            moving
+            moving,
+            dying,
+            dead,
+            victory
         };
 
         //setters
@@ -33,7 +36,7 @@ class Character {
         void setState(Character::state state);
         void setOrientation(side side);
         void setAnimationSpeed(int animationSpeed);
-        void setMovementSpeed(int movementSpeed);
+        void setTravelingTime(int travelingTime);
 
         //getters
         int getSize() const;
@@ -41,22 +44,23 @@ class Character {
         Character::state getState() const;
         side getOrientation() const;
         int getAnimationSpeed() const;
-        int getMovementSpeed() const;
+        int getTravelingTime() const;
 
         //methods
-        bool moveTo(core::vector3df position, int speed = -1);
+        bool moveTo(core::vector3df position, int travelingTime = 0);
     protected:
     private:
         //attributes
             //irr
         scene::ISceneManager *_sManager;
+        video::IVideoDriver *_driver;
         scene::IAnimatedMeshSceneNode *_mesh;
             //non irr
-        Character::state _state = Character::idle;
+        Character::state _state;
         side _orientation;
         modelInfos_t _model;
         std::string _name;
-        int _movementSpeed;
+        int _travelingTime;
 
         //methods
         side getOrientationFromPath(core::vector3df posA, core::vector3df posB);

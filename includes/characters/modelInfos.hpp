@@ -9,13 +9,17 @@
 #define MODELINFOS_HPP_
 
 #include <iostream>
+#include <vector>
 
 typedef struct modelInfos_s {
     std::string filename;
+    std::vector<std::string> textures;
     std::pair<int, int> idleLoop;
     std::pair<int, int> movingLoop;
     std::pair<int, int> dyingLoop;
-    int size;
+    std::pair<int, int> deadLoop;
+    std::pair<int, int> victoryLoop;
+    float size;
 } modelInfos_t;
 
 #endif /* !MODELINFOS_HPP_ */
