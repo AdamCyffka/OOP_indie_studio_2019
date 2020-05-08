@@ -36,3 +36,5 @@ out/
 build/*
 cmake-build-debug
 .idea/
+bin/*
+cmake/Modules/FindIrrklang.cmake

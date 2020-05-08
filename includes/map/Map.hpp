@@ -9,21 +9,27 @@
 #define MAP_HPP
 
 #include <vector>
+#include <random>
+#include <iostream>
+#include <map>
 
-#define MAP_WIDTH 30
-#define MAP_HEIGHT 20
+#define MAP_WIDTH 17
+#define MAP_HEIGHT 11
 
 class Map {
 	public:
 		Map();
 		~Map();
 
-		const std::vector<std::vector<int>> &getMap();
+		const std::map<int, std::map<int, int>> &getMap();
+		void printMap();
 
 	private:
 		void generateMap();
 		int generateBlock();
-		std::vector<std::vector<int>> _map;
+		void addPlayersSpawns();
+		void addWalls();
+		std::map<int, std::map<int, int>> _map;
 };
 
 #endif
