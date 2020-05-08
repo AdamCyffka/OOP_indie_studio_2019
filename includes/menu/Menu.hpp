@@ -17,7 +17,6 @@ class Menu : public IGame {
     public:
         explicit Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Menu() override = default;
-        void run();
 
         void loadButtons();
         void loadTextures();

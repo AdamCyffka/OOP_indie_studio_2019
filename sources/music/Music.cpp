@@ -2,15 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Intro
+** Music
 */
 
-#include "Intro.hpp"
-
-Intro::Intro()
-{
-}
-
-Intro::~Intro()
-{
-}
+#include "Music.hpp"

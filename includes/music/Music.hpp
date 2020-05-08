@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Intro
+** Music
 */
 
-#ifndef INTRO_HPP_
-#define INTRO_HPP_
+#ifndef MUSIC_HPP_
+#define MUSIC_HPP_
 
-class Intro {
+class Music {
     public:
-        Intro();
-        ~Intro();
+        Music();
+        ~Music();
 
     protected:
     private:
 };
 
-#endif /* !INTRO_HPP_ */
+#endif /* !MUSIC_HPP_ */

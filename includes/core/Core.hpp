@@ -17,11 +17,27 @@ class Core {
         Core();
 	    ~Core() = default;
 	    int run();
-        void displayScenes();
+        void switchScenes();
+
+        enum gameState_e {
+            mainMenu,
+            mainOptions,
+            mainPause,
+            mainCredits,
+            mainSelect,
+        };
+
+        void menuCase();
+        void pauseCase();
+        void gameCase();
+        void selectCase();
+        void optionsCase();
+        void creditsCase();
     protected:
     private:
         Menu *_menu;
         LoadMap *_loadmap;
+        gameState_e _state;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;

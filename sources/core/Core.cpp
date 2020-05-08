@@ -11,7 +11,6 @@
 
 Core::Core()
 {
-
 	_window = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(1920, 1080));
 	if (!_window) {
         std::cerr << "Couldn't open a window" << std::endl;
@@ -21,14 +20,58 @@ Core::Core()
     _env = _window->getGUIEnvironment();
     _driver = _window->getVideoDriver();
     _smgr = _window->getSceneManager();
+    _state = mainMenu;
     _loadmap = nullptr;
+    _menu = nullptr;
 }
 
-void Core::displayScenes()
+void Core::menuCase()
+{
+    if (!_menu)
+        _menu = new Menu(_env, _driver, _smgr);
+}
+
+void Core::selectCase()
+{
+}
+
+void Core::pauseCase()
+{
+}
+
+void Core::optionsCase()
+{
+}
+
+void Core::creditsCase()
+{
+}
+
+void Core::switchScenes()
 {
     if (!_loadmap)
         _loadmap = new LoadMap(_env, _driver, _smgr);
     _loadmap->run();
+
+    switch (_state) {
+        case mainMenu:
+            menuCase();
+            break;
+        case mainSelect:
+            selectCase();
+            break;
+        case mainPause:
+            pauseCase();
+            break;
+        case mainOptions:
+            optionsCase();
+            break;
+        case mainCredits:
+            creditsCase();
+            break;
+        default:
+            break;
+    }
 }
 
 int Core::run()
@@ -40,7 +83,7 @@ int Core::run()
 	// 	node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	// }
 
-    displayScenes();
+    switchScenes();
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
