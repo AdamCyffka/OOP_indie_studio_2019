@@ -8,11 +8,6 @@
 #include <iostream>
 #include "Core.hpp"
 
-// int main(int ac, char** av) {
-// 	std::cout << "Hello World" << std::endl;
-// 	return 0;
-// }
-
 int main(int ac, char** av)
 {
 	if (ac != 1) {
