@@ -7,13 +7,22 @@
 
 #include "Character.hpp"
 
-Character::Character(scene::ISceneManager *sManager, modelInfos_t model, std::string name, int movementSpeed, side orientation)
-: _sManager(sManager), _model(model), _name(name), _movementSpeed(movementSpeed), _orientation(orientation)
+Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model, std::string name, int travelingTime, side orientation)
+: _sManager(sManager), _driver(driver), _model(model), _name(name), _travelingTime(travelingTime), _orientation(orientation)
 {
-    _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str())); 
+    _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));
+    for (std::size_t i = 0; i < _model.textures.size(); i++) {
+        video::ITexture *texture = _driver->getTexture(_model.textures[i].c_str());
+        if (texture && _mesh) {
+            _driver->removeTexture(texture);
+            texture = _driver->getTexture(_model.textures[i].c_str());
+            _mesh->setMaterialTexture(i, texture);
+        }
+    }
+    setOrientation(orientation);
     setPosition(core::vector3df{0, 0, 0});
     setSize(_model.size);
-    setAnimationSpeed(15);
+    setAnimationSpeed(30);
     setState(Character::state::idle);
 }
 
@@ -40,7 +49,16 @@ void Character::setState(Character::state state)
             _mesh->setFrameLoop(_model.idleLoop.first, _model.idleLoop.second);
             break;
         case Character::state::moving:
-            _mesh->setFrameLoop(_model.movingLoop.first, _model.idleLoop.second);
+            _mesh->setFrameLoop(_model.movingLoop.first, _model.movingLoop.second);
+            break;
+        case Character::state::dying:
+            _mesh->setFrameLoop(_model.dyingLoop.first, _model.dyingLoop.second);
+            break;
+        case Character::state::dead:
+            _mesh->setFrameLoop(_model.deadLoop.first, _model.deadLoop.second);
+            break;
+        case Character::state::victory:
+            _mesh->setFrameLoop(_model.victoryLoop.first, _model.victoryLoop.second);
             break;
         default:
             break;
@@ -74,9 +92,9 @@ void Character::setAnimationSpeed(int animationSpeed)
     _mesh->setAnimationSpeed(animationSpeed);
 }
 
-void Character::setMovementSpeed(int movementSpeed)
+void Character::setTravelingTime(int travelingTime)
 {
-    _movementSpeed = movementSpeed;
+    _travelingTime = travelingTime;
 }
 
 //getters
@@ -105,26 +123,26 @@ int Character::getAnimationSpeed() const
     return _mesh->getAnimationSpeed();
 }
 
-int Character::getMovementSpeed() const
+int Character::getTravelingTime() const
 {
-    return _movementSpeed;
+    return _travelingTime;
 }
 
 //methods
 side Character::getOrientationFromPath(core::vector3df posA, core::vector3df posB)
 {
-    if (posA.Y == posB.Y && posA.X != posB.X)
-        return (posA.X > posB.X) ? side::west : side::east;
-    else if (posA.X == posB.X && posA.Y != posB.Y)
-        return (posA.Y > posB.Y) ? side::south : side::north;
+    if (posA.Z == posB.Z && posA.X != posB.X)
+        return (posA.X > posB.X) ? side::east : side::west;
+    else if (posA.X == posB.X && posA.Z != posB.Z)
+        return (posA.Z > posB.Z) ? side::north : side::south;
     else
         return _orientation;
 }
 
-bool Character::moveTo(core::vector3df position, int speed)
+bool Character::moveTo(core::vector3df position, int travelingTime)
 {
     core::vector3df currentPosition = getPosition();
-    scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (speed != -1) ? speed : _movementSpeed, true);
+    scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelingTime != 0) ? travelingTime : _travelingTime, false);
     
     if (animation) {
         if (_mesh) {
