@@ -26,4 +26,5 @@ class Input : public IEventReceiver
     private:
         SEvent::SJoystickEvent JoystickState;
 };
+
 #endif /* !input */

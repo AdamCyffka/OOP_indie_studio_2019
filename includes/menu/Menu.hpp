@@ -11,23 +11,21 @@
 #include <iostream>
 #include <map>
 #include <irrlicht.h>
-#include "GameStat.hpp"
+#include "IGame.hpp"
 
-class Menu : public GameStat {
+class Menu : public IGame {
     public:
-        explicit Menu(irr::IrrlichtDevice *window);
+        explicit Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Menu() override = default;
-        void run(irr::IrrlichtDevice *window) override;
+        void run();
 
-        std::map<std::string, irr::gui::IGUIButton *> getButtons();
-
-        void loadButtons(irr::IrrlichtDevice *window) override;
-        void loadTextures(irr::IrrlichtDevice *window) override;
+        void loadButtons();
+        void loadTextures();
     private:
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
-        irr::gui::IGUIFont *_font;
-        irr::gui::IGUISkin *_skin;
+        irr::scene::ISceneManager *_smgr;
+
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
 };

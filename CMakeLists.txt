@@ -12,6 +12,8 @@ link_libraries(${Irrlicht_LIBRARIES})
 
 include_directories(includes)
 include_directories(includes/core/)
+include_directories(includes/intro/)
+include_directories(includes/map/)
 include_directories(includes/menu/)
 include_directories(includes/characters/)
 include_directories("${Irrlicht_INCLUDE_DIRS}")
@@ -21,4 +23,5 @@ add_executable(bomberman
         sources/core/Core.cpp
         sources/menu/Menu.cpp
         sources/map/map.cpp
+        sources/map/LoadMap.cpp
         sources/characters/Character.cpp)
