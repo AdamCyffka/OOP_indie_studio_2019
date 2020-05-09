@@ -5,6 +5,7 @@
 ** LoadMap
 */
 
+#include "Core.hpp"
 #include "LoadMap.hpp"
 
 LoadMap::LoadMap(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
@@ -24,7 +25,9 @@ void LoadMap::run()
     irr::scene::ISceneNode *skydome;
     irr::scene::ISceneNode *castle;
     irr::scene::ISceneNode *arena;
-    irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+    irr::scene::ISceneNode *water = 0;
+    irr::scene::IAnimatedMesh *mesh = _smgr->getMesh("resources/models/blocks/block.obj");
+    irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 
     // camera
     camera->setPosition(irr::core::vector3df(0, 100, 0));
@@ -56,6 +59,20 @@ void LoadMap::run()
         arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     }
 
+    // light for water
+    water = _smgr->addLightSceneNode(0, {0, 700 ,0}, {1.0f, 0.6f, 0.7f, 1.0f}, 8000.0f);
+
+    // water
+    mesh = _smgr->addHillPlaneMesh( "myHill",
+        irr::core::dimension2d<irr::f32>(20, 20),
+        irr::core::dimension2d<irr::u32>(40, 40), 0, 0,
+        irr::core::dimension2d<irr::f32>(50, 50),
+        irr::core::dimension2d<irr::f32>(10, 10));
+    water = _smgr->addWaterSurfaceSceneNode(mesh->getMesh(0), 3.0f, 300.0f, 30.0f);
+    water->setPosition({0, 15, -800});
+    water->setMaterialTexture(0, _driver->getTexture("resources/models/castle/CastleWaterWave.png"));
+    water->setMaterialType(irr::video::EMT_REFLECTION_2_LAYER);
+
     // goal planet
     arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/goal_planet/Race_Goal_Planet.obj"));
     arena->setScale({0.1, 0.1, 0.1});
@@ -68,4 +85,31 @@ void LoadMap::run()
     _driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
     skydome = _smgr->addSkyDomeSceneNode(_driver->getTexture("resources/images/terrain/skydome.png"), 16, 8, 0.95f, 2.0f);
     _driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, true);
+
+    // particules
+    irr::scene::IParticleSystemSceneNode *ps = _smgr->addParticleSystemSceneNode(false);
+    irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+        irr::core::aabbox3d<irr::f32>(-7, 0, -7, 7, 1, 7),
+        irr::core::vector3df(0.0f, 0.06f, 0.0f),
+        5, 100,
+        irr::video::SColor(0,255, 255, 255),
+        irr::video::SColor(0,255, 255, 255),
+        800, 2000, 0,
+        irr::core::dimension2df(10.f, 10.f),
+        irr::core::dimension2df(20.f, 20.f));
+
+    ps->setEmitter(em);
+    em->drop();
+
+    irr::scene::IParticleAffector* paf = ps->createFadeOutParticleAffector();
+
+    ps->addAffector(paf);
+    paf->drop();
+
+    ps->setPosition({665, 50, -560});
+    ps->setScale({0.5, 0.5, 0.5});
+    ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
+    ps->setMaterialTexture(0, _driver->getTexture("resources/models/castle/fire.bmp"));
+    ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
