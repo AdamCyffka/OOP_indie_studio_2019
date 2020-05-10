@@ -38,3 +38,7 @@ cmake-build-debug
 .idea/
 bin/*
 cmake/Modules/FindIrrklang.cmake
+
+# blender
+resources/models/planets/observatory/*.dae
+resources/models/planets/tower_planet/*.dae
