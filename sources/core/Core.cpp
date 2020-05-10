@@ -16,6 +16,7 @@ Core::Core()
         std::cerr << "Couldn't open a window" << std::endl;
         return;
     }
+    _music = std::unique_ptr<Music>(new Music());
 	_window->setWindowCaption(L"Super Bomberman Bros");
     _env = _window->getGUIEnvironment();
     _driver = _window->getVideoDriver();
@@ -84,6 +85,7 @@ int Core::run()
 	// }
 
     switchScenes();
+    _music->playSound("resources/music/first.mp3");
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));

@@ -8,6 +8,7 @@
 #ifndef CORE_HPP_
 #define CORE_HPP_
 
+#include "Music.hpp"
 #include <irrlicht.h>
 #include "Menu.hpp"
 #include "LoadMap.hpp"
@@ -38,6 +39,7 @@ class Core {
         Menu *_menu;
         LoadMap *_loadmap;
         gameState_e _state;
+        std::unique_ptr<Music> _music;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;
