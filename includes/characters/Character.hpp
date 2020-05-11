@@ -17,7 +17,7 @@
 using namespace irr;
 class Character {
     public:
-        Character(scene::ISceneManager *sManager, video::IVideoDriver *driver,modelInfos_t model,
+        Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model,
                   std::string name = "Player", int travelingTime = 1000,
                   side orientation = side::north);
         ~Character();
