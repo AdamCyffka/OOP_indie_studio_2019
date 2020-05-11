@@ -11,14 +11,16 @@ Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver
 : _sManager(sManager), _driver(driver), _model(model), _name(name), _travelingTime(travelingTime), _orientation(orientation)
 {
     _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));
+    _mesh->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     for (std::size_t i = 0; i < _model.textures.size(); i++) {
         video::ITexture *texture = _driver->getTexture(_model.textures[i].c_str());
         if (texture && _mesh) {
             _driver->removeTexture(texture);
             texture = _driver->getTexture(_model.textures[i].c_str());
-            _mesh->setMaterialTexture(i, texture);
+            _mesh->getMaterial(i).setTexture(0, texture);
         }
     }
+    std::cout << name <<" : j'ai " << std::to_string(_mesh->getMaterialCount()) << " materials"<< std::endl;
     setOrientation(orientation);
     setPosition(core::vector3df{0, 0, 0});
     setSize(_model.size);
