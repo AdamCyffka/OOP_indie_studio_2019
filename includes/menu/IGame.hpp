@@ -29,7 +29,6 @@ enum button {
 class IGame {
     public:
         virtual ~IGame() = default;
-        //virtual void run() = 0;
 
         virtual void loadButtons() = 0;
         virtual void loadTextures() = 0;

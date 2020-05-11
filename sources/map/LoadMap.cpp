@@ -15,20 +15,20 @@ LoadMap::LoadMap(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *drive
     _smgr = smgr;
 }
 
-LoadMap::~LoadMap()
-{
-}
-
 void LoadMap::run()
 {
     irr::scene::ISceneNode *skybox;
     irr::scene::ISceneNode *observatory;
     irr::scene::ISceneNode *arena;
     irr::scene::ISceneNode *towerPlanet;
+    irr::scene::ISceneNode *dreadnoughtPlanet;
+    irr::scene::ISceneNode *dustyPlanet;
+    irr::scene::ISceneNode *gatewayPlanet;
     irr::scene::ISceneNode *plateA;
     irr::scene::ISceneNode *plateB;
     irr::scene::ISceneNodeAnimator *animA;
     irr::scene::ISceneNodeAnimator *animB;
+    irr::scene::ISceneNodeAnimator *rotatePlanet;
     irr::scene::ISceneNode *light;
     irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 
@@ -55,17 +55,46 @@ void LoadMap::run()
 
     // towerPlanet
     towerPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/tower_planet/tower_planet.obj"));
-    towerPlanet->setPosition({1000, 400, 500}); // pas toucher au y
+    towerPlanet->setPosition({1000, 400, 500});
     towerPlanet->setScale({10, 10, 10});
     if (towerPlanet) {
         towerPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     }
 
+    // dreadnoughtPlanet
+    dreadnoughtPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/dreadnought_planet/dreadnought_planet.obj"));
+    dreadnoughtPlanet->setPosition({-4000, 400, -2000});
+    dreadnoughtPlanet->setScale({15, 15, 15});
+    dreadnoughtPlanet->setRotation({50, 0, 0});
+    if (dreadnoughtPlanet) {
+        dreadnoughtPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    }
+
+    // dustyPlanet
+    dustyPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/dusty_planet/dusty_planet.obj"));
+    dustyPlanet->setPosition({-1000, -1500, 2000});
+    dustyPlanet->setScale({15, 15, 15});
+    dustyPlanet->setRotation({50, 0, 0});
+    if (dustyPlanet) {
+        dustyPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    }
+
+    // gatewayPlanet
+    gatewayPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/gateway_planet/gateway_planet.obj"));
+    gatewayPlanet->setPosition({4000, 0, -3000});
+    gatewayPlanet->setScale({500, 500, 500});
+    if (gatewayPlanet) {
+        gatewayPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    }
+    rotatePlanet = _smgr->createRotationAnimator({0.05, 0, 0});
+    gatewayPlanet->addAnimator(rotatePlanet);
+    rotatePlanet->drop();
+
     // plateA
     plateA = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateA.obj"));
     plateA->setPosition({0, 0, 0});
     plateA->setScale({3, 3, 3});
-    animA = _smgr->createRotationAnimator({0, 0.3f, 0});
+    animA = _smgr->createRotationAnimator({0, 0.3, 0});
     plateA->addAnimator(animA);
     animA->drop();
 
@@ -73,7 +102,7 @@ void LoadMap::run()
     plateB = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateB.obj"));
     plateB->setPosition({0, 10, 0});
     plateB->setScale({3, 3, 3});
-    animB = _smgr->createRotationAnimator({0, 0.1f, 0});
+    animB = _smgr->createRotationAnimator({0, 0.1, 0});
     plateB->addAnimator(animB);
     animB->drop();
 

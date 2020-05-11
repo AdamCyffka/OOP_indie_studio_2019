@@ -21,7 +21,7 @@ Music::~Music()
     _engine->drop();
 }
 
-void Music::playMusic(const std::string& music)
+void Music::playMusic(const std::string &music)
 {
     if (_music == true) {
         _engine->stopAllSounds();
@@ -29,7 +29,7 @@ void Music::playMusic(const std::string& music)
     }
 }
 
-void Music::playSound(const std::string& sound)
+void Music::playSound(const std::string &sound)
 {
     if (_sound == true) {
         _engine->play2D(sound.c_str(), false);
