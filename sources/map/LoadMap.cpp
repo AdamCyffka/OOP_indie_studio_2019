@@ -135,7 +135,6 @@ void LoadMap::loadGameMap(float x, float y, float z)
 {
 	for (int i = 0; i < _map->getMap().size(); ++i) {
 		for (int j = 0; j < _map->getMap()[i].size(); ++j) {
-			std::cout << _map->getMap()[i][j] << std::endl;
 			switch (_map->getMap()[i][j]) {
 				case EMPTY: {
 					break;
