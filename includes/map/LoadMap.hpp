@@ -13,7 +13,7 @@
 class LoadMap {
     public:
         LoadMap(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~LoadMap();
+        ~LoadMap() = default;
         void run();
 
     protected:

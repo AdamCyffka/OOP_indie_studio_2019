@@ -21,8 +21,8 @@ class Music {
 
     void setMusic(bool);
     void setSound(bool);
-    void playMusic(const std::string&);
-    void playSound(const std::string&);
+    void playMusic(const std::string &);
+    void playSound(const std::string &);
     void setVol(float);
         // void playSound(Sounds whatSound);
         // void playMusic(Musics whatMusic);
