@@ -8,9 +8,10 @@
 #ifndef CORE_HPP_
 #define CORE_HPP_
 
-#include "Music.hpp"
 #include <irrlicht.h>
+#include "MyEventReceiver.hpp"
 #include "Menu.hpp"
+#include "Options.hpp"
 #include "LoadMap.hpp"
 
 class Core {
@@ -34,12 +35,12 @@ class Core {
         void selectCase();
         void optionsCase();
         void creditsCase();
-    protected:
     private:
         Menu *_menu;
+        Options *_options;
         LoadMap *_loadmap;
         gameState_e _state;
-        std::unique_ptr<Music> _music;
+        //MyEventReceiver *_receiver;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;

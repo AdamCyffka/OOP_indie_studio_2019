@@ -17,10 +17,11 @@ add_executable(bomberman
         sources/main.cpp
         sources/core/Core.cpp
         sources/menu/Menu.cpp
+        sources/menu/Options.cpp
+        sources/menu/MyEventReceiver.cpp
         sources/map/map.cpp
         sources/map/LoadMap.cpp
         sources/characters/Character.cpp
-        sources/music/Music.cpp
         )
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
@@ -30,10 +31,8 @@ include_directories(includes)
 include_directories(includes/map)
 include_directories(includes/core/)
 include_directories(includes/intro/)
-include_directories(includes/map/)
 include_directories(includes/menu/)
 include_directories(includes/characters/)
-include_directories(includes/music/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST

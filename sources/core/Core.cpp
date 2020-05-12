@@ -16,14 +16,14 @@ Core::Core()
         std::cerr << "Couldn't open a window" << std::endl;
         return;
     }
-    _music = std::unique_ptr<Music>(new Music());
 	_window->setWindowCaption(L"Super Bomberman Bros");
     _env = _window->getGUIEnvironment();
     _driver = _window->getVideoDriver();
     _smgr = _window->getSceneManager();
-    //_state = mainMenu;
+    //_state = mainOptions;
     _loadmap = nullptr;
     _menu = nullptr;
+    _options = nullptr;
 }
 
 void Core::menuCase()
@@ -42,6 +42,8 @@ void Core::pauseCase()
 
 void Core::optionsCase()
 {
+    if (!_options)
+        _options = new Options(_env, _driver, _smgr);
 }
 
 void Core::creditsCase()
@@ -85,7 +87,6 @@ int Core::run()
 	// }
 
     switchScenes();
-    _music->playSound("resources/music/first.mp3");
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
