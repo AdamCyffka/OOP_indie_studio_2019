@@ -20,7 +20,7 @@ Core::Core()
     _env = _window->getGUIEnvironment();
     _driver = _window->getVideoDriver();
     _smgr = _window->getSceneManager();
-    //_state = mainOptions;
+    _state = mainOptions;
     _loadmap = nullptr;
     _menu = nullptr;
     _options = nullptr;

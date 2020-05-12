@@ -25,6 +25,7 @@ class Options : public IGame {
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 
+        std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
 };
