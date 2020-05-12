@@ -17,10 +17,16 @@ add_executable(bomberman
         sources/main.cpp
         sources/core/Core.cpp
         sources/menu/Menu.cpp
-        sources/map/map.cpp
+        sources/map/Map.cpp
         sources/map/LoadMap.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
+        )
+
+set_target_properties(bomberman PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXECUTABLE_OUTPUT_PATH}
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH}
         )
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
@@ -59,6 +65,10 @@ if (MSVC)
             "${CMAKE_MODULE_PATH}/irrKlang/ikpMP3.dll"
             ${CMAKE_SOURCE_DIR}/bin)
     target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/irrKlang.lib)
+    IF (EXISTS ${EXECUTABLE_OUTPUT_PATH}/Release)
+        file(REMOVE ${EXECUTABLE_OUTPUT_PATH}/Release)
+    ENDIF (EXISTS ${EXECUTABLE_OUTPUT_PATH}/Release)
+
 ELSE (MSVC)
     add_custom_command(TARGET bomberman PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
