@@ -27,7 +27,6 @@ class Options : public IGame {
 
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
-        std::map<std::string, irr::gui::IGUIScrollBar *> _scrollbars;
 };
 
 #endif /* !OPTIONS_HPP_ */
