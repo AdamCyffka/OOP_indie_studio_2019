@@ -43,9 +43,9 @@ class Map {
 		Map();
 		~Map();
 
-		const std::map<int, std::map<int, BlockState>> &getMap();
-		const std::map<int, std::map<int, BombState>> &getBombMap() const;
-		const std::map<int, std::map<int, PlayerState>> &getPlayerMap() const;
+		std::map<int, std::map<int, BlockState>> &getMap();
+		std::map<int, std::map<int, BombState>> &getBombMap();
+		std::map<int, std::map<int, PlayerState>> &getPlayerMap();
 		void printMap();
 
 	private:
