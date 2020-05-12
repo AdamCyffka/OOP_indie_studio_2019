@@ -35,6 +35,8 @@ class Core {
         void selectCase();
         void optionsCase();
         void creditsCase();
+        
+        void setState(gameState_e state);
     private:
         Menu *_menu;
         Options *_options;

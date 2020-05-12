@@ -26,10 +26,20 @@ Core::Core()
     _options = nullptr;
 }
 
+void Core::setState(Core::gameState_e state)
+{
+    _state = state;
+}
+
 void Core::menuCase()
 {
     if (!_menu)
         _menu = new Menu(_env, _driver, _smgr);
+    if (_options)
+        for (auto &it : _options->getButtons())
+            it.second->setVisible(false);
+    for (auto &it : _menu->getButtons())
+        it.second->setVisible(true);
 }
 
 void Core::selectCase()
@@ -44,6 +54,10 @@ void Core::optionsCase()
 {
     if (!_options)
         _options = new Options(_env, _driver, _smgr);
+    // for (auto &it : _menu->getButtons())
+    //     it.second->setVisible(false);
+    for (auto &it : _options->getButtons())
+        it.second->setVisible(true);
 }
 
 void Core::creditsCase()
