@@ -14,17 +14,17 @@ Map::Map()
 
 Map::~Map() = default;
 
-const std::map<int, std::map<int, BlockState>> &Map::getMap()
+std::map<int, std::map<int, BlockState>> &Map::getMap()
 {
 	return _map;
 }
 
-const std::map<int, std::map<int, BombState>> &Map::getBombMap() const
+std::map<int, std::map<int, BombState>> &Map::getBombMap()
 {
 	return _bombMap;
 }
 
-const std::map<int, std::map<int, PlayerState>> &Map::getPlayerMap() const
+std::map<int, std::map<int, PlayerState>> &Map::getPlayerMap()
 {
 	return _playerMap;
 }
@@ -79,7 +79,7 @@ int Map::generateBlock()
 	std::mt19937 rng(seeder());
 	std::uniform_int_distribution<int> randHundred(0, 100);
 	int x = randHundred(rng);
-	if (x <= 15)
+	if (x <= 2)
 		return 0;
 	return 1;
 }

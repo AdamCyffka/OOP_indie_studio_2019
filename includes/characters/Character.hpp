@@ -8,6 +8,7 @@
 #ifndef CHARACTER_HPP_
 #define CHARACTER_HPP_
 
+#include <string>
 #include <iostream>
 #include <irrlicht.h>
 #include "CharacterException.hpp"

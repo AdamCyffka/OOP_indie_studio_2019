@@ -9,6 +9,7 @@
 #define LOADMAP_HPP_
 
 #include <irrlicht.h>
+#include "Map.hpp"
 
 class LoadMap {
     public:
@@ -18,6 +19,10 @@ class LoadMap {
 
     protected:
     private:
+		void loadGameMap(float x, float y, float z);
+
+    	Map *_map;
+
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
