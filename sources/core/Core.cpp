@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include "global.hpp"
 #include "Core.hpp"
 #include "Character.hpp"
 
@@ -93,12 +94,7 @@ void Core::switchScenes()
 
 int Core::run()
 {
-    // Character *character = new Character(scenemgr, {"resources/models/characters/DryBones/dry_bones.MD3",
-    //                                             {0, 0}, {0, 0}, {0, 0}, 100}, "drybones");
-    //irr::scene::ISceneNode *node = scenemgr->addAnimatedMeshSceneNode(scenemgr->getMesh("resources/models/characters/DryBones/dry_bones.MD3"));
-    // if (node) {
-	// 	node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	// }
+    Character *testCharacter = new Character(_smgr, _driver , g_modelInfos.at("lakitu"), "testCharacter");
 
     switchScenes();
 

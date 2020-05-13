@@ -34,15 +34,15 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "resources/models/characters/dr_peach/dr_peach.MD3", // MODEL MD3
             {
-                "resources/models/characters/dr_peach/dr_peach_di.png", // TEXTURES
-                "resources/models/characters/dr_peach/dr.peach_crown_dif.png"
+                "resources/models/characters/dr_peach/dr.peach_crown_dif.png", // TEXTURES
+                "resources/models/characters/dr_peach/dr_peach_di.png"
             },
             {0, 120}, // IDLE
             {121, 140}, // MOVING
             {141, 279}, // DYING
             {280, 356}, // DEAD
             {357, 613}, // VICTORY
-            1 // SCALE SIZE
+            10 // SCALE SIZE
         }
     },
     {
@@ -58,6 +58,22 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
             {143, 281}, // DYING
             {282, 376}, // DEAD
             {377, 427}, // VICTORY
+            10 // SCALE SIZE
+        }
+    },
+    {
+        "lakitu", // STRING
+        { // MODELINFOS_T
+            "resources/models/characters/lakitu/lakitu.MD3", // MODEL MD3
+            {
+                "resources/models/characters/lakitu/lakituFace.png",
+                "resources/models/characters/lakitu/lakituBody.png"
+            },
+            {0, 120}, // IDLE
+            {121, 146}, // MOVING
+            {147, 285}, // DYING
+            {286, 380}, // DEAD
+            {381, 479}, // VICTORY
             10 // SCALE SIZE
         }
     }
