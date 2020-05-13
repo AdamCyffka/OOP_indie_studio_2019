@@ -35,6 +35,8 @@ Game::Game()
         }
     }
     bot = new AI();
+    bot2 = new AI();
+    bot2->setPosition(80, 880);
 }
 
 Game::~Game()
@@ -66,15 +68,24 @@ void Game::simulateClick()
     }
 }
 
-void Game::simulateAI()
+void Game::simulateAI(AI *Bot)
 {
-    bot->isSafe(this->getMap());
+    if (Bot->isSafe(this->getMap()))
+    {
+        if (Bot->isMovingToPlayer(&map, this->bot)) {
+        }
+        if (Bot->isMovingToPlayer(&map, this->bot2)) {
+        }
+    }
 }
 
 void Game::simulateMovement()
 {
     bot->setPosition(bot->getX() + (normalSpeed * bot->getHorMovement()), bot->getY() + (normalSpeed * bot->getVerMovement()));
+    bot2->setPosition(bot2->getX() + (normalSpeed * bot2->getHorMovement()), bot2->getY() + (normalSpeed * bot2->getVerMovement()));
+
     bot->resetMovement();
+    bot2->resetMovement();
 }
 
 int **Game::getMap()
@@ -85,13 +96,15 @@ int **Game::getMap()
 void Game::simulate()
 {
     this->simulateClick();
-    this->simulateAI();
+    this->simulateAI(bot);
+    this->simulateAI(bot2);
     this->simulateMovement();
 }
 
 void Game::setPowerUp(PowerUp power, int up)
 {
     bot->setPowerUp(power, up);
+    bot2->setPowerUp(power, up);
 }
 
 void Game::chooseMap(int map)
@@ -112,6 +125,7 @@ void Game::chooseMap(int map)
 void Game::drawAI(SDL_Renderer *renderer)
 {
     printRectangle(renderer, bot->getX(), bot->getY(), 80, 80, 0, 255, 0);
+    printRectangle(renderer, bot2->getX(), bot2->getY(), 80, 80, 255, 255, 0);
 }
 
 void Game::drawMap(SDL_Renderer *renderer)
