@@ -17,25 +17,25 @@
 #define MAP_WIDTH 17
 #define MAP_HEIGHT 11
 
-enum BlockState {
-	EMPTY,
-	BREAKABLE,
-	UNBREAKABLE
+enum blockState {
+	empty,
+	breakable,
+	unbreakable
 };
 
-enum BombState {
-	CLEAR,
-	BOMB,
-	BLOCK
+enum bombState {
+	clear,
+	bomb,
+	block
 };
 
-enum PlayerState {
-	NONE,
-	PLAYER_ONE,
-	PLAYER_TWO,
-	PLAYER_THREE,
-	PLAYER_FOUR,
-	OBSTACLE
+enum playerState {
+	none,
+	playerOne,
+	playerTwo,
+	playerThree,
+	playerFour,
+	obstacle
 };
 
 class Map {
@@ -43,9 +43,9 @@ class Map {
 		Map();
 		~Map();
 
-		std::map<int, std::map<int, BlockState>> &getMap();
-		std::map<int, std::map<int, BombState>> &getBombMap();
-		std::map<int, std::map<int, PlayerState>> &getPlayerMap();
+		std::map<int, std::map<int, blockState>> &getMap();
+		std::map<int, std::map<int, bombState>> &getBombMap();
+		std::map<int, std::map<int, playerState>> &getPlayerMap();
 		void printMap();
 
 	private:
@@ -55,9 +55,9 @@ class Map {
 		void addFooterLine();
 		void addPlayersSpawns();
 		void addWalls();
-		std::map<int, std::map<int, BlockState>> _map;
-		std::map<int, std::map<int, BombState>> _bombMap;
-		std::map<int, std::map<int, PlayerState>> _playerMap;
+		std::map<int, std::map<int, blockState>> _map;
+		std::map<int, std::map<int, bombState>> _bombMap;
+		std::map<int, std::map<int, playerState>> _playerMap;
 };
 
 #endif
