@@ -23,6 +23,8 @@ class AI {
         verMovement getVerMovement();
         void testMovement(int **map);
         int canMove(int **map, int xNext, int yNext);
+        int canMoveAfter(int **map, int **copyMap, int multX, int multY);
+        //int canMoveJustAfter(int **map, int xNext, int yNext);
         void resetMovement();
         int isSafe(int **map);
         void renderBombOnMap(int ***map);
@@ -37,7 +39,8 @@ class AI {
         int speed = 5;
         int bombUp = 0;
         horMovement _horMovement = horMovement::idleHor;
-        verMovement _verMovement= verMovement::idleVer;
+        verMovement _verMovement = verMovement::idleVer;
+        bestMovement _lastMovement = bestMovement::idleB;
 };
 
 #endif /* !CLASSEAI_HPP_ */
