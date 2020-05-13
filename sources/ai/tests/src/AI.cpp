@@ -21,6 +21,101 @@ AI::~AI()
 {
 }
 
+int AI::oneSideIsTheSame(AI *secondPlayer)
+{
+    if (this->x == secondPlayer->getX() || this->y == secondPlayer->getY())
+    {
+        return 1;
+    }
+    return 0;
+}
+
+void AI::chooseMovementTo(AI *secondPlayer)
+{
+    if (this->x == secondPlayer->getX() && this->y == secondPlayer->getY())
+    {
+        return;
+    }
+    if (this->x == secondPlayer->getX())
+    {
+        if (this->y > secondPlayer->getY())
+        {
+            _verMovement = verMovement::top;
+        }
+        else
+        {
+            _verMovement = verMovement::bottom;
+        }
+    }
+    if (this->y == secondPlayer->getY())
+    {
+    }
+}
+
+int AI::pathClear(AI *secondPlayer, int ***map)
+{
+    if (this->x == secondPlayer->getX())
+    {
+        int pathY = this->y;
+        int mult = 1;
+        if (this->y > secondPlayer->getY())
+            mult = -1;
+        while (pathY != secondPlayer->getY())
+        {
+            if (!canMove(*map, x, pathY))
+                return 0;
+            pathY = pathY + (speed * mult);
+        }
+        return 1;
+    }
+    if (this->y == secondPlayer->getY())
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int AI::canPoseBomb(AI *secondPlayer)
+{
+    if (this->x == secondPlayer->getX())
+    {
+        int distance = (this->y - secondPlayer->getY()) / 80;
+        if (distance < 0)
+            distance *= -1;
+        if (distance <= this->bombUp)
+            return 1;
+    }
+    return 0;
+}
+
+void AI::poseBomb(int ***map)
+{
+    if ((*map)[int(this->y / 80)][int(this->x) / 80] != 1)
+    {
+        (*map)[int(this->y / 80)][int(this->x) / 80] = 3;
+    }
+}
+
+int AI::isMovingToPlayer(int ***map, AI *secondPlayer)
+{
+    if (this == secondPlayer)
+    {
+        return 0;
+    }
+    if (this->oneSideIsTheSame(secondPlayer) && this->pathClear(secondPlayer, map))
+    {
+        if (this->canPoseBomb(secondPlayer))
+        {
+            this->poseBomb(map);
+        }
+        else
+        {
+            this->chooseMovementTo(secondPlayer);
+        }
+    }
+    return 1;
+}
+
 int AI::canMove(int **map, int xNext, int yNext)
 {
     int Ystart = 0;
@@ -193,6 +288,7 @@ int AI::canMoveAfter(int **map, int **copyMap, int multX, int multY)
 int AI::getNumberMovement(int **map, int **copyMap, int multX, int multY)
 {
     int movement = -1;
+
     if (canMove(map, x + (80 * multX), y + (80 * multY)))
     {
         if (canMove(copyMap, x + (80 * multX), y + (80 * multY)))
@@ -264,6 +360,8 @@ int AI::isSafe(int **map)
             _verMovement = verMovement::bottom;
         if (_lastMovement == bestMovement::topB)
             _verMovement = verMovement::top;
+    } else {
+        _lastMovement = movement;
     }
     return 0;
 }

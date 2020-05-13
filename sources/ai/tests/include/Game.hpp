@@ -21,7 +21,7 @@ class Game {
         ~Game();
         void simulate();
         void simulateClick();
-        void simulateAI();
+        void simulateAI(AI *Bot);
         void simulateMovement();
         void chooseMap(int map);
         void setPowerUp(PowerUp, int);
@@ -35,6 +35,7 @@ class Game {
     private:
         int **map;
         AI *bot;
+        AI *bot2;
         int mouseClick[2] = {-1, -1};
         int normalSpeed = 5;
 };
