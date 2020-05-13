@@ -91,6 +91,10 @@ void Joystick (IrrlichtDevice* device, Input receiver) //Fonction de l'exemple
     }
 }*/
 
+bool Input::IsKeyDown(EKEY_CODE keyCode) const {
+		return KeyIsDown[keyCode];
+}
+
 Key_mouvement keyBoard (Input receiver)
 {
     if(receiver.IsKeyDown(irr::KEY_KEY_Z))
@@ -111,10 +115,6 @@ Key_mouvement getInput(IrrlichtDevice* device, Input receiver)
     return (keyBoard(receiver));
 }
 
-bool Input::IsKeyDown(EKEY_CODE keyCode) const {
-		return KeyIsDown[keyCode];
-}
-
 /*const SEvent::SJoystickEvent &Input::GetJoystickState(void) const
 {
     return JoystickState;
@@ -125,6 +125,7 @@ bool Input::OnEvent(const SEvent& event)
     //if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
     //    JoystickState = event.JoystickEvent;
     //}
+    std::cout << event.EventType << std::endl;
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
     return false;
@@ -140,20 +141,3 @@ Input::~Input()
 {
 
 }
-
-/*int main()
-{
-    static Input receiver;
-
-    IrrlichtDevice *device = createDevice( video::EDT_SOFTWARE, core::dimension2d<u32>(640, 480), 16,false, false, false, 0);
-
-    if (device == 0)
-        return 1; // could not create selected driver.
-    
-    Key_mouvement key;
-    while (key != Exit) {
-        key = getInput(device, receiver);
-        std::cout << key << std::endl;
-    }
-}*/
-
