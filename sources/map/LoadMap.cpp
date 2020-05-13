@@ -31,12 +31,11 @@ void LoadMap::run()
 	irr::scene::ISceneNodeAnimator *animB;
 	irr::scene::ISceneNodeAnimator *rotatePlanet;
 	irr::scene::ISceneNode *light;
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 
 	// camera
-	camera->setPosition(irr::core::vector3df(-300, 80, -400));
-	camera->setTarget(irr::core::vector3df(0, 0, 0));
-	camera->setFarValue(42000.0f);
+	// camera->setPosition(irr::core::vector3df(-300, 80, -400));
+	// camera->setTarget(irr::core::vector3df(0, 0, 0));
+	// camera->setFarValue(42000.0f);
 
 	// observatory
 	observatory = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/observatory.obj"));

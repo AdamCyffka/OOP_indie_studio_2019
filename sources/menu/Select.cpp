@@ -5,6 +5,7 @@
 ** Select
 */
 
+#include "global.hpp"
 #include "Select.hpp"
 
 Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
@@ -15,12 +16,19 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 
     loadTextures();
     loadButtons();
-    selectTab = {
-        {"dry_bones", "luigi", "mario", "waluigi"},
-        {"dry_bones", "luigi", "mario", "waluigi"},
-        {"dry_bones", "luigi", "mario", "waluigi"},
-        {"dry_bones", "luigi", "mario", "waluigi"}
-    };
+    selectTab = {{"waluigi", true}, {"dr_peach", true}, {"koopa", true}, {"lakitu", true}};
+    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(selectTab[0].first), "preview1"));
+    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(selectTab[1].first), "preview2"));
+    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(selectTab[2].first), "preview3"));
+    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(selectTab[3].first), "preview4"));
+    _previews[0]->setPosition({17, 0, 245});
+    _previews[1]->setPosition({-28, 0, 225});
+    _previews[2]->setPosition({-79, 0, 205});
+    _previews[3]->setPosition({-127, 0, 185});
+    _previews[0]->setOrientation(side::east);
+    _previews[1]->setOrientation(side::east);
+    _previews[2]->setOrientation(side::east);
+    _previews[3]->setOrientation(side::east);
 }
 
 void Select::loadTextures()
@@ -115,6 +123,7 @@ void Select::loadButtons()
     _buttons["x4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_X_4, L"");
     _buttons["x4"]->setImage(_textures["x"]);
     _buttons["x4"]->setRelativePosition(irr::core::position2d<irr::s32>(1490, 763));
+
 }
 
 void Select::incSkin(int skin)
@@ -156,7 +165,7 @@ std::vector<std::vector<int>> Select::getNbRole()
     return nbRole;
 }
 
-irr::video::ITexture *Select::getSkin(int skin)
+Character *Select::getPreview(int preview) const
 {
-    return _textures[selectTab[skin][nbSkin[skin]]];
+    return _previews.at(preview);
 }

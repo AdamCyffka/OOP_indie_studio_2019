@@ -49,7 +49,7 @@ class Core {
         LoadMap *_loadmap;
         layerState _lState;
         gameState _gState;
-        //MyEventReceiver *_receiver;
+        MyEventReceiver *_receiver;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;

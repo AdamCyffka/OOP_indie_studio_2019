@@ -10,6 +10,9 @@
 
 #include <irrlicht.h>
 
+#define	WIN_WIDTH	1920
+#define	WIN_HEIGHT	1080
+
 enum button {
     GUI_ID_NEW_BUTTON,
     GUI_ID_LOAD_BUTTON,

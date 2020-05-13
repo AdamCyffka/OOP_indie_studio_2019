@@ -6,7 +6,6 @@
 */
 
 #include <iostream>
-#include "global.hpp"
 #include "Core.hpp"
 #include "Character.hpp"
 
@@ -17,11 +16,11 @@ Core::Core()
         std::cerr << "Couldn't open a window" << std::endl;
         return;
     }
-	_window->setWindowCaption(L"Super Bomberman Bros");
+	//_window->setWindowCaption(L"Super Bomberman Bros");
     _env = _window->getGUIEnvironment();
     _driver = _window->getVideoDriver();
     _smgr = _window->getSceneManager();
-    _lState = menuMain;
+    //_lState = menuMain;
     _gState = menu;
     _loadmap = nullptr;
     _menu = nullptr;
@@ -66,21 +65,56 @@ void Core::creditsCase()
 
 int Core::run()
 {
-    Character *testCharacter = new Character(_smgr, _driver , g_modelInfos.at("lakitu"), "testCharacter");
-
 	if (!_loadmap)
 		_loadmap = new LoadMap(_env, _driver, _smgr);
 	_loadmap->run();
+
+	// POSITION CAMERA PAS TOUCHER
+	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
+	camera->setFarValue(42000);
+	camera->setPosition(irr::core::vector3df(-94.354813, 44.179367, 294.335876));
+	camera->setTarget(irr::core::vector3df(-70.055885, 21.188717, 232.846115));
+	irr::core::vector3df posCam = camera->getPosition();
+	irr::core::vector3df targetCam = camera->getTarget();
+	core::stringw titre = L"POS : X = ";
+	titre += posCam.X;
+	titre += " Y = ";
+	titre += posCam.Y;
+	titre += " Z = ";
+	titre += posCam.Z;
+	titre += " TARGET: X = ";
+	titre += targetCam.X;
+	titre += " Y = ";
+	titre += targetCam.Y;
+	titre += " Z = ";
+	titre += targetCam.Z;
+	_window->setWindowCaption(titre.c_str());
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
+		irr::core::vector3df posCam = camera->getPosition();
+		irr::core::vector3df targetCam = camera->getTarget();
+		titre = L"POS : X = ";
+		titre += posCam.X;
+		titre += " Y = ";
+		titre += posCam.Y;
+		titre += " Z = ";
+		titre += posCam.Z;
+
+		titre += "\nTARGET: X = ";
+		titre += targetCam.X;
+		titre += " Y = ";
+		titre += targetCam.Y;
+		titre += " Z = ";
+		titre += targetCam.Z;
+		_window->setWindowCaption(titre.c_str());
 	    _smgr->drawAll();
         _env->drawAll();
-
 	    _driver->endScene();
     }
+
     _window->drop();
     return 0;
 }
