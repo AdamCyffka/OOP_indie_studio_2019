@@ -14,53 +14,53 @@ Map::Map()
 
 Map::~Map() = default;
 
-std::map<int, std::map<int, BlockState>> &Map::getMap()
+std::map<int, std::map<int, blockState>> &Map::getMap()
 {
 	return _map;
 }
 
-std::map<int, std::map<int, BombState>> &Map::getBombMap()
+std::map<int, std::map<int, bombState>> &Map::getBombMap()
 {
 	return _bombMap;
 }
 
-std::map<int, std::map<int, PlayerState>> &Map::getPlayerMap()
+std::map<int, std::map<int, playerState>> &Map::getPlayerMap()
 {
 	return _playerMap;
 }
 
 void Map::generateMap()
 {
-	std::map<int, BlockState> line;
-	std::map<int, BombState> bombLine;
-	std::map<int, PlayerState> playerLine;
+	std::map<int, blockState> line;
+	std::map<int, bombState> bombLine;
+	std::map<int, playerState> playerLine;
 
 	addHeaderLine();
 	for (int i = 1; i < MAP_HEIGHT + 1; ++i) {
-		line[0] = UNBREAKABLE;
-		bombLine[0] = BLOCK;
-		playerLine[0] = OBSTACLE;
+		line[0] = unbreakable;
+		bombLine[0] = block;
+		playerLine[0] = obstacle;
 		for (int j = 1; j < MAP_WIDTH + 1; ++j) {
 			int res = generateBlock();
 			if (res == 0) {
-				line[j] = EMPTY;
-				bombLine[j] = CLEAR;
-				playerLine[j] = NONE;
+				line[j] = empty;
+				bombLine[j] = clear;
+				playerLine[j] = none;
 			} else if (res == 1) {
-				line[j] = BREAKABLE;
-				bombLine[j] = BLOCK;
-				playerLine[j] = OBSTACLE;
+				line[j] = breakable;
+				bombLine[j] = block;
+				playerLine[j] = obstacle;
 			} else if (res == 2) {
-				line[j] = UNBREAKABLE;
-				bombLine[j] = BLOCK;
-				playerLine[j] = OBSTACLE;
+				line[j] = unbreakable;
+				bombLine[j] = block;
+				playerLine[j] = obstacle;
 			} else {
 				throw MapException("Unexpected value found : generateBlock()");
 			}
 		}
-		line[MAP_WIDTH + 1] = UNBREAKABLE;
-		bombLine[MAP_WIDTH + 1] = BLOCK;
-		playerLine[MAP_WIDTH + 1] = OBSTACLE;
+		line[MAP_WIDTH + 1] = unbreakable;
+		bombLine[MAP_WIDTH + 1] = block;
+		playerLine[MAP_WIDTH + 1] = obstacle;
 		_map[i] = line;
 		_bombMap[i] = bombLine;
 		_playerMap[i] = playerLine;
@@ -86,14 +86,14 @@ int Map::generateBlock()
 
 void Map::addHeaderLine()
 {
-	std::map<int, BlockState> line;
-	std::map<int, BombState> bombLine;
-	std::map<int, PlayerState> playerLine;
+	std::map<int, blockState> line;
+	std::map<int, bombState> bombLine;
+	std::map<int, playerState> playerLine;
 
 	for (int j = 0; j < MAP_WIDTH + 2; ++j) {
-		line[j] = UNBREAKABLE;
-		bombLine[j] = BLOCK;
-		playerLine[j] = OBSTACLE;
+		line[j] = unbreakable;
+		bombLine[j] = block;
+		playerLine[j] = obstacle;
 	}
 	_map[0] = line;
 	_bombMap[0] = bombLine;
@@ -103,14 +103,14 @@ void Map::addHeaderLine()
 
 void Map::addFooterLine()
 {
-	std::map<int, BlockState> line;
-	std::map<int, BombState> bombLine;
-	std::map<int, PlayerState> playerLine;
+	std::map<int, blockState> line;
+	std::map<int, bombState> bombLine;
+	std::map<int, playerState> playerLine;
 
 	for (int j = 0; j < MAP_WIDTH + 2; ++j) {
-		line[j] = UNBREAKABLE;
-		bombLine[j] = BLOCK;
-		playerLine[j] = OBSTACLE;
+		line[j] = unbreakable;
+		bombLine[j] = block;
+		playerLine[j] = obstacle;
 	}
 	_map[MAP_HEIGHT + 1] = line;
 	_bombMap[MAP_HEIGHT + 1] = bombLine;
@@ -123,49 +123,49 @@ void Map::addPlayersSpawns()
 	int columnLen = MAP_HEIGHT;
 
 	//Player 1
-	_map[1][1] = EMPTY;
-	_map[1][2] = EMPTY;
-	_map[2][1] = EMPTY;
-	_bombMap[1][1] = CLEAR;
-	_bombMap[1][2] = CLEAR;
-	_bombMap[2][1] = CLEAR;
-	_playerMap[1][1] = PLAYER_ONE;
+	_map[1][1] = empty;
+	_map[1][2] = empty;
+	_map[2][1] = empty;
+	_bombMap[1][1] = clear;
+	_bombMap[1][2] = clear;
+	_bombMap[2][1] = clear;
+	_playerMap[1][1] = playerOne;
 
 	//Player 2
-	_map[1][lineLen] = EMPTY;
-	_map[1][lineLen - 1] = EMPTY;
-	_map[2][lineLen] = EMPTY;
-	_bombMap[1][lineLen] = CLEAR;
-	_bombMap[1][lineLen - 1] = CLEAR;
-	_bombMap[2][lineLen] = CLEAR;
-	_playerMap[1][lineLen] = PLAYER_TWO;
+	_map[1][lineLen] = empty;
+	_map[1][lineLen - 1] = empty;
+	_map[2][lineLen] = empty;
+	_bombMap[1][lineLen] = clear;
+	_bombMap[1][lineLen - 1] = clear;
+	_bombMap[2][lineLen] = clear;
+	_playerMap[1][lineLen] = playerTwo;
 
 	//Player 3
-	_map[columnLen][1] = EMPTY;
-	_map[columnLen][2] = EMPTY;
-	_map[columnLen - 1][1] = EMPTY;
-	_bombMap[columnLen][1] = CLEAR;
-	_bombMap[columnLen][2] = CLEAR;
-	_bombMap[columnLen - 1][1] = CLEAR;
-	_playerMap[columnLen][1] = PLAYER_THREE;
+	_map[columnLen][1] = empty;
+	_map[columnLen][2] = empty;
+	_map[columnLen - 1][1] = empty;
+	_bombMap[columnLen][1] = clear;
+	_bombMap[columnLen][2] = clear;
+	_bombMap[columnLen - 1][1] = clear;
+	_playerMap[columnLen][1] = playerThree;
 
 	//Player 4
-	_map[columnLen][lineLen] = EMPTY;
-	_map[columnLen][lineLen - 1] = EMPTY;
-	_map[columnLen - 1][lineLen] = EMPTY;
-	_bombMap[columnLen][lineLen] = CLEAR;
-	_bombMap[columnLen][lineLen - 1] = CLEAR;
-	_bombMap[columnLen - 1][lineLen] = CLEAR;
-	_playerMap[columnLen][lineLen] = PLAYER_FOUR;
+	_map[columnLen][lineLen] = empty;
+	_map[columnLen][lineLen - 1] = empty;
+	_map[columnLen - 1][lineLen] = empty;
+	_bombMap[columnLen][lineLen] = clear;
+	_bombMap[columnLen][lineLen - 1] = clear;
+	_bombMap[columnLen - 1][lineLen] = clear;
+	_playerMap[columnLen][lineLen] = playerFour;
 }
 
 void Map::addWalls()
 {
 	for (int i = 2; i < MAP_HEIGHT; i += 2)
 		for (int j = 2; j < MAP_WIDTH; j += 2) {
-			_map[i][j] = UNBREAKABLE;
-			_bombMap[i][j] = BLOCK;
-			_playerMap[i][j] = OBSTACLE;
+			_map[i][j] = unbreakable;
+			_bombMap[i][j] = block;
+			_playerMap[i][j] = obstacle;
 		}
 }
 

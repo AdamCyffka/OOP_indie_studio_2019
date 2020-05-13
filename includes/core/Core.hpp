@@ -20,14 +20,18 @@ class Core {
         Core();
 	    ~Core() = default;
 	    int run();
-        void switchScenes();
 
-        enum gameState_e {
-            mainMenu,
-            mainOptions,
-            mainPause,
-            mainCredits,
-            mainSelect,
+        enum layerState {
+			menuMain,
+			menuOptions,
+			menuPause,
+			menuCredits,
+			menuSelect
+		};
+
+        enum gameState {
+        	menu,
+        	game
         };
 
         void menuCase();
@@ -36,14 +40,15 @@ class Core {
         void selectCase();
         void optionsCase();
         void creditsCase();
-        
-        void setState(gameState_e state);
     private:
+		void drawScene();
+		void drawLayer();
         Menu *_menu;
         Options *_options;
         Select *_select;
         LoadMap *_loadmap;
-        gameState_e _state;
+        layerState _lState;
+        gameState _gState;
         //MyEventReceiver *_receiver;
 
         irr::IrrlichtDevice *_window;
