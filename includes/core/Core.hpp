@@ -29,6 +29,19 @@ class Core {
             mainSelect,
         };
 
+        enum layerState {
+			menuMain,
+			menuOptions,
+			menuPause,
+			menuCredits,
+			menuSelect
+		};
+
+        enum gameState {
+        	menu,
+        	game
+        };
+
         void menuCase();
         void pauseCase();
         void gameCase();
@@ -36,10 +49,14 @@ class Core {
         void optionsCase();
         void creditsCase();
     private:
+		void drawScene();
+		void drawLayer();
         Menu *_menu;
         Options *_options;
         LoadMap *_loadmap;
         gameState_e _state;
+        layerState _lState;
+        gameState _gState;
         //MyEventReceiver *_receiver;
 
         irr::IrrlichtDevice *_window;

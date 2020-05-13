@@ -136,10 +136,10 @@ void LoadMap::loadGameMap(float x, float y, float z)
 	for (int i = 0; i < _map->getMap().size(); ++i) {
 		for (int j = 0; j < _map->getMap()[i].size(); ++j) {
 			switch (_map->getMap()[i][j]) {
-				case EMPTY: {
+				case empty: {
 					break;
 				}
-				case BREAKABLE: {
+				case breakable: {
 					irr::scene::ISceneNode *brick;
 					brick = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/brick.obj"));
 					brick->setPosition({x + (-40 * i), y, z + (-40 * j)}); // pas toucher au y
@@ -150,7 +150,7 @@ void LoadMap::loadGameMap(float x, float y, float z)
 					brick->setVisible(false); //A decommenter pour voir la map
 					break;
 				}
-				case UNBREAKABLE: {
+				case unbreakable: {
 					irr::scene::ISceneNode *unbreakable;
 					unbreakable = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/solid.obj"));
 					unbreakable->setPosition({x + (-40 * i), y, z + (-40 * j)}); // pas toucher au y
