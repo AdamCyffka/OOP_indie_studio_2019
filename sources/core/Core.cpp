@@ -20,10 +20,11 @@ Core::Core()
     _env = _window->getGUIEnvironment();
     _driver = _window->getVideoDriver();
     _smgr = _window->getSceneManager();
-    _state = mainOptions;
+    _state = mainSelect;
     _loadmap = nullptr;
     _menu = nullptr;
     _options = nullptr;
+    _select = nullptr;
 }
 
 void Core::setState(Core::gameState_e state)
@@ -44,6 +45,8 @@ void Core::menuCase()
 
 void Core::selectCase()
 {
+    if (!_select)
+        _select = new Select(_env, _driver, _smgr);
 }
 
 void Core::pauseCase()

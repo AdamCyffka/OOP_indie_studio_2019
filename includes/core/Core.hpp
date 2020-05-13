@@ -11,6 +11,7 @@
 #include <irrlicht.h>
 #include "MyEventReceiver.hpp"
 #include "Menu.hpp"
+#include "Select.hpp"
 #include "Options.hpp"
 #include "LoadMap.hpp"
 
@@ -40,6 +41,7 @@ class Core {
     private:
         Menu *_menu;
         Options *_options;
+        Select *_select;
         LoadMap *_loadmap;
         gameState_e _state;
         //MyEventReceiver *_receiver;
