@@ -6,13 +6,15 @@
 */
 
 #include <stdexcept>
+#include "Core.hpp"
 #include "Music.hpp"
 
 Music::Music()
 {
     _engine = irrklang::createIrrKlangDevice();
+    _master = true;
     _music = true;
-    _sound = true;
+    _sfx = true;
     if (!_engine)
         throw std::runtime_error("irrklang can't be launched");
 }
@@ -28,29 +30,22 @@ void Music::playMusic(const std::string &music)
         _engine->play2D(music.c_str(), true);
     }
 }
-
+ 
 void Music::playSound(const std::string &sound)
 {
-    if (_sound == true) {
+    if (_sfx == true) {
         _engine->play2D(sound.c_str(), false);
         if (!_engine)
             throw std::runtime_error("Sound asset not found");
     }
 }
 
-void Music::setMusic(bool state)
+void Music::pause()
 {
-    _music = state;
-    if (state == false)
-        _engine->stopAllSounds();
+	_engine->setAllSoundsPaused(true);
 }
 
-void Music::setSound(bool state)
+void Music::resume()
 {
-    _sound = state;
-}
-
-void Music::setVol(float value)
-{
-    _engine->setSoundVolume(value);
+	_engine->setAllSoundsPaused(false);
 }

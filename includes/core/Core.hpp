@@ -48,6 +48,8 @@ class Core {
         void selectCase();
         void optionsCase();
         void creditsCase();
+        
+        void setState(gameState_e state);
     private:
 		void drawScene();
 		void drawLayer();

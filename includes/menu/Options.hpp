@@ -20,14 +20,15 @@ class Options : public IGame {
 
         void loadButtons();
         void loadTextures();
+        std::map<std::string, irr::gui::IGUIButton *> getButtons();
     private:
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 
+        std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
-        std::map<std::string, irr::gui::IGUIScrollBar *> _scrollbars;
 };
 
 #endif /* !OPTIONS_HPP_ */

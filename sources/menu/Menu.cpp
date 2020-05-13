@@ -49,3 +49,8 @@ void Menu::loadButtons()
     _buttons["menuExit"]->setImage(_textures["menuExitButton"]);
     _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
 }
+
+std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
+{
+    return _buttons;
+}

@@ -74,19 +74,19 @@ void poseZoneBomb(int ***map, int bombUp, int i, int j)
 
     for (int k = 1; k <= bombUp; k++)
     {
-        if (!stopMinusX && (*map)[i - k][j] == 0)
+        if (!stopMinusX && ((*map)[i - k][j] == 0 || (*map)[i - k][j] == 4))
             (*map)[i - k][j] = 4;
         else
             stopMinusX = 1;
-        if (!stopPlusX && (*map)[i + k][j] == 0)
+        if (!stopPlusX && ((*map)[i + k][j] == 0 || (*map)[i + k][j] == 4))
             (*map)[i + k][j] = 4;
         else
             stopPlusX = 1;
-        if (!stopMinusY && (*map)[i][j - k] == 0)
+        if (!stopMinusY && ((*map)[i][j - k] == 0 || (*map)[i][j - k] == 4))
             (*map)[i][j - k] = 4;
         else
             stopMinusY = 1;
-        if (!stopPlusY && (*map)[i][j + k] == 0)
+        if (!stopPlusY && ((*map)[i][j + k] == 0 || (*map)[i][j + k] == 4))
             (*map)[i][j + k] = 4;
         else
             stopPlusY = 1;
@@ -97,6 +97,7 @@ void AI::renderBombOnMap(int ***map)
 {
     int Ystart = 0;
     int sizeHitBox = 80;
+    int bomb = 0;
 
     for (int i = 0; i < X_SIZE; i++)
     {
@@ -141,6 +142,54 @@ int AI::rushToSafety(int **map, int **copyMap, int multX, int multY)
     return -1;
 }
 
+int AI::canMoveAfter(int **map, int **copyMap, int multX, int multY)
+{
+    if (multX == 0 && multY == 1 && canMove(copyMap, x + (80), y + (80 * multY)))
+    {
+        _lastMovement = bestMovement::bottomB;
+        return 1;
+    }
+    if (multX == 0 && multY == 1 && canMove(copyMap, x + (-80), y + (80 * multY)))
+    {
+        _lastMovement = bestMovement::bottomB;
+        return 1;
+    }
+    if (multX == 0 && multY == -1 && canMove(copyMap, x + (80), y + (80 * multY)))
+    {
+        _lastMovement = bestMovement::topB;
+        return 1;
+    }
+    if (multX == 0 && multY == -1 && canMove(copyMap, x + (-80), y + (80 * multY)))
+    {
+        _lastMovement = bestMovement::topB;
+        return 1;
+    }
+
+    if (multX == 1 && multY == 0 && canMove(copyMap, x + (80 * multX), y + (80)))
+    {
+        _lastMovement = bestMovement::rightB;
+        return 1;
+    }
+    if (multX == 1 && multY == 0 && canMove(copyMap, x + (80 * multX), y + (-80)))
+    {
+        _lastMovement = bestMovement::rightB;
+        return 1;
+    }
+
+    if (multX == -1 && multY == 0 && canMove(copyMap, x + (80 * multX), y + (80)))
+    {
+        _lastMovement = bestMovement::leftB;
+        return 1;
+    }
+    if (multX == -1 && multY == 0 && canMove(copyMap, x + (80 * multX), y + (-80)))
+    {
+        _lastMovement = bestMovement::leftB;
+        return 1;
+    }
+
+    return 0;
+}
+
 int AI::getNumberMovement(int **map, int **copyMap, int multX, int multY)
 {
     int movement = -1;
@@ -151,6 +200,10 @@ int AI::getNumberMovement(int **map, int **copyMap, int multX, int multY)
             return 0;
         }
         movement = rushToSafety(map, copyMap, multX, multY);
+    }
+    if (canMove(map, x + (80 * multX), y + (80 * multY)) && canMoveAfter(map, copyMap, multX, multY))
+    {
+        return 0;
     }
     return movement;
 }
@@ -163,6 +216,7 @@ bestMovement AI::findSafePlace(int **map, int **copyMap)
     int top = getNumberMovement(map, copyMap, 0, -1);
 
     int listNBMovements[4] = {right, left, bottom, top};
+
     std::sort(listNBMovements, listNBMovements + (sizeof(listNBMovements) / sizeof(listNBMovements[0])));
     for (int i = 0; i < 4; i++)
     {
@@ -187,6 +241,8 @@ int AI::isSafe(int **map)
     renderBombOnMap(&copyMap);
     if (canMove(copyMap, x, y))
     {
+        if (_lastMovement != bestMovement::idleB)
+            _lastMovement = bestMovement::idleB;
         return 1;
     }
     bestMovement movement = findSafePlace(map, copyMap);
@@ -198,6 +254,17 @@ int AI::isSafe(int **map)
         _verMovement = verMovement::bottom;
     if (movement == bestMovement::topB)
         _verMovement = verMovement::top;
+    if (movement == bestMovement::idleB)
+    {
+        if (_lastMovement == bestMovement::rightB)
+            _horMovement = horMovement::right;
+        if (_lastMovement == bestMovement::leftB)
+            _horMovement = horMovement::left;
+        if (_lastMovement == bestMovement::bottomB)
+            _verMovement = verMovement::bottom;
+        if (_lastMovement == bestMovement::topB)
+            _verMovement = verMovement::top;
+    }
     return 0;
 }
 

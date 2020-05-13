@@ -18,6 +18,9 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
                         return true;
+                    case GUI_ID_OPTIONS_BUTTON:
+                        //_core.setState(Core::mainOptions);
+                        return true;
                 }
             default:
                 break;
