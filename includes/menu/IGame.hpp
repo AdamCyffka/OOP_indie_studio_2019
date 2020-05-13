@@ -46,7 +46,7 @@ enum button {
     GUI_ID_X_2,
     GUI_ID_X_3,
     GUI_ID_X_4,
-    GUI_ID_RESUME_BUTTON_BUTTON,
+    GUI_ID_RESUME_BUTTON,
 };
 
 class IGame {

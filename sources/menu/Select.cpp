@@ -25,10 +25,6 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
     _previews[1]->setPosition({-28, 0, 225});
     _previews[2]->setPosition({-79, 0, 205});
     _previews[3]->setPosition({-127, 0, 185});
-    _previews[0]->setOrientation(side::east);
-    _previews[1]->setOrientation(side::east);
-    _previews[2]->setOrientation(side::east);
-    _previews[3]->setOrientation(side::east);
 }
 
 void Select::loadTextures()
@@ -99,10 +95,6 @@ void Select::loadButtons()
     _buttons["p3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_3, L"");
     _buttons["p3"]->setImage(_textures["p"]);
     _buttons["p3"]->setRelativePosition(irr::core::position2d<irr::s32>(1000, 750));
-
-    _buttons["p4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_4, L"");
-    _buttons["p4"]->setImage(_textures["p"]);
-    _buttons["p4"]->setRelativePosition(irr::core::position2d<irr::s32>(1400, 750));
 
     _buttons["p4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_4, L"");
     _buttons["p4"]->setImage(_textures["p"]);

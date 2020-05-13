@@ -43,22 +43,22 @@ void Options::loadButtons()
     _images["musicVolume"]->setImage(_textures["musicVolume"]);
     _images["musicVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 500));
 
-    _buttons["plus"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_PLUS_GENERAL_BUTTON, L"");
-    _buttons["plus"]->setImage(_textures["plus"]);
-    _buttons["plus"]->setRelativePosition(irr::core::position2d<irr::s32>(1550, 400));
-    _buttons["minus"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_MINUS_GENERAL_BUTTON, L"");
-    _buttons["minus"]->setImage(_textures["minus"]);
-    _buttons["minus"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 400));
+    _buttons["plus2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_PLUS_GENERAL_BUTTON, L"");
+    _buttons["plus2"]->setImage(_textures["plus"]);
+    _buttons["plus2"]->setRelativePosition(irr::core::position2d<irr::s32>(1550, 400));
+    _buttons["minus2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_MINUS_GENERAL_BUTTON, L"");
+    _buttons["minus2"]->setImage(_textures["minus"]);
+    _buttons["minus2"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 400));
     _images["generalVolume"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_GENERAL_IMAGE);
     _images["generalVolume"]->setImage(_textures["generalVolume"]);
     _images["generalVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 400));
 
-    _buttons["plus"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_PLUS_SFX_BUTTON, L"");
-    _buttons["plus"]->setImage(_textures["plus"]);
-    _buttons["plus"]->setRelativePosition(irr::core::position2d<irr::s32>(1550, 600));
-    _buttons["minus"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_MINUS_SFX_BUTTON, L"");
-    _buttons["minus"]->setImage(_textures["minus"]);
-    _buttons["minus"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 600));
+    _buttons["plus3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_PLUS_SFX_BUTTON, L"");
+    _buttons["plus3"]->setImage(_textures["plus"]);
+    _buttons["plus3"]->setRelativePosition(irr::core::position2d<irr::s32>(1550, 600));
+    _buttons["minus3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_OPTION_MINUS_SFX_BUTTON, L"");
+    _buttons["minus3"]->setImage(_textures["minus"]);
+    _buttons["minus3"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 600));
     _images["sfxVolume"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_SFX_IMAGE);
     _images["sfxVolume"]->setImage(_textures["sfxVolume"]);
     _images["sfxVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 600));
@@ -67,4 +67,9 @@ void Options::loadButtons()
 std::map<std::string, irr::gui::IGUIButton *> Options::getButtons()
 {
     return _buttons;
+}
+
+std::map<std::string, irr::gui::IGUIImage *> Options::getImages()
+{
+    return _images;
 }
