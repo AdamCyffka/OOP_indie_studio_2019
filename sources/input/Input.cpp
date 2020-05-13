@@ -141,7 +141,7 @@ Input::~Input()
 
 }
 
-int main()
+/*int main()
 {
     static Input receiver;
 
@@ -155,5 +155,5 @@ int main()
         key = getInput(device, receiver);
         std::cout << key << std::endl;
     }
-}
+}*/
 
