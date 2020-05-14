@@ -142,6 +142,11 @@ std::map<std::string, irr::gui::IGUIButton *> Select::getButtons()
     return _buttons;
 }
 
+std::map<std::string, irr::gui::IGUIImage *> Select::getImages()
+{
+	return _images;
+}
+
 std::map<std::string, irr::video::ITexture *> Select::getTextures()
 {
     return _textures;

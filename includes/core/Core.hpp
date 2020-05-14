@@ -50,6 +50,7 @@ class Core {
 
         void setState(layerState state);
     private:
+		void init();
 		void hideLayers();
 		template<typename T>
 		void showLayer(T *page);
@@ -63,6 +64,9 @@ class Core {
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;
+
+        bool _isInitialized;
+        unsigned int _initStep;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;

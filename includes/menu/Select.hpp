@@ -21,7 +21,8 @@ class Select {
         ~Select() = default;
 
         // Getter
-        std::map<std::string, irr::gui::IGUIButton *> getButtons();
+		std::map<std::string, irr::gui::IGUIImage *> getImages();
+		std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::video::ITexture *> getTextures();
         std::vector<std::vector<std::vector<std::string>>> getSelectRole();
         std::vector<std::vector<int>> getNbRole(); 
@@ -42,7 +43,8 @@ class Select {
 
         std::vector<int> _pos;
         std::vector<bool> _playersIA;
-        std::map<std::string, irr::video::ITexture *> _textures;
+		std::map<std::string, irr::gui::IGUIImage *> _images;
+		std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::vector<Character *> _previews;
         std::vector<std::pair<std::string, bool>> selectTab;
