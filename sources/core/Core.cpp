@@ -113,26 +113,36 @@ void Core::init()
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 
-		_splash->getBar()->setProgress(20);
+		_splash->getBar()->setProgress(15);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 1) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(40);
+		_splash->getBar()->setProgress(30);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 2) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(60);
+		_splash->getBar()->setProgress(45);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	} else if (_initStep == 3) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(80);
+		_splash->getBar()->setProgress(60);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	} else if (_initStep == 4) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(75);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	} else if (_initStep == 5) {
+		if (!_help)
+			_help = new Help(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(90);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	} else if (_initStep == 6) {
+		if (!_credits)
+			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else {
