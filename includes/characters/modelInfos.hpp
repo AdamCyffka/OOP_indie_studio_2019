@@ -15,7 +15,7 @@ typedef struct modelInfos_s {
     std::string filename;
     std::vector<std::string> textures;
     std::pair<int, int> idleLoop;
-    std::pair<int, int> movingLoop;
+    std::pair<int, int> runningLoop;
     std::pair<int, int> dyingLoop;
     std::pair<int, int> deadLoop;
     std::pair<int, int> victoryLoop;

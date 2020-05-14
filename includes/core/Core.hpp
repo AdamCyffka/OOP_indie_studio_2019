@@ -15,6 +15,8 @@
 #include "LoadMap.hpp"
 #include "Splash.hpp"
 
+class Help;
+class Credits;
 class MyEventReceiver;
 
 class Core {
@@ -27,9 +29,10 @@ class Core {
 			menuMain,
 			menuOptions,
 			menuPause,
-			menuCredits,
-			menuSelect,
-			menuSplash
+			menuSplash,
+			menuHelp,
+            menuCredits,
+			menuSelect
 		};
 
         enum gameState {
@@ -42,6 +45,7 @@ class Core {
         void gameCase();
         void selectCase();
         void optionsCase();
+        void helpCase();
         void creditsCase();
         void splashCase();
         
@@ -61,6 +65,8 @@ class Core {
         Splash *_splash;
         LoadMap *_loadmap;
         Select *_select;
+        Credits *_credits;
+        Help *_help;
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;

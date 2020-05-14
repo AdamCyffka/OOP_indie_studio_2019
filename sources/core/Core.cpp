@@ -11,9 +11,11 @@
 #include "Character.hpp"
 #include "Select.hpp"
 #include "MyEventReceiver.hpp"
+#include "Credits.hpp"
+#include "Help.hpp"
 
-#include <chrono>
-#include <thread>
+//#include <chrono>
+//#include <thread>
 
 Core::Core()
 {
@@ -30,13 +32,15 @@ Core::Core()
 	_smgr = _window->getSceneManager();
 	_lState = menuSplash;
 	_gState = menu;
-	_select = nullptr;
-	_loadmap = nullptr;
-	_menu = nullptr;
-	_options = nullptr;
-	_select = nullptr;
 	_isInitialized = false;
 	_initStep = 0;
+    _loadmap = nullptr;
+	_credits = nullptr;
+	_help = nullptr;
+	_splash = nullptr;
+    _menu = nullptr;
+    _options = nullptr;
+    _select = nullptr;
 }
 
 Select *Core::getSelect()
@@ -78,6 +82,14 @@ void Core::optionsCase()
 
 void Core::creditsCase()
 {
+	hideLayers();
+	showLayer(_credits);
+}
+
+void Core::helpCase()
+{
+	hideLayers();
+	showLayer(_help);
 }
 
 void Core::splashCase()
@@ -92,7 +104,6 @@ void Core::splashCase()
 void Core::init()
 {
 	if (_initStep == 0) {
-		_splash->setBar(new ProgressBar(_env, _driver, core::rect<irr::s32>(300, 800, 1620, 830)));
 		_splash->getBar()->setPosition(core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 		_splash->getBar()->setProgress(20);
@@ -132,7 +143,7 @@ void Core::init()
 int Core::run()
 {
 	// POSITION CAMERA PAS TOUCHER
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 	camera->setPosition(irr::core::vector3df(-94.354813, 44.179367, 294.335876));
 	camera->setTarget(irr::core::vector3df(-70.055885, 21.188717, 232.846115));
@@ -194,24 +205,27 @@ void Core::drawScene()
 void Core::drawLayer()
 {
 	switch (_lState) {
-	case menuMain:
-		menuCase();
-		break;
-	case menuOptions:
-		optionsCase();
-		break;
-	case menuPause:
-		pauseCase();
-		break;
-	case menuCredits:
-		creditsCase();
-		break;
-	case menuSelect:
-		selectCase();
-		break;
-	case menuSplash:
-		splashCase();
-		break;
+		case menuSplash:
+			splashCase();
+			break;
+		case menuMain:
+			menuCase();
+			break;
+		case menuOptions:
+			optionsCase();
+			break;
+		case menuPause:
+			pauseCase();
+			break;
+		case menuCredits:
+			creditsCase();
+			break;
+		case menuHelp:
+			helpCase();
+			break;
+		case menuSelect:
+			selectCase();
+			break;
 	}
 }
 
@@ -239,6 +253,18 @@ void Core::hideLayers()
 		for (auto &it : _select->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _select->getImages())
+			it.second->setVisible(false);
+	}
+	if (_credits) {
+		for (auto &it : _credits->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _credits->getImages())
+			it.second->setVisible(false);
+	}
+	if (_help) {
+		for (auto &it : _help->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _help->getImages())
 			it.second->setVisible(false);
 	}
 }

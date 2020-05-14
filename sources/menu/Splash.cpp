@@ -13,6 +13,8 @@ Splash::Splash(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 	_env = env;
 	_smgr = smgr;
 
+	_bar = new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830));
+
 	loadTextures();
 	loadButtons();
 }
@@ -25,10 +27,10 @@ void Splash::loadTextures()
 
 void Splash::loadButtons()
 {
-	_images["background"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080), nullptr, GUI_ID_OPTION_MUSIC_IMAGE);
+	_images["background"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	_images["background"]->setImage(_textures["background"]);
 	_images["background"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
-	_images["title"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080), nullptr, GUI_ID_OPTION_MUSIC_IMAGE);
+	_images["title"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	_images["title"]->setImage(_textures["title"]);
 	_images["title"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 100));
 }
@@ -46,9 +48,4 @@ std::map<std::string, irr::gui::IGUIImage *> Splash::getImages()
 ProgressBar *Splash::getBar()
 {
 	return _bar;
-}
-
-void Splash::setBar(ProgressBar *bar)
-{
-	_bar = bar;
 }

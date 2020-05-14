@@ -20,6 +20,8 @@ add_executable(bomberman
         sources/menu/Options.cpp
         sources/menu/Splash.cpp
         sources/menu/Select.cpp
+        sources/menu/Credits.cpp
+        sources/menu/Help.cpp
         sources/menu/MyEventReceiver.cpp
         sources/menu/ProgressBar.cpp
         sources/characters/Character.cpp
