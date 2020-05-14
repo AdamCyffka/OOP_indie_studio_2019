@@ -13,6 +13,7 @@
 #include "MyEventReceiver.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
+#include "Pause.hpp"
 #include "CircleCameraTraveling.hpp"
 
 #include <chrono>
@@ -37,6 +38,7 @@ Core::Core()
 	_initStep = 0;
     _loadmap = nullptr;
 	_credits = nullptr;
+	_pause = nullptr;
 	_help = nullptr;
 	_splash = nullptr;
     _menu = nullptr;
@@ -73,6 +75,8 @@ void Core::selectCase()
 
 void Core::pauseCase()
 {
+	if (!_pause)
+        _pause = new Pause(_env, _driver, _smgr);
 }
 
 void Core::optionsCase()
