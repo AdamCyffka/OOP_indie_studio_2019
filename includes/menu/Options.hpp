@@ -21,6 +21,7 @@ class Options : public IGame {
         void loadButtons();
         void loadTextures();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
+        std::map<std::string, irr::gui::IGUIImage *> getImages();
     private:
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;

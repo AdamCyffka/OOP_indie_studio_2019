@@ -12,6 +12,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "Character.hpp"
 #include "IGame.hpp"
 
 class Select {
@@ -28,7 +29,7 @@ class Select {
         // Loader
         void loadButtons();
         void loadTextures();
-        irr::video::ITexture *getSkin(int skin);
+        Character *getPreview(int preview) const;
         irr::video::ITexture *getRole(int role);
         void incSkin(int skin);
         void changeRole(int role);
@@ -43,7 +44,8 @@ class Select {
         std::vector<bool> _playersIA;
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
-        std::vector<std::vector<std::string>> selectTab;
+        std::vector<Character *> _previews;
+        std::vector<std::pair<std::string, bool>> selectTab;
         std::vector<std::vector<std::vector<std::string>>> selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
         int nbSkin[4] = {0, 1, 2, 3};
         std::vector<std::vector<int>> nbRole {
@@ -52,6 +54,7 @@ class Select {
             {1, 0},
             {1, 0}
         };
+
 };
 
 #endif /* !SELECT_HPP_ */

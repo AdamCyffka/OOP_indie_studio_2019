@@ -47,7 +47,7 @@ void Menu::loadButtons()
 
     _buttons["menuExit"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_QUIT_BUTTON, L"");
     _buttons["menuExit"]->setImage(_textures["menuExitButton"]);
-    _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
+    _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800)); // WIN_WIDTH / 2 - 107.5
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()

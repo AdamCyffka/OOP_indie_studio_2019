@@ -9,11 +9,12 @@
 #define CORE_HPP_
 
 #include <irrlicht.h>
-#include "MyEventReceiver.hpp"
 #include "Menu.hpp"
 #include "Select.hpp"
 #include "Options.hpp"
 #include "LoadMap.hpp"
+
+class MyEventReceiver;
 
 class Core {
     public:
@@ -40,16 +41,21 @@ class Core {
         void selectCase();
         void optionsCase();
         void creditsCase();
+
+        layerState getState();
+        Select *getSelect();
+
+        void setState(layerState state);
     private:
 		void drawScene();
 		void drawLayer();
         Menu *_menu;
         Options *_options;
-        Select *_select;
         LoadMap *_loadmap;
+        Select *_select;
         layerState _lState;
         gameState _gState;
-        //MyEventReceiver *_receiver;
+        MyEventReceiver *_receiver;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;
