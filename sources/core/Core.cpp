@@ -13,6 +13,7 @@
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
+#include "CircleCameraTraveling.hpp"
 
 Core::Core()
 {
@@ -144,8 +145,10 @@ int Core::run()
 	// POSITION CAMERA PAS TOUCHER
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
-	camera->setPosition(irr::core::vector3df(-94.354813, 44.179367, 294.335876));
-	camera->setTarget(irr::core::vector3df(-70.055885, 21.188717, 232.846115));
+	
+	CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00035);
+	traveling.start(); // commente pour enlever le tourni
+
 	irr::core::vector3df posCam = camera->getPosition();
 	irr::core::vector3df targetCam = camera->getTarget();
 	core::stringw titre = L"POS : X = ";
