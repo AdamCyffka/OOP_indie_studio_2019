@@ -22,7 +22,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
                 "resources/models/characters/waluigi/Tex_0003_0.png"
             },
             {0, 120}, // IDLE
-            {121, 142}, // MOVING
+            {121, 142}, // RUNNING
             {143, 281}, // DYING
             {282, 353}, // DEAD
             {354, 604}, // VICTORY
@@ -38,7 +38,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
                 "resources/models/characters/dr_peach/dr_peach_di.png"
             },
             {0, 120}, // IDLE
-            {121, 140}, // MOVING
+            {121, 140}, // RUNNING
             {141, 279}, // DYING
             {280, 356}, // DEAD
             {357, 613}, // VICTORY
@@ -50,11 +50,11 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "resources/models/characters/koopa/koopa.MD3", // MODEL MD3
             {
-                "resources/models/characters/koopa/koopaBody.png",
+                "resources/models/characters/koopa/koopaBody.png", // TEXTURES
                 "resources/models/characters/koopa/koopaFace.png"
             },
             {0, 120}, // IDLE
-            {121, 142}, // MOVING
+            {121, 142}, // RUNNING
             {143, 281}, // DYING
             {282, 376}, // DEAD
             {377, 427}, // VICTORY
@@ -66,14 +66,45 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "resources/models/characters/lakitu/lakitu.MD3", // MODEL MD3
             {
-                "resources/models/characters/lakitu/lakituFace.png",
+                "resources/models/characters/lakitu/lakituFace.png", // TEXTURES
                 "resources/models/characters/lakitu/lakituBody.png"
             },
             {0, 120}, // IDLE
-            {121, 146}, // MOVING
+            {121, 146}, // RUNNING
             {147, 285}, // DYING
             {286, 380}, // DEAD
             {381, 479}, // VICTORY
+            15 // SCALE SIZE
+        }
+    },
+    {
+        "mario", // STRING
+        { // MODELINFOS_T
+            "resources/models/characters/mario/mario.MD3", // MODEL MD3
+            {
+                "resources/models/characters/mario/mario_eye.0.png", // TEXTURES
+                "resources/models/characters/mario/mario_all.png"
+            },
+            {0, 120}, // IDLE
+            {121, 142}, // RUNNING
+            {143, 281}, // DYING
+            {282, 368}, // DEAD
+            {369, 423}, // VICTORY
+            20 // SCALE SIZE
+        }
+    },
+    {
+        "yoshi", // STRING
+        { // MODELINFOS_T
+            "resources/models/characters/yoshi/yoshi.MD3", // MODEL MD3
+            {
+                "resources/models/characters/yoshi/yoshi.png" // TEXTURES
+            },
+            {0, 120}, // IDLE
+            {121, 142}, // RUNNING
+            {143, 281}, // DYING
+            {282, 342}, // DEAD
+            {343, 666}, // VICTORY
             15 // SCALE SIZE
         }
     }

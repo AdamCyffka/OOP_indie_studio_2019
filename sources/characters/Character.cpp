@@ -50,8 +50,8 @@ void Character::setState(Character::state state)
         case Character::state::idle:
             _mesh->setFrameLoop(_model.idleLoop.first, _model.idleLoop.second);
             break;
-        case Character::state::moving:
-            _mesh->setFrameLoop(_model.movingLoop.first, _model.movingLoop.second);
+        case Character::state::running:
+            _mesh->setFrameLoop(_model.runningLoop.first, _model.runningLoop.second);
             break;
         case Character::state::dying:
             _mesh->setFrameLoop(_model.dyingLoop.first, _model.dyingLoop.second);
@@ -148,7 +148,7 @@ bool Character::moveTo(core::vector3df position, int travelingTime)
     
     if (animation) {
         if (_mesh) {
-            setState(Character::state::moving);
+            setState(Character::state::running);
             setOrientation(getOrientationFromPath(currentPosition, position));
             _mesh->addAnimator(animation);
 
