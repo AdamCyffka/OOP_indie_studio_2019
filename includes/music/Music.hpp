@@ -23,6 +23,7 @@ class Music {
     void playSound(const std::string &);
     void pause();
     void resume();
+    void defaultVolume();
     // masterVolumeUp();
     // masterVolumeDown();
     // musicVolumeUp();

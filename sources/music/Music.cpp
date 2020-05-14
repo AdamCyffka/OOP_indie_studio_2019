@@ -17,10 +17,18 @@ Music::Music()
     _sfx = true;
     if (!_engine)
         throw std::runtime_error("irrklang can't be launched");
+    defaultVolume();
 }
 Music::~Music()
 {
     _engine->drop();
+}
+
+void Music::defaultVolume()
+{
+    irrklang::ISoundSource *shootSound = _engine->addSoundSourceFromFile("resources/sfx/click.mp3");
+
+    shootSound->setDefaultVolume(0.2);
 }
 
 void Music::playMusic(const std::string &music)
@@ -30,7 +38,7 @@ void Music::playMusic(const std::string &music)
         _engine->play2D(music.c_str(), true);
     }
 }
- 
+
 void Music::playSound(const std::string &sound)
 {
     if (_sfx == true) {

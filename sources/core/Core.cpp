@@ -6,6 +6,8 @@
 */
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "menu/ProgressBar.hpp"
 #include "Core.hpp"
 #include "Character.hpp"
@@ -15,9 +17,6 @@
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "CircleCameraTraveling.hpp"
-
-#include <chrono>
-#include <thread>
 
 Core::Core()
 {

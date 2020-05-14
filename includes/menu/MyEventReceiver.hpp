@@ -8,6 +8,7 @@
 #ifndef MYEVENTRECEIVER_HPP_
 #define MYEVENTRECEIVER_HPP_
 
+#include "Music.hpp"
 #include "Core.hpp"
 
 class MyEventReceiver : public irr::IEventReceiver {
@@ -16,6 +17,7 @@ class MyEventReceiver : public irr::IEventReceiver {
         bool OnEvent(const irr::SEvent &event) override;
         bool clicks(const irr::SEvent &event);
     private:
+        Music _music;
         Core &_core;
         irr::IrrlichtDevice *_window;
 };

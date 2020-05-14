@@ -13,6 +13,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
         irr::s32 id = event.GUIEvent.Caller->getID();
         switch (event.GUIEvent.EventType) {
             case irr::gui::EGET_BUTTON_CLICKED:
+                _music.playSound("resources/sfx/click.mp3");
                 switch (id) {
                     case GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
