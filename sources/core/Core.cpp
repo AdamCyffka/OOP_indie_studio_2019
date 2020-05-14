@@ -11,6 +11,7 @@
 #include "Select.hpp"
 #include "MyEventReceiver.hpp"
 #include "Credits.hpp"
+#include "Help.hpp"
 
 Core::Core()
 {
@@ -30,6 +31,7 @@ Core::Core()
 	_select = nullptr;
     _loadmap = nullptr;
 	_credits = nullptr;
+	_help = nullptr;
     _menu = nullptr;
     _options = nullptr;
     _select = nullptr;
@@ -67,6 +69,12 @@ void Core::menuCase()
         for (auto &it : _credits->getButtons())
             it.second->setVisible(false);
 		for (auto &it : _credits->getImages())
+            it.second->setVisible(false);
+	}
+	if (_help) {
+        for (auto &it : _help->getButtons())
+            it.second->setVisible(false);
+		for (auto &it : _help->getImages())
             it.second->setVisible(false);
 	}
     for (auto &it : _menu->getButtons())
@@ -108,6 +116,18 @@ void Core::creditsCase()
 	for (auto &it : _credits->getButtons())
         it.second->setVisible(true);
 	for (auto &it : _credits->getImages())
+            it.second->setVisible(true);
+}
+
+void Core::helpCase()
+{
+	if (!_help)
+        _help = new Help(_env, _driver, _smgr);
+	for (auto &it : _menu->getButtons())
+        it.second->setVisible(false);
+	for (auto &it : _help->getButtons())
+        it.second->setVisible(true);
+	for (auto &it : _help->getImages())
             it.second->setVisible(true);
 }
 
@@ -191,6 +211,9 @@ void Core::drawLayer()
 			break;
 		case menuCredits:
 			creditsCase();
+			break;
+		case menuHelp:
+			helpCase();
 			break;
 		case menuSelect:
 			selectCase();

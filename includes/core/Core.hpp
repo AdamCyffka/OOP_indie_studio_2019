@@ -14,6 +14,7 @@
 #include "Options.hpp"
 #include "LoadMap.hpp"
 
+class Help;
 class Credits;
 class MyEventReceiver;
 
@@ -57,6 +58,7 @@ class Core {
         LoadMap *_loadmap;
         Select *_select;
         Credits *_credits;
+        Help *_help;
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;

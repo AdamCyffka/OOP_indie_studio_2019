@@ -21,6 +21,7 @@ add_executable(bomberman
         sources/menu/Options.cpp
         sources/menu/Select.cpp
         sources/menu/Credits.cpp
+        sources/menu/Help.cpp
         sources/menu/MyEventReceiver.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
