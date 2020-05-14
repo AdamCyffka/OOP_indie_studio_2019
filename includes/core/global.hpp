@@ -92,6 +92,34 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
             {369, 423}, // VICTORY
             20 // SCALE SIZE
         }
+    },
+    {
+        "yoshi", // STRING
+        { // MODELINFOS_T
+            "resources/models/characters/yoshi/yoshi.MD3", // MODEL MD3
+            {
+                "resources/models/characters/yoshi/yoshi.png", // TEXTURES
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+                "resources/models/characters/yoshi/yoshi.png",
+            },
+            {0, 120}, // IDLE
+            {121, 142}, // RUNNING
+            {143, 281}, // DYING
+            {282, 342}, // DEAD
+            {343, 666}, // VICTORY
+            15 // SCALE SIZE
+        }
     }
 };
 
