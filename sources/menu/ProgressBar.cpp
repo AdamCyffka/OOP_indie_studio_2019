@@ -74,3 +74,8 @@ void ProgressBar::draw()
 	_driver->draw2DRectangle(_color, _toFill);
 	_driver->draw2DRectangle(_emptyColor, _nonFilled);
 }
+
+irr::u32 ProgressBar::getProgress()
+{
+	return _progress;
+}

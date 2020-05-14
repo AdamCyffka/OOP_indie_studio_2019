@@ -18,11 +18,13 @@ class Splash : public IGame {
 		explicit Splash(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
 		~Splash() = default;
 
-		void loadButtons() override;
-		void loadTextures() override;
+		void loadButtons();
+		void loadTextures();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
 		ProgressBar *getBar();
+		void setBar(ProgressBar *bar);
+
 	private:
 		ProgressBar *_bar;
 		irr::gui::IGUIEnvironment *_env;

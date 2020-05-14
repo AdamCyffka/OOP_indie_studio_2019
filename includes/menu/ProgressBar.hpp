@@ -20,6 +20,7 @@ class ProgressBar : public irr::gui::IGUIElement {
 		ProgressBar(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::core::rect<irr::s32> dimensions, irr::gui::IGUIElement *parent = 0);
 		~ProgressBar() override = default;
 
+		irr::u32 getProgress();
 		void setProgress(irr::u32);
 		void setColor(irr::video::SColor);
 		void setEmptyColor(irr::video::SColor);

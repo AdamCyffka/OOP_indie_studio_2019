@@ -15,8 +15,8 @@
 #include "Help.hpp"
 #include "CircleCameraTraveling.hpp"
 
-//#include <chrono>
-//#include <thread>
+#include <chrono>
+#include <thread>
 
 Core::Core()
 {
@@ -105,8 +105,10 @@ void Core::splashCase()
 void Core::init()
 {
 	if (_initStep == 0) {
-		_splash->getBar()->setPosition(core::rect<irr::s32>(30, 700, 600, 600));
+		_splash->setBar(new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830)));
+		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
+
 		_splash->getBar()->setProgress(20);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 1) {
