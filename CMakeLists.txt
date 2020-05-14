@@ -20,6 +20,7 @@ add_executable(bomberman
         sources/map/LoadMap.cpp
         sources/menu/Options.cpp
         sources/menu/Select.cpp
+        sources/menu/Help.cpp
         sources/menu/MyEventReceiver.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp

@@ -10,6 +10,7 @@
 #include "Character.hpp"
 #include "Select.hpp"
 #include "MyEventReceiver.hpp"
+#include "Help.hpp"
 
 Core::Core()
 {
@@ -28,6 +29,7 @@ Core::Core()
     _gState = menu;
 	_select = nullptr;
     _loadmap = nullptr;
+	_help = nullptr;
     _menu = nullptr;
     _options = nullptr;
     _select = nullptr;
@@ -61,6 +63,12 @@ void Core::menuCase()
 		for (auto &it : _options->getImages())
             it.second->setVisible(false);
 	}
+	if (_help) {
+        for (auto &it : _help->getButtons())
+            it.second->setVisible(false);
+		for (auto &it : _help->getImages())
+            it.second->setVisible(false);
+	}
     for (auto &it : _menu->getButtons())
         it.second->setVisible(true);
 }
@@ -91,8 +99,16 @@ void Core::optionsCase()
             it.second->setVisible(true);
 }
 
-void Core::creditsCase()
+void Core::helpCase()
 {
+	if (!_help)
+        _help = new Help(_env, _driver, _smgr);
+	for (auto &it : _menu->getButtons())
+        it.second->setVisible(false);
+	for (auto &it : _help->getButtons())
+        it.second->setVisible(true);
+	for (auto &it : _help->getImages())
+            it.second->setVisible(true);
 }
 
 int Core::run()
@@ -154,37 +170,30 @@ int Core::run()
 void Core::drawScene()
 {
 	switch (_gState) {
-		case menu: {
+		case menu:
 			drawLayer();
-		}
-		case game: {
+		case game:
 			break;
-		}
 	}
 }
 
 void Core::drawLayer()
 {
 	switch (_lState) {
-		case menuMain: {
+		case menuMain:
 			menuCase();
 			break;
-		}
-		case menuOptions: {
+		case menuOptions:
 			optionsCase();
 			break;
-		}
-		case menuPause: {
+		case menuPause:
 			pauseCase();
 			break;
-		}
-		case menuCredits: {
-			creditsCase();
+		case menuHelp:
+			helpCase();
 			break;
-		}
-		case menuSelect: {
+		case menuSelect:
 			selectCase();
 			break;
-		}
 	}
 }

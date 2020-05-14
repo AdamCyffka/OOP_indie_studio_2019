@@ -41,7 +41,7 @@ void Menu::loadButtons()
     _buttons["menuOptions"]->setImage(_textures["menuOptionsButton"]);
     _buttons["menuOptions"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 550));
 
-    _buttons["menuCredits"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_CREDITS_BUTTON, L"");
+    _buttons["menuCredits"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_HELP_BUTTON, L"");
     _buttons["menuCredits"]->setImage(_textures["menuCreditsButton"]);
     _buttons["menuCredits"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
 
