@@ -9,26 +9,19 @@
 #define CORE_HPP_
 
 #include <irrlicht.h>
-#include "MyEventReceiver.hpp"
 #include "Menu.hpp"
+#include "Select.hpp"
 #include "Options.hpp"
 #include "LoadMap.hpp"
 #include "Splash.hpp"
+
+class MyEventReceiver;
 
 class Core {
     public:
         Core();
 	    ~Core() = default;
 	    int run();
-        void switchScenes();
-
-        enum gameState_e {
-            mainMenu,
-            mainOptions,
-            mainPause,
-            mainCredits,
-            mainSelect,
-        };
 
         enum layerState {
 			menuMain,
@@ -52,7 +45,10 @@ class Core {
         void creditsCase();
         void splashCase();
         
-        void setState(gameState_e state);
+        layerState getState();
+        Select *getSelect();
+
+        void setState(layerState state);
     private:
 		void hideLayers();
 		template<typename T>
@@ -63,10 +59,10 @@ class Core {
         Options *_options;
         Splash *_splash;
         LoadMap *_loadmap;
-        gameState_e _state;
+        Select *_select;
         layerState _lState;
         gameState _gState;
-        //MyEventReceiver *_receiver;
+        MyEventReceiver *_receiver;
 
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;
