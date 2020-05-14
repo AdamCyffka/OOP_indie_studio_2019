@@ -4,7 +4,6 @@ project(OOP_indie_studio_2019)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_BUILD_TYPE Debug)
 
 set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
 set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
