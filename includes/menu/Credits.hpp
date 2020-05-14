@@ -2,20 +2,20 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Help
+** Credits
 */
 
-#ifndef HELP_HPP_
-#define HELP_HPP_
+#ifndef CREDITS_HPP_
+#define CREDITS_HPP_
 
 #include <map>
 #include <string>
 #include "IGame.hpp"
 
-class Help : public IGame {
+class Credits : public IGame {
     public:
-        explicit Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~Help() = default;
+        explicit Credits(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        ~Credits() = default;
         void loadButtons();
         void loadTextures();
 
@@ -31,4 +31,4 @@ class Help : public IGame {
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
 };
 
-#endif /* !HELP_HPP_ */
+#endif /* !CREDITS_HPP_ */

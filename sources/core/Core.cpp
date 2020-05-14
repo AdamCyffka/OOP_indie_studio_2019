@@ -10,6 +10,7 @@
 #include "Character.hpp"
 #include "Select.hpp"
 #include "MyEventReceiver.hpp"
+#include "Credits.hpp"
 #include "Help.hpp"
 #include "CircleCameraTraveling.hpp"
 
@@ -30,6 +31,7 @@ Core::Core()
     _gState = menu;
 	_select = nullptr;
     _loadmap = nullptr;
+	_credits = nullptr;
 	_help = nullptr;
     _menu = nullptr;
     _options = nullptr;
@@ -62,6 +64,12 @@ void Core::menuCase()
         for (auto &it : _options->getButtons())
             it.second->setVisible(false);
 		for (auto &it : _options->getImages())
+            it.second->setVisible(false);
+	}
+	if (_credits) {
+        for (auto &it : _credits->getButtons())
+            it.second->setVisible(false);
+		for (auto &it : _credits->getImages())
             it.second->setVisible(false);
 	}
 	if (_help) {
@@ -100,6 +108,18 @@ void Core::optionsCase()
             it.second->setVisible(true);
 }
 
+void Core::creditsCase()
+{
+	if (!_credits)
+        _credits = new Credits(_env, _driver, _smgr);
+	for (auto &it : _menu->getButtons())
+        it.second->setVisible(false);
+	for (auto &it : _credits->getButtons())
+        it.second->setVisible(true);
+	for (auto &it : _credits->getImages())
+            it.second->setVisible(true);
+}
+
 void Core::helpCase()
 {
 	if (!_help)
@@ -119,7 +139,7 @@ int Core::run()
 	_loadmap->run();
 
 	// POSITION CAMERA PAS TOUCHER
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 	
 	CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00035);
@@ -191,6 +211,9 @@ void Core::drawLayer()
 			break;
 		case menuPause:
 			pauseCase();
+			break;
+		case menuCredits:
+			creditsCase();
 			break;
 		case menuHelp:
 			helpCase();

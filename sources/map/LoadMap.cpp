@@ -25,6 +25,7 @@ void LoadMap::run()
 	irr::scene::ISceneNode *dreadnoughtPlanet;
 	irr::scene::ISceneNode *dustyPlanet;
 	irr::scene::ISceneNode *gatewayPlanet;
+	irr::scene::ISceneNode *beanPlanet;
 	irr::scene::ISceneNode *plateA;
 	irr::scene::ISceneNode *plateB;
 	irr::scene::ISceneNodeAnimator *animA;
@@ -39,7 +40,7 @@ void LoadMap::run()
 
 	// observatory
 	observatory = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/observatory.obj"));
-	observatory->setPosition({0, 0, 0}); // pas toucher au y
+	observatory->setPosition({0, 0, 0});
 	observatory->setScale({5, 5, 5});
 	if (observatory) {
 		observatory->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -47,10 +48,19 @@ void LoadMap::run()
 
 	// arena
 	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));
-	arena->setPosition({-500, 300, 700}); // pas toucher au y
+	arena->setPosition({-500, 300, 700});
 	arena->setScale({0.05, 0.05, 0.05});
 	if (arena) {
 		arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	}
+
+	// beanPlanet
+	beanPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/bean_planet/bean_planet.obj"));
+	beanPlanet->setPosition({200, 300, 1000});
+	beanPlanet->setRotation({0, 200, 0});
+	beanPlanet->setScale({5, 5, 5});
+	if (beanPlanet) {
+		beanPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	}
 
 	// towerPlanet

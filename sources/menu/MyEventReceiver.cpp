@@ -50,6 +50,9 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case GUI_ID_NEW_BUTTON:
                         _core.setState(Core::menuSelect);
                         return true;
+                    case GUI_ID_CREDITS_BUTTON:
+                        _core.setState(Core::menuCredits);
+                        return true;
                     case GUI_ID_HELP_BUTTON:
                         _core.setState(Core::menuHelp);
                         return true;
