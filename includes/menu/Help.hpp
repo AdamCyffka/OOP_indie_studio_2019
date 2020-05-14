@@ -2,24 +2,23 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Options
+** Help
 */
 
-#ifndef OPTIONS_HPP_
-#define OPTIONS_HPP_
+#ifndef HELP_HPP_
+#define HELP_HPP_
 
-#include <iostream>
 #include <map>
-#include <irrlicht.h>
+#include <string>
 #include "IGame.hpp"
 
-class Options : public IGame {
+class Help : public IGame {
     public:
-        explicit Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~Options() = default;
-
+        explicit Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        ~Help() = default;
         void loadButtons();
         void loadTextures();
+
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
     private:
@@ -32,4 +31,4 @@ class Options : public IGame {
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
 };
 
-#endif /* !OPTIONS_HPP_ */
+#endif /* !HELP_HPP_ */

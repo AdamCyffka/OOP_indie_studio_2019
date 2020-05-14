@@ -41,13 +41,13 @@ void Menu::loadButtons()
     _buttons["menuOptions"]->setImage(_textures["menuOptionsButton"]);
     _buttons["menuOptions"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 550));
 
-    _buttons["menuCredits"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_CREDITS_BUTTON, L"");
+    _buttons["menuCredits"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_HELP_BUTTON, L"");
     _buttons["menuCredits"]->setImage(_textures["menuCreditsButton"]);
     _buttons["menuCredits"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
 
     _buttons["menuExit"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_QUIT_BUTTON, L"");
     _buttons["menuExit"]->setImage(_textures["menuExitButton"]);
-    _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
+    _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800)); // WIN_WIDTH / 2 - 107.5
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
