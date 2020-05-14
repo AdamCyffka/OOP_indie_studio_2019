@@ -14,7 +14,7 @@
 #include "Options.hpp"
 #include "LoadMap.hpp"
 
-class Help;
+class Credits;
 class MyEventReceiver;
 
 class Core {
@@ -28,6 +28,7 @@ class Core {
 			menuOptions,
 			menuPause,
 			menuHelp,
+            menuCredits,
 			menuSelect
 		};
 
@@ -42,6 +43,7 @@ class Core {
         void selectCase();
         void optionsCase();
         void helpCase();
+        void creditsCase();
 
         layerState getState();
         Select *getSelect();
@@ -54,7 +56,7 @@ class Core {
         Options *_options;
         LoadMap *_loadmap;
         Select *_select;
-        Help *_help;
+        Credits *_credits;
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;

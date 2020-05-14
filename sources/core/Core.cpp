@@ -10,7 +10,7 @@
 #include "Character.hpp"
 #include "Select.hpp"
 #include "MyEventReceiver.hpp"
-#include "Help.hpp"
+#include "Credits.hpp"
 
 Core::Core()
 {
@@ -29,7 +29,7 @@ Core::Core()
     _gState = menu;
 	_select = nullptr;
     _loadmap = nullptr;
-	_help = nullptr;
+	_credits = nullptr;
     _menu = nullptr;
     _options = nullptr;
     _select = nullptr;
@@ -63,10 +63,10 @@ void Core::menuCase()
 		for (auto &it : _options->getImages())
             it.second->setVisible(false);
 	}
-	if (_help) {
-        for (auto &it : _help->getButtons())
+	if (_credits) {
+        for (auto &it : _credits->getButtons())
             it.second->setVisible(false);
-		for (auto &it : _help->getImages())
+		for (auto &it : _credits->getImages())
             it.second->setVisible(false);
 	}
     for (auto &it : _menu->getButtons())
@@ -99,15 +99,15 @@ void Core::optionsCase()
             it.second->setVisible(true);
 }
 
-void Core::helpCase()
+void Core::creditsCase()
 {
-	if (!_help)
-        _help = new Help(_env, _driver, _smgr);
+	if (!_credits)
+        _credits = new Credits(_env, _driver, _smgr);
 	for (auto &it : _menu->getButtons())
         it.second->setVisible(false);
-	for (auto &it : _help->getButtons())
+	for (auto &it : _credits->getButtons())
         it.second->setVisible(true);
-	for (auto &it : _help->getImages())
+	for (auto &it : _credits->getImages())
             it.second->setVisible(true);
 }
 
@@ -118,7 +118,7 @@ int Core::run()
 	_loadmap->run();
 
 	// POSITION CAMERA PAS TOUCHER
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 	camera->setPosition(irr::core::vector3df(-94.354813, 44.179367, 294.335876));
 	camera->setTarget(irr::core::vector3df(-70.055885, 21.188717, 232.846115));
@@ -189,8 +189,8 @@ void Core::drawLayer()
 		case menuPause:
 			pauseCase();
 			break;
-		case menuHelp:
-			helpCase();
+		case menuCredits:
+			creditsCase();
 			break;
 		case menuSelect:
 			selectCase();

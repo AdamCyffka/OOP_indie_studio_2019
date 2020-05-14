@@ -5,9 +5,9 @@
 ** Help
 */
 
-#include "Help.hpp"
+#include "Credits.hpp"
 
-Help::Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
+Credits::Credits(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
     _driver = driver;
     _env = env;
@@ -17,12 +17,12 @@ Help::Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr
     loadButtons();
 }
 
-void Help::loadTextures()
+void Credits::loadTextures()
 {
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
     _textures["credits"] = _driver->getTexture("resources/images/buttons/credits_us.png");
 }
-void Help::loadButtons()
+void Credits::loadButtons()
 {
     _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
     _buttons["back"]->setImage(_textures["back"]);
@@ -33,12 +33,12 @@ void Help::loadButtons()
     _images["credits"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
 }
 
-std::map<std::string, irr::gui::IGUIButton *> Help::getButtons()
+std::map<std::string, irr::gui::IGUIButton *> Credits::getButtons()
 {
     return _buttons;
 }
 
-std::map<std::string, irr::gui::IGUIImage *> Help::getImages()
+std::map<std::string, irr::gui::IGUIImage *> Credits::getImages()
 {
     return _images;
 }
