@@ -16,6 +16,7 @@
 
 class Help;
 class Credits;
+class Pause;
 class MyEventReceiver;
 
 class Core {
@@ -30,7 +31,7 @@ class Core {
 			menuPause,
 			menuHelp,
             menuCredits,
-			menuSelect
+			menuSelect,
 		};
 
         enum gameState {
@@ -59,6 +60,7 @@ class Core {
         Select *_select;
         Credits *_credits;
         Help *_help;
+        Pause *_pause;
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;

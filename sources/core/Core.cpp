@@ -12,6 +12,7 @@
 #include "MyEventReceiver.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
+#include "Pause.hpp"
 
 Core::Core()
 {
@@ -31,6 +32,7 @@ Core::Core()
 	_select = nullptr;
     _loadmap = nullptr;
 	_credits = nullptr;
+	_pause = nullptr;
 	_help = nullptr;
     _menu = nullptr;
     _options = nullptr;
@@ -93,6 +95,8 @@ void Core::selectCase()
 
 void Core::pauseCase()
 {
+	if (!_pause)
+        _pause = new Pause(_env, _driver, _smgr);
 }
 
 void Core::optionsCase()
