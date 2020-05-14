@@ -13,6 +13,7 @@
 #include "Menu.hpp"
 #include "Options.hpp"
 #include "LoadMap.hpp"
+#include "Splash.hpp"
 
 class Core {
     public:
@@ -34,7 +35,8 @@ class Core {
 			menuOptions,
 			menuPause,
 			menuCredits,
-			menuSelect
+			menuSelect,
+			menuSplash
 		};
 
         enum gameState {
@@ -48,13 +50,18 @@ class Core {
         void selectCase();
         void optionsCase();
         void creditsCase();
+        void splashCase();
         
         void setState(gameState_e state);
     private:
+		void hideLayers();
+		template<typename T>
+		void showLayer(T *page);
 		void drawScene();
 		void drawLayer();
         Menu *_menu;
         Options *_options;
+        Splash *_splash;
         LoadMap *_loadmap;
         gameState_e _state;
         layerState _lState;
