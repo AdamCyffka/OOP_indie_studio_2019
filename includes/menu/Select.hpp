@@ -45,8 +45,8 @@ class Select {
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::vector<Character *> _previews;
-        std::vector<std::pair<std::string, bool>> selectTab;
-        std::vector<std::vector<std::vector<std::string>>> selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
+        std::vector<std::pair<std::string, bool>> _selectTab;
+        std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
         int nbSkin[4] = {0, 1, 2, 3};
         std::vector<std::vector<int>> nbRole {
             {0, 1},

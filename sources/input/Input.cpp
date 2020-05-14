@@ -95,24 +95,35 @@ bool Input::IsKeyDown(EKEY_CODE keyCode) const {
 		return KeyIsDown[keyCode];
 }
 
-Key_mouvement keyBoard (Input receiver)
+Key_mouvement Input::keyBoard (Input receiver)
 {
-    if(receiver.IsKeyDown(irr::KEY_KEY_Z))
+    if (receiver.IsKeyDown(irr::KEY_KEY_Z)) {
+        _playerInput[1] = Up;
         return (Up);
-    else if(receiver.IsKeyDown(irr::KEY_KEY_S))
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_S)) {
+        _playerInput[1] = Down;
         return (Down);
-    if(receiver.IsKeyDown(irr::KEY_KEY_Q))
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
+        _playerInput[1] = Left;
         return (Left);
-    else if(receiver.IsKeyDown(irr::KEY_KEY_D))
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
+        _playerInput[1] = Right;
         return (Right);
-    else if (receiver.IsKeyDown(irr::KEY_KEY_W))
-        return (Exit);
-    return (None);
-}
-
-Key_mouvement getInput(IrrlichtDevice* device, Input receiver)
-{
-    return (keyBoard(receiver));
+    }
+    if(receiver.IsKeyDown(irr::KEY_UP)) {
+        _playerInput[2] = Up;
+        return (Right);
+    } else if (receiver.IsKeyDown(irr::KEY_DOWN)) {
+        _playerInput[2] = Down;
+        return (Down);
+    } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
+        _playerInput[2] = Left;
+        return (Left);
+    } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
+        _playerInput[2] = Right;
+        return (Right);
+    }
+    return;
 }
 
 /*const SEvent::SJoystickEvent &Input::GetJoystickState(void) const
@@ -131,6 +142,20 @@ bool Input::OnEvent(const SEvent& event)
     return false;
 }
 
+
+std::map<int, Key_mouvement> Input::getPlayerInput()
+{
+    return (_playerInput);
+}
+
+Key_mouvement Input::getInput(IrrlichtDevice* device, Input receiver)
+{
+    if (receiver.keyBoard(receiver) == Exit)
+        return (Exit);
+        
+    return (receiver.keyBoard(receiver));
+}
+
 Input::Input()
 {
 	for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
@@ -141,3 +166,4 @@ Input::~Input()
 {
 
 }
+
