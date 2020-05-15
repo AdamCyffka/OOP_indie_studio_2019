@@ -104,7 +104,7 @@ void LoadMap::run()
 	plateA = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateA.obj"));
 	plateA->setPosition({0, 0, 0});
 	plateA->setScale({3, 3, 3});
-	animA = _smgr->createRotationAnimator({0, 0.3, 0});
+	animA = _smgr->createRotationAnimator({0, -0.2, 0});
 	plateA->addAnimator(animA);
 	animA->drop();
 
@@ -112,7 +112,7 @@ void LoadMap::run()
 	plateB = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateB.obj"));
 	plateB->setPosition({0, 10, 0});
 	plateB->setScale({3, 3, 3});
-	animB = _smgr->createRotationAnimator({0, 0.1, 0});
+	animB = _smgr->createRotationAnimator({0, -0.1, 0});
 	plateB->addAnimator(animB);
 	animB->drop();
 

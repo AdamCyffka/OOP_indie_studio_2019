@@ -158,12 +158,11 @@ void Core::init()
 
 int Core::run()
 {
-	// POSITION CAMERA PAS TOUCHER
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 	
-	CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00035);
-	traveling.start(); // commente pour enlever le tourni
+	CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
+	traveling.start(); // commenter pour enlever le tournoi
 
 	irr::core::vector3df posCam = camera->getPosition();
 	irr::core::vector3df targetCam = camera->getTarget();

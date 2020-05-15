@@ -16,7 +16,7 @@ class ACameraTraveling {
     public:
         ACameraTraveling(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr) : _camera(camera), _smgr(smgr) {};
         ~ACameraTraveling() = default;
-        
+
         virtual bool accelerateTo(irr::core::vector3df pos) = 0;
 
     protected:
