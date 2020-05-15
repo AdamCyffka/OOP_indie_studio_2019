@@ -31,6 +31,7 @@ void LoadMap::run()
 	irr::scene::ISceneNodeAnimator *animA;
 	irr::scene::ISceneNodeAnimator *animB;
 	irr::scene::ISceneNodeAnimator *rotatePlanet;
+	irr::scene::ISceneNodeAnimator *core;
 	irr::scene::ISceneNode *light;
 
 	// camera
@@ -126,7 +127,12 @@ void LoadMap::run()
 	// light core
 	light = _smgr->addLightSceneNode(0, {0, 50, 0}, {240, 248, 255, 0}, 800);
 	irr::scene::IParticleSystemSceneNode *ps = _smgr->addParticleSystemSceneNode(false, light);
-	irr::scene::IParticleEmitter *em = ps->createBoxEmitter({-3, 0, -3, 3, 1, 3}, {0, 0, 0}, 20, 30, {10, 255, 255, 255}, {10, 255, 255, 255}, 400, 1100);
+	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+        core::aabbox3d<f32>(-3,0,-3,3,1,3),
+        core::vector3df(0.0f,0.03f,0.0f),
+        80,100,
+        video::SColor(10,255,255,255), video::SColor(10,255,255,255),
+        400,1100);
 	em->setMinStartSize({30, 40});
 	em->setMaxStartSize({30, 40});
 	ps->setEmitter(em);
@@ -135,6 +141,9 @@ void LoadMap::run()
 	ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	ps->setMaterialTexture(0, _driver->getTexture("resources/images/fx/fireball.bmp"));
 	ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+	core = _smgr->createFlyCircleAnimator(core::vector3df(0,0,0), 70.0f,
+            0.001f, core::vector3df(0.2f, 0.9f, 0.f));
+    core->drop();
 
 	// gameMap
 	loadGameMap(-500, 300, 1000);

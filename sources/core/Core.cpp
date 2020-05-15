@@ -44,6 +44,18 @@ Core::Core()
     _menu = nullptr;
     _options = nullptr;
     _select = nullptr;
+
+	// irr::scene::IParticleSystemSceneNode *_fire;
+	// scene::IParticleEmitter *em = _fire->createBoxEmitter(
+	// 	core::aabbox3d<f32>(-6, 0, -7, 7, 1, 7),
+	// 	core::vector3df(0.0f, 0.01f, 0.0f),
+	// 	80, 600,
+	// 	video::SColor(0, 0, 0, 0),
+	// 	video::SColor(0, 255, 255, 255),
+	// 	600, 1200, 0,
+	// 	core::dimension2df(0.0f, 0.0f),
+	// 	core::dimension2df(30.0f, 30.0f));
+
 }
 
 Select *Core::getSelect()

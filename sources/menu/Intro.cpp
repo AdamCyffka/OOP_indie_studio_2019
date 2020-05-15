@@ -17,9 +17,10 @@ Intro::Intro(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
     loadTextures();
     loadButtons();
 
-    irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNode();
-    CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
-	traveling.start();
+    irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya();
+    // CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
+	// traveling.start();
+    camera->setFarValue(42000);
 }
 
 void Intro::loadTextures()
