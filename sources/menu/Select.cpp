@@ -28,6 +28,15 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
    for (auto &i : _previews) {
        i->setOrientation(side::east);
    }
+
+    _buttons["p1"]->setImage(_textures[_selectRole[0][0][_nbRole[0][0]]]);
+    _buttons["ia1"]->setImage(_textures[_selectRole[0][0][_nbRole[0][1]]]);
+    _buttons["p2"]->setImage(_textures[_selectRole[0][0][_nbRole[1][0]]]);
+    _buttons["ia2"]->setImage(_textures[_selectRole[0][0][_nbRole[1][1]]]);
+    _buttons["ia3"]->setImage(_textures[_selectRole[0][0][_nbRole[2][1]]]);
+    _buttons["p3"]->setImage(_textures[_selectRole[0][0][_nbRole[2][0]]]);
+    _buttons["ia4"]->setImage(_textures[_selectRole[0][0][_nbRole[3][1]]]);
+    _buttons["p4"]->setImage(_textures[_selectRole[0][0][_nbRole[3][0]]]);
 }
 
 void Select::loadTextures()
@@ -118,7 +127,6 @@ void Select::loadButtons()
     _buttons["x4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_X_4, L"");
     _buttons["x4"]->setImage(_textures["x"]);
     _buttons["x4"]->setRelativePosition(irr::core::position2d<irr::s32>(1490, 763));
-
 }
 
 void Select::incSkin(int skin)
@@ -131,13 +139,25 @@ void Select::incSkin(int skin)
 
 void Select::changeRole(int role)
 {
-    if (nbRole[role][0] == 0) {
-        nbRole[role][0] = 1;
-        nbRole[role][1] = 0;
+    if (_nbRole[role][0] == 0) {
+        _nbRole[role][0] = 1;
+        _nbRole[role][1] = 0;
     } else {
-        nbRole[role][0] = 0;
-        nbRole[role][1] = 1;
+        _nbRole[role][0] = 0;
+        _nbRole[role][1] = 1;
     }
+}
+
+void Select::run()
+{
+    _buttons["p1"]->setImage(_textures[_selectRole[0][0][_nbRole[0][0]]]);
+    _buttons["ia1"]->setImage(_textures[_selectRole[0][1][_nbRole[0][1]]]);
+    _buttons["p2"]->setImage(_textures[_selectRole[0][0][_nbRole[1][0]]]);
+    _buttons["ia2"]->setImage(_textures[_selectRole[0][1][_nbRole[1][1]]]);
+    _buttons["p3"]->setImage(_textures[_selectRole[0][0][_nbRole[2][0]]]);
+    _buttons["ia3"]->setImage(_textures[_selectRole[0][1][_nbRole[2][1]]]);
+    _buttons["ia4"]->setImage(_textures[_selectRole[0][1][_nbRole[3][1]]]);
+    _buttons["p4"]->setImage(_textures[_selectRole[0][0][_nbRole[3][0]]]);
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Select::getButtons()
@@ -162,7 +182,7 @@ std::vector<std::vector<std::vector<std::string>>> Select::getSelectRole()
 
 std::vector<std::vector<int>> Select::getNbRole()
 {
-    return nbRole;
+    return _nbRole;
 }
 
 Character *Select::getPreview(int preview) const
