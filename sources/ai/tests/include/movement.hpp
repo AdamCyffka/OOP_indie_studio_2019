@@ -17,6 +17,15 @@ enum bestMovement
     bottomB
 };
 
+enum wishMovement
+{
+    idleW,
+    leftW,
+    rightW,
+    topW,
+    bottomW
+};
+
 enum horMovement
 {
     idleHor = 0,
