@@ -57,6 +57,9 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case GUI_ID_HELP_BUTTON:
                         _core.setState(Core::menuHelp);
                         return true;
+                    case GUI_ID_INTRO_BUTTON:
+                        _core.setState(Core::menuMain);
+                        return true;
                 }
             default:
                 break;

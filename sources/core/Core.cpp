@@ -8,15 +8,15 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "menu/ProgressBar.hpp"
+#include "ProgressBar.hpp"
+#include "MyEventReceiver.hpp"
 #include "Core.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
-#include "MyEventReceiver.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
-#include "CircleCameraTraveling.hpp"
+#include "Intro.hpp"
 
 Core::Core()
 {
@@ -35,6 +35,7 @@ Core::Core()
 	_gState = menu;
 	_isInitialized = false;
 	_initStep = 0;
+	_intro = nullptr;
     _loadmap = nullptr;
 	_credits = nullptr;
 	_pause = nullptr;
@@ -58,6 +59,12 @@ Core::layerState Core::getState()
 void Core::setState(Core::layerState state)
 {
 	_lState = state;
+}
+
+void Core::introCase()
+{
+	hideLayers();
+	showLayer(_intro);
 }
 
 void Core::menuCase()
@@ -120,26 +127,31 @@ void Core::init()
 		_splash->getBar()->setProgress(30);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 2) {
+		if (!_intro)
+			_intro = new Intro(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(40);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	} else if (_initStep == 3) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(45);
+		_splash->getBar()->setProgress(50);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(250));
-	} else if (_initStep == 3) {
+	} else if (_initStep == 4) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(60);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	} else if (_initStep == 4) {
+	} else if (_initStep == 5) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(75);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	} else if (_initStep == 5) {
+	} else if (_initStep == 6) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(90);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	} else if (_initStep == 6) {
+	} else if (_initStep == 7) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
@@ -150,7 +162,7 @@ void Core::init()
 			_loadmap->run();
 		}
 		_splash->getBar()->setVisible(false);
-		_lState = menuMain;
+		_lState = menuIntro;
 	}
 	_initStep++;
 	hideLayers();
@@ -161,9 +173,6 @@ int Core::run()
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 	
-	CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
-	traveling.start(); // commenter pour enlever le tournoi
-
 	irr::core::vector3df posCam = camera->getPosition();
 	irr::core::vector3df targetCam = camera->getTarget();
 	core::stringw titre = L"POS : X = ";
@@ -225,6 +234,9 @@ void Core::drawLayer()
 		case menuSplash:
 			splashCase();
 			break;
+		case menuIntro:
+			introCase();
+			break;
 		case menuMain:
 			menuCase();
 			break;
@@ -252,6 +264,12 @@ void Core::hideLayers()
 		for (auto &it : _menu->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _menu->getImages())
+			it.second->setVisible(false);
+	}
+	if (_intro) {
+		for (auto &it : _intro->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _intro->getImages())
 			it.second->setVisible(false);
 	}
 	if (_options) {

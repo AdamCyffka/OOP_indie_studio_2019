@@ -15,6 +15,7 @@
 #include "LoadMap.hpp"
 #include "Splash.hpp"
 
+class Intro;
 class Help;
 class Credits;
 class Pause;
@@ -27,6 +28,7 @@ class Core {
 	    int run();
 
         enum layerState {
+            menuIntro,
 			menuMain,
 			menuOptions,
 			menuPause,
@@ -41,6 +43,7 @@ class Core {
         	game
         };
 
+        void introCase();
         void menuCase();
         void pauseCase();
         void gameCase();
@@ -61,6 +64,7 @@ class Core {
 		void showLayer(T *page);
 		void drawScene();
 		void drawLayer();
+        Intro *_intro;
         Menu *_menu;
         Options *_options;
         Splash *_splash;

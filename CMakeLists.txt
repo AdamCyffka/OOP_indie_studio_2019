@@ -20,6 +20,7 @@ add_executable(bomberman
         sources/menu/Options.cpp
         sources/menu/Splash.cpp
         sources/menu/Select.cpp
+        sources/menu/Intro.cpp
         sources/menu/Credits.cpp
         sources/menu/Help.cpp
         sources/menu/Pause.cpp
