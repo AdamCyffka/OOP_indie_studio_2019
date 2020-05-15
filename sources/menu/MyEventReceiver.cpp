@@ -13,8 +13,12 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
         irr::s32 id = event.GUIEvent.Caller->getID();
         switch (event.GUIEvent.EventType) {
             case irr::gui::EGET_BUTTON_CLICKED:
-                _music.playSound("resources/sfx/click.mp3");
-                switch (id) {
+            	_core.getMusicEngine()->add2D("resources/sfx/click.mp3", false, true, true, irrklang::ESM_AUTO_DETECT, true);
+// 				sound effect example below
+//            	_core.getMusicEngine()->enableSoundEffect("resources/sfx/click.mp3", musicNs::echo, true);
+//				_core.getMusicEngine()->enableSoundEffect("resources/sfx/click.mp3", musicNs::wavesReverb, true);
+				_core.getMusicEngine()->setPause("resources/sfx/click.mp3", false, true);
+            	switch (id) {
                     case GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
                         return true;
@@ -60,6 +64,24 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case GUI_ID_INTRO_BUTTON:
                         _core.setState(Core::menuMain);
                         return true;
+	                case GUI_ID_OPTION_PLUS_MUSIC_BUTTON:
+						_core.getMusicEngine()->musicUp();
+						return true;
+					case GUI_ID_OPTION_MINUS_MUSIC_BUTTON:
+						_core.getMusicEngine()->musicDown();
+						return true;
+					case GUI_ID_OPTION_PLUS_GENERAL_BUTTON:
+						_core.getMusicEngine()->masterUp();
+						return true;
+					case GUI_ID_OPTION_MINUS_GENERAL_BUTTON:
+						_core.getMusicEngine()->masterDown();
+						return true;
+					case GUI_ID_OPTION_PLUS_SFX_BUTTON:
+						_core.getMusicEngine()->sfxUp();
+						return true;
+					case GUI_ID_OPTION_MINUS_SFX_BUTTON:
+						_core.getMusicEngine()->sfxDown();
+						return true;
                 }
             default:
                 break;

@@ -17,7 +17,6 @@ class MyEventReceiver : public irr::IEventReceiver {
         bool OnEvent(const irr::SEvent &event) override;
         bool clicks(const irr::SEvent &event);
     private:
-        Music _music;
         Core &_core;
         irr::IrrlichtDevice *_window;
 };

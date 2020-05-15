@@ -44,6 +44,7 @@ Core::Core()
     _menu = nullptr;
     _options = nullptr;
     _select = nullptr;
+    _music = nullptr;
 }
 
 Select *Core::getSelect()
@@ -54,6 +55,11 @@ Select *Core::getSelect()
 Core::layerState Core::getState()
 {
 	return _lState;
+}
+
+Music *Core::getMusicEngine()
+{
+	return _music;
 }
 
 void Core::setState(Core::layerState state)
@@ -119,41 +125,47 @@ void Core::init()
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 
-		_splash->getBar()->setProgress(15);
+		_splash->getBar()->setProgress(11);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 1) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(30);
+		_splash->getBar()->setProgress(22);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 2) {
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(40);
+		_splash->getBar()->setProgress(33);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 3) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(50);
+		_splash->getBar()->setProgress(44);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	} else if (_initStep == 4) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(60);
+		_splash->getBar()->setProgress(55);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	} else if (_initStep == 5) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(75);
+		_splash->getBar()->setProgress(66);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 6) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(90);
+		_splash->getBar()->setProgress(77);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 7) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(88);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	} else if (_initStep == 8) {
+		if (!_music) {
+			_music = new Music();
+		}
 		_splash->getBar()->setProgress(100);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else {
@@ -172,7 +184,7 @@ int Core::run()
 {
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
-	
+
 	irr::core::vector3df posCam = camera->getPosition();
 	irr::core::vector3df targetCam = camera->getTarget();
 	core::stringw titre = L"POS : X = ";

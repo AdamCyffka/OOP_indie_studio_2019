@@ -14,6 +14,7 @@
 #include "Options.hpp"
 #include "LoadMap.hpp"
 #include "Splash.hpp"
+#include "Music.hpp"
 
 class Intro;
 class Help;
@@ -55,6 +56,7 @@ class Core {
         
         layerState getState();
         Select *getSelect();
+        Music *getMusicEngine();
 
         void setState(layerState state);
     private:
@@ -73,6 +75,7 @@ class Core {
         Credits *_credits;
         Help *_help;
         Pause *_pause;
+        Music *_music;
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;
