@@ -17,17 +17,17 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
     loadTextures();
     loadButtons();
     _selectTab = {{"waluigi", true}, {"mario", true}, {"yoshi", true}, {"lakitu", true}, {"dr_peach", false}, {"koopa", false}};
-    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[0].first), "preview1"));
-    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[1].first), "preview2"));
-    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[2].first), "preview3"));
-    _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[3].first), "preview4"));
-    _previews[0]->setPosition({17, 0, 245});
-    _previews[1]->setPosition({-28, 0, 225});
-    _previews[2]->setPosition({-79, 0, 205});
-    _previews[3]->setPosition({-127, 0, 185});
-    for (auto &i : _previews) {
-        i->setOrientation(side::east);
-    }
+   _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[0].first), "preview1"));
+   _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[1].first), "preview2"));
+   _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[2].first), "preview3"));
+   _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[3].first), "preview4"));
+   _previews[0]->setPosition({17, 0, 245});
+   _previews[1]->setPosition({-28, 0, 225});
+   _previews[2]->setPosition({-79, 0, 205});
+   _previews[3]->setPosition({-127, 0, 185});
+   for (auto &i : _previews) {
+       i->setOrientation(side::east);
+   }
 }
 
 void Select::loadTextures()
@@ -143,6 +143,11 @@ void Select::changeRole(int role)
 std::map<std::string, irr::gui::IGUIButton *> Select::getButtons()
 {
     return _buttons;
+}
+
+std::map<std::string, irr::gui::IGUIImage *> Select::getImages()
+{
+	return _images;
 }
 
 std::map<std::string, irr::video::ITexture *> Select::getTextures()

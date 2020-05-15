@@ -17,17 +17,17 @@ Game::Game()
     for (int i = 0; i < X_SIZE; i++)
         map[i] = new int[Y_SIZE];
     int realMap[X_SIZE][Y_SIZE] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-           {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-           {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-           {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-           {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-           {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+           {1, 0, 0, 5, 5, 5, 5, 5, 5, 5, 0, 0, 1},
+           {1, 0, 1, 5, 1, 5, 1, 5, 1, 5, 1, 0, 1},
+           {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
+           {1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1},
+           {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
+           {1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1},
+           {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
+           {1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1},
+           {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
+           {1, 0, 1, 5, 1, 5, 1, 5, 1, 5, 1, 0, 1},
+           {1, 0, 0, 5, 5, 5, 5, 5, 5, 5, 0, 0, 1},
            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
     for (int i = 0; i < X_SIZE; i++) {
         for (int j = 0; j < Y_SIZE; j++) {
@@ -36,7 +36,7 @@ Game::Game()
     }
     bot = new AI();
     bot2 = new AI();
-    bot2->setPosition(80, 880);
+    bot2->setPosition(880, 880);
 }
 
 Game::~Game()
@@ -72,9 +72,8 @@ void Game::simulateAI(AI *Bot)
 {
     if (Bot->isSafe(this->getMap()))
     {
-        if (Bot->isMovingToPlayer(&map, this->bot)) {
-        }
-        if (Bot->isMovingToPlayer(&map, this->bot2)) {
+        if (!Bot->isMovingToPlayer(&map, this->bot) && !Bot->isMovingToPlayer(&map, this->bot2)) {
+            Bot->moveRandomly(&map);
         }
     }
 }
@@ -143,6 +142,10 @@ void Game::drawMap(SDL_Renderer *renderer)
             if (map[i][j] == 1)
             {
                 printRectangle(renderer, Xstart, Ystart, 80, 80, 255, 255, 255);
+            }
+            if (map[i][j] == 5)
+            {
+                printRectangle(renderer, Xstart, Ystart, 80, 80, 155, 50, 50);
             }
             Xstart += 80;
         }

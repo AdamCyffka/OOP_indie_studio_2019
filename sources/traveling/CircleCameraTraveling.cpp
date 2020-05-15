@@ -30,5 +30,5 @@ void CircleCameraTraveling::start()
 
 bool CircleCameraTraveling::accelerateTo(irr::core::vector3df pos)
 {
-
+    return false;
 }

@@ -59,3 +59,8 @@ std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 {
     return _buttons;
 }
+
+std::map<std::string, irr::gui::IGUIImage *> Menu::getImages()
+{
+	return _images;
+}
