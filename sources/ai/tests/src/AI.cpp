@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 
 AI::AI()
 {
@@ -49,6 +50,14 @@ void AI::chooseMovementTo(AI *secondPlayer)
     }
     if (this->y == secondPlayer->getY())
     {
+        if (this->x > secondPlayer->getX())
+        {
+            _horMovement = horMovement::left;
+        }
+        else
+        {
+            _horMovement = horMovement::right;
+        }
     }
 }
 
@@ -70,6 +79,16 @@ int AI::pathClear(AI *secondPlayer, int ***map)
     }
     if (this->y == secondPlayer->getY())
     {
+        int pathX = this->x;
+        int mult = 1;
+        if (this->x > secondPlayer->getX())
+            mult = -1;
+        while (pathX != secondPlayer->getX())
+        {
+            if (!canMove(*map, pathX, y))
+                return 0;
+            pathX = pathX + (speed * mult);
+        }
         return 1;
     }
     return 0;
@@ -80,6 +99,14 @@ int AI::canPoseBomb(AI *secondPlayer)
     if (this->x == secondPlayer->getX())
     {
         int distance = (this->y - secondPlayer->getY()) / 80;
+        if (distance < 0)
+            distance *= -1;
+        if (distance <= this->bombUp)
+            return 1;
+    }
+    if (this->y == secondPlayer->getY())
+    {
+        int distance = (this->x - secondPlayer->getX()) / 80;
         if (distance < 0)
             distance *= -1;
         if (distance <= this->bombUp)
@@ -112,8 +139,9 @@ int AI::isMovingToPlayer(int ***map, AI *secondPlayer)
         {
             this->chooseMovementTo(secondPlayer);
         }
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 int AI::canMove(int **map, int xNext, int yNext)
@@ -285,6 +313,33 @@ int AI::canMoveAfter(int **map, int **copyMap, int multX, int multY)
     return 0;
 }
 
+int AI::onlyWay(int **map, int multX, int multY)
+{
+    int way = 0;
+
+    if (map[int(this->y / 80)][int(this->x / 80) - 1] == 0)
+    {
+        way++;
+    }
+    if (map[int(this->y / 80)][int(this->x / 80) + 1] == 0)
+    {
+        way++;
+    }
+    if (map[int(this->y / 80) - 1][int(this->x / 80)] == 0)
+    {
+        way++;
+    }
+    if (map[int(this->y / 80) + 1][int(this->x / 80)] == 0)
+    {
+        way++;
+    }
+    if (way == 1 && map[int(this->y / 80) + multY][int(this->x / 80) + multX] == 0) {
+        return 1;
+        std::cout << "only one way !" << std::endl;
+    }
+    return 0;
+}
+
 int AI::getNumberMovement(int **map, int **copyMap, int multX, int multY)
 {
     int movement = -1;
@@ -301,6 +356,9 @@ int AI::getNumberMovement(int **map, int **copyMap, int multX, int multY)
     {
         return 0;
     }
+    /*if (onlyWay(map, multX, multY)) {
+        return 0;
+    }*/
     return movement;
 }
 
@@ -314,6 +372,7 @@ bestMovement AI::findSafePlace(int **map, int **copyMap)
     int listNBMovements[4] = {right, left, bottom, top};
 
     std::sort(listNBMovements, listNBMovements + (sizeof(listNBMovements) / sizeof(listNBMovements[0])));
+
     for (int i = 0; i < 4; i++)
     {
         if (listNBMovements[i] != -1)
@@ -360,7 +419,9 @@ int AI::isSafe(int **map)
             _verMovement = verMovement::bottom;
         if (_lastMovement == bestMovement::topB)
             _verMovement = verMovement::top;
-    } else {
+    }
+    else
+    {
         _lastMovement = movement;
     }
     return 0;
@@ -425,4 +486,135 @@ void AI::resetMovement()
 void AI::setPowerUp(PowerUp power, int up)
 {
     bombUp = up;
+}
+
+void AI::moveDependingOfWishMovement()
+{
+    if (_wishMovement == wishMovement::bottomW)
+        _verMovement = verMovement::bottom;
+    if (_wishMovement == wishMovement::topW)
+        _verMovement = verMovement::top;
+    if (_wishMovement == wishMovement::leftW)
+        _horMovement = horMovement::left;
+    if (_wishMovement == wishMovement::rightW)
+        _horMovement = horMovement::right;
+}
+
+int AI::canStillMove(int **map)
+{
+    if (_wishMovement == wishMovement::bottomW && canMove(map, x, y + speed))
+        return 1;
+    if (_wishMovement == wishMovement::topW && canMove(map, x, y - speed))
+        return 1;
+    if (_wishMovement == wishMovement::leftW && canMove(map, x - speed, y))
+        return 1;
+    if (_wishMovement == wishMovement::rightW && canMove(map, x + speed, y))
+        return 1;
+    return 0;
+}
+
+void AI::choseAMove(int **map)
+{
+    if (!canMove(map, x, y + speed) && !canMove(map, x, y - speed) && !canMove(map, x + speed, y) && !canMove(map, x - speed, y))
+        return;
+    std::srand(std::time(nullptr));
+    while (1)
+    {
+        int wish = rand() % 4 + 1;
+
+        if (wish == 4 && canMove(map, x, y + speed))
+        {
+            _wishMovement = wishMovement::bottomW;
+            return;
+        }
+        if (wish == 3 && canMove(map, x, y - speed))
+        {
+            _wishMovement = wishMovement::topW;
+            return;
+        }
+        if (wish == 1 && canMove(map, x - speed, y))
+        {
+            _wishMovement = wishMovement::leftW;
+            return;
+        }
+        if (wish == 2 && canMove(map, x + speed, y))
+        {
+            _wishMovement = wishMovement::rightW;
+            return;
+        }
+    }
+}
+
+int AI::findBreakableWall(int **map)
+{
+    if (map[int(this->y / 80)][int(this->x / 80) - 1] == 5)
+    {
+        return 1;
+    }
+    if (map[int(this->y / 80)][int(this->x / 80) + 1] == 5)
+    {
+        return 1;
+    }
+    if (map[int(this->y / 80) - 1][int(this->x / 80)] == 5)
+    {
+        return 1;
+    }
+    if (map[int(this->y / 80) + 1][int(this->x / 80)] == 5)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int AI::canSaflyPoseABomb(int **map)
+{
+    int breakableWall = this->findBreakableWall(map);
+
+    if (breakableWall == 0)
+        return 0;
+    if (map[int(this->y / 80)][int(this->x / 80) - 1] == 0)
+    {
+        return 1;
+    }
+    if (map[int(this->y / 80)][int(this->x / 80) + 1] == 0)
+    {
+        return 1;
+    }
+    if (map[int(this->y / 80) - 1][int(this->x / 80)] == 0)
+    {
+        return 1;
+    }
+    if (map[int(this->y / 80) + 1][int(this->x / 80)] == 0)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+void AI::moveRandomly(int ***map)
+{
+    int **copyMap = copyDoubleArray(*map);
+    renderBombOnMap(&copyMap);
+
+    if (_wishMovement != wishMovement::idleW)
+    {
+        if (this->canStillMove(copyMap))
+        {
+            this->moveDependingOfWishMovement();
+        }
+        else
+        {
+            if (this->canSaflyPoseABomb(copyMap)) {
+                this->poseBomb(map);
+                return;
+                std::cout << "pose the bomb !" << std::endl;
+            }
+            _wishMovement = wishMovement::idleW;
+        }
+    }
+    if (_wishMovement == wishMovement::idleW)
+    {
+        this->choseAMove(copyMap);
+        this->moveDependingOfWishMovement();
+    }
 }
