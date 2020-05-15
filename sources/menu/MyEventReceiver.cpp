@@ -13,6 +13,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
         irr::s32 id = event.GUIEvent.Caller->getID();
         switch (event.GUIEvent.EventType) {
             case irr::gui::EGET_BUTTON_CLICKED:
+                _music.playSound("resources/sfx/click.mp3");
                 switch (id) {
                     case GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
@@ -49,6 +50,12 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         return true;
                     case GUI_ID_NEW_BUTTON:
                         _core.setState(Core::menuSelect);
+                        return true;
+                    case GUI_ID_CREDITS_BUTTON:
+                        _core.setState(Core::menuCredits);
+                        return true;
+                    case GUI_ID_HELP_BUTTON:
+                        _core.setState(Core::menuHelp);
                         return true;
                 }
             default:

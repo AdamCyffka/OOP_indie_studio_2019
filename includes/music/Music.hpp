@@ -8,6 +8,7 @@
 #ifndef MUSIC_HPP_
 #define MUSIC_HPP_
 
+#include <string>
 #include <map>
 #include <memory>
 #include <deque>
@@ -22,6 +23,7 @@ class Music {
     void playSound(const std::string &);
     void pause();
     void resume();
+    void defaultVolume();
     // masterVolumeUp();
     // masterVolumeDown();
     // musicVolumeUp();

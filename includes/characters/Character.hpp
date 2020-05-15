@@ -24,7 +24,7 @@ class Character {
 
         enum state {
             idle,
-            moving,
+            running,
             dying,
             dead,
             victory
