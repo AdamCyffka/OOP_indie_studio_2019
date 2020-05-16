@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include "music/MusicException.hpp"
 #include "Music.hpp"
 
 Music::Music()
@@ -22,155 +23,176 @@ Music::~Music()
 void Music::add2D(const std::string &filename, bool loop, bool startPaused, bool track, irrklang::E_STREAM_MODE mode, bool enableSFX)
 {
 	if (!_engine) {
-		return; // TODO THROW
+		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (startPaused && !track)
 		track = true;
 	if (enableSFX) {
 		_sfx[filename] = _engine->play2D(filename.c_str(), loop, startPaused, track, mode, enableSFX);
 		if ((track || startPaused || enableSFX) && _sfx[filename] == nullptr)
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		_musics[filename] = _engine->play2D(filename.c_str(), loop, startPaused, track, mode, enableSFX);
-		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr) {
-			std::cout << "failed to create" << std::endl;
-			return; // TODO THROW
-		}
+		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr)
+			throw MusicException("music object doesn't exist");
 	}
 }
 
 void Music::add3D(const std::string &filename, const irrklang::vec3df &vec, bool loop, bool startPaused, bool track, irrklang::E_STREAM_MODE mode, bool enableSFX)
 {
 	if (!_engine) {
-		return; // TODO THROW
+		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (startPaused && !track)
 		track = true;
 	if (enableSFX) {
 		_sfx[filename] = _engine->play3D(filename.c_str(), vec, loop, startPaused, track, mode, enableSFX);
 		if ((track || startPaused || enableSFX) && _sfx[filename] == nullptr)
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		_musics[filename] = _engine->play3D(filename.c_str(), vec, loop, startPaused, track, mode, enableSFX);
 		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr)
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 }
 
 bool Music::isFinished(const std::string &filename, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	if (isSFX) {
 		if (_sfx[filename])
 			_sfx[filename]->isFinished();
 		else
-			return true; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			_musics[filename]->isFinished();
 		else
-			return true; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 	return true;
 }
 
 bool Music::getPause(const std::string &filename, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	if (isSFX) {
 		if (_sfx[filename])
 			_sfx[filename]->getIsPaused();
 		else
-			return true; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			_musics[filename]->getIsPaused();
 		else
-			return true; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 	return true;
 }
 
 void Music::setPause(const std::string &filename, bool state, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	if (isSFX) {
 		if (_sfx[filename])
 			_sfx[filename]->setIsPaused(state);
 		else
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			_musics[filename]->setIsPaused(state);
 		else
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 }
 
 void Music::stop(const std::string &filename, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	if (isSFX) {
 		if (_sfx[filename])
 			_sfx[filename]->stop();
 		else
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			_musics[filename]->stop();
 		else
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 }
 
 void Music::set3DRadiusMin(const std::string &filename, irrklang::ik_f32 dist, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	if (isSFX) {
 		if (_sfx[filename])
 			_sfx[filename]->setMinDistance(dist);
 		else
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			_musics[filename]->setMinDistance(dist);
 		else
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 }
 
 void Music::set3DRadiusMax(const std::string &filename, irrklang::ik_f32 dist, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	if (isSFX) {
 		if (_sfx[filename])
 			_sfx[filename]->setMaxDistance(dist);
 		else
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			_musics[filename]->setMaxDistance(dist);
 		else
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 }
 
 void Music::setListenerPosition(irrklang::vec3df pos, irrklang::vec3df target)
 {
-	if (_engine)
-		_engine->setListenerPosition(pos, target);
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
+	_engine->setListenerPosition(pos, target);
 }
 
 void Music::enableSoundEffect(const std::string &filename, musicNs::effect effect, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	irrklang::ISoundEffectControl *fx = nullptr;
 	if (isSFX) {
 		if (_sfx[filename])
 			fx = _sfx[filename]->getSoundEffectControl();
 		else
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			fx = _musics[filename]->getSoundEffectControl();
 		else
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 	if (!fx)
-		return; // TODO THROW
+		throw MusicException("music object cannot have special effects");
 	switch (effect) {
 	case musicNs::chorus:
 		fx->enableChorusSoundEffect();
@@ -204,17 +226,20 @@ void Music::enableSoundEffect(const std::string &filename, musicNs::effect effec
 
 void Music::disableSoundEffect(const std::string &filename, musicNs::effect effect, bool isSFX)
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	irrklang::ISoundEffectControl *fx = nullptr;
 	if (isSFX) {
 		if (_sfx[filename])
 			fx = _sfx[filename]->getSoundEffectControl();
 		else
-			return; // TODO THROW
+			throw MusicException("sfx object doesn't exist");
 	} else {
 		if (_musics[filename])
 			fx = _musics[filename]->getSoundEffectControl();
 		else
-			return; // TODO THROW
+			throw MusicException("music object doesn't exist");
 	}
 	if (!fx)
 		return; // TODO THROW
@@ -251,6 +276,9 @@ void Music::disableSoundEffect(const std::string &filename, musicNs::effect effe
 
 void Music::masterUp()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	_engine->setSoundVolume(_engine->getSoundVolume() + VOLUME_DIFF);
 	if (_engine->getSoundVolume() > 1.0f)
 		_engine->setSoundVolume(1.0f);
@@ -259,6 +287,9 @@ void Music::masterUp()
 
 void Music::musicUp()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	_musicVolume += VOLUME_DIFF;
 	if (_musicVolume > 1.0f)
 		_musicVolume = 1.0f;
@@ -267,6 +298,9 @@ void Music::musicUp()
 
 void Music::sfxUp()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	_sfxVolume += VOLUME_DIFF;
 	if (_sfxVolume > 1.0f)
 		_sfxVolume = 1.0f;
@@ -275,6 +309,9 @@ void Music::sfxUp()
 
 void Music::masterDown()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	_engine->setSoundVolume(_engine->getSoundVolume() - VOLUME_DIFF);
 	if (_engine->getSoundVolume() < 0.0f)
 		_engine->setSoundVolume(0.0f);
@@ -283,6 +320,9 @@ void Music::masterDown()
 
 void Music::musicDown()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	_musicVolume -= VOLUME_DIFF;
 	if (_musicVolume < 0.0f)
 		_musicVolume = 0.0f;
@@ -291,6 +331,9 @@ void Music::musicDown()
 
 void Music::sfxDown()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	_sfxVolume -= VOLUME_DIFF;
 	if (_sfxVolume < 0.0f)
 		_sfxVolume = 0.0f;
@@ -299,6 +342,9 @@ void Music::sfxDown()
 
 void Music::setSoundVolume()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	for (auto &it : _musics) {
 		it.second->setVolume(_musicVolume);
 	}
@@ -309,14 +355,27 @@ void Music::setSoundVolume()
 
 irrklang::ISound *Music::getSound(const std::string &filename, bool isSFX)
 {
-	if (!isSFX)
-		return _musics[filename];
-	else
-		return _sfx[filename];
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
+	if (isSFX) {
+		if (_sfx[filename])
+			return _sfx[filename];
+		else
+			throw MusicException("sfx object doesn't exist");
+	} else {
+		if (_musics[filename])
+			return _musics[filename];
+		else
+			throw MusicException("music object doesn't exist");
+	}
 }
 
 void Music::destroySounds()
 {
+	if (!_engine) {
+		throw MusicException("Irkklang device doesn't exist");
+	}
 	for (auto &it : _musics) {
 		if (it.second) {
 			it.second->drop();
