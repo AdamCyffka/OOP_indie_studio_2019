@@ -19,6 +19,7 @@ class Intro : public IGame {
 
 		void loadButtons();
 		void loadTextures();
+		void run();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
 	private:

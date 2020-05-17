@@ -16,9 +16,10 @@ class Help : public IGame {
     public:
         explicit Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Help() = default;
+
         void loadButtons();
         void loadTextures();
-
+        void run();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
     private:

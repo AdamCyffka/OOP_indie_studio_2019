@@ -209,42 +209,25 @@ int Core::run()
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 
-	irr::core::vector3df posCam = camera->getPosition();
-	irr::core::vector3df targetCam = camera->getTarget();
-	core::stringw titre = L"POS : X = ";
-	titre += posCam.X;
-	titre += " Y = ";
-	titre += posCam.Y;
-	titre += " Z = ";
-	titre += posCam.Z;
-	titre += " TARGET: X = ";
-	titre += targetCam.X;
-	titre += " Y = ";
-	titre += targetCam.Y;
-	titre += " Z = ";
-	titre += targetCam.Z;
-	_window->setWindowCaption(titre.c_str());
+	// core::stringw str = L"Irrlicht Engine [";
+	// str += _driver->getName();
+	// str += L"] FPS: ";
+	// str += (s32)_driver->getFPS();
+	// _window->setWindowCaption(str.c_str());
+	// _env->addStaticText(str.c_str(), irr::core::rect<s32>(150,20,350,40));
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
-		irr::core::vector3df posCam = camera->getPosition();
-		irr::core::vector3df targetCam = camera->getTarget();
-		titre = L"POS : X = ";
-		titre += posCam.X;
-		titre += " Y = ";
-		titre += posCam.Y;
-		titre += " Z = ";
-		titre += posCam.Z;
 
-		titre += "\nTARGET: X = ";
-		titre += targetCam.X;
-		titre += " Y = ";
-		titre += targetCam.Y;
-		titre += " Z = ";
-		titre += targetCam.Z;
-		_window->setWindowCaption(titre.c_str());
+		// str = L"Irrlicht Engine [";
+		// str += _driver->getName();
+		// str += L"] FPS: ";
+		// str += (s32)_driver->getFPS();
+		// _window->setWindowCaption(str.c_str());
+		// _env->addStaticText(str.c_str(), irr::core::rect<s32>(150,20,350,40));
+
 		_smgr->drawAll();
 		_env->drawAll();
 		_driver->endScene();

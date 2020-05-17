@@ -5,6 +5,7 @@
 ** MyEventReceiver
 */
 
+#include "Enum.hpp"
 #include "MyEventReceiver.hpp"
 
 bool MyEventReceiver::clicks(const irr::SEvent &event)

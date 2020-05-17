@@ -5,6 +5,7 @@
 ** Menu
 */
 
+#include "Enum.hpp"
 #include "Menu.hpp"
 
 Menu::Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
@@ -54,6 +55,9 @@ void Menu::loadButtons()
     _buttons["menuHelpButton"]->setImage(_textures["menuHelpButton"]);
     _buttons["menuHelpButton"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
 }
+
+void Menu::run()
+{}
 
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 {

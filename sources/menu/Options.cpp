@@ -5,6 +5,7 @@
 ** Options
 */
 
+#include "Enum.hpp"
 #include "Options.hpp"
 
 Options::Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
@@ -63,6 +64,9 @@ void Options::loadButtons()
     _images["sfxVolume"]->setImage(_textures["sfxVolume"]);
     _images["sfxVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 600));
 }
+
+void Options::run()
+{}
 
 std::map<std::string, irr::gui::IGUIButton *> Options::getButtons()
 {
