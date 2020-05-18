@@ -15,46 +15,46 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
             case irr::gui::EGET_BUTTON_CLICKED:
                 _music.playSound("resources/sfx/click.mp3");
                 switch (id) {
-                    case GUI_ID_QUIT_BUTTON:
+                    case IGame::GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
                         return true;
-                    case GUI_ID_SKIN_1:
+                    case IGame::GUI_ID_SKIN_1:
                         _core.getSelect()->incSkin(0);
                         return true;
-                    case GUI_ID_SKIN_2:
+                    case IGame::GUI_ID_SKIN_2:
                         _core.getSelect()->incSkin(1);
                         return true;
-                    case GUI_ID_SKIN_3:
+                    case IGame::GUI_ID_SKIN_3:
                         _core.getSelect()->incSkin(2);
                         return true;
-                    case GUI_ID_SKIN_4:
+                    case IGame::GUI_ID_SKIN_4:
                         _core.getSelect()->incSkin(3);
                         return true;
-                    case GUI_ID_X_1:
+                    case IGame::GUI_ID_X_1:
                         _core.getSelect()->changeRole(0);
                         return true;
-                    case GUI_ID_X_2:
+                    case IGame::GUI_ID_X_2:
                         _core.getSelect()->changeRole(1);
                         return true;
-                    case GUI_ID_X_3:
+                    case IGame::GUI_ID_X_3:
                         _core.getSelect()->changeRole(2);
                         return true;
-                    case GUI_ID_X_4:
+                    case IGame::GUI_ID_X_4:
                         _core.getSelect()->changeRole(3);
                         return true;
-                    case GUI_ID_OPTION_RETURN:
+                    case IGame::GUI_ID_OPTION_RETURN:
                         _core.setState(Core::menuMain);
                         return true;
-                    case GUI_ID_OPTIONS_BUTTON:
+                    case IGame::GUI_ID_OPTIONS_BUTTON:
                         _core.setState(Core::menuOptions);
                         return true;
-                    case GUI_ID_NEW_BUTTON:
+                    case IGame::GUI_ID_NEW_BUTTON:
                         _core.setState(Core::menuSelect);
                         return true;
-                    case GUI_ID_CREDITS_BUTTON:
+                    case IGame::GUI_ID_CREDITS_BUTTON:
                         _core.setState(Core::menuCredits);
                         return true;
-                    case GUI_ID_HELP_BUTTON:
+                    case IGame::GUI_ID_HELP_BUTTON:
                         _core.setState(Core::menuHelp);
                         return true;
                 }

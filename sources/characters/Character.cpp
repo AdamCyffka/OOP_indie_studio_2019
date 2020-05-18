@@ -44,6 +44,7 @@ void Character::setPosition(core::vector3df position)
     _mesh->setPosition(position);
 }
 
+
 void Character::setState(Character::state state)
 {
     switch (state) {
@@ -66,6 +67,11 @@ void Character::setState(Character::state state)
             break;
     }
     _state = state;
+}
+
+void Character::setVisibility(bool state)
+{
+    _mesh->setVisible(false);
 }
 
 void Character::setOrientation(side orientation)
@@ -113,6 +119,11 @@ core::vector3df Character::getPosition() const
 Character::state Character::getState() const
 {
     return _state;
+}
+
+bool Character::getVisibility() const
+{
+    return _mesh->isVisible();
 }
 
 side Character::getOrientation() const

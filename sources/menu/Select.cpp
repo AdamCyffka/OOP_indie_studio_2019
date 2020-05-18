@@ -155,6 +155,11 @@ std::map<std::string, irr::video::ITexture *> Select::getTextures()
     return _textures;
 }
 
+std::vector<Character *> Select::getPreviews()
+{
+    return _previews;
+}
+
 std::vector<std::vector<std::vector<std::string>>> Select::getSelectRole()
 {
     return _selectRole;
