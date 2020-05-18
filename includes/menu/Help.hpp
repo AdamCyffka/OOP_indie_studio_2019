@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 #include "IGame.hpp"
+#include "Character.hpp"
 
 class Help : public IGame {
     public:
@@ -20,6 +21,7 @@ class Help : public IGame {
         void loadButtons();
         void loadTextures();
         void run();
+        std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
     private:

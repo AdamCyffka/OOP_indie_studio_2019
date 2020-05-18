@@ -71,7 +71,7 @@ void Character::setState(Character::state state)
 
 void Character::setVisibility(bool state)
 {
-    _mesh->setVisible(false);
+    _mesh->setVisible(state);
 }
 
 void Character::setOrientation(side orientation)

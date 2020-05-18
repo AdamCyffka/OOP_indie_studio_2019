@@ -37,6 +37,11 @@ void Help::loadButtons()
 void Help::run()
 {}
 
+std::vector<Character *> Help::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Help::getButtons()
 {
     return _buttons;

@@ -58,6 +58,11 @@ void Menu::loadButtons()
 void Menu::run()
 {}
 
+std::vector<Character *> Menu::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 {
     return _buttons;

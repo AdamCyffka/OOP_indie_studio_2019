@@ -8,6 +8,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <typeinfo>
 #include "ProgressBar.hpp"
 #include "MyEventReceiver.hpp"
 #include "Core.hpp"
@@ -332,5 +333,7 @@ void Core::showLayer(T *layer)
 		it.second->setVisible(true);
 	for (auto &it : layer->getImages())
 		it.second->setVisible(true);
+	for (auto &it : layer->getPreviews())
+		it->setVisibility(true);
 }
 
