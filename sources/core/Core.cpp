@@ -46,29 +46,6 @@ Core::Core()
     _options = nullptr;
     _select = nullptr;
     _music = nullptr;
-	// irr::scene::IParticleSystemSceneNode *_fire;
-	// _fire = _smgr->addParticleSystemSceneNode(false);
-	// irr::scene::IParticleEmitter *em = _fire->createBoxEmitter(
-	// 	irr::core::aabbox3d<f32>(-6, 0, -7, 7, 1, 7),
-	// 	irr::core::vector3df(0.0f, 0.01f, 0.0f),
-	// 	80, 600,
-	// 	irr::video::SColor(0, 0, 0, 0),
-	// 	irr::video::SColor(0, 255, 255, 255),
-	// 	600, 1200, 0,
-	// 	irr::core::dimension2df(0.0f, 0.0f),
-	// 	irr::core::dimension2df(30.0f, 30.0f));
-	// _fire->setEmitter(em);
-	// em->drop();
-	// irr::scene::IParticleAffector *paf = _fire->createFadeOutParticleAffector();
-	// _fire->addAffector(paf);
-	// paf->drop();
-
-	// _fire->setPosition(irr::core::vector3df(0, 0, 0));
-	// _fire->setScale(core::vector3df(2, 2, 2));
-	// _fire->setMaterialFlag(video::EMF_LIGHTING, false);
-	// _fire->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	// _fire->setMaterialTexture(0, _driver->getTexture("resources/images/fx/fire.bmp"));
-	// _fire->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 }
 
 Select *Core::getSelect()
@@ -112,8 +89,8 @@ void Core::selectCase()
 
 void Core::pauseCase()
 {
-	if (!_pause)
-        _pause = new Pause(_env, _driver, _smgr);
+	hideLayers();
+	showLayer(_pause);
 }
 
 void Core::optionsCase()
@@ -151,53 +128,46 @@ void Core::init()
 		_splash->getBar()->addBorder(2);
 
 		_splash->getBar()->setProgress(11);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 1) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(22);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 2) {
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(33);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 3) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(44);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	} else if (_initStep == 4) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(55);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	} else if (_initStep == 5) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(66);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 6) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(77);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 7) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(88);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 8) {
-		if (!_music) {
+		if (!_music)
 			_music = new Music();
-		}
-		_splash->getBar()->setProgress(100);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		_splash->getBar()->setProgress(95);
+	// } else if (_initStep == 9) {
+	// 	if (!_pause)
+	// 		_pause = new Pause();
+	// 	_splash->getBar()->setProgress(100);
 	} else {
 		_isInitialized = true;
-		if (_loadmap) {
+		if (_loadmap)
 			_loadmap->run();
-		}
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
 	}
@@ -210,25 +180,30 @@ int Core::run()
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
 
-	// core::stringw str = L"Irrlicht Engine [";
-	// str += _driver->getName();
-	// str += L"] FPS: ";
-	// str += (s32)_driver->getFPS();
-	// _window->setWindowCaption(str.c_str());
-	// _env->addStaticText(str.c_str(), irr::core::rect<s32>(150,20,350,40));
+	irr::gui::IGUISkin* skin = _env->getSkin();
+    irr::gui::IGUIFont* font = _env->getFont("resources/fonts/font.bmp");
+    if (font)
+        skin->setFont(font);
+    skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
+
+	core::stringw str = L"Irrlicht Engine [";
+	str += _driver->getName();
+	str += L"] FPS: ";
+	str += (s32)_driver->getFPS();
+	_window->setWindowCaption(str.c_str());
+	irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
 
-		// str = L"Irrlicht Engine [";
-		// str += _driver->getName();
-		// str += L"] FPS: ";
-		// str += (s32)_driver->getFPS();
-		// _window->setWindowCaption(str.c_str());
-		// _env->addStaticText(str.c_str(), irr::core::rect<s32>(150,20,350,40));
-
+		str = L"Irrlicht Engine [";
+		str += _driver->getName();
+		str += L"] FPS: ";
+		str += (s32)_driver->getFPS();
+		_window->setWindowCaption(str.c_str());
+		fpsText->setText(str.c_str());
 		_smgr->drawAll();
 		_env->drawAll();
 		_driver->endScene();
@@ -322,6 +297,12 @@ void Core::hideLayers()
 		for (auto &it : _help->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _help->getImages())
+			it.second->setVisible(false);
+	}
+	if (_pause) {
+		for (auto &it : _pause->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _pause->getImages())
 			it.second->setVisible(false);
 	}
 }
