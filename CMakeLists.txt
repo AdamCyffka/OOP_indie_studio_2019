@@ -29,6 +29,7 @@ add_executable(bomberman
         sources/characters/Character.cpp
         sources/music/Music.cpp
         sources/traveling/CircleCameraTraveling.cpp
+        sources/input/Input.cpp
         )
 
 set_target_properties(bomberman PROPERTIES
@@ -46,6 +47,7 @@ include_directories(includes/menu/)
 include_directories(includes/characters/)
 include_directories(includes/music/)
 include_directories(includes/traveling/)
+include_directories(includes/input/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST
