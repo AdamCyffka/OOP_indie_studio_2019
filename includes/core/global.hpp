@@ -15,7 +15,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
         "waluigi", // STRING
         { // MODELINFOS_T
-            "resources/models/characters/waluigi/waluigi.MD3", // MODEL MD3
+            "resources/models/characters/waluigi/waluigi.md3", // MODEL MD3
             {
                 "resources/models/characters/waluigi/Tex_0001_0.png", // TEXTURES
                 "resources/models/characters/waluigi/Tex_0002_0.png",
@@ -32,7 +32,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
         "dr_peach", // STRING
         { // MODELINFOS_T
-            "resources/models/characters/dr_peach/dr_peach.MD3", // MODEL MD3
+            "resources/models/characters/dr_peach/dr_peach.md3", // MODEL MD3
             {
                 "resources/models/characters/dr_peach/dr.peach_crown_dif.png", // TEXTURES
                 "resources/models/characters/dr_peach/dr_peach_di.png"
@@ -48,7 +48,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
         "koopa", // STRING
         { // MODELINFOS_T
-            "resources/models/characters/koopa/koopa.MD3", // MODEL MD3
+            "resources/models/characters/koopa/koopa.md3", // MODEL MD3
             {
                 "resources/models/characters/koopa/koopaBody.png", // TEXTURES
                 "resources/models/characters/koopa/koopaFace.png"
@@ -64,7 +64,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
         "lakitu", // STRING
         { // MODELINFOS_T
-            "resources/models/characters/lakitu/lakitu.MD3", // MODEL MD3
+            "resources/models/characters/lakitu/lakitu.md3", // MODEL MD3
             {
                 "resources/models/characters/lakitu/lakituFace.png", // TEXTURES
                 "resources/models/characters/lakitu/lakituBody.png"
@@ -80,7 +80,7 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
         "mario", // STRING
         { // MODELINFOS_T
-            "resources/models/characters/mario/mario.MD3", // MODEL MD3
+            "resources/models/characters/mario/mario.md3", // MODEL MD3
             {
                 "resources/models/characters/mario/mario_eye.0.png", // TEXTURES
                 "resources/models/characters/mario/mario_all.png"
@@ -91,34 +91,6 @@ extern const std::map<std::string, modelInfos_t> g_modelInfos = {
             {282, 368}, // DEAD
             {369, 423}, // VICTORY
             20 // SCALE SIZE
-        }
-    },
-    {
-        "yoshi", // STRING
-        { // MODELINFOS_T
-            "resources/models/characters/yoshi/yoshi.MD3", // MODEL MD3
-            {
-                "resources/models/characters/yoshi/yoshi.png", // TEXTURES
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-                "resources/models/characters/yoshi/yoshi.png",
-            },
-            {0, 120}, // IDLE
-            {121, 142}, // RUNNING
-            {143, 281}, // DYING
-            {282, 342}, // DEAD
-            {343, 666}, // VICTORY
-            15 // SCALE SIZE
         }
     }
 };
