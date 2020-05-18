@@ -25,11 +25,13 @@ void LoadMap::run()
 	irr::scene::ISceneNode *dreadnoughtPlanet;
 	irr::scene::ISceneNode *dustyPlanet;
 	irr::scene::ISceneNode *gatewayPlanet;
+	irr::scene::ISceneNode *beanPlanet;
 	irr::scene::ISceneNode *plateA;
 	irr::scene::ISceneNode *plateB;
 	irr::scene::ISceneNodeAnimator *animA;
 	irr::scene::ISceneNodeAnimator *animB;
 	irr::scene::ISceneNodeAnimator *rotatePlanet;
+	irr::scene::ISceneNodeAnimator *core;
 	irr::scene::ISceneNode *light;
 
 	// camera
@@ -39,7 +41,7 @@ void LoadMap::run()
 
 	// observatory
 	observatory = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/observatory.obj"));
-	observatory->setPosition({0, 0, 0}); // pas toucher au y
+	observatory->setPosition({0, 0, 0});
 	observatory->setScale({5, 5, 5});
 	if (observatory) {
 		observatory->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -47,10 +49,19 @@ void LoadMap::run()
 
 	// arena
 	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));
-	arena->setPosition({-500, 300, 700}); // pas toucher au y
+	arena->setPosition({-500, 300, 700});
 	arena->setScale({0.05, 0.05, 0.05});
 	if (arena) {
 		arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	}
+
+	// beanPlanet
+	beanPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/bean_planet/bean_planet.obj"));
+	beanPlanet->setPosition({200, 300, 1000});
+	beanPlanet->setRotation({0, 200, 0});
+	beanPlanet->setScale({5, 5, 5});
+	if (beanPlanet) {
+		beanPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	}
 
 	// towerPlanet
@@ -94,7 +105,7 @@ void LoadMap::run()
 	plateA = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateA.obj"));
 	plateA->setPosition({0, 0, 0});
 	plateA->setScale({3, 3, 3});
-	animA = _smgr->createRotationAnimator({0, 0.3, 0});
+	animA = _smgr->createRotationAnimator({0, -0.2, 0});
 	plateA->addAnimator(animA);
 	animA->drop();
 
@@ -102,7 +113,7 @@ void LoadMap::run()
 	plateB = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateB.obj"));
 	plateB->setPosition({0, 10, 0});
 	plateB->setScale({3, 3, 3});
-	animB = _smgr->createRotationAnimator({0, 0.1, 0});
+	animB = _smgr->createRotationAnimator({0, -0.1, 0});
 	plateB->addAnimator(animB);
 	animB->drop();
 
@@ -116,7 +127,12 @@ void LoadMap::run()
 	// light core
 	light = _smgr->addLightSceneNode(0, {0, 50, 0}, {240, 248, 255, 0}, 800);
 	irr::scene::IParticleSystemSceneNode *ps = _smgr->addParticleSystemSceneNode(false, light);
-	irr::scene::IParticleEmitter *em = ps->createBoxEmitter({-3, 0, -3, 3, 1, 3}, {0, 0, 0}, 20, 30, {10, 255, 255, 255}, {10, 255, 255, 255}, 400, 1100);
+	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+        core::aabbox3d<f32>(-3,0,-3,3,1,3),
+        core::vector3df(0.0f,0.03f,0.0f),
+        80,100,
+        video::SColor(10,255,255,255), video::SColor(10,255,255,255),
+        400,1100);
 	em->setMinStartSize({30, 40});
 	em->setMaxStartSize({30, 40});
 	ps->setEmitter(em);
@@ -125,6 +141,9 @@ void LoadMap::run()
 	ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	ps->setMaterialTexture(0, _driver->getTexture("resources/images/fx/fireball.bmp"));
 	ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+	core = _smgr->createFlyCircleAnimator(core::vector3df(0,0,0), 70.0f,
+            0.001f, core::vector3df(0.2f, 0.9f, 0.f));
+    core->drop();
 
 	// gameMap
 	loadGameMap(-500, 300, 1000);

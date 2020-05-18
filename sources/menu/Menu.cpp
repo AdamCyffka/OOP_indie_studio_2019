@@ -25,6 +25,7 @@ void Menu::loadTextures()
     _textures["menuCreditsButton"] = _driver->getTexture("resources/images/buttons/credits.png");
     _textures["menuExitButton"] = _driver->getTexture("resources/images/buttons/leave.png");
     _textures["menuExitPressedButton"] = _driver->getTexture("resources/images/buttons/back.png");
+    _textures["menuHelpButton"] = _driver->getTexture("resources/images/buttons/help.png");
 }
 
 void Menu::loadButtons()
@@ -41,16 +42,28 @@ void Menu::loadButtons()
     _buttons["menuOptions"]->setImage(_textures["menuOptionsButton"]);
     _buttons["menuOptions"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 550));
 
-    _buttons["menuCredits"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_HELP_BUTTON, L"");
+    _buttons["menuCredits"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_CREDITS_BUTTON, L"");
     _buttons["menuCredits"]->setImage(_textures["menuCreditsButton"]);
-    _buttons["menuCredits"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
+    _buttons["menuCredits"]->setRelativePosition(irr::core::position2d<irr::s32>(1680, 945));
 
     _buttons["menuExit"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_QUIT_BUTTON, L"");
     _buttons["menuExit"]->setImage(_textures["menuExitButton"]);
-    _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800)); // WIN_WIDTH / 2 - 107.5
+    _buttons["menuExit"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
+
+    _buttons["menuHelpButton"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_HELP_BUTTON, L"");
+    _buttons["menuHelpButton"]->setImage(_textures["menuHelpButton"]);
+    _buttons["menuHelpButton"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
 }
+
+void Menu::run()
+{}
 
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 {
     return _buttons;
+}
+
+std::map<std::string, irr::gui::IGUIImage *> Menu::getImages()
+{
+	return _images;
 }

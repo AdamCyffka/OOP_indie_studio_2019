@@ -44,14 +44,15 @@ void Character::setPosition(core::vector3df position)
     _mesh->setPosition(position);
 }
 
+
 void Character::setState(Character::state state)
 {
     switch (state) {
         case Character::state::idle:
             _mesh->setFrameLoop(_model.idleLoop.first, _model.idleLoop.second);
             break;
-        case Character::state::moving:
-            _mesh->setFrameLoop(_model.movingLoop.first, _model.movingLoop.second);
+        case Character::state::running:
+            _mesh->setFrameLoop(_model.runningLoop.first, _model.runningLoop.second);
             break;
         case Character::state::dying:
             _mesh->setFrameLoop(_model.dyingLoop.first, _model.dyingLoop.second);
@@ -66,6 +67,11 @@ void Character::setState(Character::state state)
             break;
     }
     _state = state;
+}
+
+void Character::setVisibility(bool state)
+{
+    _mesh->setVisible(false);
 }
 
 void Character::setOrientation(side orientation)
@@ -115,6 +121,11 @@ Character::state Character::getState() const
     return _state;
 }
 
+bool Character::getVisibility() const
+{
+    return _mesh->isVisible();
+}
+
 side Character::getOrientation() const
 {
     return _orientation;
@@ -145,10 +156,10 @@ bool Character::moveTo(core::vector3df position, int travelingTime)
 {
     core::vector3df currentPosition = getPosition();
     scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelingTime != 0) ? travelingTime : _travelingTime, false);
-    
+
     if (animation) {
         if (_mesh) {
-            setState(Character::state::moving);
+            setState(Character::state::running);
             setOrientation(getOrientationFromPath(currentPosition, position));
             _mesh->addAnimator(animation);
 

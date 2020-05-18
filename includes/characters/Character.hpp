@@ -24,7 +24,7 @@ class Character {
 
         enum state {
             idle,
-            moving,
+            running,
             dying,
             dead,
             victory
@@ -34,6 +34,7 @@ class Character {
         void setSize(int size);
         void setPosition(core::vector3df position);
         void setState(Character::state state);
+        void setVisibility(bool visibility);
         void setOrientation(side side);
         void setAnimationSpeed(int animationSpeed);
         void setTravelingTime(int travelingTime);
@@ -42,6 +43,7 @@ class Character {
         int getSize() const;
         core::vector3df getPosition() const;
         Character::state getState() const;
+        bool getVisibility() const;
         side getOrientation() const;
         int getAnimationSpeed() const;
         int getTravelingTime() const;

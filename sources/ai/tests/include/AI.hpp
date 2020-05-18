@@ -39,6 +39,13 @@ public:
     void chooseMovementTo(AI *secondPlayer);
     int canPoseBomb(AI *secondPlayer);
     void poseBomb(int ***map);
+    void moveRandomly(int ***map);
+    void moveDependingOfWishMovement();
+    int canStillMove(int **map);
+    void choseAMove(int **map);
+    int canSaflyPoseABomb(int **map);
+    int findBreakableWall(int **map);
+    int onlyWay(int **map, int multX, int multY);
 
 protected:
 private:
@@ -49,6 +56,7 @@ private:
     horMovement _horMovement = horMovement::idleHor;
     verMovement _verMovement = verMovement::idleVer;
     bestMovement _lastMovement = bestMovement::idleB;
+    wishMovement _wishMovement = wishMovement::idleW;
 };
 
 #endif /* !CLASSEAI_HPP_ */

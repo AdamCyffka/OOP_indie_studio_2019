@@ -8,19 +8,18 @@
 #include <iostream>
 #include "Core.hpp"
 
-int main(int ac, char** av)
+int main(int ac, char **av)
 {
 	if (ac != 1) {
-    	std::cerr << "Error : " << av[0] << " does not take any argument !" << std::endl;
-    	return (84);
-    }
+		std::cerr << "Error : " << av[0] << " does not take any argument !" << std::endl;
+		return (84);
+	}
 	try {
 		Core launch;
 		launch.run();
-    }
-  	catch (std::exception const &msg) {
-    	std::cerr << msg.what() << std::endl;
-    	return (84);
-    }
-  	return (0);
+	} catch (std::exception const &msg) {
+		std::cerr << msg.what() << std::endl;
+		return (84);
+	}
+	return (0);
 }

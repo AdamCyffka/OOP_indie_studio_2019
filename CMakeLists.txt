@@ -7,7 +7,6 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
 set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
-set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 find_package(Irrlicht REQUIRED)
 #find_package(Boost 1.69 REQUIRED /* COMPOSANTS REQUIS ICI*/) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST (n'oubliez pas d'insérer les composants)
@@ -19,11 +18,17 @@ add_executable(bomberman
         sources/map/Map.cpp
         sources/map/LoadMap.cpp
         sources/menu/Options.cpp
+        sources/menu/Splash.cpp
         sources/menu/Select.cpp
+        sources/menu/Intro.cpp
+        sources/menu/Credits.cpp
         sources/menu/Help.cpp
+        sources/menu/Pause.cpp
         sources/menu/MyEventReceiver.cpp
+        sources/menu/ProgressBar.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
+        sources/traveling/CircleCameraTraveling.cpp
         )
 
 set_target_properties(bomberman PROPERTIES
@@ -37,10 +42,10 @@ target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
 include_directories(includes)
 include_directories(includes/map)
 include_directories(includes/core/)
-include_directories(includes/intro/)
 include_directories(includes/menu/)
 include_directories(includes/characters/)
 include_directories(includes/music/)
+include_directories(includes/traveling/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST

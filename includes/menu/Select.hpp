@@ -15,14 +15,17 @@
 #include "Character.hpp"
 #include "IGame.hpp"
 
-class Select {
+class Select : public IGame {
     public:
         Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Select() = default;
+        void run();
 
         // Getter
-        std::map<std::string, irr::gui::IGUIButton *> getButtons();
+		std::map<std::string, irr::gui::IGUIImage *> getImages();
+		std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::video::ITexture *> getTextures();
+        std::vector<Character *> getPreviews();
         std::vector<std::vector<std::vector<std::string>>> getSelectRole();
         std::vector<std::vector<int>> getNbRole(); 
 
@@ -42,13 +45,14 @@ class Select {
 
         std::vector<int> _pos;
         std::vector<bool> _playersIA;
-        std::map<std::string, irr::video::ITexture *> _textures;
+		std::map<std::string, irr::gui::IGUIImage *> _images;
+		std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::vector<Character *> _previews;
-        std::vector<std::pair<std::string, bool>> selectTab;
-        std::vector<std::vector<std::vector<std::string>>> selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
+        std::vector<std::pair<std::string, bool>> _selectTab;
+        std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
         int nbSkin[4] = {0, 1, 2, 3};
-        std::vector<std::vector<int>> nbRole {
+        std::vector<std::vector<int>> _nbRole {
             {0, 1},
             {1, 0},
             {1, 0},
