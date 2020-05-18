@@ -15,7 +15,7 @@
 #include "Character.hpp"
 #include "IGame.hpp"
 
-class Select {
+class Select : public IGame {
     public:
         Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Select() = default;
@@ -25,6 +25,7 @@ class Select {
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::video::ITexture *> getTextures();
+        std::vector<Character *> getPreviews();
         std::vector<std::vector<std::vector<std::string>>> getSelectRole();
         std::vector<std::vector<int>> getNbRole(); 
 

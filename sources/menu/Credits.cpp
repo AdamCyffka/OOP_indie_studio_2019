@@ -5,7 +5,6 @@
 ** Help
 */
 
-#include "Enum.hpp"
 #include "Credits.hpp"
 
 Credits::Credits(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)

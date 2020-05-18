@@ -5,7 +5,6 @@
 ** Help
 */
 
-#include "Enum.hpp"
 #include "Help.hpp"
 
 Help::Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)

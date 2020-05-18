@@ -5,7 +5,6 @@
 ** Pause
 */
 
-#include "Enum.hpp"
 #include "Pause.hpp"
 
 Pause::Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)

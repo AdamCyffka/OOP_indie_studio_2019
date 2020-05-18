@@ -5,7 +5,6 @@
 ** Select
 */
 
-#include "Enum.hpp"
 #include "global.hpp"
 #include "Select.hpp"
 
@@ -165,6 +164,11 @@ std::map<std::string, irr::gui::IGUIImage *> Select::getImages()
 std::map<std::string, irr::video::ITexture *> Select::getTextures()
 {
     return _textures;
+}
+
+std::vector<Character *> Select::getPreviews()
+{
+    return _previews;
 }
 
 std::vector<std::vector<std::vector<std::string>>> Select::getSelectRole()

@@ -5,7 +5,6 @@
 ** Options
 */
 
-#include "Enum.hpp"
 #include "Options.hpp"
 
 Options::Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)

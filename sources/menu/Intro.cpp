@@ -5,7 +5,6 @@
 ** Intro
 */
 
-#include "Enum.hpp"
 #include "CircleCameraTraveling.hpp"
 #include "Intro.hpp"
 
@@ -31,7 +30,7 @@ void Intro::loadTextures()
 
 void Intro::loadButtons()
 {
-    _buttons["press"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_INTRO_BUTTON, L"");
+    _buttons["press"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, IGame::GUI_ID_INTRO_BUTTON, L"");
     _buttons["press"]->setImage(_textures["press"]);
     _buttons["press"]->setRelativePosition(irr::core::position2d<irr::s32>(790, 800));
 }

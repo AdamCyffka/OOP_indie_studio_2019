@@ -5,7 +5,6 @@
 ** Menu
 */
 
-#include "Enum.hpp"
 #include "Menu.hpp"
 
 Menu::Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)

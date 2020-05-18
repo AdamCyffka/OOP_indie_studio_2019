@@ -283,6 +283,8 @@ void Core::hideLayers()
 			it.second->setVisible(false);
 		for (auto &it : _select->getImages())
 			it.second->setVisible(false);
+		for (auto &it : _select->getPreviews())
+			it->setVisibility(false);
 	}
 	if (_credits) {
 		for (auto &it : _credits->getButtons())
@@ -312,3 +314,4 @@ void Core::showLayer(T *layer)
 	for (auto &it : layer->getImages())
 		it.second->setVisible(true);
 }
+

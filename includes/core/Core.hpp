@@ -62,8 +62,7 @@ class Core {
     private:
 		void init();
 		void hideLayers();
-		template<typename T>
-		void showLayer(T *page);
+		template<typename T> void showLayer(T *layer);
 		void drawScene();
 		void drawLayer();
         Intro *_intro;
