@@ -37,6 +37,11 @@ void Credits::loadButtons()
 void Credits::run()
 {}
 
+std::vector<Character *> Credits::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Credits::getButtons()
 {
     return _buttons;

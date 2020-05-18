@@ -10,6 +10,7 @@
 
 #include <map>
 #include <string>
+#include "Character.hpp"
 #include "IGame.hpp"
 
 class Pause : public IGame {
@@ -20,6 +21,7 @@ class Pause : public IGame {
         void loadButtons();
         void loadTextures();
         void run();
+        std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
     private:

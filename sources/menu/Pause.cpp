@@ -52,6 +52,11 @@ void Pause::loadButtons()
 void Pause::run()
 {}
 
+std::vector<Character *> Pause::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Pause::getButtons()
 {
     return _buttons;

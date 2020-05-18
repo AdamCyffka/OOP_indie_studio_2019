@@ -67,6 +67,11 @@ void Options::loadButtons()
 void Options::run()
 {}
 
+std::vector<Character *> Options::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Options::getButtons()
 {
     return _buttons;

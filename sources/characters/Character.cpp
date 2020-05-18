@@ -11,18 +11,19 @@ Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver
 : _sManager(sManager), _driver(driver), _model(model), _name(name), _travelingTime(travelingTime), _orientation(orientation)
 {
     _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));
+    if (!_mesh)
+        throw CharacterException("Unable to create mesh with model " + _model.filename);
     _mesh->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     for (std::size_t i = 0; i < _model.textures.size(); i++) {
         video::ITexture *texture = _driver->getTexture(_model.textures[i].c_str());
         if (texture && _mesh) {
             _driver->removeTexture(texture);
             texture = _driver->getTexture(_model.textures[i].c_str());
-            _mesh->getMaterial(i).setTexture(0, texture);
+            _mesh->getMaterial(u32(i)).setTexture(0, texture);
         }
     }
-    std::cout << name <<" : j'ai " << std::to_string(_mesh->getMaterialCount()) << " materials"<< std::endl;
     setOrientation(orientation);
-    setPosition(core::vector3df{0, 0, 0});
+    setPosition(core::vector3df{0.0f, 0.0f, 0.0f});
     setSize(_model.size);
     setAnimationSpeed(30);
     setState(Character::state::idle);
@@ -34,7 +35,7 @@ Character::~Character()
 }
 
 //setters
-void Character::setSize(int size)
+void Character::setSize(f32 size)
 {
     _mesh->setScale(core::vector3df(size, size, size));
 }
@@ -71,23 +72,23 @@ void Character::setState(Character::state state)
 
 void Character::setVisibility(bool state)
 {
-    _mesh->setVisible(false);
+    _mesh->setVisible(state);
 }
 
 void Character::setOrientation(side orientation)
 {
     switch (orientation) {
         case side::north:
-            _mesh->setRotation(core::vector3df(0, 0, 0));
+            _mesh->setRotation(core::vector3df(0.0f, 0.0f, 0.0f));
             break;
         case side::south:
-            _mesh->setRotation(core::vector3df(0, 180, 0));
+            _mesh->setRotation(core::vector3df(0.0f, 180.0f, 0.0f));
             break;
         case side::east:
-            _mesh->setRotation(core::vector3df(0, 90, 0));
+            _mesh->setRotation(core::vector3df(0.0f, 90.0f, 0.0f));
             break;
         case side::west:
-            _mesh->setRotation(core::vector3df(0, -90, 0));
+            _mesh->setRotation(core::vector3df(0.0f, -90.0f, 0.0f));
             break;
         default:
             break;
@@ -95,18 +96,18 @@ void Character::setOrientation(side orientation)
     _orientation = orientation;
 }
 
-void Character::setAnimationSpeed(int animationSpeed)
+void Character::setAnimationSpeed(f32 animationSpeed)
 {
     _mesh->setAnimationSpeed(animationSpeed);
 }
 
-void Character::setTravelingTime(int travelingTime)
+void Character::setTravelingTime(u32 travelingTime)
 {
     _travelingTime = travelingTime;
 }
 
 //getters
-int Character::getSize() const
+float Character::getSize() const
 {
     return _model.size;
 }
@@ -131,12 +132,12 @@ side Character::getOrientation() const
     return _orientation;
 }
 
-int Character::getAnimationSpeed() const
+f32 Character::getAnimationSpeed() const
 {
     return _mesh->getAnimationSpeed();
 }
 
-int Character::getTravelingTime() const
+u32 Character::getTravelingTime() const
 {
     return _travelingTime;
 }
@@ -152,7 +153,7 @@ side Character::getOrientationFromPath(core::vector3df posA, core::vector3df pos
         return _orientation;
 }
 
-bool Character::moveTo(core::vector3df position, int travelingTime)
+bool Character::moveTo(core::vector3df position, u32 travelingTime)
 {
     core::vector3df currentPosition = getPosition();
     scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelingTime != 0) ? travelingTime : _travelingTime, false);
@@ -172,4 +173,37 @@ bool Character::moveTo(core::vector3df position, int travelingTime)
         throw CharacterException("Cannot create a fly straight animator from the scene manager");
     }
     return true;
+}
+
+
+void Character::changeModel(modelInfos_t model)
+{
+    side orientation = getOrientation();
+    core::vector3df position = getPosition();
+    float size = getSize();
+    f32 animationSpeed = getAnimationSpeed();
+    Character::state state = getState();
+
+    _model = model;
+    if (_mesh) {
+        _mesh->drop();
+        _mesh = nullptr;
+    }
+    _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));
+    if (!_mesh)
+        throw CharacterException("Unable to create mesh with model " + _model.filename);
+    _mesh->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+    for (std::size_t i = 0; i < _model.textures.size(); i++) {
+        video::ITexture *texture = _driver->getTexture(_model.textures[i].c_str());
+        if (texture && _mesh) {
+            _driver->removeTexture(texture);
+            texture = _driver->getTexture(_model.textures[i].c_str());
+            _mesh->getMaterial(u32(i)).setTexture(0, texture);
+        }
+    }
+    setOrientation(orientation);
+    setPosition(position);
+    setSize(size);
+    setAnimationSpeed(animationSpeed);
+    setState(state);
 }

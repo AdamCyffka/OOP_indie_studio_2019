@@ -31,25 +31,26 @@ class Character {
         };
 
         //setters
-        void setSize(int size);
+        void setSize(f32 size);
         void setPosition(core::vector3df position);
         void setState(Character::state state);
         void setVisibility(bool visibility);
         void setOrientation(side side);
-        void setAnimationSpeed(int animationSpeed);
-        void setTravelingTime(int travelingTime);
+        void setAnimationSpeed(f32 animationSpeed);
+        void setTravelingTime(u32 travelingTime);
 
         //getters
-        int getSize() const;
+        float getSize() const;
         core::vector3df getPosition() const;
         Character::state getState() const;
         bool getVisibility() const;
         side getOrientation() const;
-        int getAnimationSpeed() const;
-        int getTravelingTime() const;
+        f32 getAnimationSpeed() const;
+        u32 getTravelingTime() const;
 
         //methods
-        bool moveTo(core::vector3df position, int travelingTime = 0);
+        bool moveTo(core::vector3df position, u32 travelingTime = 0);
+        void changeModel(modelInfos_t model);
     protected:
     private:
         //attributes

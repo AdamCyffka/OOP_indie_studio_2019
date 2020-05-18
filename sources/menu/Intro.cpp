@@ -38,6 +38,11 @@ void Intro::loadButtons()
 void Intro::run()
 {}
 
+std::vector<Character *> Intro::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Intro::getButtons()
 {
     return _buttons;

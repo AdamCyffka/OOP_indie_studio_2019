@@ -36,6 +36,11 @@ void Splash::loadButtons()
 void Splash::run()
 {}
 
+std::vector<Character *> Splash::getPreviews()
+{
+    return {};
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Splash::getButtons()
 {
 	return _buttons;
