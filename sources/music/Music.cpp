@@ -6,12 +6,13 @@
 */
 
 #include <iostream>
-#include "music/MusicException.hpp"
+#include "MusicException.hpp"
 #include "Music.hpp"
 
 Music::Music()
 {
 	_engine = irrklang::createIrrKlangDevice();
+	_engine->setSoundVolume(0.3);
 }
 
 Music::~Music()

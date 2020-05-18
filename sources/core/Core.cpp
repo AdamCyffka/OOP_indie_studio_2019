@@ -203,6 +203,7 @@ int Core::run()
 		str += (s32)_driver->getFPS();
 		_window->setWindowCaption(str.c_str());
 		fpsText->setText(str.c_str());
+
 		_smgr->drawAll();
 		_env->drawAll();
 		_driver->endScene();
