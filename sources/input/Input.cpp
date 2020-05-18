@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "../../includes/input/Input.hpp"
+#include "Input.hpp"
 
 
 using namespace irr;
@@ -91,6 +91,11 @@ void Input::keyBoard (Input receiver)
 		
 }
 
+bool Input::IsKeyPressed(Input receiver)
+{
+	return _keyIsPressed;
+}
+
 const SEvent::SJoystickEvent &Input::GetJoystickStatePone(void) const
 {
     return JoystickStatePone;
@@ -109,8 +114,12 @@ bool Input::OnEvent(const SEvent& event)
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 1) {
         JoystickStatePtwo = event.JoystickEvent;
     }
-	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+		_keyIsPressed = true;
+	} else {
+		_keyIsPressed = false;
+	}
     return false;
 }
 
@@ -126,6 +135,7 @@ Input::Input()
     	KeyIsDown[i] = false;
 	_playerInput[1] = None;
 	_playerInput[2] = None;
+	_keyIsPressed = false;
 }
 
 Input::~Input()
