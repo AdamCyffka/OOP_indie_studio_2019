@@ -8,15 +8,15 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "menu/ProgressBar.hpp"
+#include "ProgressBar.hpp"
+#include "MyEventReceiver.hpp"
 #include "Core.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
-#include "MyEventReceiver.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
-#include "CircleCameraTraveling.hpp"
+#include "Intro.hpp"
 
 Core::Core()
 {
@@ -35,6 +35,7 @@ Core::Core()
 	_gState = menu;
 	_isInitialized = false;
 	_initStep = 0;
+	_intro = nullptr;
     _loadmap = nullptr;
 	_credits = nullptr;
 	_pause = nullptr;
@@ -43,6 +44,30 @@ Core::Core()
     _menu = nullptr;
     _options = nullptr;
     _select = nullptr;
+    _music = nullptr;
+	// irr::scene::IParticleSystemSceneNode *_fire;
+	// _fire = _smgr->addParticleSystemSceneNode(false);
+	// irr::scene::IParticleEmitter *em = _fire->createBoxEmitter(
+	// 	irr::core::aabbox3d<f32>(-6, 0, -7, 7, 1, 7),
+	// 	irr::core::vector3df(0.0f, 0.01f, 0.0f),
+	// 	80, 600,
+	// 	irr::video::SColor(0, 0, 0, 0),
+	// 	irr::video::SColor(0, 255, 255, 255),
+	// 	600, 1200, 0,
+	// 	irr::core::dimension2df(0.0f, 0.0f),
+	// 	irr::core::dimension2df(30.0f, 30.0f));
+	// _fire->setEmitter(em);
+	// em->drop();
+	// irr::scene::IParticleAffector *paf = _fire->createFadeOutParticleAffector();
+	// _fire->addAffector(paf);
+	// paf->drop();
+
+	// _fire->setPosition(irr::core::vector3df(0, 0, 0));
+	// _fire->setScale(core::vector3df(2, 2, 2));
+	// _fire->setMaterialFlag(video::EMF_LIGHTING, false);
+	// _fire->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	// _fire->setMaterialTexture(0, _driver->getTexture("resources/images/fx/fire.bmp"));
+	// _fire->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 }
 
 Select *Core::getSelect()
@@ -55,9 +80,20 @@ Core::layerState Core::getState()
 	return _lState;
 }
 
+Music *Core::getMusicEngine()
+{
+	return _music;
+}
+
 void Core::setState(Core::layerState state)
 {
 	_lState = state;
+}
+
+void Core::introCase()
+{
+	hideLayers();
+	showLayer(_intro);
 }
 
 void Core::menuCase()
@@ -68,6 +104,7 @@ void Core::menuCase()
 
 void Core::selectCase()
 {
+	_select->run();
 	hideLayers();
 	showLayer(_select);
 }
@@ -112,36 +149,47 @@ void Core::init()
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 
-		_splash->getBar()->setProgress(15);
+		_splash->getBar()->setProgress(11);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 1) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(30);
+		_splash->getBar()->setProgress(22);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} else if (_initStep == 2) {
+		if (!_intro)
+			_intro = new Intro(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(33);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	} else if (_initStep == 3) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(45);
+		_splash->getBar()->setProgress(44);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(250));
-	} else if (_initStep == 3) {
+	} else if (_initStep == 4) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(60);
+		_splash->getBar()->setProgress(55);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	} else if (_initStep == 4) {
+	} else if (_initStep == 5) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(75);
-//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	} else if (_initStep == 5) {
-		if (!_help)
-			_help = new Help(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(90);
+		_splash->getBar()->setProgress(66);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else if (_initStep == 6) {
+		if (!_help)
+			_help = new Help(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(77);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	} else if (_initStep == 7) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(88);
+//		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	} else if (_initStep == 8) {
+		if (!_music) {
+			_music = new Music();
+		}
 		_splash->getBar()->setProgress(100);
 //		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	} else {
@@ -150,7 +198,7 @@ void Core::init()
 			_loadmap->run();
 		}
 		_splash->getBar()->setVisible(false);
-		_lState = menuMain;
+		_lState = menuIntro;
 	}
 	_initStep++;
 	hideLayers();
@@ -158,49 +206,28 @@ void Core::init()
 
 int Core::run()
 {
-	// POSITION CAMERA PAS TOUCHER
 	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
 	camera->setFarValue(42000);
-	
-	CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00035);
-	traveling.start(); // commente pour enlever le tourni
 
-	irr::core::vector3df posCam = camera->getPosition();
-	irr::core::vector3df targetCam = camera->getTarget();
-	core::stringw titre = L"POS : X = ";
-	titre += posCam.X;
-	titre += " Y = ";
-	titre += posCam.Y;
-	titre += " Z = ";
-	titre += posCam.Z;
-	titre += " TARGET: X = ";
-	titre += targetCam.X;
-	titre += " Y = ";
-	titre += targetCam.Y;
-	titre += " Z = ";
-	titre += targetCam.Z;
-	_window->setWindowCaption(titre.c_str());
+	// core::stringw str = L"Irrlicht Engine [";
+	// str += _driver->getName();
+	// str += L"] FPS: ";
+	// str += (s32)_driver->getFPS();
+	// _window->setWindowCaption(str.c_str());
+	// _env->addStaticText(str.c_str(), irr::core::rect<s32>(150,20,350,40));
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
-		irr::core::vector3df posCam = camera->getPosition();
-		irr::core::vector3df targetCam = camera->getTarget();
-		titre = L"POS : X = ";
-		titre += posCam.X;
-		titre += " Y = ";
-		titre += posCam.Y;
-		titre += " Z = ";
-		titre += posCam.Z;
 
-		titre += "\nTARGET: X = ";
-		titre += targetCam.X;
-		titre += " Y = ";
-		titre += targetCam.Y;
-		titre += " Z = ";
-		titre += targetCam.Z;
-		_window->setWindowCaption(titre.c_str());
+		// str = L"Irrlicht Engine [";
+		// str += _driver->getName();
+		// str += L"] FPS: ";
+		// str += (s32)_driver->getFPS();
+		// _window->setWindowCaption(str.c_str());
+		// _env->addStaticText(str.c_str(), irr::core::rect<s32>(150,20,350,40));
+
 		_smgr->drawAll();
 		_env->drawAll();
 		_driver->endScene();
@@ -225,6 +252,9 @@ void Core::drawLayer()
 	switch (_lState) {
 		case menuSplash:
 			splashCase();
+			break;
+		case menuIntro:
+			introCase();
 			break;
 		case menuMain:
 			menuCase();
@@ -253,6 +283,12 @@ void Core::hideLayers()
 		for (auto &it : _menu->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _menu->getImages())
+			it.second->setVisible(false);
+	}
+	if (_intro) {
+		for (auto &it : _intro->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _intro->getImages())
 			it.second->setVisible(false);
 	}
 	if (_options) {

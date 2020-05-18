@@ -22,6 +22,7 @@ void Help::loadTextures()
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
     _textures["help"] = _driver->getTexture("resources/images/buttons/credits_us.png");
 }
+
 void Help::loadButtons()
 {
     _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
@@ -32,6 +33,9 @@ void Help::loadButtons()
     _images["help"]->setImage(_textures["help"]);
     _images["help"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
 }
+
+void Help::run()
+{}
 
 std::map<std::string, irr::gui::IGUIButton *> Help::getButtons()
 {

@@ -55,6 +55,9 @@ void Menu::loadButtons()
     _buttons["menuHelpButton"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
 }
 
+void Menu::run()
+{}
+
 std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 {
     return _buttons;

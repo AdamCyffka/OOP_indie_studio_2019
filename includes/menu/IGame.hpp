@@ -10,7 +10,6 @@
 
 #include <irrlicht.h>
 
-
 class IGame {
     public:
         enum button {
@@ -30,6 +29,7 @@ class IGame {
             GUI_ID_OPTION_PLUS_SFX_BUTTON,
             GUI_ID_OPTION_MINUS_SFX_BUTTON,
             GUI_ID_SELECT_PLAY,
+            GUI_ID_INTRO_BUTTON,
             GUI_ID_SKIN_1,
             GUI_ID_SKIN_2,
             GUI_ID_SKIN_3,
@@ -52,6 +52,7 @@ class IGame {
 
         virtual void loadButtons() = 0;
         virtual void loadTextures() = 0;
+        virtual void run() = 0;
 };
 
 #endif /* !IGAME_HPP_ */

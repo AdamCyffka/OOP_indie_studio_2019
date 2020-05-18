@@ -25,6 +25,7 @@ void Pause::loadTextures()
     _textures["bachToMenu"] = _driver->getTexture("resources/images/buttons/back.png");
     _textures["backToDesktop"] = _driver->getTexture("resources/images/buttons/leave.png");
 }
+
 void Pause::loadButtons()
 {
     _buttons["resume"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_RESUME_BUTTON, L"");
@@ -47,6 +48,9 @@ void Pause::loadButtons()
     _buttons["backToDesktop"]->setImage(_textures["backToDesktop"]);
     _buttons["backToDesktop"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 600));
 }
+
+void Pause::run()
+{}
 
 std::map<std::string, irr::gui::IGUIButton *> Pause::getButtons()
 {

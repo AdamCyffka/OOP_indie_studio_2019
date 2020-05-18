@@ -156,7 +156,7 @@ bool Character::moveTo(core::vector3df position, int travelingTime)
 {
     core::vector3df currentPosition = getPosition();
     scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelingTime != 0) ? travelingTime : _travelingTime, false);
-    
+
     if (animation) {
         if (_mesh) {
             setState(Character::state::running);

@@ -22,6 +22,7 @@ void Credits::loadTextures()
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
     _textures["credits"] = _driver->getTexture("resources/images/buttons/credits_us.png");
 }
+
 void Credits::loadButtons()
 {
     _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
@@ -32,6 +33,9 @@ void Credits::loadButtons()
     _images["credits"]->setImage(_textures["credits"]);
     _images["credits"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
 }
+
+void Credits::run()
+{}
 
 std::map<std::string, irr::gui::IGUIButton *> Credits::getButtons()
 {
