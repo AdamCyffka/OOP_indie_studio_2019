@@ -8,135 +8,107 @@
 #include <iostream>
 #include "../../includes/input/Input.hpp"
 
+
 using namespace irr;
-/*
-void Joystick (IrrlichtDevice* device, Input receiver) //Fonction de l'exemple
-{
-    core::array<SJoystickInfo> joystickInfo;
-    
-    if(device->activateJoysticks(joystickInfo))
-    {
-        std::cout << "Joystick support is enabled and " << joystickInfo.size() << " joystick(s) are present." << std::endl;
-
-        for (u32 joystick = 0; joystick < joystickInfo.size(); ++joystick) {
-            std::cout << "Joystick " << joystick << ":" << std::endl;
-            std::cout << "\tName: '" << joystickInfo[joystick].Name.c_str() << "'" << std::endl;
-            std::cout << "\tAxes: " << joystickInfo[joystick].Axes << std::endl;
-            std::cout << "\tButtons: " << joystickInfo[joystick].Buttons << std::endl;
-
-            std::cout << "\tHat is: ";
-
-            switch(joystickInfo[joystick].PovHat)
-            {
-            case SJoystickInfo::POV_HAT_PRESENT:
-                std::cout << "present" << std::endl;
-                break;
-
-            case SJoystickInfo::POV_HAT_ABSENT:
-                std::cout << "absent" << std::endl;
-                break;
-
-            case SJoystickInfo::POV_HAT_UNKNOWN:
-            default:
-                std::cout << "unknown" << std::endl;
-                break;
-            }
-        }
-    } else {
-        std::cout << "Joystick support is not enabled." << std::endl;
-    }
-
-    core::stringw tmp = L"Irrlicht Joystick Example (";
-    tmp += joystickInfo.size();
-    tmp += " joysticks)";
-    
-    
-    bool movedWithJoystick = false;
-        
-    if(joystickInfo.size() > 0)
-    {
-        f32 moveHorizontal = 0.f; // Range is -1.f for full left to +1.f for full right
-        f32 moveVertical = 0.f; // -1.f for full down to +1.f for full up.
-
-        const SEvent::SJoystickEvent & joystickData = receiver.GetJoystickState();
-
-        // We receive the full analog range of the axes, and so have to implement our
-        // own dead zone.  This is an empirical value, since some joysticks have more
-        // jitter or creep around the center point than others.  We'll use 5% of the
-        // range as the dead zone, but generally you would want to give the user the
-        // option to change this.
-        const f32 DEAD_ZONE = 0.05f;
-
-        moveHorizontal = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
-        if(fabs(moveHorizontal) < DEAD_ZONE)
-            moveHorizontal = 0.f;
-        moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
-        if(fabs(moveVertical) < DEAD_ZONE)
-            moveVertical = 0.f;
-
-        // POV hat info is only currently supported on Windows, but the value is
-        // guaranteed to be 65535 if it's not supported, so we can check its range.
-        const u16 povDegrees = joystickData.POV / 100;
-        if(povDegrees < 360)
-        {
-            if(povDegrees > 0 && povDegrees < 180)
-                moveHorizontal = 1.f;
-            else if(povDegrees > 180)
-                moveHorizontal = -1.f;
-            if(povDegrees > 90 && povDegrees < 270)
-                moveVertical = -1.f;
-            else if(povDegrees > 270 || povDegrees < 90)
-                moveVertical = +1.f;
-        }
-    }
-}*/
 
 bool Input::IsKeyDown(EKEY_CODE keyCode) const {
 		return KeyIsDown[keyCode];
 }
 
-Key_mouvement Input::keyBoard (Input receiver)
+void Input::keyBoard (Input receiver)
 {
+	core::array<SJoystickInfo> joystickInfo;
+	f32 moveHorizontal = 0.f;
+	f32 moveVertical = 0.f;
+	const SEvent::SJoystickEvent &joystickData = receiver.GetJoystickStatePone();
+	const SEvent::SJoystickEvent &joystickDatatwo = receiver.GetJoystickStatePtwo();
+	const f32 DEAD_ZONE = 0.05f;
+
     if (receiver.IsKeyDown(irr::KEY_KEY_Z)) {
         _playerInput[1] = Up;
-        return (Up);
     } else if(receiver.IsKeyDown(irr::KEY_KEY_S)) {
         _playerInput[1] = Down;
-        return (Down);
     } else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
         _playerInput[1] = Left;
-        return (Left);
     } else if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
         _playerInput[1] = Right;
-        return (Right);
-    }
+    } else {
+		_playerInput[1] = None;
+	}
     if(receiver.IsKeyDown(irr::KEY_UP)) {
         _playerInput[2] = Up;
-        return (Right);
     } else if (receiver.IsKeyDown(irr::KEY_DOWN)) {
         _playerInput[2] = Down;
-        return (Down);
     } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
         _playerInput[2] = Left;
-        return (Left);
-    } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_RIGHT)) { 
         _playerInput[2] = Right;
-        return (Right);
-    }
-    return;
+    } else {
+		_playerInput[2] = None;
+	}
+	if (joystickInfo.size() > 0)
+	{
+	
+		moveHorizontal = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
+		if(fabs(moveHorizontal) < DEAD_ZONE)
+			moveHorizontal = 0.f;
+
+		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
+		if(fabs(moveVertical) < DEAD_ZONE)
+			moveVertical = 0.f;
+		if (moveVertical == 1) {
+			_playerInput[3] = Up;
+		} else if (moveVertical == -1) {
+			_playerInput[3] = Down;
+		} else if (moveHorizontal == 1) {
+			_playerInput[3] = Right;
+		} else if (moveHorizontal == -1) {
+			_playerInput[3] = Left;
+		} else {
+			_playerInput[3] = None;
+		}
+
+
+		moveHorizontal = (f32)joystickDatatwo.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
+		if(fabs(moveHorizontal) < DEAD_ZONE)
+			moveHorizontal = 0.f;
+
+		moveVertical = (f32)joystickDatatwo.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
+		if(fabs(moveVertical) < DEAD_ZONE)
+			moveVertical = 0.f;
+		if (moveVertical == 1) {
+			_playerInput[4] = Up;
+		} else if (moveVertical == -1) {
+			_playerInput[4] = Down;
+		} else if (moveHorizontal == 1) {
+			_playerInput[4] = Right;
+		} else if (moveHorizontal == -1) {
+			_playerInput[4] = Left;
+		} else {
+			_playerInput[4] = None;
+		}
+	}
+		
 }
 
-/*const SEvent::SJoystickEvent &Input::GetJoystickState(void) const
+const SEvent::SJoystickEvent &Input::GetJoystickStatePone(void) const
 {
-    return JoystickState;
-}*/
+    return JoystickStatePone;
+}
+
+const SEvent::SJoystickEvent &Input::GetJoystickStatePtwo(void) const
+{
+    return JoystickStatePtwo;
+}
 
 bool Input::OnEvent(const SEvent& event) 
 {
-    //if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
-    //    JoystickState = event.JoystickEvent;
-    //}
-    std::cout << event.EventType << std::endl;
+    if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
+        JoystickStatePone = event.JoystickEvent;
+    }
+	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 1) {
+        JoystickStatePtwo = event.JoystickEvent;
+    }
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
     return false;
@@ -148,22 +120,15 @@ std::map<int, Key_mouvement> Input::getPlayerInput()
     return (_playerInput);
 }
 
-Key_mouvement Input::getInput(IrrlichtDevice* device, Input receiver)
-{
-    if (receiver.keyBoard(receiver) == Exit)
-        return (Exit);
-        
-    return (receiver.keyBoard(receiver));
-}
-
 Input::Input()
 {
 	for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
     	KeyIsDown[i] = false;
+	_playerInput[1] = None;
+	_playerInput[2] = None;
 }
 
 Input::~Input()
 {
 
 }
-
