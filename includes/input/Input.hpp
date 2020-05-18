@@ -30,6 +30,7 @@ class Input : public IEventReceiver
         const SEvent::SJoystickEvent &GetJoystickStatePtwo(void) const;
 	    virtual bool OnEvent(const SEvent& event);
         virtual bool IsKeyDown(EKEY_CODE keyCode) const;
+        bool IsKeyPressed(Input receiver);
         void keyBoard(Input receiver);
         std::map<int, Key_mouvement> getPlayerInput();
 	    Input();
@@ -37,6 +38,7 @@ class Input : public IEventReceiver
 
     private:
 	    bool KeyIsDown[KEY_KEY_CODES_COUNT];
+        bool _keyIsPressed;
         std::map<int, Key_mouvement> _playerInput;
         SEvent::SJoystickEvent JoystickStatePone;
         SEvent::SJoystickEvent JoystickStatePtwo;
