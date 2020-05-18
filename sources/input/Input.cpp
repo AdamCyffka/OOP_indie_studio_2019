@@ -21,6 +21,7 @@ void Input::keyBoard (Input receiver)
 	f32 moveHorizontal = 0.f;
 	f32 moveVertical = 0.f;
 	const SEvent::SJoystickEvent &joystickData = receiver.GetJoystickStatePone();
+	const SEvent::SJoystickEvent &joystickDatatwo = receiver.GetJoystickStatePtwo();
 	const f32 DEAD_ZONE = 0.05f;
 
     if (receiver.IsKeyDown(irr::KEY_KEY_Z)) {
@@ -65,6 +66,26 @@ void Input::keyBoard (Input receiver)
 			_playerInput[3] = Left;
 		} else {
 			_playerInput[3] = None;
+		}
+
+
+		moveHorizontal = (f32)joystickDatatwo.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
+		if(fabs(moveHorizontal) < DEAD_ZONE)
+			moveHorizontal = 0.f;
+
+		moveVertical = (f32)joystickDatatwo.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
+		if(fabs(moveVertical) < DEAD_ZONE)
+			moveVertical = 0.f;
+		if (moveVertical == 1) {
+			_playerInput[4] = Up;
+		} else if (moveVertical == -1) {
+			_playerInput[4] = Down;
+		} else if (moveHorizontal == 1) {
+			_playerInput[4] = Right;
+		} else if (moveHorizontal == -1) {
+			_playerInput[4] = Left;
+		} else {
+			_playerInput[4] = None;
 		}
 	}
 		
