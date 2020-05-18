@@ -151,6 +151,11 @@ void Select::run()
     _buttons["p4"]->setImage(_textures[_selectRole[0][0][_nbRole[3][0]]]);
 }
 
+std::vector<Character *> Select::getPreviews()
+{
+    return _previews;
+}
+
 std::map<std::string, irr::gui::IGUIButton *> Select::getButtons()
 {
     return _buttons;
@@ -159,16 +164,6 @@ std::map<std::string, irr::gui::IGUIButton *> Select::getButtons()
 std::map<std::string, irr::gui::IGUIImage *> Select::getImages()
 {
 	return _images;
-}
-
-std::map<std::string, irr::video::ITexture *> Select::getTextures()
-{
-    return _textures;
-}
-
-std::vector<Character *> Select::getPreviews()
-{
-    return _previews;
 }
 
 std::vector<std::vector<std::vector<std::string>>> Select::getSelectRole()

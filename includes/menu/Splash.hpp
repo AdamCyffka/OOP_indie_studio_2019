@@ -11,6 +11,7 @@
 #include <iostream>
 #include <map>
 #include "IGame.hpp"
+#include "Character.hpp"
 #include "ProgressBar.hpp"
 
 class Splash : public IGame {
@@ -21,6 +22,7 @@ class Splash : public IGame {
 		void loadButtons();
 		void loadTextures();
 		void run();
+        std::vector<Character *> getPreviews();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
 		ProgressBar *getBar();

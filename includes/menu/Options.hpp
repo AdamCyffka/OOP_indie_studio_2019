@@ -11,6 +11,7 @@
 #include <iostream>
 #include <map>
 #include <irrlicht.h>
+#include "Character.hpp"
 #include "IGame.hpp"
 
 class Options : public IGame {
@@ -21,6 +22,7 @@ class Options : public IGame {
         void loadButtons();
         void loadTextures();
         void run();
+        std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
     private:
