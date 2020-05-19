@@ -28,7 +28,7 @@ class Bomb {
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
         int ifCanPoseBomb();
-        void poseBomb(int **map);
+        void poseBomb();
     private:
         int _x;
         int _y;

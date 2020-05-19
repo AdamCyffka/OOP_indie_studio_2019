@@ -82,3 +82,17 @@ int Bomb::ifCanPoseBomb()
         }
     }
 }
+
+void Bomb::poseBomb()
+{
+    if (ifCanPoseBomb() == true && getIsBlast() == true) {
+        if (playerState::playerOne) {
+        }
+        if (playerState::playerTwo) {
+        }
+        if (playerState::playerThree) {
+        }
+        if (playerState::playerFour) {
+        }
+    }
+}
