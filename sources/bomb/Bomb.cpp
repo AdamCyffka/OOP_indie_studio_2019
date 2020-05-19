@@ -6,6 +6,7 @@
 */
 
 #include "Bomb.hpp"
+#include "Map.hpp"
 
 Bomb::Bomb(int x, int y, int radius, irr::u32 delay)
 {
@@ -48,4 +49,36 @@ void Bomb::setIsBlast(bool isBlast)
 bool Bomb::getIsBlast() const
 {
     return (this->_isBlast);
+}
+
+int Bomb::ifCanPoseBomb()
+{
+    if (playerState::playerOne) {
+        if (blockState::empty) {
+            return (1);
+        } else {
+            return (0);
+        }
+    }
+    if (playerState::playerTwo) {
+        if (blockState::empty) {
+            return (1);
+        } else {
+            return (0);
+        }
+    }
+    if (playerState::playerThree) {
+        if (blockState::empty) {
+            return (1);
+        } else {
+            return (0);
+        }
+    }
+    if (playerState::playerFour) {
+        if (blockState::empty) {
+            return (1);
+        } else {
+            return (0);
+        }
+    }
 }
