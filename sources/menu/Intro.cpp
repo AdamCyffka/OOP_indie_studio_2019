@@ -5,7 +5,7 @@
 ** Intro
 */
 
-#include "CircleCameraTraveling.hpp"
+#include "CircleCameraTravel.hpp"
 #include "Intro.hpp"
 #include "LoadingException.hpp"
 
@@ -19,8 +19,8 @@ Intro::Intro(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
     loadButtons();
 
     irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya();
-    // CircleCameraTraveling traveling = CircleCameraTraveling(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
-	// traveling.start();
+    // CircleCameraTravel travel = CircleCameraTravel(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
+	// travel.start();
     camera->setFarValue(42000);
 }
 

@@ -32,7 +32,6 @@ void LoadMap::run()
 	irr::scene::ISceneNodeAnimator *animB;
 	irr::scene::ISceneNodeAnimator *rotatePlanet;
 	irr::scene::ISceneNodeAnimator *core;
-	irr::scene::ISceneNode *light;
 
 	// camera
 	// camera->setPosition(irr::core::vector3df(-300, 80, -400));
@@ -43,60 +42,53 @@ void LoadMap::run()
 	observatory = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/observatory.obj"));
 	observatory->setPosition({0, 0, 0});
 	observatory->setScale({5, 5, 5});
-	if (observatory) {
+	if (observatory)
 		observatory->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
 	// arena
 	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));
-	arena->setPosition({-500, 300, 700});
-	arena->setScale({0.05, 0.05, 0.05});
-	if (arena) {
+	arena->setPosition({-1250, 285, 1140});
+	arena->setScale({0.19, 0.19, 0.19});
+	if (arena)
 		arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
 	// beanPlanet
 	beanPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/bean_planet/bean_planet.obj"));
 	beanPlanet->setPosition({200, 300, 1000});
 	beanPlanet->setRotation({0, 200, 0});
 	beanPlanet->setScale({5, 5, 5});
-	if (beanPlanet) {
+	if (beanPlanet)
 		beanPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
 	// towerPlanet
 	towerPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/tower_planet/tower_planet.obj"));
 	towerPlanet->setPosition({1000, 400, 500});
 	towerPlanet->setScale({10, 10, 10});
-	if (towerPlanet) {
+	if (towerPlanet)
 		towerPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
 	// dreadnoughtPlanet
 	dreadnoughtPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/dreadnought_planet/dreadnought_planet.obj"));
 	dreadnoughtPlanet->setPosition({-4000, 400, -2000});
 	dreadnoughtPlanet->setScale({15, 15, 15});
 	dreadnoughtPlanet->setRotation({50, 0, 0});
-	if (dreadnoughtPlanet) {
+	if (dreadnoughtPlanet)
 		dreadnoughtPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
 	// dustyPlanet
 	dustyPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/dusty_planet/dusty_planet.obj"));
 	dustyPlanet->setPosition({-1000, -1500, 2000});
 	dustyPlanet->setScale({15, 15, 15});
 	dustyPlanet->setRotation({50, 0, 0});
-	if (dustyPlanet) {
+	if (dustyPlanet)
 		dustyPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
 	// gatewayPlanet
 	gatewayPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/gateway_planet/gateway_planet.obj"));
 	gatewayPlanet->setPosition({4000, 0, -3000});
 	gatewayPlanet->setScale({500, 500, 500});
-	if (gatewayPlanet) {
+	if (gatewayPlanet)
 		gatewayPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 	rotatePlanet = _smgr->createRotationAnimator({0.05, 0, 0});
 	gatewayPlanet->addAnimator(rotatePlanet);
 	rotatePlanet->drop();
@@ -105,6 +97,8 @@ void LoadMap::run()
 	plateA = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateA.obj"));
 	plateA->setPosition({0, 0, 0});
 	plateA->setScale({3, 3, 3});
+	if (plateA)
+		plateA->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	animA = _smgr->createRotationAnimator({0, -0.2, 0});
 	plateA->addAnimator(animA);
 	animA->drop();
@@ -113,26 +107,31 @@ void LoadMap::run()
 	plateB = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateB.obj"));
 	plateB->setPosition({0, 10, 0});
 	plateB->setScale({3, 3, 3});
+	if (plateB)
+		plateB->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	animB = _smgr->createRotationAnimator({0, -0.1, 0});
 	plateB->addAnimator(animB);
 	animB->drop();
 
 	// skybox
 	_driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
-	skybox = _smgr->addSkyBoxSceneNode(_driver->getTexture("resources/images/terrain/interstellar_up.tga"),_driver->getTexture("resources/images/terrain/interstellar_dn.tga"),
-		_driver->getTexture("resources/images/terrain/interstellar_rt.tga"), _driver->getTexture("resources/images/terrain/interstellar_lf.tga"),
-		_driver->getTexture("resources/images/terrain/interstellar_ft.tga"), _driver->getTexture("resources/images/terrain/interstellar_bk.tga"));
+	skybox = _smgr->addSkyBoxSceneNode(
+		_driver->getTexture("resources/images/terrain/interstellar_up.tga"),
+		_driver->getTexture("resources/images/terrain/interstellar_dn.tga"),
+		_driver->getTexture("resources/images/terrain/interstellar_rt.tga"), 
+		_driver->getTexture("resources/images/terrain/interstellar_lf.tga"),
+		_driver->getTexture("resources/images/terrain/interstellar_ft.tga"),
+		_driver->getTexture("resources/images/terrain/interstellar_bk.tga"));
 	_driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, true);
 
 	// light core
-	light = _smgr->addLightSceneNode(0, {0, 50, 0}, {240, 248, 255, 0}, 800);
-	irr::scene::IParticleSystemSceneNode *ps = _smgr->addParticleSystemSceneNode(false, light);
+	irr::scene::IParticleSystemSceneNode *ps = _smgr->addParticleSystemSceneNode(false);
 	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
-        core::aabbox3d<f32>(-3,0,-3,3,1,3),
-        core::vector3df(0.0f,0.03f,0.0f),
-        80,100,
-        video::SColor(10,255,255,255), video::SColor(10,255,255,255),
-        400,1100);
+        core::aabbox3d<f32>(-3, 0, -3, 3, 1, 3),
+        core::vector3df(0.0f, 0.10f, 0.0f),
+        80, 100,
+        video::SColor(10, 255, 255, 255), video::SColor(10, 255, 255, 255),
+        400, 1100);
 	em->setMinStartSize({30, 40});
 	em->setMaxStartSize({30, 40});
 	ps->setEmitter(em);
@@ -141,7 +140,7 @@ void LoadMap::run()
 	ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	ps->setMaterialTexture(0, _driver->getTexture("resources/images/fx/fireball.bmp"));
 	ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-	core = _smgr->createFlyCircleAnimator(core::vector3df(0,0,0), 70.0f,
+	core = _smgr->createFlyCircleAnimator(core::vector3df(0, 0, 0), 70.0f,
             0.001f, core::vector3df(0.2f, 0.9f, 0.f));
     core->drop();
 
@@ -165,7 +164,7 @@ void LoadMap::loadGameMap(float x, float y, float z)
 					if (brick) {
 						brick->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 					}
-					brick->setVisible(true); //A decommenter pour voir la map
+					brick->setVisible(true);
 					break;
 				}
 				case unbreakable: {
@@ -176,7 +175,7 @@ void LoadMap::loadGameMap(float x, float y, float z)
 					if (unbreakable) {
 						unbreakable->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 					}
-					unbreakable->setVisible(true); //A decommenter pour voir la map
+					unbreakable->setVisible(true);
 					break;
 				}
 			}

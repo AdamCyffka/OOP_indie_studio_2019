@@ -28,7 +28,8 @@ add_executable(bomberman
         sources/menu/ProgressBar.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
-        sources/traveling/CircleCameraTraveling.cpp
+        sources/travel/CircleCameraTravel.cpp
+        sources/travel/StraightCameraTravel.cpp
         sources/input/Input.cpp
         )
 
@@ -46,8 +47,9 @@ include_directories(includes/core/)
 include_directories(includes/menu/)
 include_directories(includes/characters/)
 include_directories(includes/music/)
-include_directories(includes/traveling/)
+include_directories(includes/travel/)
 include_directories(includes/input/)
+include_directories(includes/powerUps/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST

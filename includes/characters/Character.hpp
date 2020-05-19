@@ -11,14 +11,14 @@
 #include <string>
 #include <irrlicht.h>
 #include "CharacterException.hpp"
-#include "modelinfos.hpp"
+#include "modelInfos.hpp"
 #include "side.hpp"
 
 using namespace irr;
 class Character {
     public:
         Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model,
-                  std::string name = "Player", int travelingTime = 1000,
+                  std::string name = "Player", int travelTime = 1000,
                   side orientation = side::north);
         ~Character();
 
@@ -37,7 +37,7 @@ class Character {
         void setVisibility(bool visibility);
         void setOrientation(side side);
         void setAnimationSpeed(f32 animationSpeed);
-        void setTravelingTime(u32 travelingTime);
+        void setTravelTime(u32 travelTime);
 
         //getters
         float getSize() const;
@@ -46,10 +46,10 @@ class Character {
         bool getVisibility() const;
         side getOrientation() const;
         f32 getAnimationSpeed() const;
-        u32 getTravelingTime() const;
+        u32 getTravelTime() const;
 
         //methods
-        bool moveTo(core::vector3df position, u32 travelingTime = 0);
+        bool moveTo(core::vector3df position, u32 travelTime = 0);
         void changeModel(modelInfos_t model);
     protected:
     private:
@@ -63,7 +63,7 @@ class Character {
         side _orientation;
         modelInfos_t _model;
         std::string _name;
-        int _travelingTime;
+        int _travelTime;
 
         //methods
         side getOrientationFromPath(core::vector3df posA, core::vector3df posB);
