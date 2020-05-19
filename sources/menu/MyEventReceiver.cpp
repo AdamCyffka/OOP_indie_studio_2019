@@ -13,11 +13,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
         irr::s32 id = event.GUIEvent.Caller->getID();
         switch (event.GUIEvent.EventType) {
             case irr::gui::EGET_BUTTON_CLICKED:
-            	_core.getMusicEngine()->add2D("resources/sfx/click.mp3", false, true, true, irrklang::ESM_AUTO_DETECT, true);
-// 				sound effect example below
-//            	_core.getMusicEngine()->enableSoundEffect("resources/sfx/click.mp3", musicNs::echo, true);
-//				_core.getMusicEngine()->enableSoundEffect("resources/sfx/click.mp3", musicNs::wavesReverb, true);
-				_core.getMusicEngine()->setPause("resources/sfx/click.mp3", false, true);
+            	_core.getMusicEngine()->add2D("resources/sfx/click.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
             	switch (id) {
                     case IGame::GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
