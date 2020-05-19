@@ -18,6 +18,7 @@
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "Intro.hpp"
+#include "WallPass.hpp"
 
 Core::Core()
 {
@@ -46,6 +47,18 @@ Core::Core()
     _options = nullptr;
     _select = nullptr;
     _music = nullptr;
+	_wallpass = nullptr;
+
+	irr::scene::ISceneNode *mushRoom;
+	irr::scene::ISceneNodeAnimator *anim;
+    mushRoom = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/wallPass/wallPass.obj"));
+	mushRoom->setPosition({-150, 30, 0});
+	mushRoom->setScale({6, 6, 6});
+	if (mushRoom)
+		mushRoom->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	anim = _smgr->createRotationAnimator({0, 1, 0});
+	mushRoom->addAnimator(anim);
+	anim->drop();
 }
 
 Select *Core::getSelect()
