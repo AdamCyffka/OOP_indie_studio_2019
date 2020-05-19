@@ -54,7 +54,7 @@ class Core {
         void helpCase();
         void creditsCase();
         void splashCase();
-        
+
         layerState getState();
         Select *getSelect();
         Music *getMusicEngine();

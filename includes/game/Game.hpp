@@ -2,21 +2,21 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Player
+** Game
 */
 
-#ifndef PLAYER_HPP_
-#define PLAYER_HPP_
+#ifndef GAME_HPP_
+#define GAME_HPP_
 
 #include "IEntity.hpp"
 
-class Player {
+class Game {
     public:
-        Player();
-        ~Player();
+        Game();
+        ~Game();
 
     protected:
     private:
 };
 
-#endif /* !PLAYER_HPP_ */
+#endif /* !GAME_HPP_ */

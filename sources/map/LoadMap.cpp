@@ -33,11 +33,6 @@ void LoadMap::run()
 	irr::scene::ISceneNodeAnimator *rotatePlanet;
 	irr::scene::ISceneNodeAnimator *core;
 
-	// camera
-	// camera->setPosition(irr::core::vector3df(-300, 80, -400));
-	// camera->setTarget(irr::core::vector3df(0, 0, 0));
-	// camera->setFarValue(42000.0f);
-
 	// observatory
 	observatory = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/observatory.obj"));
 	observatory->setPosition({0, 0, 0});
@@ -47,8 +42,8 @@ void LoadMap::run()
 
 	// arena
 	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));
-	arena->setPosition({-1250, 285, 1140});
-	arena->setScale({0.19, 0.19, 0.19});
+	arena->setPosition({-500, 303, 700});
+	arena->setScale({0.047, 0.047, 0.047});
 	if (arena)
 		arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
@@ -159,22 +154,20 @@ void LoadMap::loadGameMap(float x, float y, float z)
 				case breakable: {
 					irr::scene::ISceneNode *brick;
 					brick = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/brick.obj"));
-					brick->setPosition({x + (-10 * i), y, z + (-10 * j)}); // pas toucher au y
+					brick->setPosition({x + (-10 * i), y, z + (-10 * j)});
 					brick->setScale({5, 5, 5});
-					if (brick) {
+					if (brick)
 						brick->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-					}
 					brick->setVisible(true);
 					break;
 				}
 				case unbreakable: {
 					irr::scene::ISceneNode *unbreakable;
 					unbreakable = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/solid.obj"));
-					unbreakable->setPosition({x + (-10 * i), y, z + (-10 * j)}); // pas toucher au y
+					unbreakable->setPosition({x + (-10 * i), y, z + (-10 * j)});
 					unbreakable->setScale({5, 5, 5});
-					if (unbreakable) {
+					if (unbreakable)
 						unbreakable->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-					}
 					unbreakable->setVisible(true);
 					break;
 				}
