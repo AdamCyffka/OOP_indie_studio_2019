@@ -146,7 +146,7 @@ void LoadMap::run()
     core->drop();
 
 	// gameMap
-	loadGameMap(-500, 300, 1000);
+	loadGameMap(-440, 308, 790);
 }
 
 void LoadMap::loadGameMap(float x, float y, float z)
@@ -160,23 +160,23 @@ void LoadMap::loadGameMap(float x, float y, float z)
 				case breakable: {
 					irr::scene::ISceneNode *brick;
 					brick = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/brick.obj"));
-					brick->setPosition({x + (-40 * i), y, z + (-40 * j)}); // pas toucher au y
-					brick->setScale({20, 20, 20});
+					brick->setPosition({x + (-10 * i), y, z + (-10 * j)}); // pas toucher au y
+					brick->setScale({5, 5, 5});
 					if (brick) {
 						brick->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 					}
-					brick->setVisible(false); //A decommenter pour voir la map
+					brick->setVisible(true); //A decommenter pour voir la map
 					break;
 				}
 				case unbreakable: {
 					irr::scene::ISceneNode *unbreakable;
 					unbreakable = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/solid.obj"));
-					unbreakable->setPosition({x + (-40 * i), y, z + (-40 * j)}); // pas toucher au y
-					unbreakable->setScale({20, 20, 20});
+					unbreakable->setPosition({x + (-10 * i), y, z + (-10 * j)}); // pas toucher au y
+					unbreakable->setScale({5, 5, 5});
 					if (unbreakable) {
 						unbreakable->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 					}
-					unbreakable->setVisible(false); //A decommenter pour voir la map
+					unbreakable->setVisible(true); //A decommenter pour voir la map
 					break;
 				}
 			}
