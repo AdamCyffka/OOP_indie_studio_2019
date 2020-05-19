@@ -11,9 +11,9 @@
 #include <map>
 #include <string>
 #include "Character.hpp"
-#include "IGame.hpp"
+#include "IMenu.hpp"
 
-class Pause : public IGame {
+class Pause : public IMenu {
     public:
         explicit Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Pause() = default;

@@ -8,9 +8,9 @@
 #ifndef FIREUP_HPP_
 #define FIREUP_HPP_
 
-#include "IBonus.hpp"
+#include "IPowerUps.hpp"
 
-class FireUp : public IBonus {
+class FireUp : public IPowerUps {
     public:
         FireUp();
         ~FireUp();

@@ -8,9 +8,9 @@
 #ifndef SPEEDUP_HPP_
 #define SPEEDUP_HPP_
 
-#include "IBonus.hpp"
+#include "IPowerUps.hpp"
 
-class SpeedUp : public IBonus {
+class SpeedUp : public IPowerUps {
     public:
         SpeedUp();
         ~SpeedUp();

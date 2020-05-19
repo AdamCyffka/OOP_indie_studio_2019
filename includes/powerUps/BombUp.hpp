@@ -8,9 +8,9 @@
 #ifndef BOMBUP_HPP_
 #define BOMBUP_HPP_
 
-#include "IBonus.hpp"
+#include "IPowerUps.hpp"
 
-class BombUp : public IBonus {
+class BombUp : public IPowerUps {
     public:
         BombUp();
         ~BombUp();

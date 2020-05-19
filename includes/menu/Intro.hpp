@@ -10,10 +10,10 @@
 
 #include <iostream>
 #include <map>
-#include "IGame.hpp"
+#include "IMenu.hpp"
 #include "Character.hpp"
 
-class Intro : public IGame {
+class Intro : public IMenu {
 	public:
 		explicit Intro(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
 		~Intro() = default;

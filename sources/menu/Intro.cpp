@@ -33,7 +33,7 @@ void Intro::loadTextures()
 
 void Intro::loadButtons()
 {
-    _buttons["press"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, IGame::GUI_ID_INTRO_BUTTON, L"");
+    _buttons["press"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, IMenu::GUI_ID_INTRO_BUTTON, L"");
 	if (_buttons.find("press") != _buttons.end() && !_buttons["press"])
 		throw LoadingException("could not add button : press");
     _buttons["press"]->setImage(_textures["press"]);

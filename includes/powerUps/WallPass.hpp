@@ -8,9 +8,9 @@
 #ifndef WALLPASS_HPP_
 #define WALLPASS_HPP_
 
-#include "IBonus.hpp"
+#include "IPowerUps.hpp"
 
-class WallPass : public IBonus {
+class WallPass : public IPowerUps {
     public:
         explicit WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~WallPass() = default;

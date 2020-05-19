@@ -10,7 +10,7 @@
 
 #include "Music.hpp"
 #include "Core.hpp"
-#include "IGame.hpp"
+#include "IMenu.hpp"
 
 class MyEventReceiver : public irr::IEventReceiver {
     public:

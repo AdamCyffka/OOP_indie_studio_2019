@@ -13,9 +13,9 @@
 #include <string>
 #include <vector>
 #include "Character.hpp"
-#include "IGame.hpp"
+#include "IMenu.hpp"
 
-class Select : public IGame {
+class Select : public IMenu {
     public:
         Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Select() = default;

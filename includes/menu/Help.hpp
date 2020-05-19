@@ -10,10 +10,10 @@
 
 #include <map>
 #include <string>
-#include "IGame.hpp"
+#include "IMenu.hpp"
 #include "Character.hpp"
 
-class Help : public IGame {
+class Help : public IMenu {
     public:
         explicit Help(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Help() = default;

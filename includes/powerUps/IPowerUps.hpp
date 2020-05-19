@@ -2,20 +2,21 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** IBonus
+** IPowerUps
 */
 
-#ifndef IBONUS_HPP_
-#define IBONUS_HPP_
+#ifndef IPOWERUPS_HPP_
+#define IPOWERUPS_HPP_
 
 #include <irrlicht.h>
 
-class IBonus {
+class IPowerUps {
     public:
-		IBonus();
+		virtual ~IPowerUps() = default;
+
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
 };
 
-#endif /* !IBONUS_HPP_ */
+#endif /* !IPOWERUPS_HPP_ */
