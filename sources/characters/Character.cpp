@@ -180,7 +180,6 @@ void Character::changeModel(modelInfos_t model)
 {
     side orientation = getOrientation();
     core::vector3df position = getPosition();
-    float size = getSize();
     f32 animationSpeed = getAnimationSpeed();
     Character::state state = getState();
 
@@ -203,7 +202,7 @@ void Character::changeModel(modelInfos_t model)
     }
     setOrientation(orientation);
     setPosition(position);
-    setSize(size);
+    setSize(_model.size);
     setAnimationSpeed(animationSpeed);
     setState(state);
 }

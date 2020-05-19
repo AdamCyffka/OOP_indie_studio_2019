@@ -139,7 +139,6 @@ void Core::init()
 		_splash->setBar(new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830)));
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
-
 		_splash->getBar()->setProgress(11);
 	} else if (_initStep == 1) {
 		if (!_loadmap)
