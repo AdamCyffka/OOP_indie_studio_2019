@@ -2,21 +2,47 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Ia
+** Ai
 */
 
-#ifndef IA_HPP_
-#define IA_HPP_
+#ifndef AI_HPP_
+#define AI_HPP_
 
 #include "IEntity.hpp"
 
-class Ia : public IEntity {
-    public:
-        Ia();
-        ~Ia();
+class AI : public IEntity {
+	public:
+	Player(Character *);
+	~Player() = default;
 
-    protected:
-    private:
+	void spawn();
+	void kill();
+	void move();
+	void run();
+	void putBomb();
+
+	Fire getFirePower();
+	Bomb getBombAmount();
+	Speed getSpeed();
+	WallPass getWallPass();
+	BombPass getBombPass();
+	void getEntityNumber();
+	void getScore();
+	Character *getCharacter();
+	void moveTo(Move);
+	bool isAlive();
+
+	private:
+	bool _isAlive;
+	int _entityNumber;
+	int _score;
+	Character *_character;
+
+	Fire _firePower;
+	Bomb _bombAmount;
+	Speed _speed;
+	WallPass _wallPass;
+	BombPass _bombPass;
 };
 
 #endif /* !IA_HPP_ */

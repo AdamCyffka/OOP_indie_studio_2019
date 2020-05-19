@@ -10,13 +10,39 @@
 
 #include "IEntity.hpp"
 
-class Player {
+class Player : public IEntity {
     public:
-        Player();
-        ~Player();
+        Player(Character *, Input *);
+        ~Player() = default;
 
-    protected:
-    private:
+		void spawn();
+	 	void kill();
+	 	void move();
+	 	void run();
+	 	void putBomb();
+
+		Fire getFirePower();
+		Bomb getBombAmount();
+		Speed getSpeed();
+		WallPass getWallPass();
+		BombPass getBombPass();
+		void getEntityNumber();
+		void getScore();
+		Character *getCharacter();
+		void moveTo(Move);
+		bool isAlive();
+
+	private:
+		bool _isAlive;
+		int _entityNumber;
+		int _score;
+		Character *_character;
+
+		Fire _firePower;
+		Bomb _bombAmount;
+		Speed _speed;
+		WallPass _wallPass;
+		BombPass _bombPass;
 };
 
 #endif /* !PLAYER_HPP_ */
