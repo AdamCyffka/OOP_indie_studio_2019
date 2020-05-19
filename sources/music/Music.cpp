@@ -12,7 +12,7 @@
 Music::Music()
 {
 	_engine = irrklang::createIrrKlangDevice();
-	_engine->setSoundVolume(0.3);
+	_engine->setSoundVolume(0.3f);
 }
 
 Music::~Music()

@@ -11,7 +11,7 @@
 #include <string>
 #include <irrlicht.h>
 #include "CharacterException.hpp"
-#include "modelinfos.hpp"
+#include "modelInfos.hpp"
 #include "side.hpp"
 
 using namespace irr;
