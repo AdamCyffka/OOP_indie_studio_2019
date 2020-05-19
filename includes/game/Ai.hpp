@@ -12,8 +12,8 @@
 
 class AI : public IEntity {
 	public:
-	Player(Character *);
-	~Player() = default;
+	AI(Character *);
+	~AI() = default;
 
 	void spawn();
 	void kill();
