@@ -7,8 +7,8 @@
 
 #include "Character.hpp"
 
-Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model, std::string name, int travelingTime, side orientation)
-: _sManager(sManager), _driver(driver), _model(model), _name(name), _travelingTime(travelingTime), _orientation(orientation)
+Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model, std::string name, int travelTime, side orientation)
+: _sManager(sManager), _driver(driver), _model(model), _name(name), _travelTime(travelTime), _orientation(orientation)
 {
     _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));
     if (!_mesh)
@@ -101,9 +101,9 @@ void Character::setAnimationSpeed(f32 animationSpeed)
     _mesh->setAnimationSpeed(animationSpeed);
 }
 
-void Character::setTravelingTime(u32 travelingTime)
+void Character::setTravelTime(u32 travelTime)
 {
-    _travelingTime = travelingTime;
+    _travelTime = travelTime;
 }
 
 //getters
@@ -137,9 +137,9 @@ f32 Character::getAnimationSpeed() const
     return _mesh->getAnimationSpeed();
 }
 
-u32 Character::getTravelingTime() const
+u32 Character::getTravelTime() const
 {
-    return _travelingTime;
+    return _travelTime;
 }
 
 //methods
@@ -153,10 +153,10 @@ side Character::getOrientationFromPath(core::vector3df posA, core::vector3df pos
         return _orientation;
 }
 
-bool Character::moveTo(core::vector3df position, u32 travelingTime)
+bool Character::moveTo(core::vector3df position, u32 travelTime)
 {
     core::vector3df currentPosition = getPosition();
-    scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelingTime != 0) ? travelingTime : _travelingTime, false);
+    scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelTime != 0) ? travelTime : _travelTime, false);
 
     if (animation) {
         if (_mesh) {
