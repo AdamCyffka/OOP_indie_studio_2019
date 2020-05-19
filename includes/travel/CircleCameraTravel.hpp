@@ -2,24 +2,25 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** CircleCameraTraveling
+** CircleCameraTravel
 */
 
-#ifndef CIRCLECAMERATRAVELING_HPP_
-#define CIRCLECAMERATRAVELING_HPP_
+#ifndef CIRCLECAMERATRAVEL_HPP_
+#define CIRCLECAMERATRAVEL_HPP_
 
-#include "ACameraTraveling.hpp"
+#include "ACameraTravel.hpp"
 
 using namespace irr;
 
-class CircleCameraTraveling : public ACameraTraveling {
+class CircleCameraTravel : public ACameraTravel {
     public:
-        CircleCameraTraveling(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr, core::vector3df center, float radius, float speed);
-        ~CircleCameraTraveling();
+        CircleCameraTravel(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr,
+        core::vector3df center, float radius, float speed);
+        ~CircleCameraTravel();
 
-        bool accelerateTo(irr::core::vector3df pos) final;
-
-        void start();
+        void start() final;
+        void stop() final;
+        bool accelerateTo(irr::core::vector3df pos);
 
         void setCenter(core::vector3df center) {_center = center;}
         void setRadius(float radius) {_radius = radius;}
@@ -34,4 +35,4 @@ class CircleCameraTraveling : public ACameraTraveling {
         float _speed;
 };
 
-#endif /* !CIRCLECAMERATRAVELING_HPP_ */
+#endif /* !CIRCLECAMERATRAVEL_HPP_ */
