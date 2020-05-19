@@ -8,6 +8,8 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 
+#include <irrlicht.h>
+
 enum Move {
     LEFT,
     RIGHT,
@@ -28,12 +30,14 @@ class Player {
         void die();
         void move();
 		void putBomb();
+        void getPlayerConfig();
+        void onEvent(const irr::SEvent &event);
     protected:
         void getBonus();
 		void moveLeft();
 		void moveRight();
-		void moveTop();
-		void moveBottom();
+		void moveUp();
+		void moveDown();
     private:
 };
 
