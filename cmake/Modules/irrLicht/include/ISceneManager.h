@@ -1167,7 +1167,7 @@ namespace scene
 		/** \param center: Center of the circle.
 		\param radius: Radius of the circle.
 		\param speed: The orbital speed, in radians per millisecond.
-		\param direction: Specifies the upvector used for alignment of the mesh.
+		\param direction: Specifies the upvector used for alignment of the meshzzz.
 		\param startPosition: The position on the circle where the animator will
 		begin. Value is in multiples of a circle, i.e. 0.5 is half way around. (phase)
 		\param radiusEllipsoid: if radiusEllipsoid != 0 then radius2 froms a ellipsoid

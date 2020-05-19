@@ -48,6 +48,7 @@ include_directories(includes/characters/)
 include_directories(includes/music/)
 include_directories(includes/traveling/)
 include_directories(includes/input/)
+include_directories(includes/powerUps/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST
