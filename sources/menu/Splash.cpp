@@ -21,22 +21,22 @@ Splash::Splash(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 void Splash::loadTextures()
 {
 	_textures["background"] = _driver->getTexture("resources/images/splash/background.png");
-	if (!_textures["background"])
+	if (_textures.find("background") != _textures.end() && !_textures["background"])
 		throw LoadingException("could not load texture : resources/images/splash/background.png");
 	_textures["title"] = _driver->getTexture("resources/images/splash/title.png");
-	if (!_textures["title"])
+	if (_textures.find("title") != _textures.end() && !_textures["title"])
 		throw LoadingException("could not load texture : resources/images/splash/title.png");
 }
 
 void Splash::loadButtons()
 {
 	_images["background"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	if (!_images["background"])
+	if (_images.find("background") != _images.end() && !_images["background"])
 		throw LoadingException("could not add image : background");
 	_images["background"]->setImage(_textures["background"]);
 	_images["background"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
 	_images["title"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	if (!_images["title"])
+	if (_images.find("title") != _images.end() && !_images["title"])
 		throw LoadingException("could not add image : title");
 	_images["title"]->setImage(_textures["title"]);
 	_images["title"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 100));
