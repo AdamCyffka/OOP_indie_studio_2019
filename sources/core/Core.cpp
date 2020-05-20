@@ -192,6 +192,7 @@ int Core::run()
 	// _window->setWindowCaption(str.c_str());
 	// irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
 
+	video::ITexture* images = _driver->getTexture("resources/images/cursor.png");
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
@@ -204,12 +205,14 @@ int Core::run()
 		// _window->setWindowCaption(str.c_str());
 		// fpsText->setText(str.c_str());
 
-		// _window->getCursorControl()->setVisible(false);
-		// irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
-		// _env->addImage(_driver->getTexture("resources/images/cursor.png"), irr::core::position2d<int>(mousePosition.X, mousePosition.Y));
-
 		_smgr->drawAll();
 		_env->drawAll();
+	
+		//draw cursor
+		_window->getCursorControl()->setVisible(false);
+		irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
+		_driver->draw2DImage(images, irr::core::position2d<s32>(mousePosition.X, mousePosition.Y));
+		
 		_driver->endScene();
 	}
 	_window->drop();
