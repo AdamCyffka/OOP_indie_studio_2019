@@ -12,4 +12,16 @@ WallPass::WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *dri
     _driver = driver;
 	_env = env;
 	_smgr = smgr;
+
+	irr::scene::ISceneNode *mushRoom;
+	irr::scene::ISceneNodeAnimator *anim;
+    mushRoom = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/wallPass/wallPass.obj"));
+	mushRoom->setPosition({-550, 310, 630});
+	mushRoom->setRotation({-50, 0, 0});
+	mushRoom->setScale({4, 4, 4});
+	if (mushRoom)
+		mushRoom->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	anim = _smgr->createRotationAnimator({0, 1, 0});
+	mushRoom->addAnimator(anim);
+	anim->drop();
 }

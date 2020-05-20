@@ -16,7 +16,6 @@
 #include "Splash.hpp"
 #include "Music.hpp"
 
-class WallPass;
 class Intro;
 class Help;
 class Credits;
@@ -79,7 +78,6 @@ class Core {
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;
-        WallPass *_wallpass;
 
         bool _isInitialized;
         unsigned int _initStep;

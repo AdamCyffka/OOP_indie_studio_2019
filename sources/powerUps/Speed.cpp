@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** SpeedUp
+** Speed
 */
 
-#include "SpeedUp.hpp"
+#include "Speed.hpp"
 
-SpeedUp::SpeedUp()
+Speed::Speed()
 {
 }
 
-SpeedUp::~SpeedUp()
+Speed::~Speed()
 {
 }

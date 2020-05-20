@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** FireUp
+** Fire
 */
 
-#include "FireUp.hpp"
+#include "Fire.hpp"
 
-FireUp::FireUp()
+Fire::Fire()
 {
 }
 
-FireUp::~FireUp()
+Fire::~Fire()
 {
 }

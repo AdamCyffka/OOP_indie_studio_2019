@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** BombUp
+** Bomb
 */
 
-#include "BombUp.hpp"
+#include "Bomb.hpp"
 
-BombUp::BombUp()
+Bomb::Bomb()
 {
 }
 
-BombUp::~BombUp()
+Bomb::~Bomb()
 {
 }

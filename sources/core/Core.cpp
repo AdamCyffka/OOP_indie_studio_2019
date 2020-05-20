@@ -18,7 +18,6 @@
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "Intro.hpp"
-#include "WallPass.hpp"
 
 Core::Core()
 {
@@ -47,13 +46,13 @@ Core::Core()
     _options = nullptr;
     _select = nullptr;
     _music = nullptr;
-	_wallpass = nullptr;
 
 	irr::scene::ISceneNode *mushRoom;
 	irr::scene::ISceneNodeAnimator *anim;
     mushRoom = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/wallPass/wallPass.obj"));
-	mushRoom->setPosition({-150, 30, 0});
-	mushRoom->setScale({6, 6, 6});
+	mushRoom->setPosition({-550, 310, 630});
+	mushRoom->setRotation({-50, 0, 0});
+	mushRoom->setScale({4, 4, 4});
 	if (mushRoom)
 		mushRoom->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	anim = _smgr->createRotationAnimator({0, 1, 0});
@@ -216,6 +215,10 @@ int Core::run()
 		str += (s32)_driver->getFPS();
 		_window->setWindowCaption(str.c_str());
 		fpsText->setText(str.c_str());
+
+		// _window->getCursorControl()->setVisible(false);
+		// irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
+		// _env->addImage(_driver->getTexture("resources/images/cursor.png"), irr::core::position2d<int>(mousePosition.X, mousePosition.Y));
 
 		_smgr->drawAll();
 		_env->drawAll();
