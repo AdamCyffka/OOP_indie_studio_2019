@@ -2,18 +2,18 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** WallPass
+** FireDown
 */
 
-#ifndef WALLPASS_HPP_
-#define WALLPASS_HPP_
+#ifndef FIREDOWN_HPP_
+#define FIREDOWN_HPP_
 
 #include "IPowerUps.hpp"
 
-class WallPass : public IPowerUps {
+class FireDown : public IPowerUps {
     public:
-        explicit WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
-        ~WallPass() = default;
+        explicit FireDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
+        ~FireDown() = default;
 
         void spawn();
 		void die();
@@ -24,4 +24,4 @@ class WallPass : public IPowerUps {
         irr::scene::ISceneManager *_smgr;
 };
 
-#endif /* !WALLPASS_HPP_ */
+#endif /* !FIREDOWN_HPP_ */
