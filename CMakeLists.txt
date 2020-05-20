@@ -8,8 +8,11 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
 set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+
 find_package(Irrlicht REQUIRED)
 #find_package(Boost 1.69 REQUIRED /* COMPOSANTS REQUIS ICI*/) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST (n'oubliez pas d'insérer les composants)
+find_package(Threads REQUIRED)
 
 add_executable(bomberman
         sources/main.cpp
@@ -40,6 +43,7 @@ set_target_properties(bomberman PROPERTIES
         )
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
+target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories(includes)
 include_directories(includes/map)
