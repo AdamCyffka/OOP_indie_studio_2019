@@ -7,12 +7,13 @@
 
 #include <iostream>
 #include "Core.hpp"
+#include "GameCore.hpp"
 
 int main(int ac, char **av)
 {
 #ifdef __linux__
-	if (getenv("DISPLAY") == NULL) {
-		std::cerr << "error : some environement variable are missing." << std::endl;
+	if (!getenv("DISPLAY")) {
+		std::cerr << "error : some environment variable are missing." << std::endl;
 		return (84);
     }
 #endif

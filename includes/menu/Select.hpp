@@ -12,6 +12,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "IEntity.hpp"
 #include "Character.hpp"
 #include "IMenu.hpp"
 
@@ -37,6 +38,7 @@ class Select : public IMenu {
         void incSkin(int skin);
         void changeRole(int role);
 
+		const std::vector<EntityType::EntityType> &getEntityTypes();
         void switchSkin(int pos);
     private:
         irr::gui::IGUIEnvironment *_env;
@@ -49,7 +51,8 @@ class Select : public IMenu {
 		std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::vector<Character *> _previews;
-        int nbSkin[4] = {0, 1, 2, 3};
+		std::vector<EntityType::EntityType> _entitiesTypes;
+		int nbSkin[4] = {0, 1, 2, 3};
         std::vector<std::pair<std::string, bool>> _selectTab;
         std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
         std::vector<std::vector<int>> _nbRole {

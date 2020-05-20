@@ -31,6 +31,9 @@ add_executable(bomberman
         sources/travel/CircleCameraTravel.cpp
         sources/travel/StraightCameraTravel.cpp
         sources/input/Input.cpp
+        sources/game/Player.cpp
+        sources/game/AI.cpp
+        sources/game/GameCore.cpp
         )
 
 set_target_properties(bomberman PROPERTIES
@@ -41,17 +44,20 @@ set_target_properties(bomberman PROPERTIES
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
 
-include_directories(includes)
-include_directories(includes/map)
-include_directories(includes/core/)
-include_directories(includes/menu/)
-include_directories(includes/characters/)
-include_directories(includes/music/)
-include_directories(includes/travel/)
-include_directories(includes/input/)
-include_directories(includes/powerUps/)
-include_directories(${Irrlicht_INCLUDE_DIRS})
-include_directories(${Irrklang_DIR}/include)
+include_directories(includes
+        includes/map
+        includes/core/
+        includes/menu/
+        includes/characters/
+        includes/music/
+        includes/travel/
+        includes/input/
+        includes/powerUps/
+        includes/game/
+        ${Irrlicht_INCLUDE_DIRS}
+        ${Irrklang_DIR}/include
+        )
+
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST
 
 file(COPY "${CMAKE_SOURCE_DIR}/resources"

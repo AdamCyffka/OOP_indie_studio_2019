@@ -43,7 +43,7 @@ void LoadMap::run()
 	// arena
 	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));
 	arena->setPosition({-500, 303, 700});
-	arena->setScale({0.047, 0.047, 0.047});
+	arena->setScale({0.047f, 0.047f, 0.047f});
 	if (arena)
 		arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
@@ -84,7 +84,7 @@ void LoadMap::run()
 	gatewayPlanet->setScale({500, 500, 500});
 	if (gatewayPlanet)
 		gatewayPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	rotatePlanet = _smgr->createRotationAnimator({0.05, 0, 0});
+	rotatePlanet = _smgr->createRotationAnimator({0.05f, 0.0f, 0.0f});
 	gatewayPlanet->addAnimator(rotatePlanet);
 	rotatePlanet->drop();
 
@@ -94,7 +94,7 @@ void LoadMap::run()
 	plateA->setScale({3, 3, 3});
 	if (plateA)
 		plateA->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	animA = _smgr->createRotationAnimator({0, -0.2, 0});
+	animA = _smgr->createRotationAnimator({0.0f, -0.2f, 0.0f});
 	plateA->addAnimator(animA);
 	animA->drop();
 
@@ -104,7 +104,7 @@ void LoadMap::run()
 	plateB->setScale({3, 3, 3});
 	if (plateB)
 		plateB->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	animB = _smgr->createRotationAnimator({0, -0.1, 0});
+	animB = _smgr->createRotationAnimator({0.0f, -0.1f, 0.0f});
 	plateB->addAnimator(animB);
 	animB->drop();
 

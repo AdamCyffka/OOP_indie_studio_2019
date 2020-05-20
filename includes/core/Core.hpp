@@ -15,6 +15,7 @@
 #include "LoadMap.hpp"
 #include "Splash.hpp"
 #include "Music.hpp"
+#include "GameCore.hpp"
 
 class Intro;
 class Help;
@@ -36,7 +37,7 @@ class Core {
 			menuSplash,
 			menuHelp,
             menuCredits,
-			menuSelect,
+			menuSelect
 		};
 
         enum gameState {
@@ -54,11 +55,14 @@ class Core {
         void creditsCase();
         void splashCase();
 
-        layerState getState();
+        layerState getLState();
+		gameState getGState();
         Select *getSelect();
-        Music *getMusicEngine();
+		GameCore *getGame();
+		Music *getMusicEngine();
 
-        void setState(layerState state);
+        void setLState(layerState state);
+        void setGState(gameState state);
     private:
 		void init();
 		void hideLayers();
@@ -75,6 +79,8 @@ class Core {
         Help *_help;
         Pause *_pause;
         Music *_music;
+        Input *_inputs;
+        GameCore *_game;
         layerState _lState;
         gameState _gState;
         MyEventReceiver *_receiver;

@@ -43,22 +43,22 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getSelect()->changeRole(3);
                         return true;
                     case IMenu::GUI_ID_OPTION_RETURN:
-                        _core.setState(Core::menuMain);
+                        _core.setLState(Core::menuMain);
                         return true;
                     case IMenu::GUI_ID_OPTIONS_BUTTON:
-                        _core.setState(Core::menuOptions);
+                        _core.setLState(Core::menuOptions);
                         return true;
                     case IMenu::GUI_ID_NEW_BUTTON:
-                        _core.setState(Core::menuSelect);
+                        _core.setLState(Core::menuSelect);
                         return true;
                     case IMenu::GUI_ID_CREDITS_BUTTON:
-                        _core.setState(Core::menuCredits);
+                        _core.setLState(Core::menuCredits);
                         return true;
                     case IMenu::GUI_ID_HELP_BUTTON:
-                        _core.setState(Core::menuHelp);
+                        _core.setLState(Core::menuHelp);
                         return true;
                     case IMenu::GUI_ID_INTRO_BUTTON:
-                        _core.setState(Core::menuMain);
+                        _core.setLState(Core::menuMain);
                         return true;
 	                case IMenu::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:
 						_core.getMusicEngine()->musicUp();
@@ -77,6 +77,10 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 						return true;
 					case IMenu::GUI_ID_OPTION_MINUS_SFX_BUTTON:
 						_core.getMusicEngine()->sfxDown();
+						return true;
+	            	case IMenu::GUI_ID_SELECT_PLAY:
+						_core.setGState(Core::game);
+						_core.getGame()->init();
 						return true;
                 }
             default:

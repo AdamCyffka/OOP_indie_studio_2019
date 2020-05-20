@@ -12,25 +12,23 @@
 
 class AI : public IEntity {
 	public:
-	AI(Character *);
-	~AI() = default;
+	AI(Character *, int);
 
-	void spawn();
-	void kill();
-	void move();
-	void run();
-	void putBomb();
+	void kill() override;
+	void move() override;
+	void run() override;
+	void putBomb() override;
 
-	Fire getFirePower();
-	Bomb getBombAmount();
-	Speed getSpeed();
-	WallPass getWallPass();
-	BombPass getBombPass();
-	int getEntityNumber();
-	int getScore();
-	Character *getCharacter();
-	void moveTo(Move);
-	bool isAlive();
+	int getFirePower() override;
+	int getBombAmount() override;
+	int getSpeed();
+	bool getWallPass() override;
+	bool getBombPass() override;
+	int getEntityNumber() override;
+	int getScore() override;
+	Character *getCharacter() override;
+	void moveTo(Move) override;
+	bool isAlive() override;
 
 	private:
 	bool _isAlive;
@@ -38,11 +36,11 @@ class AI : public IEntity {
 	int _score;
 	Character *_character;
 
-	Fire _firePower;
-	Bomb _bombAmount;
-	Speed _speed;
-	WallPass _wallPass;
-	BombPass _bombPass;
+	int _firePower;
+	int _bombAmount;
+	int _speed;
+	bool _wallPass;
+	bool _bombPass;
 };
 
 #endif /* !IA_HPP_ */

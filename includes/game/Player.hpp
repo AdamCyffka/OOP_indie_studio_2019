@@ -9,28 +9,27 @@
 #define PLAYER_HPP_
 
 #include "IEntity.hpp"
+#include "Input.hpp"
 
 class Player : public IEntity {
     public:
-        Player(Character *, Input *);
-        ~Player() = default;
+        Player(Character *, const Key_mouvement &, int);
 
-		void spawn();
-	 	void kill();
-	 	void move();
-	 	void run();
-	 	void putBomb();
+	 	void kill() override;
+	 	void move() override;
+	 	void run() override;
+	 	void putBomb() override;
 
-		Fire getFirePower();
-		Bomb getBombAmount();
-		Speed getSpeed();
-		WallPass getWallPass();
-		BombPass getBombPass();
-		void getEntityNumber();
-		void getScore();
-		Character *getCharacter();
-		void moveTo(Move);
-		bool isAlive();
+		int getFirePower() override;
+		int getBombAmount() override;
+		int getSpeed() override;
+		bool getWallPass() override;
+		bool getBombPass() override;
+		int getEntityNumber() override;
+		int getScore() override;
+		Character *getCharacter() override;
+		void moveTo(Move) override;
+		bool isAlive() override;
 
 	private:
 		bool _isAlive;
@@ -38,11 +37,14 @@ class Player : public IEntity {
 		int _score;
 		Character *_character;
 
-		Fire _firePower;
-		Bomb _bombAmount;
-		Speed _speed;
-		WallPass _wallPass;
-		BombPass _bombPass;
+		Key_mouvement _input;
+		int _firePower;
+		int _bombAmount;
+		int _speed;
+		bool _wallPass;
+		bool _bombPass;
+
+		std::map<int, irr::core::vector3df> _spawnAreas;
 };
 
 #endif /* !PLAYER_HPP_ */
