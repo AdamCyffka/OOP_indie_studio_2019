@@ -26,8 +26,8 @@ class AI : public IEntity {
 	Speed getSpeed();
 	WallPass getWallPass();
 	BombPass getBombPass();
-	void getEntityNumber();
-	void getScore();
+	int getEntityNumber();
+	int getScore();
 	Character *getCharacter();
 	void moveTo(Move);
 	bool isAlive();
