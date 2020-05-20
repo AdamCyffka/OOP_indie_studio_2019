@@ -49,18 +49,6 @@ Core::Core()
     _music = nullptr;
     _inputs = nullptr;
     _game = nullptr;
-
-	irr::scene::ISceneNode *mushRoom;
-	irr::scene::ISceneNodeAnimator *anim;
-    mushRoom = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/wallPass/wallPass.obj"));
-	mushRoom->setPosition({-550, 310, 630});
-	mushRoom->setRotation({-50, 0, 0});
-	mushRoom->setScale({4, 4, 4});
-	if (mushRoom)
-		mushRoom->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	anim = _smgr->createRotationAnimator({0, 1, 0});
-	mushRoom->addAnimator(anim);
-	anim->drop();
 }
 
 Select *Core::getSelect()
@@ -230,31 +218,34 @@ int Core::run()
         skin->setFont(font);
     skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
-	core::stringw str = L"Irrlicht Engine [";
-	str += _driver->getName();
-	str += L"] FPS: ";
-	str += (s32)_driver->getFPS();
-	_window->setWindowCaption(str.c_str());
-	irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
+	// core::stringw str = L"Irrlicht Engine [";
+	// str += _driver->getName();
+	// str += L"] FPS: ";
+	// str += (s32)_driver->getFPS();
+	// _window->setWindowCaption(str.c_str());
+	// irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
 
+	video::ITexture* images = _driver->getTexture("resources/images/cursor.png");
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
 
-		str = L"Irrlicht Engine [";
-		str += _driver->getName();
-		str += L"] FPS: ";
-		str += (s32)_driver->getFPS();
-		_window->setWindowCaption(str.c_str());
-		fpsText->setText(str.c_str());
-
-		// _window->getCursorControl()->setVisible(false);
-		// irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
-		// _env->addImage(_driver->getTexture("resources/images/cursor.png"), irr::core::position2d<int>(mousePosition.X, mousePosition.Y));
+		// str = L"Irrlicht Engine [";
+		// str += _driver->getName();
+		// str += L"] FPS: ";
+		// str += (s32)_driver->getFPS();
+		// _window->setWindowCaption(str.c_str());
+		// fpsText->setText(str.c_str());
 
 		_smgr->drawAll();
 		_env->drawAll();
+	
+		//draw cursor
+		_window->getCursorControl()->setVisible(false);
+		irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
+		_driver->draw2DImage(images, irr::core::position2d<s32>(mousePosition.X, mousePosition.Y));
+		
 		_driver->endScene();
 	}
 	_window->drop();
