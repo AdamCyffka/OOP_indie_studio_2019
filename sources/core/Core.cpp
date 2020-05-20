@@ -185,24 +185,24 @@ int Core::run()
         skin->setFont(font);
     skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
-	core::stringw str = L"Irrlicht Engine [";
-	str += _driver->getName();
-	str += L"] FPS: ";
-	str += (s32)_driver->getFPS();
-	_window->setWindowCaption(str.c_str());
-	irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
+	// core::stringw str = L"Irrlicht Engine [";
+	// str += _driver->getName();
+	// str += L"] FPS: ";
+	// str += (s32)_driver->getFPS();
+	// _window->setWindowCaption(str.c_str());
+	// irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
 
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
 
-		str = L"Irrlicht Engine [";
-		str += _driver->getName();
-		str += L"] FPS: ";
-		str += (s32)_driver->getFPS();
-		_window->setWindowCaption(str.c_str());
-		fpsText->setText(str.c_str());
+		// str = L"Irrlicht Engine [";
+		// str += _driver->getName();
+		// str += L"] FPS: ";
+		// str += (s32)_driver->getFPS();
+		// _window->setWindowCaption(str.c_str());
+		// fpsText->setText(str.c_str());
 
 		// _window->getCursorControl()->setVisible(false);
 		// irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();

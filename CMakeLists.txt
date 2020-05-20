@@ -34,6 +34,16 @@ add_executable(bomberman
         sources/travel/CircleCameraTravel.cpp
         sources/travel/StraightCameraTravel.cpp
         sources/input/Input.cpp
+        sources/powerUps/BombDown.cpp
+        sources/powerUps/BombFull.cpp
+        sources/powerUps/BombPass.cpp
+        sources/powerUps/BombUp.cpp
+        sources/powerUps/FireDown.cpp
+        sources/powerUps/FireFull.cpp
+        sources/powerUps/FireUp.cpp
+        sources/powerUps/SpeedDown.cpp
+        sources/powerUps/SpeedUp.cpp
+        sources/powerUps/WallPass.cpp
         )
 
 set_target_properties(bomberman PROPERTIES
