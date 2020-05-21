@@ -36,6 +36,7 @@ class Input : public IEventReceiver
 {
     public:
         bool IsKeyPressed(Input receiver);
+        
         const SEvent::SJoystickEvent &GetJoystickStatePone(void) const;
         const SEvent::SJoystickEvent &GetJoystickStatePtwo(void) const;
         const SEvent::SJoystickEvent &GetJoystickStatePthree(void) const;
