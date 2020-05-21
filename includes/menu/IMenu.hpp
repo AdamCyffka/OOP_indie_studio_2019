@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** IGame
+** IMenu
 */
 
-#ifndef IGAME_HPP_
-#define IGAME_HPP_
+#ifndef IMENU_HPP_
+#define IMENU_HPP_
 
 #include <irrlicht.h>
 
-class IGame {
+class IMenu {
     public:
         enum button {
             GUI_ID_NEW_BUTTON,
@@ -48,11 +48,11 @@ class IGame {
             GUI_ID_X_4,
         };
 
-        virtual ~IGame() = default;
+        virtual ~IMenu() = default;
 
         virtual void loadButtons() = 0;
         virtual void loadTextures() = 0;
         virtual void run() = 0;
 };
 
-#endif /* !IGAME_HPP_ */
+#endif /* !IMENU_HPP_ */

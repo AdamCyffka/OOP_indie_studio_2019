@@ -5,8 +5,8 @@
 ** Event
 */
 
-#ifndef input
-#define input
+#ifndef INPUT_HPP_
+#define INPUT_HPP_
 
 #include <vector>
 #include <map>
@@ -68,4 +68,4 @@ class Input : public IEventReceiver
 };
 
 
-#endif //input
+#endif //INPUT_HPP_

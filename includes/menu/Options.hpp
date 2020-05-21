@@ -12,9 +12,9 @@
 #include <map>
 #include <irrlicht.h>
 #include "Character.hpp"
-#include "IGame.hpp"
+#include "IMenu.hpp"
 
-class Options : public IGame {
+class Options : public IMenu {
     public:
         explicit Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Options() = default;

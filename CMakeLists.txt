@@ -8,8 +8,11 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
 set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+
 find_package(Irrlicht REQUIRED)
 #find_package(Boost 1.69 REQUIRED /* COMPOSANTS REQUIS ICI*/) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST (n'oubliez pas d'insérer les composants)
+find_package(Threads REQUIRED)
 
 add_executable(bomberman
         sources/main.cpp
@@ -28,8 +31,22 @@ add_executable(bomberman
         sources/menu/ProgressBar.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
-        sources/traveling/CircleCameraTraveling.cpp
+        sources/travel/CircleCameraTravel.cpp
+        sources/travel/StraightCameraTravel.cpp
         sources/input/Input.cpp
+        sources/game/Player.cpp
+        sources/game/AI.cpp
+        sources/game/GameCore.cpp
+        sources/powerUps/BombDown.cpp
+        sources/powerUps/BombFull.cpp
+        sources/powerUps/BombPass.cpp
+        sources/powerUps/BombUp.cpp
+        sources/powerUps/FireDown.cpp
+        sources/powerUps/FireFull.cpp
+        sources/powerUps/FireUp.cpp
+        sources/powerUps/SpeedDown.cpp
+        sources/powerUps/SpeedUp.cpp
+        sources/powerUps/WallPass.cpp
         )
 
 set_target_properties(bomberman PROPERTIES
@@ -39,17 +56,22 @@ set_target_properties(bomberman PROPERTIES
         )
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
+target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
 
-include_directories(includes)
-include_directories(includes/map)
-include_directories(includes/core/)
-include_directories(includes/menu/)
-include_directories(includes/characters/)
-include_directories(includes/music/)
-include_directories(includes/traveling/)
-include_directories(includes/input/)
-include_directories(${Irrlicht_INCLUDE_DIRS})
-include_directories(${Irrklang_DIR}/include)
+include_directories(includes
+        includes/map
+        includes/core/
+        includes/menu/
+        includes/characters/
+        includes/music/
+        includes/travel/
+        includes/input/
+        includes/powerUps/
+        includes/game/
+        ${Irrlicht_INCLUDE_DIRS}
+        ${Irrklang_DIR}/include
+        )
+
 #include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST
 
 file(COPY "${CMAKE_SOURCE_DIR}/resources"

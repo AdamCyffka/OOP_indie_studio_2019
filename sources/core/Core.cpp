@@ -9,6 +9,7 @@
 #include <chrono>
 #include <thread>
 #include <typeinfo>
+#include "CoreException.hpp"
 #include "ProgressBar.hpp"
 #include "MyEventReceiver.hpp"
 #include "Core.hpp"
@@ -46,6 +47,8 @@ Core::Core()
     _options = nullptr;
     _select = nullptr;
     _music = nullptr;
+    _inputs = nullptr;
+    _game = nullptr;
 }
 
 Select *Core::getSelect()
@@ -53,9 +56,19 @@ Select *Core::getSelect()
 	return _select;
 }
 
-Core::layerState Core::getState()
+GameCore *Core::getGame()
+{
+	return _game;
+}
+
+Core::layerState Core::getLState()
 {
 	return _lState;
+}
+
+Core::gameState Core::getGState()
+{
+	return _gState;
 }
 
 Music *Core::getMusicEngine()
@@ -63,9 +76,14 @@ Music *Core::getMusicEngine()
 	return _music;
 }
 
-void Core::setState(Core::layerState state)
+void Core::setLState(Core::layerState state)
 {
 	_lState = state;
+}
+
+void Core::setGState(Core::gameState state)
+{
+	_gState = state;
 }
 
 void Core::introCase()
@@ -120,46 +138,60 @@ void Core::splashCase()
 	showLayer(_splash);
 }
 
+void Core::gameCase()
+{
+	_game->run();
+}
+
 void Core::init()
 {
 	if (_initStep == 0) {
 		_splash->setBar(new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830)));
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
-
-		_splash->getBar()->setProgress(11);
+		_splash->getBar()->setProgress(5);
 	} else if (_initStep == 1) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(22);
+		_splash->getBar()->setProgress(10);
 	} else if (_initStep == 2) {
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(33);
+		_splash->getBar()->setProgress(20);
 	} else if (_initStep == 3) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(44);
+		_splash->getBar()->setProgress(30);
 	} else if (_initStep == 4) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(55);
+		_splash->getBar()->setProgress(40);
 	} else if (_initStep == 5) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(66);
+		_splash->getBar()->setProgress(50);
 	} else if (_initStep == 6) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(77);
+		_splash->getBar()->setProgress(60);
 	} else if (_initStep == 7) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(88);
+		_splash->getBar()->setProgress(70);
 	} else if (_initStep == 8) {
 		if (!_music)
 			_music = new Music();
-		_splash->getBar()->setProgress(95);
+		_splash->getBar()->setProgress(80);
+	} else if (_initStep == 9) {
+		if (!_inputs)
+			_inputs = new Input();
+		_splash->getBar()->setProgress(90);
+	} else if (_initStep == 10) {
+		if (!_select)
+			throw CoreException("Select hasn't been initialized, cannot get characters previews");
+		if (!_game)
+			_game = new GameCore(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+		_splash->getBar()->setProgress(90);
 	// } else if (_initStep == 9) {
 	// 	if (!_pause)
 	// 		_pause = new Pause();
@@ -186,26 +218,34 @@ int Core::run()
         skin->setFont(font);
     skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
-	core::stringw str = L"Irrlicht Engine [";
-	str += _driver->getName();
-	str += L"] FPS: ";
-	str += (s32)_driver->getFPS();
-	_window->setWindowCaption(str.c_str());
-	irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
+	// core::stringw str = L"Irrlicht Engine [";
+	// str += _driver->getName();
+	// str += L"] FPS: ";
+	// str += (s32)_driver->getFPS();
+	// _window->setWindowCaption(str.c_str());
+	// irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
 
+	video::ITexture* images = _driver->getTexture("resources/images/cursor.png");
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
 
-		str = L"Irrlicht Engine [";
-		str += _driver->getName();
-		str += L"] FPS: ";
-		str += (s32)_driver->getFPS();
-		_window->setWindowCaption(str.c_str());
-		fpsText->setText(str.c_str());
+		// str = L"Irrlicht Engine [";
+		// str += _driver->getName();
+		// str += L"] FPS: ";
+		// str += (s32)_driver->getFPS();
+		// _window->setWindowCaption(str.c_str());
+		// fpsText->setText(str.c_str());
+
 		_smgr->drawAll();
 		_env->drawAll();
+	
+		//draw cursor
+		_window->getCursorControl()->setVisible(false);
+		irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
+		_driver->draw2DImage(images, irr::core::position2d<s32>(mousePosition.X, mousePosition.Y));
+		
 		_driver->endScene();
 	}
 	_window->drop();
@@ -219,6 +259,7 @@ void Core::drawScene()
 		drawLayer();
 		break;
 	case game:
+		gameCase();
 		break;
 	}
 }
@@ -317,4 +358,3 @@ void Core::showLayer(T *layer)
 	for (auto &it : layer->getPreviews())
 		it->setVisibility(true);
 }
-

@@ -12,9 +12,9 @@
 #include <map>
 #include <irrlicht.h>
 #include "Character.hpp"
-#include "IGame.hpp"
+#include "IMenu.hpp"
 
-class Menu : public IGame {
+class Menu : public IMenu {
     public:
         explicit Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Menu() override = default;
