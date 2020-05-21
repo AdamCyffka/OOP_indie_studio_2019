@@ -5,14 +5,96 @@
 ** Event
 */
 
-#include <iostream>
 #include "Input.hpp"
 
 
 using namespace irr;
 
+bool Input::IsKeyPressed(Input receiver)
+{
+	return _keyIsPressed;
+}
+
+const SEvent::SJoystickEvent &Input::GetJoystickStatePone(void) const
+{
+    return JoystickStatePone;
+}
+
+const SEvent::SJoystickEvent &Input::GetJoystickStatePtwo(void) const
+{
+    return JoystickStatePtwo;
+}
+
 bool Input::IsKeyDown(EKEY_CODE keyCode) const {
 		return KeyIsDown[keyCode];
+}
+
+void Input::player_one(Input receiver)
+{
+	if (receiver.IsKeyDown(irr::KEY_KEY_Z)) {
+        _playerInput[1] = Up;
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_S)) {
+        _playerInput[1] = Down;
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
+        _playerInput[1] = Left;
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
+        _playerInput[1] = Right;
+	} else if(receiver.IsKeyDown(irr::KEY_SPACE)) {
+        _playerInput[1] = Bomb;
+    } else {
+		_playerInput[1] = None;
+	}
+}
+
+void Input::player_two(Input receiver)
+{
+	if (receiver.IsKeyDown(irr::KEY_UP)) {
+        _playerInput[2] = Up;
+    } else if (receiver.IsKeyDown(irr::KEY_DOWN)) {
+        _playerInput[2] = Down;
+    } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
+        _playerInput[2] = Left;
+    } else if (receiver.IsKeyDown(irr::KEY_RIGHT)) { 
+        _playerInput[2] = Right;
+	} else if (receiver.IsKeyDown(irr::KEY_ACCEPT)) {
+		_playerInput[2] = Bomb;
+    } else {
+		_playerInput[2] = None;
+	}
+}
+
+void Input::player_three(Input receiver)
+{
+	if (receiver.IsKeyDown(irr::KEY_KEY_Y)) {
+        _playerInput[3] = Up;
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_H)) {
+        _playerInput[3] = Down;
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_J)) { 
+        _playerInput[3] = Left;
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_G)) { 
+        _playerInput[3] = Right;
+	} else if (receiver.IsKeyDown(irr::KEY_KEY_B)) {
+		_playerInput[3] = Bomb;
+    } else {
+		_playerInput[3] = None;
+	}
+}
+
+void Input::player_four(Input receiver)
+{
+	if (receiver.IsKeyDown(irr::KEY_KEY_Y)) {
+        _playerInput[4] = Up;
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_H)) {
+        _playerInput[4] = Down;
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_J)) { 
+        _playerInput[4] = Left;
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_G)) { 
+        _playerInput[4] = Right;
+	} else if (receiver.IsKeyDown(irr::KEY_KEY_B)) {
+		_playerInput[4] = Bomb;
+    } else {
+		_playerInput[4] = None;
+	}	
 }
 
 void Input::keyBoard (Input receiver)
@@ -24,28 +106,7 @@ void Input::keyBoard (Input receiver)
 	const SEvent::SJoystickEvent &joystickDatatwo = receiver.GetJoystickStatePtwo();
 	const f32 DEAD_ZONE = 0.05f;
 
-    if (receiver.IsKeyDown(irr::KEY_KEY_Z)) {
-        _playerInput[1] = Up;
-    } else if(receiver.IsKeyDown(irr::KEY_KEY_S)) {
-        _playerInput[1] = Down;
-    } else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
-        _playerInput[1] = Left;
-    } else if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
-        _playerInput[1] = Right;
-    } else {
-		_playerInput[1] = None;
-	}
-    if(receiver.IsKeyDown(irr::KEY_UP)) {
-        _playerInput[2] = Up;
-    } else if (receiver.IsKeyDown(irr::KEY_DOWN)) {
-        _playerInput[2] = Down;
-    } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
-        _playerInput[2] = Left;
-    } else if (receiver.IsKeyDown(irr::KEY_RIGHT)) { 
-        _playerInput[2] = Right;
-    } else {
-		_playerInput[2] = None;
-	}
+    
 	if (joystickInfo.size() > 0)
 	{
 	
@@ -91,20 +152,6 @@ void Input::keyBoard (Input receiver)
 		
 }
 
-bool Input::IsKeyPressed(Input receiver)
-{
-	return _keyIsPressed;
-}
-
-const SEvent::SJoystickEvent &Input::GetJoystickStatePone(void) const
-{
-    return JoystickStatePone;
-}
-
-const SEvent::SJoystickEvent &Input::GetJoystickStatePtwo(void) const
-{
-    return JoystickStatePtwo;
-}
 
 bool Input::OnEvent(const SEvent& event) 
 {
