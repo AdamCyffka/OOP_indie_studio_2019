@@ -58,6 +58,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.setLState(Core::menuHelp);
                         return true;
                     case IMenu::GUI_ID_INTRO_BUTTON:
+                        _core.getIntro()->init();
                         _core.setLState(Core::menuMain);
                         return true;
 	                case IMenu::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:

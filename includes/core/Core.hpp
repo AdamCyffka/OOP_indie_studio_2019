@@ -60,6 +60,7 @@ class Core {
         Select *getSelect();
 		GameCore *getGame();
 		Music *getMusicEngine();
+        Intro *getIntro();
 
         void setLState(layerState state);
         void setGState(gameState state);

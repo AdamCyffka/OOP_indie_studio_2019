@@ -22,7 +22,7 @@
 
 Core::Core()
 {
-	_window = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(1920, 1080));
+	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 32, true);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
@@ -74,6 +74,11 @@ Core::gameState Core::getGState()
 Music *Core::getMusicEngine()
 {
 	return _music;
+}
+
+Intro *Core::getIntro()
+{
+	return _intro;
 }
 
 void Core::setLState(Core::layerState state)
@@ -150,38 +155,38 @@ void Core::init()
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 		_splash->getBar()->setProgress(5);
-	} else if (_initStep == 1) {
+	}  else if (_initStep == 1) {
+		if (!_music)
+			_music = new Music();
+		_splash->getBar()->setProgress(7);
+	} else if (_initStep == 2) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(10);
-	} else if (_initStep == 2) {
+	} else if (_initStep == 3) {
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(20);
-	} else if (_initStep == 3) {
+	} else if (_initStep == 4) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(30);
-	} else if (_initStep == 4) {
+	} else if (_initStep == 5) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(40);
-	} else if (_initStep == 5) {
+	} else if (_initStep == 6) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
-	} else if (_initStep == 6) {
+	} else if (_initStep == 7) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(60);
-	} else if (_initStep == 7) {
+	} else if (_initStep == 8) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(70);
-	} else if (_initStep == 8) {
-		if (!_music)
-			_music = new Music();
-		_splash->getBar()->setProgress(80);
 	} else if (_initStep == 9) {
 		if (!_inputs)
 			_inputs = new Input();
@@ -209,9 +214,6 @@ void Core::init()
 
 int Core::run()
 {
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
-	camera->setFarValue(42000);
-
 	irr::gui::IGUISkin* skin = _env->getSkin();
     irr::gui::IGUIFont* font = _env->getFont("resources/fonts/font.bmp");
     if (font)
