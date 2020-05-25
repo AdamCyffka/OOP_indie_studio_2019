@@ -7,8 +7,8 @@
 
 #include "Character.hpp"
 
-Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model, std::string name, int travelTime, side orientation)
-: _sManager(sManager), _driver(driver), _model(model), _name(name), _travelTime(travelTime), _orientation(orientation)
+Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model, int travelTime, side orientation)
+: _sManager(sManager), _driver(driver), _model(model), _travelTime(travelTime), _orientation(orientation)
 {
     _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));
     if (!_mesh)
@@ -167,7 +167,7 @@ bool Character::moveTo(core::vector3df position, u32 travelTime)
             animation->drop();
         } else {
             animation->drop();
-            throw CharacterException("Mesh \"" + _name + "\" not found");
+            throw CharacterException("Mesh \"" + _model.filename + "\" not found");
         }
     } else {
         throw CharacterException("Cannot create a fly straight animator from the scene manager");

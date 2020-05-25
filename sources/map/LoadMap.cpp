@@ -175,3 +175,8 @@ void LoadMap::loadGameMap(float x, float y, float z)
 		}
 	}
 }
+
+Map *LoadMap::getMap()
+{
+	return _map;
+}

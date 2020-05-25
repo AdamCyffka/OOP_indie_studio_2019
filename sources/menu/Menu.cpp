@@ -99,3 +99,8 @@ std::map<std::string, irr::gui::IGUIImage *> Menu::getImages()
 {
 	return _images;
 }
+
+std::map<std::string, irr::gui::IGUICheckBox *> Menu::getCheckBox()
+{
+  return _checkBox;
+}

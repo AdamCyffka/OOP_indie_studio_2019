@@ -9,30 +9,35 @@
 #include <chrono>
 #include <thread>
 #include <typeinfo>
+#include "Core.hpp"
 #include "CoreException.hpp"
 #include "ProgressBar.hpp"
 #include "MyEventReceiver.hpp"
-#include "Core.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "Intro.hpp"
+#include "Save.hpp"
+#include "Load.hpp"
 
 Core::Core()
 {
-	_window = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(1920, 1080));
+	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 32, true);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
 	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
-	_receiver = new MyEventReceiver(_window, *this);
+	_smgr = _window->getSceneManager();
+	_camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	_camera->setFarValue(42000);
+	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
+	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
 	_window->setEventReceiver(_receiver);
 	_env = _window->getGUIEnvironment();
 	_driver = _window->getVideoDriver();
-	_smgr = _window->getSceneManager();
 	_lState = menuSplash;
 	_gState = menu;
 	_isInitialized = false;
@@ -45,10 +50,13 @@ Core::Core()
 	_splash = nullptr;
     _menu = nullptr;
     _options = nullptr;
+	_save = nullptr;
+	_load = nullptr;
     _select = nullptr;
     _music = nullptr;
     _inputs = nullptr;
     _game = nullptr;
+	_deviceParam.Fullscreen = false;
 }
 
 Select *Core::getSelect()
@@ -59,6 +67,11 @@ Select *Core::getSelect()
 GameCore *Core::getGame()
 {
 	return _game;
+}
+
+Map *Core::getMap()
+{
+	return _loadmap->getMap();
 }
 
 Core::layerState Core::getLState()
@@ -74,6 +87,11 @@ Core::gameState Core::getGState()
 Music *Core::getMusicEngine()
 {
 	return _music;
+}
+
+Intro *Core::getIntro()
+{
+	return _intro;
 }
 
 void Core::setLState(Core::layerState state)
@@ -129,6 +147,18 @@ void Core::helpCase()
 	showLayer(_help);
 }
 
+void Core::saveCase()
+{
+	hideLayers();
+	showLayer(_save);
+}
+
+void Core::loadCase()
+{
+	hideLayers();
+	showLayer(_load);
+}
+
 void Core::splashCase()
 {
 	if (!_splash)
@@ -150,48 +180,56 @@ void Core::init()
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 		_splash->getBar()->setProgress(5);
-	} else if (_initStep == 1) {
+	}  else if (_initStep == 1) {
+		if (!_music)
+			_music = new Music();
+		_splash->getBar()->setProgress(7);
+	} else if (_initStep == 2) {
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(10);
-	} else if (_initStep == 2) {
+	} else if (_initStep == 3) {
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(20);
-	} else if (_initStep == 3) {
+	} else if (_initStep == 4) {
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(30);
-	} else if (_initStep == 4) {
+	} else if (_initStep == 5) {
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(40);
-	} else if (_initStep == 5) {
+	} else if (_initStep == 6) {
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
-	} else if (_initStep == 6) {
+	} else if (_initStep == 7) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(60);
-	} else if (_initStep == 7) {
+	} else if (_initStep == 8) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(70);
-	} else if (_initStep == 8) {
-		if (!_music)
-			_music = new Music();
-		_splash->getBar()->setProgress(80);
 	} else if (_initStep == 9) {
+		if (!_save)
+			_save = new Save(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(80);
+	} else if (_initStep == 10) {
 		if (!_inputs)
 			_inputs = new Input();
 		_splash->getBar()->setProgress(90);
-	} else if (_initStep == 10) {
+	} else if (_initStep == 11) {
+		if (!_load)
+			_load = new Load(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(95);
+	} else if (_initStep == 12) {
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_game)
-			_game = new GameCore(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
-		_splash->getBar()->setProgress(90);
+			_game = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+		_splash->getBar()->setProgress(100);
 	// } else if (_initStep == 9) {
 	// 	if (!_pause)
 	// 		_pause = new Pause();
@@ -202,6 +240,7 @@ void Core::init()
 			_loadmap->run();
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
+		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
 	}
 	_initStep++;
 	hideLayers();
@@ -209,9 +248,6 @@ void Core::init()
 
 int Core::run()
 {
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
-	camera->setFarValue(42000);
-
 	irr::gui::IGUISkin* skin = _env->getSkin();
     irr::gui::IGUIFont* font = _env->getFont("resources/fonts/font.bmp");
     if (font)
@@ -230,6 +266,23 @@ int Core::run()
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
+
+		core::vector3df cameraPosition = _camera->getPosition();
+		core::vector3df cameraTargetPosition = _camera->getTarget();
+		core::stringw cameraPositionStr = L"CAMERA POSITION [";
+		cameraPositionStr += cameraPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Z;
+		cameraPositionStr += L"] CAMERA TARGET POSITION [";
+		cameraPositionStr += cameraTargetPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Z;
+		cameraPositionStr += L"]";
+		_window->setWindowCaption(cameraPositionStr.c_str());
 
 		// str = L"Irrlicht Engine [";
 		// str += _driver->getName();
@@ -291,6 +344,12 @@ void Core::drawLayer()
 		case menuSelect:
 			selectCase();
 			break;
+		case menuSave:
+			saveCase();
+			break;
+		case menuLoad:
+			loadCase();
+			break;
 	}
 }
 
@@ -312,6 +371,8 @@ void Core::hideLayers()
 		for (auto &it : _options->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _options->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _options->getCheckBox())
 			it.second->setVisible(false);
 	}
 	if (_splash) {
@@ -346,6 +407,12 @@ void Core::hideLayers()
 		for (auto &it : _pause->getImages())
 			it.second->setVisible(false);
 	}
+	if (_save)
+		for (auto &it : _save->getButtons())
+			it.second->setVisible(false);
+	if (_load)
+		for (auto &it : _load->getButtons())
+			it.second->setVisible(false);
 }
 
 template<typename T>
@@ -354,6 +421,8 @@ void Core::showLayer(T *layer)
 	for (auto &it : layer->getButtons())
 		it.second->setVisible(true);
 	for (auto &it : layer->getImages())
+		it.second->setVisible(true);
+	for (auto &it : layer->getCheckBox())
 		it.second->setVisible(true);
 	for (auto &it : layer->getPreviews())
 		it->setVisibility(true);

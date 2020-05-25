@@ -17,11 +17,12 @@ Intro::Intro(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
 
     loadTextures();
     loadButtons();
+}
 
-    irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya();
-    // CircleCameraTravel travel = CircleCameraTravel(camera, _smgr, {0, 100, 0}, 500.0, 0.00025);
-	// travel.start();
-    camera->setFarValue(42000);
+void Intro::init()
+{
+    std::cout << "test" << std::endl;
+    //_core->getMusicEngine()->add2D("resources/music/first.mp3");
 }
 
 void Intro::loadTextures()
@@ -56,4 +57,9 @@ std::map<std::string, irr::gui::IGUIButton *> Intro::getButtons()
 std::map<std::string, irr::gui::IGUIImage *> Intro::getImages()
 {
     return _images;
+}
+
+std::map<std::string, irr::gui::IGUICheckBox *> Intro::getCheckBox()
+{
+    return _checkBox;
 }

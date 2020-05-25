@@ -9,32 +9,37 @@
 #define AI_HPP_
 
 #include "IEntity.hpp"
+#include "Map.hpp"
 
 class AI : public IEntity {
 	public:
-	AI(Character *, int);
+	AI(Character *, int, Map *);
 
 	void kill() override;
-	void move() override;
 	void run() override;
 	void putBomb() override;
 
 	int getFirePower() override;
 	int getBombAmount() override;
-	int getSpeed();
+	int getSpeed() override;
 	bool getWallPass() override;
 	bool getBombPass() override;
 	int getEntityNumber() override;
+	void setScore(int) override;
 	int getScore() override;
+	void setWinNumber(int) override;
+	int getWinNumber() override;
 	Character *getCharacter() override;
-	void moveTo(Move) override;
+	void moveTo(side) override;
 	bool isAlive() override;
 
 	private:
 	bool _isAlive;
 	int _entityNumber;
 	int _score;
+	int _winNumber;
 	Character *_character;
+	Map *_map;
 
 	int _firePower;
 	int _bombAmount;

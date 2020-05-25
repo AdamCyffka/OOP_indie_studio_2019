@@ -8,8 +8,8 @@
 #include "CircleCameraTravel.hpp"
 #include "CameraTravelException.hpp"
 
-CircleCameraTravel::CircleCameraTravel(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr, core::vector3df center, float radius, float speed)
-: ACameraTravel(camera, smgr), _center(center), _radius(radius), _speed(speed)
+CircleCameraTravel::CircleCameraTravel(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr, core::vector3df center, core::vector3df targetPosition, float radius, float speed)
+: ACameraTravel(camera, smgr), _center(center), _radius(radius), _speed(speed), _targetPosition(targetPosition)
 {
     std::cout << "Circle camera travel created." << std::endl;
 }
@@ -28,7 +28,7 @@ void CircleCameraTravel::start()
     if (_anim) {
         auto *camera = getCamera();
         camera->addAnimator(_anim);
-        camera->setTarget(_center);
+        camera->setTarget(_targetPosition);
     } else {
         throw CameraTravelException("Could not create fly circle animator.");
     }

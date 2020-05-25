@@ -69,3 +69,8 @@ void Splash::setBar(ProgressBar *bar)
 {
 	_bar = bar;
 }
+
+std::map<std::string, irr::gui::IGUICheckBox *> Splash::getCheckBox()
+{
+  return _checkBox;
+}

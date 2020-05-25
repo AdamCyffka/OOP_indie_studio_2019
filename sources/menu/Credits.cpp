@@ -59,3 +59,8 @@ std::map<std::string, irr::gui::IGUIImage *> Credits::getImages()
 {
     return _images;
 }
+
+std::map<std::string, irr::gui::IGUICheckBox *> Credits::getCheckBox()
+{
+    return _checkBox;
+}
