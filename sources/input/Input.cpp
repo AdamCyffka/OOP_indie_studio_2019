@@ -5,8 +5,8 @@
 ** Event
 */
 
-#include "../../includes/input/Input.hpp"
-#include "../../victor/irrlicht-1.8.4/include/driverChoice.h"
+#include "Input.hpp"
+#include "driverChoice.h"
 
 
 using namespace irr;
