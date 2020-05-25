@@ -83,6 +83,15 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 						_core.setGState(Core::game);
 						_core.getGame()->init();
 						return true;
+                    case IMenu::GUI_ID_SAVE_BUTTON:
+						_core.setLState(Core::menuSave);
+						return true;
+                    case IMenu::GUI_ID_LOAD_BUTTON:
+						_core.setLState(Core::menuLoad);
+						return true;
+                    case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
+						_core.setLState(Core::menuPause);
+						return true;
                 }
             default:
                 break;

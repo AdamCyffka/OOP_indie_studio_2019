@@ -63,3 +63,8 @@ std::map<std::string, irr::gui::IGUIImage *> Intro::getImages()
 {
     return _images;
 }
+
+std::map<std::string, irr::gui::IGUICheckBox *> Intro::getCheckBox()
+{
+    return _checkBox;
+}

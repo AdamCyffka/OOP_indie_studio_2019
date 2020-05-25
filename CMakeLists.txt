@@ -29,6 +29,8 @@ add_executable(bomberman
         sources/menu/Pause.cpp
         sources/menu/MyEventReceiver.cpp
         sources/menu/ProgressBar.cpp
+        sources/menu/Save.cpp
+        sources/menu/Load.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
         sources/travel/CircleCameraTravel.cpp

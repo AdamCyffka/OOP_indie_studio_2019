@@ -87,3 +87,8 @@ std::map<std::string, irr::gui::IGUIImage *> Pause::getImages()
 {
     return _images;
 }
+
+std::map<std::string, irr::gui::IGUICheckBox *> Pause::getCheckBox()
+{
+    return _checkBox;
+}

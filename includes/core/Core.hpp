@@ -17,6 +17,8 @@
 #include "Music.hpp"
 #include "GameCore.hpp"
 
+class Load;
+class Save;
 class Intro;
 class Help;
 class Credits;
@@ -37,7 +39,9 @@ class Core {
 			menuSplash,
 			menuHelp,
             menuCredits,
-			menuSelect
+			menuSelect,
+            menuSave,
+            menuLoad
 		};
 
         enum gameState {
@@ -54,6 +58,8 @@ class Core {
         void helpCase();
         void creditsCase();
         void splashCase();
+        void saveCase();
+        void loadCase();
 
         layerState getLState();
 		gameState getGState();
@@ -79,6 +85,8 @@ class Core {
         Credits *_credits;
         Help *_help;
         Pause *_pause;
+        Save *_save;
+        Load *_load;
         Music *_music;
         Input *_inputs;
         GameCore *_game;
@@ -89,6 +97,7 @@ class Core {
         bool _isInitialized;
         unsigned int _initStep;
 
+        irr::SIrrlichtCreationParameters _deviceParam;
         irr::IrrlichtDevice *_window;
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
