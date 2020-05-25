@@ -12,7 +12,6 @@
 #include "Input.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
-#include "Core.hpp"
 #include <map>
 
 class Core;
