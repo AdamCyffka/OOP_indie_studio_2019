@@ -11,6 +11,7 @@
 #include <irrlicht.h>
 #include "CameraTravelManager.hpp"
 #include "Menu.hpp"
+#include "Score.hpp"
 #include "Select.hpp"
 #include "Options.hpp"
 #include "LoadMap.hpp"
@@ -42,8 +43,9 @@ class Core {
 			menuHelp,
             menuCredits,
 			menuSelect,
+            menuScore,
             menuSave,
-            menuLoad
+            menuLoad,
 		};
 
         enum gameState {
@@ -56,6 +58,7 @@ class Core {
         void pauseCase();
         void gameCase();
         void selectCase();
+        void scoreCase();
         void optionsCase();
         void helpCase();
         void creditsCase();
@@ -66,10 +69,12 @@ class Core {
         layerState getLState();
 		gameState getGState();
         Select *getSelect();
+        Score *getScore();
 		GameCore *getGame();
 		Map *getMap();
 		Music *getMusicEngine();
         Intro *getIntro();
+        CameraTravelManager *getCameraTravelManager();
 
         void setLState(layerState state);
         void setGState(gameState state);
@@ -93,6 +98,7 @@ class Core {
         Save *_save;
         Load *_load;
         Music *_music;
+        Score *_score;
         Input *_inputs;
         GameCore *_game;
         layerState _lState;

@@ -15,6 +15,7 @@
 #include "MyEventReceiver.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
+#include "Score.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
@@ -53,6 +54,7 @@ Core::Core()
 	_save = nullptr;
 	_load = nullptr;
     _select = nullptr;
+	_score = nullptr;
     _music = nullptr;
     _inputs = nullptr;
     _game = nullptr;
@@ -62,6 +64,11 @@ Core::Core()
 Select *Core::getSelect()
 {
 	return _select;
+}
+
+Score *Core::getScore()
+{
+	return _score;
 }
 
 GameCore *Core::getGame()
@@ -94,6 +101,11 @@ Intro *Core::getIntro()
 	return _intro;
 }
 
+CameraTravelManager *Core::getCameraTravelManager()
+{
+	return _cameraTravelManager;
+}
+
 void Core::setLState(Core::layerState state)
 {
 	_lState = state;
@@ -121,6 +133,12 @@ void Core::selectCase()
 	_select->run();
 	hideLayers();
 	showLayer(_select);
+}
+
+void Core::scoreCase()
+{
+	hideLayers();
+	showLayer(_score);
 }
 
 void Core::pauseCase()
@@ -205,26 +223,30 @@ void Core::init()
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
 	} else if (_initStep == 7) {
+		if (!_score)
+			_score = new Score(_env, _driver, _smgr, _select->getPreviews());
+		_splash->getBar()->setProgress(50);
+	} else if (_initStep == 8) {
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(60);
-	} else if (_initStep == 8) {
+	} else if (_initStep == 9) {
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(70);
-	} else if (_initStep == 9) {
+	} else if (_initStep == 10) {
 		if (!_save)
 			_save = new Save(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(80);
-	} else if (_initStep == 10) {
+	} else if (_initStep == 11) {
 		if (!_inputs)
 			_inputs = new Input();
 		_splash->getBar()->setProgress(90);
-	} else if (_initStep == 11) {
+	} else if (_initStep == 12) {
 		if (!_load)
 			_load = new Load(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(95);
-	} else if (_initStep == 12) {
+	} else if (_initStep == 13) {
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_game)
@@ -344,6 +366,9 @@ void Core::drawLayer()
 		case menuSelect:
 			selectCase();
 			break;
+		case menuScore:
+			scoreCase();
+			break;
 		case menuSave:
 			saveCase();
 			break;
@@ -387,6 +412,14 @@ void Core::hideLayers()
 		for (auto &it : _select->getImages())
 			it.second->setVisible(false);
 		for (auto &it : _select->getPreviews())
+			it->setVisibility(false);
+	}
+	if (_score) {
+		for (auto &it : _score->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _score->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _score->getPreviews())
 			it->setVisibility(false);
 	}
 	if (_credits) {

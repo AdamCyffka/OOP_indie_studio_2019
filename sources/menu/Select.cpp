@@ -18,7 +18,7 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 
     loadTextures();
     loadButtons();
-    _selectTab = {{"waluigi", true}, {"mario", true}, {"lakitu", true}, {"koopa", true}, {"dr_peach", false}};
+    _selectTab = {{"waluigi", 0}, {"mario", 1}, {"lakitu", 2}, {"koopa", 3}, {"dr_peach", -1}};
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[0].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[1].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[2].first)));
@@ -180,12 +180,47 @@ void Select::loadButtons()
     _buttons["x4"]->setRelativePosition(irr::core::position2d<irr::s32>(1490, 763));
 }
 
+void Select::spawnEntities()
+{
+    _previews[0]->setPosition({17, 0, 245});
+    _previews[1]->setPosition({-28, 0, 225});
+    _previews[2]->setPosition({-79, 0, 205});
+    _previews[3]->setPosition({-127, 0, 185});
+    for (auto &i : _previews) {
+        i->setOrientation(side::east);
+        i->setState(Character::state::idle);
+    }
+}
+
+int Select::getNextAvailableSkin()
+{
+    for (size_t i = 0; i < _selectTab.size(); i++) {
+        if (_selectTab[i].second == -1)
+            return i;
+    }
+}
+
 void Select::incSkin(int skin)
 {
-    if (nbSkin[skin] < 6)
-        nbSkin[skin]++;
-    else
-        nbSkin[skin] = 0;
+    for (size_t i = 0; i < _selectTab.size(); i++) {
+        if (_selectTab[i].second == skin) {
+            int newSkinIndex = getNextAvailableSkin();
+            _previews[skin]->changeModel(g_modelInfos.at(_selectTab[newSkinIndex].first));
+            _selectTab[newSkinIndex].second = skin;
+            _selectTab[i].second = -1;
+            break;
+        }
+    }
+
+    // if (_selectTab[i].second == -1) {
+    //         for (size_t j = 0; j < _selectTab.size(); j++) {
+    //             if (_selectTab[j].second == skin) {
+    //                 _selectTab[j].second = -1;
+    //             }
+    //         }
+    //         _previews[skin]->changeModel(g_modelInfos.at(_selectTab[i].first));
+    //         _selectTab[i].second = skin;
+    //     }
 }
 
 void Select::changeRole(int role)

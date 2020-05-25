@@ -42,10 +42,12 @@ void GameCore::init()
 void GameCore::run()
 {
 
-	if (gameOver()) //toggle to skip game part
+	if (!gameOver()) //toggle to skip game part
 	{
 		_core->setGState(Core::menu);
-		_core->setLState(Core::menuMain);
+		_core->setLState(Core::menuScore);
+		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
+		_core->getScore()->spawnEntities();
 		return;
 	}
 	std::cout << "game running" << std::endl;

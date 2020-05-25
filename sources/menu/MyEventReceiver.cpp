@@ -45,6 +45,8 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case IMenu::GUI_ID_OPTION_RETURN:
                         if (_core.getLState() == Core::layerState::menuSelect)
                             _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToMenu);
+                        else if (_core.getLState() == Core::layerState::menuScore)
+                            _cameraTravelManager->doTravel(CameraTravelManager::travel::scoreToMenu);
                         _core.setLState(Core::menuMain);
                         return true;
                     case IMenu::GUI_ID_OPTIONS_BUTTON:
@@ -52,6 +54,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         return true;
                     case IMenu::GUI_ID_NEW_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
+                        _core.getSelect()->spawnEntities();
                         _core.setLState(Core::menuSelect);
                         return true;
                     case IMenu::GUI_ID_CREDITS_BUTTON:
