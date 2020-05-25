@@ -16,7 +16,6 @@ class Player : public IEntity {
         Player(Character *, const Key_mouvement &, int);
 
 	 	void kill() override;
-	 	void move() override;
 	 	void run() override;
 	 	void putBomb() override;
 
@@ -26,14 +25,18 @@ class Player : public IEntity {
 		bool getWallPass() override;
 		bool getBombPass() override;
 		int getEntityNumber() override;
+		void setScore(int) override;
 		int getScore() override;
+		void setWinNumber(int) override;
+		int getWinNumber() override;
 		Character *getCharacter() override;
-		void moveTo(Move) override;
+		void moveTo(side) override;
 		bool isAlive() override;
 
 	private:
 		bool _isAlive;
 		int _entityNumber;
+		int _winNumber;
 		int _score;
 		Character *_character;
 

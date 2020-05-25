@@ -80,6 +80,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 						return true;
 	            	case IMenu::GUI_ID_SELECT_PLAY:
 						_core.setGState(Core::game);
+						_core.hideLayers();
 						_core.getGame()->init();
 						return true;
                 }

@@ -61,6 +61,11 @@ GameCore *Core::getGame()
 	return _game;
 }
 
+Map *Core::getMap()
+{
+	return _loadmap->getMap();
+}
+
 Core::layerState Core::getLState()
 {
 	return _lState;
@@ -190,7 +195,7 @@ void Core::init()
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_game)
-			_game = new GameCore(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+			_game = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
 		_splash->getBar()->setProgress(90);
 	// } else if (_initStep == 9) {
 	// 	if (!_pause)

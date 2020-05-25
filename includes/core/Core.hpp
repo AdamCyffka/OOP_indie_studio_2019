@@ -22,6 +22,7 @@ class Help;
 class Credits;
 class Pause;
 class MyEventReceiver;
+class GameCore;
 
 class Core {
     public:
@@ -59,13 +60,16 @@ class Core {
 		gameState getGState();
         Select *getSelect();
 		GameCore *getGame();
+		Map *getMap();
 		Music *getMusicEngine();
 
         void setLState(layerState state);
         void setGState(gameState state);
+
+		void hideLayers();
+
     private:
 		void init();
-		void hideLayers();
 		template<typename T> void showLayer(T *layer);
 		void drawScene();
 		void drawLayer();
