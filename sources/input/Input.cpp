@@ -6,8 +6,6 @@
 */
 
 #include "Input.hpp"
-#include "driverChoice.h"
-
 
 using namespace irr;
 
