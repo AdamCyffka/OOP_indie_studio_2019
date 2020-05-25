@@ -9,10 +9,10 @@
 #include <chrono>
 #include <thread>
 #include <typeinfo>
+#include "Core.hpp"
 #include "CoreException.hpp"
 #include "ProgressBar.hpp"
 #include "MyEventReceiver.hpp"
-#include "Core.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
 #include "Credits.hpp"
@@ -30,11 +30,14 @@ Core::Core()
 		return;
 	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
-	_receiver = new MyEventReceiver(_window, *this);
+	_smgr = _window->getSceneManager();
+	_camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	_camera->setFarValue(42000);
+	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
+	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
 	_window->setEventReceiver(_receiver);
 	_env = _window->getGUIEnvironment();
 	_driver = _window->getVideoDriver();
-	_smgr = _window->getSceneManager();
 	_lState = menuSplash;
 	_gState = menu;
 	_isInitialized = false;
@@ -64,6 +67,11 @@ Select *Core::getSelect()
 GameCore *Core::getGame()
 {
 	return _game;
+}
+
+Map *Core::getMap()
+{
+	return _loadmap->getMap();
 }
 
 Core::layerState Core::getLState()
@@ -220,7 +228,7 @@ void Core::init()
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_game)
-			_game = new GameCore(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+			_game = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
 		_splash->getBar()->setProgress(100);
 	// } else if (_initStep == 9) {
 	// 	if (!_pause)
@@ -232,6 +240,7 @@ void Core::init()
 			_loadmap->run();
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
+		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
 	}
 	_initStep++;
 	hideLayers();
@@ -258,6 +267,22 @@ int Core::run()
 
 		drawScene();
 
+		core::vector3df cameraPosition = _camera->getPosition();
+		core::vector3df cameraTargetPosition = _camera->getTarget();
+		core::stringw cameraPositionStr = L"CAMERA POSITION [";
+		cameraPositionStr += cameraPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Z;
+		cameraPositionStr += L"] CAMERA TARGET POSITION [";
+		cameraPositionStr += cameraTargetPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Z;
+		cameraPositionStr += L"]";
+		_window->setWindowCaption(cameraPositionStr.c_str());
 
 		// str = L"Irrlicht Engine [";
 		// str += _driver->getName();

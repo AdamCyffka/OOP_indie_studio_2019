@@ -15,7 +15,7 @@ using namespace irr;
 class CircleCameraTravel : public ACameraTravel {
     public:
         CircleCameraTravel(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr,
-        core::vector3df center, float radius, float speed);
+        core::vector3df center, core::vector3df targetPosition, float radius, float speed);
         ~CircleCameraTravel();
 
         void start() final;
@@ -31,6 +31,7 @@ class CircleCameraTravel : public ACameraTravel {
     protected:
     private:
         core::vector3df _center;
+        core::vector3df _targetPosition;
         float _radius;
         float _speed;
 };
