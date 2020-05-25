@@ -61,9 +61,11 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.setLState(Core::menuHelp);
                         return true;
                     case IMenu::GUI_ID_INTRO_BUTTON:
+                        _core.getMusicEngine()->stop("resources/music/intro.mp3", false);
+                        _core.getMusicEngine()->add2D("resources/music/menu.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
                         _core.setLState(Core::menuMain);
-                        return true;
+                        return true;<
 	                case IMenu::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:
 						_core.getMusicEngine()->musicUp();
 						return true;
