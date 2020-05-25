@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <map>
-#include "../../victor/irrlicht-1.8.4/include/irrlicht.h"
+#include "irrlicht.h"
 
 using namespace irr;                    // NONE A PAS OUBLIER , POUR NON TOUCHE OU TOUCHE NON BIND
 
