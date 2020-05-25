@@ -55,7 +55,7 @@ class Select : public IMenu {
         std::vector<Character *> _previews;
 		std::vector<EntityType::EntityType> _entitiesTypes;
 		int nbSkin[4] = {0, 1, 2, 3};
-        std::vector<std::pair<std::string, bool>> _selectTab;
+        std::vector<std::pair<std::string, int>> _selectTab;
         std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};
         std::vector<std::vector<int>> _nbRole {
             {0, 1},
