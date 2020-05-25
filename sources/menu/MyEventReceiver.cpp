@@ -65,7 +65,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getMusicEngine()->add2D("resources/music/menu.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
                         _core.setLState(Core::menuMain);
-                        return true;<
+                        return true;
 	                case IMenu::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:
 						_core.getMusicEngine()->musicUp();
 						return true;
@@ -85,6 +85,8 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 						_core.getMusicEngine()->sfxDown();
 						return true;
 	            	case IMenu::GUI_ID_SELECT_PLAY:
+                        _core.getMusicEngine()->stop("resources/music/menu.mp3", false);
+                        _core.getMusicEngine()->add2D("resources/music/game.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
 						_core.setGState(Core::game);
 						_core.hideLayers();
