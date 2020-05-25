@@ -14,6 +14,12 @@
 
 using namespace irr;                    // NONE A PAS OUBLIER , POUR NON TOUCHE OU TOUCHE NON BIND
 
+enum basic_key 
+{
+    escape = 1,
+    exit_game = 2
+};
+
 enum device 
 {
     Keyboard = 1,
@@ -50,7 +56,7 @@ class Input : public IEventReceiver
         void player_three(Input receiver);
         void player_four(Input receiver);
         
-        void keyBoard(Input receiver);
+        basic_key keyBoard(Input receiver);
         void define_player(Input receiver);
         std::map<int, Key_mouvement> getPlayerInput();
 	    Input();
