@@ -48,7 +48,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case IMenu::GUI_ID_OPTIONS_BUTTON:
                         _core.setLState(Core::menuOptions);
                         return true;
-                    case IGame::GUI_ID_NEW_BUTTON:
+                    case IMenu::GUI_ID_NEW_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
                         _core.setLState(Core::menuSelect);
                         return true;
@@ -58,7 +58,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case IMenu::GUI_ID_HELP_BUTTON:
                         _core.setLState(Core::menuHelp);
                         return true;
-                    case IGame::GUI_ID_INTRO_BUTTON:
+                    case IMenu::GUI_ID_INTRO_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
                         _core.setLState(Core::menuMain);
                         return true;

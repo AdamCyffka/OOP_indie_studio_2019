@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.10)
 project(OOP_indie_studio_2019)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -83,14 +83,14 @@ target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
 #########################################
 
 ########## Boost integration ############
-#set(Boost_DEBUG 1)
-#if(MSVC)
-#    set(BOOST_ROOT "C:/Program Files/boost_1_69_0")
-#endif(MSVC)
-#find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
-#message("${Boost_INCLUDE_DIRS} ${Boost_LIBRARY_DIRS}")
-#include_directories(${Boost_INCLUDE_DIRS})
-#target_link_libraries(bomberman ${Boost_LIBRARIES})
+set(Boost_DEBUG 1)
+if(MSVC)
+    set(BOOST_ROOT "C:/Program Files/boost_1_69_0")
+endif(MSVC)
+find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
+message("${Boost_INCLUDE_DIRS} ${Boost_LIBRARY_DIRS}")
+include_directories(${Boost_INCLUDE_DIRS})
+target_link_libraries(bomberman ${Boost_LIBRARIES})
 #########################################
 
 ######## Components integration #########

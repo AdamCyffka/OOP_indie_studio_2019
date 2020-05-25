@@ -89,7 +89,6 @@ class Core {
         GameCore *_game;
         layerState _lState;
         gameState _gState;
-        WallPass *_wallpass;
         MyEventReceiver *_receiver;
         CameraTravelManager *_cameraTravelManager;
 
