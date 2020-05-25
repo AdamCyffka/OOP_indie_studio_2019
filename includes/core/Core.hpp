@@ -9,6 +9,7 @@
 #define CORE_HPP_
 
 #include <irrlicht.h>
+#include "CameraTravelManager.hpp"
 #include "Menu.hpp"
 #include "Select.hpp"
 #include "Options.hpp"
@@ -78,8 +79,10 @@ class Core {
         Music *_music;
         layerState _lState;
         gameState _gState;
-        MyEventReceiver *_receiver;
         WallPass *_wallpass;
+
+        MyEventReceiver *_receiver;
+        CameraTravelManager *_cameraTravelManager;
 
         bool _isInitialized;
         unsigned int _initStep;
@@ -88,6 +91,7 @@ class Core {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+        irr::scene::ICameraSceneNode *_camera;
 };
 
 #endif /* !CORE_HPP_ */

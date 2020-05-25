@@ -49,6 +49,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.setState(Core::menuOptions);
                         return true;
                     case IGame::GUI_ID_NEW_BUTTON:
+                        _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
                         _core.setState(Core::menuSelect);
                         return true;
                     case IGame::GUI_ID_CREDITS_BUTTON:
@@ -58,6 +59,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.setState(Core::menuHelp);
                         return true;
                     case IGame::GUI_ID_INTRO_BUTTON:
+                        _cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
                         _core.setState(Core::menuMain);
                         return true;
 	                case IGame::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:

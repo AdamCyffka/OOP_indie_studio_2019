@@ -11,15 +11,18 @@
 #include "Music.hpp"
 #include "Core.hpp"
 #include "IGame.hpp"
+#include "CameraTravelManager.hpp"
 
 class MyEventReceiver : public irr::IEventReceiver {
     public:
-        MyEventReceiver(irr::IrrlichtDevice *window, Core &core) : _window(window), _core(core) {};
+        MyEventReceiver(irr::IrrlichtDevice *window, Core &core, CameraTravelManager *cameraTravelManager)
+        : _window(window), _core(core), _cameraTravelManager(cameraTravelManager) {};
         bool OnEvent(const irr::SEvent &event) override;
         bool clicks(const irr::SEvent &event);
     private:
         Core &_core;
         irr::IrrlichtDevice *_window;
+        CameraTravelManager *_cameraTravelManager;
 };
 
 #endif /* !MYEVENTRECEIVER_HPP_ */

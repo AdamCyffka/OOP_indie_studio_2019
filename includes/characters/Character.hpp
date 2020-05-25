@@ -18,8 +18,7 @@ using namespace irr;
 class Character {
     public:
         Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model,
-                  std::string name = "Player", int travelTime = 1000,
-                  side orientation = side::north);
+        int travelTime = 1000, side orientation = side::north);
         ~Character();
 
         enum state {
@@ -62,7 +61,6 @@ class Character {
         Character::state _state;
         side _orientation;
         modelInfos_t _model;
-        std::string _name;
         int _travelTime;
 
         //methods

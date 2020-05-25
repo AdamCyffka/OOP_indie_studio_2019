@@ -4,13 +4,18 @@ project(OOP_indie_studio_2019)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+#set(Boost_INCLUDE_DIRS "C:/Program Files/boost_1_69_0")
+#set(Boost_LIBRARY_DIRS "C:/Program Files/boost_1_69_0/stage/lib")
+find_package (Threads REQUIRED)
 
 set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
 set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
 
-find_package(Irrlicht REQUIRED)
-#find_package(Boost 1.69 REQUIRED /* COMPOSANTS REQUIS ICI*/) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST (n'oubliez pas d'insérer les composants)
+message("${Boost_INCLUDE_DIRS} ${Boost_LIBRARY_DIRS}")
 
+find_package(Irrlicht REQUIRED)
+find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
 add_executable(bomberman
         sources/main.cpp
         sources/core/Core.cpp
@@ -30,8 +35,10 @@ add_executable(bomberman
         sources/music/Music.cpp
         sources/travel/CircleCameraTravel.cpp
         sources/travel/StraightCameraTravel.cpp
+        sources/travel/CameraTravelManager.cpp
         sources/input/Input.cpp
         )
+
 
 set_target_properties(bomberman PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}
@@ -40,6 +47,8 @@ set_target_properties(bomberman PROPERTIES
         )
 
 target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
+target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(bomberman ${Boost_LIBRARIES})
 
 include_directories(includes)
 include_directories(includes/map)
@@ -52,7 +61,7 @@ include_directories(includes/input/)
 include_directories(includes/powerUps/)
 include_directories(${Irrlicht_INCLUDE_DIRS})
 include_directories(${Irrklang_DIR}/include)
-#include_directories(${Boost_INCLUDE_DIRS}) A DECOMMENTER SI VOUS UTILISEZ LA LIB BOOST
+include_directories(${Boost_INCLUDE_DIRS})
 
 file(COPY "${CMAKE_SOURCE_DIR}/resources"
         DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/bin")

@@ -9,9 +9,9 @@
 #include <chrono>
 #include <thread>
 #include <typeinfo>
+#include "Core.hpp"
 #include "ProgressBar.hpp"
 #include "MyEventReceiver.hpp"
-#include "Core.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
 #include "Credits.hpp"
@@ -28,11 +28,14 @@ Core::Core()
 		return;
 	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
-	_receiver = new MyEventReceiver(_window, *this);
+	_smgr = _window->getSceneManager();
+	_camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	_camera->setFarValue(42000);
+	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
+	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
 	_window->setEventReceiver(_receiver);
 	_env = _window->getGUIEnvironment();
 	_driver = _window->getVideoDriver();
-	_smgr = _window->getSceneManager();
 	_lState = menuSplash;
 	_gState = menu;
 	_isInitialized = false;
@@ -189,9 +192,6 @@ void Core::init()
 
 int Core::run()
 {
-	irr::scene::ICameraSceneNode *camera = _smgr->addCameraSceneNodeMaya(); // addCameraSceneNodeMaya
-	camera->setFarValue(42000);
-
 	irr::gui::IGUISkin* skin = _env->getSkin();
     irr::gui::IGUIFont* font = _env->getFont("resources/fonts/font.bmp");
     if (font)
