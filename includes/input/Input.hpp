@@ -51,6 +51,7 @@ class Input : public IEventReceiver
         void player_four(Input receiver);
         
         void keyBoard(Input receiver);
+        void define_player(Input receiver);
         std::map<int, Key_mouvement> getPlayerInput();
 	    Input();
         ~Input();

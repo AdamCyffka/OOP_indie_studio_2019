@@ -46,6 +46,11 @@ class IMenu {
             GUI_ID_X_2,
             GUI_ID_X_3,
             GUI_ID_X_4,
+            GUI_ID_SAVE_SLOT_1,
+            GUI_ID_SAVE_SLOT_2,
+            GUI_ID_SAVE_SLOT_3,
+            GUI_ID_SAVE_SLOT_4,
+            GUI_ID_SAVE_BACKTOPAUSE,
         };
 
         virtual ~IMenu() = default;

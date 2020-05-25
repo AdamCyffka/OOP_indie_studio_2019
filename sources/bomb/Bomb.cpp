@@ -86,13 +86,13 @@ int Bomb::ifCanPoseBomb()
 void Bomb::poseBomb()
 {
     if (ifCanPoseBomb() == true && getIsBlast() == true) {
-        if (playerState::playerOne) {
+        if (playerState::playerOne) { // pose bomb here if player One
         }
-        if (playerState::playerTwo) {
+        if (playerState::playerTwo) { // pose bomb here if player Two
         }
-        if (playerState::playerThree) {
+        if (playerState::playerThree) { // pose bomb here if player Three
         }
-        if (playerState::playerFour) {
+        if (playerState::playerFour) { // pose bomb here if player Four
         }
     }
 }

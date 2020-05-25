@@ -19,6 +19,8 @@
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "Intro.hpp"
+#include "Save.hpp"
+#include "Load.hpp"
 
 Core::Core()
 {
@@ -48,10 +50,13 @@ Core::Core()
 	_splash = nullptr;
     _menu = nullptr;
     _options = nullptr;
+	_save = nullptr;
+	_load = nullptr;
     _select = nullptr;
     _music = nullptr;
     _inputs = nullptr;
     _game = nullptr;
+	_deviceParam.Fullscreen = false;
 }
 
 Select *Core::getSelect()
@@ -142,6 +147,18 @@ void Core::helpCase()
 	showLayer(_help);
 }
 
+void Core::saveCase()
+{
+	hideLayers();
+	showLayer(_save);
+}
+
+void Core::loadCase()
+{
+	hideLayers();
+	showLayer(_load);
+}
+
 void Core::splashCase()
 {
 	if (!_splash)
@@ -196,15 +213,23 @@ void Core::init()
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(70);
 	} else if (_initStep == 9) {
+		if (!_save)
+			_save = new Save(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(80);
+	} else if (_initStep == 10) {
 		if (!_inputs)
 			_inputs = new Input();
 		_splash->getBar()->setProgress(90);
-	} else if (_initStep == 10) {
+	} else if (_initStep == 11) {
+		if (!_load)
+			_load = new Load(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(95);
+	} else if (_initStep == 12) {
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_game)
 			_game = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
-		_splash->getBar()->setProgress(90);
+		_splash->getBar()->setProgress(100);
 	// } else if (_initStep == 9) {
 	// 	if (!_pause)
 	// 		_pause = new Pause();
@@ -215,6 +240,7 @@ void Core::init()
 			_loadmap->run();
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
+		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
 	}
 	_initStep++;
 	hideLayers();
@@ -240,6 +266,23 @@ int Core::run()
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
+
+		core::vector3df cameraPosition = _camera->getPosition();
+		core::vector3df cameraTargetPosition = _camera->getTarget();
+		core::stringw cameraPositionStr = L"CAMERA POSITION [";
+		cameraPositionStr += cameraPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Z;
+		cameraPositionStr += L"] CAMERA TARGET POSITION [";
+		cameraPositionStr += cameraTargetPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Z;
+		cameraPositionStr += L"]";
+		_window->setWindowCaption(cameraPositionStr.c_str());
 
 		// str = L"Irrlicht Engine [";
 		// str += _driver->getName();
@@ -301,6 +344,12 @@ void Core::drawLayer()
 		case menuSelect:
 			selectCase();
 			break;
+		case menuSave:
+			saveCase();
+			break;
+		case menuLoad:
+			loadCase();
+			break;
 	}
 }
 
@@ -322,6 +371,8 @@ void Core::hideLayers()
 		for (auto &it : _options->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _options->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _options->getCheckBox())
 			it.second->setVisible(false);
 	}
 	if (_splash) {
@@ -356,6 +407,12 @@ void Core::hideLayers()
 		for (auto &it : _pause->getImages())
 			it.second->setVisible(false);
 	}
+	if (_save)
+		for (auto &it : _save->getButtons())
+			it.second->setVisible(false);
+	if (_load)
+		for (auto &it : _load->getButtons())
+			it.second->setVisible(false);
 }
 
 template<typename T>
@@ -364,6 +421,8 @@ void Core::showLayer(T *layer)
 	for (auto &it : layer->getButtons())
 		it.second->setVisible(true);
 	for (auto &it : layer->getImages())
+		it.second->setVisible(true);
+	for (auto &it : layer->getCheckBox())
 		it.second->setVisible(true);
 	for (auto &it : layer->getPreviews())
 		it->setVisibility(true);

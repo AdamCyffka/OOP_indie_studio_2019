@@ -59,8 +59,8 @@ void StraightCameraTravel::start()
     if (_anim) {
         auto *camera = getCamera();
         camera->addAnimator(_anim);
-		camera->setTarget(_targetPosition);
-//        boost::thread *thr = new boost::thread(boost::bind(&StraightCameraTravel::updateTarget, this));
+        camera->setTarget(_targetPosition);
+        // boost::thread *thr = new boost::thread(boost::bind(&StraightCameraTravel::updateTarget, this)); // smooth camera target
     } else {
         throw CameraTravelException("Could not create fly straight animator.");
     }

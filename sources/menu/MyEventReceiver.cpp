@@ -43,6 +43,8 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getSelect()->changeRole(3);
                         return true;
                     case IMenu::GUI_ID_OPTION_RETURN:
+                        if (_core.getLState() == Core::layerState::menuSelect)
+                            _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToMenu);
                         _core.setLState(Core::menuMain);
                         return true;
                     case IMenu::GUI_ID_OPTIONS_BUTTON:
@@ -81,10 +83,19 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 						_core.getMusicEngine()->sfxDown();
 						return true;
 	            	case IMenu::GUI_ID_SELECT_PLAY:
-	            		_cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
+                        _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
 						_core.setGState(Core::game);
 						_core.hideLayers();
 						_core.getGame()->init();
+						return true;
+                    case IMenu::GUI_ID_SAVE_BUTTON:
+						_core.setLState(Core::menuSave);
+						return true;
+                    case IMenu::GUI_ID_LOAD_BUTTON:
+						_core.setLState(Core::menuLoad);
+						return true;
+                    case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
+						_core.setLState(Core::menuPause);
 						return true;
                 }
             default:

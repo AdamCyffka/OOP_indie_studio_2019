@@ -254,3 +254,9 @@ const std::vector<EntityType::EntityType> &Select::getEntityTypes()
 	}
 	return _entitiesTypes;
 }
+
+
+std::map<std::string, irr::gui::IGUICheckBox *> Select::getCheckBox()
+{
+  return _checkBox;
+}

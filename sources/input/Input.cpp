@@ -6,6 +6,7 @@
 */
 
 #include "Input.hpp"
+#include "driverChoice.h"
 
 
 using namespace irr;
@@ -141,7 +142,6 @@ void Input::player_three(Input receiver)
 
 	if (joystickInfo.size() == 0)
 	{
-	
 		moveHorizontal = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
 		if(fabs(moveHorizontal) < DEAD_ZONE)
 			moveHorizontal = 0.f;
@@ -233,7 +233,7 @@ void Input::keyBoard (Input receiver)
 bool Input::OnEvent(const SEvent& event) 
 {
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
-        JoystickStatePone = event.JoystickEvent;
+		JoystickStatePone = event.JoystickEvent;
     }
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 1) {
         JoystickStatePtwo = event.JoystickEvent;
@@ -242,7 +242,16 @@ bool Input::OnEvent(const SEvent& event)
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		_keyIsPressed = true;
 	} else {
-		_keyIsPressed = false;
+		if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick >= 0) {
+			for (int i = 0; i < 8; i++) {
+				if (JoystickStatePone.IsButtonPressed(i))
+					_keyIsPressed = true;
+				if (JoystickStatePtwo.IsButtonPressed(i))
+					_keyIsPressed = true;
+			}
+		} else {
+			_keyIsPressed = false;
+		}
 	}
     return false;
 }
@@ -266,3 +275,6 @@ Input::~Input()
 {
 
 }
+
+	
+

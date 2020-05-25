@@ -19,14 +19,12 @@ class CameraTravelManager {
         ~CameraTravelManager();
 
         enum travel {
+            intro,
             introToMenu,
             menuToSelect,
-            menuToSelectSave,
-            menuToHelp,
-            menuToOptions,
-            menuToCredits,
             selectToMenu,
-            selectToGame
+            selectToGame,
+            gameToScore
         };
 
         ACameraTravel *getTravel(travel travel) const;

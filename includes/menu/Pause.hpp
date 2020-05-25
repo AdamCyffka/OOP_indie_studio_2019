@@ -24,6 +24,7 @@ class Pause : public IMenu {
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
+        std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
     private:
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
@@ -32,6 +33,7 @@ class Pause : public IMenu {
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
+        std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
 };
 
 
