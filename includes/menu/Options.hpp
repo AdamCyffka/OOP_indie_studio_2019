@@ -25,18 +25,17 @@ class Options : public IMenu {
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
-        void setFullscreen(bool fullscreen) {_fullscreen = fullscreen;}
-        bool getFullscreen(void) const { return (_fullscreen); }
+        std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
     private:
-        bool _fullscreen;
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
-
+        irr::SIrrlichtCreationParameters _deviceParam;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
+        std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
 };
 
 #endif /* !OPTIONS_HPP_ */

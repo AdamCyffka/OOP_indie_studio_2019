@@ -26,6 +26,7 @@ class Select : public IMenu {
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::video::ITexture *> getTextures();
+        std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
         std::vector<Character *> getPreviews();
         std::vector<std::vector<std::vector<std::string>>> getSelectRole();
         std::vector<std::vector<int>> getNbRole(); 
@@ -50,6 +51,7 @@ class Select : public IMenu {
 		std::map<std::string, irr::gui::IGUIImage *> _images;
 		std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
+        std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
         std::vector<Character *> _previews;
 		std::vector<EntityType::EntityType> _entitiesTypes;
 		int nbSkin[4] = {0, 1, 2, 3};

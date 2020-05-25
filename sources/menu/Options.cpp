@@ -13,7 +13,6 @@ Options::Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *drive
   _driver = driver;
   _env = env;
   _smgr = smgr;
-  _fullscreen = false;
 
   loadTextures();
   loadButtons();
@@ -96,6 +95,9 @@ void Options::loadButtons()
 		throw LoadingException("could not add image : sfxVolume");
     _images["sfxVolume"]->setImage(_textures["sfxVolume"]);
     _images["sfxVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 600));
+
+  irr::core::dimension2d<u32> dim(1920, 1080);
+  _checkBox["fullScreen"] = _env->addCheckBox(_deviceParam.Fullscreen, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
 }
 
 void Options::run()
@@ -114,4 +116,9 @@ std::map<std::string, irr::gui::IGUIButton *> Options::getButtons()
 std::map<std::string, irr::gui::IGUIImage *> Options::getImages()
 {
   return _images;
+}
+
+std::map<std::string, irr::gui::IGUICheckBox *> Options::getCheckBox()
+{
+  return _checkBox;
 }

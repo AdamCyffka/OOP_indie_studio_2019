@@ -2,21 +2,21 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Pause
+** Load
 */
 
-#ifndef PAUSE_HPP_
-#define PAUSE_HPP_
+#ifndef LOAD_HPP_
+#define LOAD_HPP_
 
 #include <map>
 #include <string>
-#include "Character.hpp"
 #include "IMenu.hpp"
+#include "Character.hpp"
 
-class Pause : public IMenu {
+class Load : public IMenu {
     public:
-        explicit Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~Pause() = default;
+        explicit Load(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        ~Load() = default;
 
         void loadButtons();
         void loadTextures();
@@ -35,6 +35,4 @@ class Pause : public IMenu {
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
 };
-
-
-#endif /* !PAUSE_HPP_ */
+#endif /* !LOAD_HPP_ */
