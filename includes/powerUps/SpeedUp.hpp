@@ -8,15 +8,20 @@
 #ifndef SPEEDUP_HPP_
 #define SPEEDUP_HPP_
 
-#include "IBonus.hpp"
+#include "IPowerUps.hpp"
 
-class SpeedUp : public IBonus {
+class SpeedUp : public IPowerUps {
     public:
-        SpeedUp();
-        ~SpeedUp();
+        explicit SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
+        ~SpeedUp() = default;
 
-    protected:
+        void spawn();
+		void die();
+		void update();
     private:
+        irr::gui::IGUIEnvironment *_env;
+        irr::video::IVideoDriver *_driver;
+        irr::scene::ISceneManager *_smgr;
 };
 
 #endif /* !SPEEDUP_HPP_ */

@@ -8,10 +8,10 @@
 #ifndef MYEVENTRECEIVER_HPP_
 #define MYEVENTRECEIVER_HPP_
 
-#include "Music.hpp"
 #include "Core.hpp"
-#include "IGame.hpp"
 #include "CameraTravelManager.hpp"
+#include "IMenu.hpp"
+#include "Intro.hpp"
 
 class MyEventReceiver : public irr::IEventReceiver {
     public:

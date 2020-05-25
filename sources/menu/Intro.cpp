@@ -19,6 +19,12 @@ Intro::Intro(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
     loadButtons();
 }
 
+void Intro::init()
+{
+    std::cout << "test" << std::endl;
+    //_core->getMusicEngine()->add2D("resources/music/first.mp3");
+}
+
 void Intro::loadTextures()
 {
     _textures["press"] = _driver->getTexture("resources/images/buttons/press.png");
@@ -28,7 +34,7 @@ void Intro::loadTextures()
 
 void Intro::loadButtons()
 {
-    _buttons["press"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, IGame::GUI_ID_INTRO_BUTTON, L"");
+    _buttons["press"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, IMenu::GUI_ID_INTRO_BUTTON, L"");
 	if (_buttons.find("press") != _buttons.end() && !_buttons["press"])
 		throw LoadingException("could not add button : press");
     _buttons["press"]->setImage(_textures["press"]);

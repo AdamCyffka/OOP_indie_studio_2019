@@ -5,6 +5,7 @@
 ** Select
 */
 
+#include "IEntity.hpp"
 #include "global.hpp"
 #include "Select.hpp"
 #include "LoadingException.hpp"
@@ -238,4 +239,18 @@ std::vector<std::vector<int>> Select::getNbRole()
 Character *Select::getPreview(int preview) const
 {
     return _previews.at(preview);
+}
+
+const std::vector<EntityType::EntityType> &Select::getEntityTypes()
+{
+	_entitiesTypes.clear();
+
+	for (auto it : _nbRole)
+	{
+		if (*it.begin() == 1)
+			_entitiesTypes.push_back(EntityType::EntityType::AI);
+		else
+			_entitiesTypes.push_back(EntityType::EntityType::player);
+	}
+	return _entitiesTypes;
 }

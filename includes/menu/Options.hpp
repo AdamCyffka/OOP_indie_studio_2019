@@ -12,9 +12,9 @@
 #include <map>
 #include <irrlicht.h>
 #include "Character.hpp"
-#include "IGame.hpp"
+#include "IMenu.hpp"
 
-class Options : public IGame {
+class Options : public IMenu {
     public:
         explicit Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Options() = default;
@@ -25,10 +25,14 @@ class Options : public IGame {
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
+        void setFullscreen(bool fullscreen) {_fullscreen = fullscreen;}
+        bool getFullscreen(void) const { return (_fullscreen); }
     private:
+        bool _fullscreen;
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;

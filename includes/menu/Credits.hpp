@@ -10,10 +10,10 @@
 
 #include <map>
 #include <string>
-#include "IGame.hpp"
+#include "IMenu.hpp"
 #include "Character.hpp"
 
-class Credits : public IGame {
+class Credits : public IMenu {
     public:
         explicit Credits(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Credits() = default;

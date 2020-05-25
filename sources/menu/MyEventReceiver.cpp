@@ -15,70 +15,75 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
             case irr::gui::EGET_BUTTON_CLICKED:
             	_core.getMusicEngine()->add2D("resources/sfx/click.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
             	switch (id) {
-                    case IGame::GUI_ID_QUIT_BUTTON:
+                    case IMenu::GUI_ID_QUIT_BUTTON:
                         _window->closeDevice();
                         return true;
-                    case IGame::GUI_ID_SKIN_1:
+                    case IMenu::GUI_ID_SKIN_1:
                         _core.getSelect()->incSkin(0);
                         return true;
-                    case IGame::GUI_ID_SKIN_2:
+                    case IMenu::GUI_ID_SKIN_2:
                         _core.getSelect()->incSkin(1);
                         return true;
-                    case IGame::GUI_ID_SKIN_3:
+                    case IMenu::GUI_ID_SKIN_3:
                         _core.getSelect()->incSkin(2);
                         return true;
-                    case IGame::GUI_ID_SKIN_4:
+                    case IMenu::GUI_ID_SKIN_4:
                         _core.getSelect()->incSkin(3);
                         return true;
-                    case IGame::GUI_ID_X_1:
+                    case IMenu::GUI_ID_X_1:
                         _core.getSelect()->changeRole(0);
                         return true;
-                    case IGame::GUI_ID_X_2:
+                    case IMenu::GUI_ID_X_2:
                         _core.getSelect()->changeRole(1);
                         return true;
-                    case IGame::GUI_ID_X_3:
+                    case IMenu::GUI_ID_X_3:
                         _core.getSelect()->changeRole(2);
                         return true;
-                    case IGame::GUI_ID_X_4:
+                    case IMenu::GUI_ID_X_4:
                         _core.getSelect()->changeRole(3);
                         return true;
-                    case IGame::GUI_ID_OPTION_RETURN:
-                        _core.setState(Core::menuMain);
+                    case IMenu::GUI_ID_OPTION_RETURN:
+                        _core.setLState(Core::menuMain);
                         return true;
-                    case IGame::GUI_ID_OPTIONS_BUTTON:
-                        _core.setState(Core::menuOptions);
+                    case IMenu::GUI_ID_OPTIONS_BUTTON:
+                        _core.setLState(Core::menuOptions);
                         return true;
                     case IGame::GUI_ID_NEW_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
-                        _core.setState(Core::menuSelect);
+                        _core.setLState(Core::menuSelect);
                         return true;
-                    case IGame::GUI_ID_CREDITS_BUTTON:
-                        _core.setState(Core::menuCredits);
+                    case IMenu::GUI_ID_CREDITS_BUTTON:
+                        _core.setLState(Core::menuCredits);
                         return true;
-                    case IGame::GUI_ID_HELP_BUTTON:
-                        _core.setState(Core::menuHelp);
+                    case IMenu::GUI_ID_HELP_BUTTON:
+                        _core.setLState(Core::menuHelp);
                         return true;
                     case IGame::GUI_ID_INTRO_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
-                        _core.setState(Core::menuMain);
+                        _core.setLState(Core::menuMain);
                         return true;
-	                case IGame::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:
+	                case IMenu::GUI_ID_OPTION_PLUS_MUSIC_BUTTON:
 						_core.getMusicEngine()->musicUp();
 						return true;
-					case IGame::GUI_ID_OPTION_MINUS_MUSIC_BUTTON:
+					case IMenu::GUI_ID_OPTION_MINUS_MUSIC_BUTTON:
 						_core.getMusicEngine()->musicDown();
 						return true;
-					case IGame::GUI_ID_OPTION_PLUS_GENERAL_BUTTON:
+					case IMenu::GUI_ID_OPTION_PLUS_GENERAL_BUTTON:
 						_core.getMusicEngine()->masterUp();
 						return true;
-					case IGame::GUI_ID_OPTION_MINUS_GENERAL_BUTTON:
+					case IMenu::GUI_ID_OPTION_MINUS_GENERAL_BUTTON:
 						_core.getMusicEngine()->masterDown();
 						return true;
-					case IGame::GUI_ID_OPTION_PLUS_SFX_BUTTON:
+					case IMenu::GUI_ID_OPTION_PLUS_SFX_BUTTON:
 						_core.getMusicEngine()->sfxUp();
 						return true;
-					case IGame::GUI_ID_OPTION_MINUS_SFX_BUTTON:
+					case IMenu::GUI_ID_OPTION_MINUS_SFX_BUTTON:
 						_core.getMusicEngine()->sfxDown();
+						return true;
+	            	case IMenu::GUI_ID_SELECT_PLAY:
+						_core.setGState(Core::game);
+						_core.hideLayers();
+						_core.getGame()->init();
 						return true;
                 }
             default:

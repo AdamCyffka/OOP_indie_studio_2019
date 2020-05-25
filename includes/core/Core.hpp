@@ -16,13 +16,14 @@
 #include "LoadMap.hpp"
 #include "Splash.hpp"
 #include "Music.hpp"
+#include "GameCore.hpp"
 
-class WallPass;
 class Intro;
 class Help;
 class Credits;
 class Pause;
 class MyEventReceiver;
+class GameCore;
 
 class Core {
     public:
@@ -38,7 +39,7 @@ class Core {
 			menuSplash,
 			menuHelp,
             menuCredits,
-			menuSelect,
+			menuSelect
 		};
 
         enum gameState {
@@ -55,15 +56,22 @@ class Core {
         void helpCase();
         void creditsCase();
         void splashCase();
-        
-        layerState getState();
-        Select *getSelect();
-        Music *getMusicEngine();
 
-        void setState(layerState state);
+        layerState getLState();
+		gameState getGState();
+        Select *getSelect();
+		GameCore *getGame();
+		Map *getMap();
+		Music *getMusicEngine();
+        Intro *getIntro();
+
+        void setLState(layerState state);
+        void setGState(gameState state);
+
+		void hideLayers();
+
     private:
 		void init();
-		void hideLayers();
 		template<typename T> void showLayer(T *layer);
 		void drawScene();
 		void drawLayer();
@@ -77,10 +85,11 @@ class Core {
         Help *_help;
         Pause *_pause;
         Music *_music;
+        Input *_inputs;
+        GameCore *_game;
         layerState _lState;
         gameState _gState;
         WallPass *_wallpass;
-
         MyEventReceiver *_receiver;
         CameraTravelManager *_cameraTravelManager;
 

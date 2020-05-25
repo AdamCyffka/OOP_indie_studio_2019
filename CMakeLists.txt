@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.17)
 project(OOP_indie_studio_2019)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -9,13 +9,6 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 #set(Boost_LIBRARY_DIRS "C:/Program Files/boost_1_69_0/stage/lib")
 find_package (Threads REQUIRED)
 
-set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
-set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
-
-message("${Boost_INCLUDE_DIRS} ${Boost_LIBRARY_DIRS}")
-
-find_package(Irrlicht REQUIRED)
-find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
 add_executable(bomberman
         sources/main.cpp
         sources/core/Core.cpp
@@ -37,6 +30,32 @@ add_executable(bomberman
         sources/travel/StraightCameraTravel.cpp
         sources/travel/CameraTravelManager.cpp
         sources/input/Input.cpp
+        sources/game/Player.cpp
+        sources/game/AI.cpp
+        sources/game/GameCore.cpp
+        sources/powerUps/BombDown.cpp
+        sources/powerUps/BombFull.cpp
+        sources/powerUps/BombPass.cpp
+        sources/powerUps/BombUp.cpp
+        sources/powerUps/FireDown.cpp
+        sources/powerUps/FireFull.cpp
+        sources/powerUps/FireUp.cpp
+        sources/powerUps/SpeedDown.cpp
+        sources/powerUps/SpeedUp.cpp
+        sources/powerUps/WallPass.cpp
+        )
+
+
+include_directories(includes
+        includes/map
+        includes/core/
+        includes/menu/
+        includes/characters/
+        includes/music/
+        includes/travel/
+        includes/input/
+        includes/powerUps/
+        includes/game/
         )
 
 
@@ -46,23 +65,35 @@ set_target_properties(bomberman PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH}
         )
 
-target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
-target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(bomberman ${Boost_LIBRARIES})
+######### Irrlicht integration #########
+set(Irrlicht_DIR "${CMAKE_MODULE_PATH}/irrLicht")
+find_package(Irrlicht REQUIRED)
+if (Irrlicht_FOUND)
+    target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
+    include_directories(${Irrlicht_INCLUDE_DIRS})
+endif (Irrlicht_FOUND)
+#########################################
 
-include_directories(includes)
-include_directories(includes/map)
-include_directories(includes/core/)
-include_directories(includes/menu/)
-include_directories(includes/characters/)
-include_directories(includes/music/)
-include_directories(includes/travel/)
-include_directories(includes/input/)
-include_directories(includes/powerUps/)
-include_directories(${Irrlicht_INCLUDE_DIRS})
+######### Irrklang integration ##########
+set(Irrklang_DIR "${CMAKE_MODULE_PATH}/irrKlang")
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 include_directories(${Irrklang_DIR}/include)
-include_directories(${Boost_INCLUDE_DIRS})
+target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
+#########################################
 
+########## Boost integration ############
+#set(Boost_DEBUG 1)
+#if(MSVC)
+#    set(BOOST_ROOT "C:/Program Files/boost_1_69_0")
+#endif(MSVC)
+#find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
+#message("${Boost_INCLUDE_DIRS} ${Boost_LIBRARY_DIRS}")
+#include_directories(${Boost_INCLUDE_DIRS})
+#target_link_libraries(bomberman ${Boost_LIBRARIES})
+#########################################
+
+######## Components integration #########
 file(COPY "${CMAKE_SOURCE_DIR}/resources"
         DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
@@ -84,10 +115,6 @@ if (MSVC)
             "${CMAKE_MODULE_PATH}/irrKlang/ikpMP3.dll"
             ${CMAKE_SOURCE_DIR}/bin)
     target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/irrKlang.lib)
-    IF (EXISTS ${EXECUTABLE_OUTPUT_PATH}/Release)
-        file(REMOVE ${EXECUTABLE_OUTPUT_PATH}/Release)
-    ENDIF (EXISTS ${EXECUTABLE_OUTPUT_PATH}/Release)
-
 ELSE (MSVC)
     add_custom_command(TARGET bomberman PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -99,3 +126,4 @@ ELSE (MSVC)
             ${CMAKE_SOURCE_DIR}/bin)
     target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/libIrrKlang.so)
 ENDIF(MSVC)
+#########################################

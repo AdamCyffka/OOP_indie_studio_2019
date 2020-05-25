@@ -17,6 +17,8 @@ class LoadMap {
         ~LoadMap() = default;
         void run();
 
+        Map *getMap();
+
     protected:
     private:
 		void loadGameMap(float x, float y, float z);

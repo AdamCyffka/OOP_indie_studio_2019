@@ -10,11 +10,11 @@
 
 #include <iostream>
 #include <map>
-#include "IGame.hpp"
+#include "IMenu.hpp"
 #include "Character.hpp"
 #include "ProgressBar.hpp"
 
-class Splash : public IGame {
+class Splash : public IMenu {
 	public:
 		explicit Splash(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
 		~Splash() = default;
