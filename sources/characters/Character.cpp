@@ -206,3 +206,8 @@ void Character::changeModel(modelInfos_t model)
     setAnimationSpeed(animationSpeed);
     setState(state);
 }
+
+std::string Character::getModelName() const
+{
+    return _model.filename;
+}
