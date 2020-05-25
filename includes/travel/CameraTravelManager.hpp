@@ -19,12 +19,9 @@ class CameraTravelManager {
         ~CameraTravelManager();
 
         enum travel {
+            intro,
             introToMenu,
             menuToSelect,
-            menuToSelectSave,
-            menuToHelp,
-            menuToOptions,
-            menuToCredits,
             selectToMenu,
             selectToGame
         };

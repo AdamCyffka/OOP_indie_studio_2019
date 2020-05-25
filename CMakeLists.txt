@@ -4,8 +4,6 @@ project(OOP_indie_studio_2019)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package (Threads REQUIRED)
 
 add_executable(bomberman
         sources/main.cpp

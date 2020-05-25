@@ -215,6 +215,7 @@ void Core::init()
 			_loadmap->run();
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
+		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
 	}
 	_initStep++;
 	hideLayers();
@@ -240,6 +241,23 @@ int Core::run()
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
+
+		core::vector3df cameraPosition = _camera->getPosition();
+		core::vector3df cameraTargetPosition = _camera->getTarget();
+		core::stringw cameraPositionStr = L"CAMERA POSITION [";
+		cameraPositionStr += cameraPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraPosition.Z;
+		cameraPositionStr += L"] CAMERA TARGET POSITION [";
+		cameraPositionStr += cameraTargetPosition.X;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Y;
+		cameraPositionStr += L" ";
+		cameraPositionStr += cameraTargetPosition.Z;
+		cameraPositionStr += L"]";
+		_window->setWindowCaption(cameraPositionStr.c_str());
 
 		// str = L"Irrlicht Engine [";
 		// str += _driver->getName();
