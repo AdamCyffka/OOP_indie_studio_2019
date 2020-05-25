@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
-#set(Boost_INCLUDE_DIRS "C:/Program Files/boost_1_69_0")
-#set(Boost_LIBRARY_DIRS "C:/Program Files/boost_1_69_0/stage/lib")
 find_package (Threads REQUIRED)
 
 add_executable(bomberman
