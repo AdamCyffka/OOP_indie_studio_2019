@@ -54,6 +54,18 @@ void CameraTravelManager::doTravel(travel travel)
                     throw CameraTravelException("Camera travel manager can't access to camera travel for: menuToSelect");
             }
             break;
+		case travel::selectToGame:
+			if (auto travel = getTravel(selectToGame)) {
+				travel->start();
+			} else {
+				_travels[selectToGame] = new StraightCameraTravel(_camera, _smgr,
+					{-94.3f, 44.1f, 294.3f}, {-539.4f, 453.6f, 710.3f}, {-516.3f, 333.2f, 710.5f}, u32(6000));;
+				if (auto travel = getTravel(selectToGame))
+					travel->start();
+				else
+					throw CameraTravelException("Camera travel manager can't access to camera travel for: gameToSelect");
+			}
+			break;
         default:
             break;
     }

@@ -47,7 +47,7 @@ void StraightCameraTravel::updateTarget()
             z -= 0.05;
         else if (z < _targetPosition.Z)
             z += 0.05;
-        boost::this_thread::sleep_for(boost::chrono::microseconds(1));
+        boost::this_thread::sleep_for(boost::chrono::microseconds(100));
         camera->setTarget({x, y, z});
         boost::this_thread::yield();
     }
@@ -59,7 +59,8 @@ void StraightCameraTravel::start()
     if (_anim) {
         auto *camera = getCamera();
         camera->addAnimator(_anim);
-        boost::thread *thr = new boost::thread(boost::bind(&StraightCameraTravel::updateTarget, this));
+		camera->setTarget(_targetPosition);
+//        boost::thread *thr = new boost::thread(boost::bind(&StraightCameraTravel::updateTarget, this));
     } else {
         throw CameraTravelException("Could not create fly straight animator.");
     }

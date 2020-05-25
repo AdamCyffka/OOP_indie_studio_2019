@@ -81,6 +81,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 						_core.getMusicEngine()->sfxDown();
 						return true;
 	            	case IMenu::GUI_ID_SELECT_PLAY:
+	            		_cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
 						_core.setGState(Core::game);
 						_core.hideLayers();
 						_core.getGame()->init();
