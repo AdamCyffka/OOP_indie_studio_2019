@@ -69,6 +69,7 @@ find_package(Irrlicht REQUIRED)
 if (Irrlicht_FOUND)
     target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
     include_directories(${Irrlicht_INCLUDE_DIRS})
+
 endif (Irrlicht_FOUND)
 #########################################
 
@@ -80,15 +81,18 @@ include_directories(${Irrklang_DIR}/include)
 target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
 #########################################
 
-########## Boost integration ############
-set(Boost_DEBUG 1)
+######## Boost integration ############
+#set(Boost_DEBUG 1)
 if(MSVC)
     set(BOOST_ROOT "C:/Program Files/boost_1_69_0")
+    set(Boost_INCLUDE_DIRS "C:/Program Files/boost_1_69_0/boost")
+    set(Boost_LIBRARY_DIRS "C:/Program Files/boost_1_69_0/stage/lib")
 endif(MSVC)
 find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
-message("${Boost_INCLUDE_DIRS} ${Boost_LIBRARY_DIRS}")
+if (Boost_FOUND)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(bomberman ${Boost_LIBRARIES})
+endif (Boost_FOUND)
 #########################################
 
 ######## Components integration #########
