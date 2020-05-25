@@ -276,21 +276,5 @@ Input::~Input()
 
 }
 
-int main()
-{
-	 // ask user for driver
-    video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-    if (driverType==video::EDT_COUNT)
-        return 1;
-
-    // create device
-    Input receiver;
-
-    IrrlichtDevice* device = createDevice(driverType,
-            core::dimension2d<u32>(640, 480), 16, false, false, false, &receiver);
-
-	while (device->run()){
-		
-	}
-}	
+	
 
