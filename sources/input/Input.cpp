@@ -6,8 +6,6 @@
 */
 
 #include "Input.hpp"
-#include "driverChoice.h"
-
 
 using namespace irr;
 
@@ -58,13 +56,13 @@ void Input::player_one(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[1] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[1] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[1] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[1] = Left;
 		} else {
 			_playerInput[1] = None;
@@ -104,13 +102,13 @@ void Input::player_two(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[2] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[2] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[2] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[2] = Left;
 		} else {
 			_playerInput[2] = None;
@@ -149,13 +147,13 @@ void Input::player_three(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[3] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[3] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[3] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[3] = Left;
 		} else {
 			_playerInput[3] = None;
@@ -195,13 +193,13 @@ void Input::player_four(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[4] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[4] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[4] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[4] = Left;
 		} else {
 			_playerInput[4] = None;
@@ -223,10 +221,11 @@ void Input::player_four(Input receiver)
 	}	
 }
 
-void Input::keyBoard (Input receiver)
+basic_key Input::keyBoard (Input receiver)
 {
-
-		
+	if (receiver.IsKeyDown(irr::KEY_F12))
+		exit(84);
+	
 }
 
 

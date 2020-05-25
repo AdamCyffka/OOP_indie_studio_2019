@@ -18,7 +18,7 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 
     loadTextures();
     loadButtons();
-    _selectTab = {{"waluigi", true}, {"mario", true}, {"lakitu", true}, {"koopa", true}, {"dr_peach", false}};
+    _selectTab = {{"waluigi", 0}, {"mario", 1}, {"lakitu", 2}, {"koopa", 3}, {"dr_peach", -1}};
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[0].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[1].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[2].first)));
@@ -182,10 +182,16 @@ void Select::loadButtons()
 
 void Select::incSkin(int skin)
 {
-    if (nbSkin[skin] < 6)
-        nbSkin[skin]++;
-    else
-        nbSkin[skin] = 0;
+    for (size_t i = 0; i < _selectTab.size(); i++) {
+        if (_selectTab[i].second == -1) {
+            for (size_t j = 0; j < _selectTab.size(); j++) {
+                if (_selectTab[j].second == skin)
+                    _selectTab[j].second = -1;
+            }
+            _previews[skin]->changeModel(g_modelInfos.at(_selectTab[i].first));
+            _selectTab[i].second = skin;
+        }
+    }
 }
 
 void Select::changeRole(int role)
