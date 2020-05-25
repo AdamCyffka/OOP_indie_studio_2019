@@ -10,12 +10,13 @@
 
 Options::Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
-    _driver = driver;
-    _env = env;
-    _smgr = smgr;
+  _driver = driver;
+  _env = env;
+  _smgr = smgr;
+  _fullscreen = false;
 
-    loadTextures();
-    loadButtons();
+  loadTextures();
+  loadButtons();
 }
 
 void Options::loadTextures()
@@ -102,15 +103,15 @@ void Options::run()
 
 std::vector<Character *> Options::getPreviews()
 {
-    return {};
+  return {};
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Options::getButtons()
 {
-    return _buttons;
+  return _buttons;
 }
 
 std::map<std::string, irr::gui::IGUIImage *> Options::getImages()
 {
-    return _images;
+  return _images;
 }

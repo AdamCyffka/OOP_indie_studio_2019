@@ -24,6 +24,12 @@ Intro::Intro(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
     camera->setFarValue(42000);
 }
 
+void Intro::init()
+{
+    std::cout << "test" << std::endl;
+    //_core->getMusicEngine()->add2D("resources/music/first.mp3");
+}
+
 void Intro::loadTextures()
 {
     _textures["press"] = _driver->getTexture("resources/images/buttons/press.png");

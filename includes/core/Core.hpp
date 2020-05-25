@@ -62,6 +62,7 @@ class Core {
 		GameCore *getGame();
 		Map *getMap();
 		Music *getMusicEngine();
+        Intro *getIntro();
 
         void setLState(layerState state);
         void setGState(gameState state);

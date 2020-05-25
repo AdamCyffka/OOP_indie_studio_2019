@@ -25,10 +25,14 @@ class Options : public IMenu {
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
+        void setFullscreen(bool fullscreen) {_fullscreen = fullscreen;}
+        bool getFullscreen(void) const { return (_fullscreen); }
     private:
+        bool _fullscreen;
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
