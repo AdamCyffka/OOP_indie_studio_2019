@@ -241,6 +241,7 @@ void Core::init()
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
 		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
+		_music->add2D("resources/music/overture.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
 	}
 	_initStep++;
 	hideLayers();
