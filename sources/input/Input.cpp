@@ -7,7 +7,6 @@
 
 #include "Input.hpp"
 
-
 using namespace irr;
 
 bool Input::IsKeyPressed(Input receiver)
@@ -57,13 +56,13 @@ void Input::player_one(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[1] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[1] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[1] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[1] = Left;
 		} else {
 			_playerInput[1] = None;
@@ -103,13 +102,13 @@ void Input::player_two(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[2] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[2] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[2] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[2] = Left;
 		} else {
 			_playerInput[2] = None;
@@ -141,7 +140,6 @@ void Input::player_three(Input receiver)
 
 	if (joystickInfo.size() == 0)
 	{
-	
 		moveHorizontal = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
 		if(fabs(moveHorizontal) < DEAD_ZONE)
 			moveHorizontal = 0.f;
@@ -149,13 +147,13 @@ void Input::player_three(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[3] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[3] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[3] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[3] = Left;
 		} else {
 			_playerInput[3] = None;
@@ -195,13 +193,13 @@ void Input::player_four(Input receiver)
 		moveVertical = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_Y] / -32767.f;
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
-		if (moveVertical == 1) {
+		if (moveVertical == 1.0) {
 			_playerInput[4] = Up;
-		} else if (moveVertical == -1) {
+		} else if (moveVertical == -1.0) {
 			_playerInput[4] = Down;
-		} else if (moveHorizontal == 1) {
+		} else if (moveHorizontal == 1.0) {
 			_playerInput[4] = Right;
-		} else if (moveHorizontal == -1) {
+		} else if (moveHorizontal == -1.0) {
 			_playerInput[4] = Left;
 		} else {
 			_playerInput[4] = None;
@@ -223,17 +221,18 @@ void Input::player_four(Input receiver)
 	}	
 }
 
-void Input::keyBoard (Input receiver)
+basic_key Input::keyBoard (Input receiver)
 {
-
-		
+	if (receiver.IsKeyDown(irr::KEY_F12))
+		exit(84);
+	
 }
 
 
 bool Input::OnEvent(const SEvent& event) 
 {
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
-        JoystickStatePone = event.JoystickEvent;
+		JoystickStatePone = event.JoystickEvent;
     }
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 1) {
         JoystickStatePtwo = event.JoystickEvent;
@@ -242,7 +241,16 @@ bool Input::OnEvent(const SEvent& event)
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		_keyIsPressed = true;
 	} else {
-		_keyIsPressed = false;
+		if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick >= 0) {
+			for (int i = 0; i < 8; i++) {
+				if (JoystickStatePone.IsButtonPressed(i))
+					_keyIsPressed = true;
+				if (JoystickStatePtwo.IsButtonPressed(i))
+					_keyIsPressed = true;
+			}
+		} else {
+			_keyIsPressed = false;
+		}
 	}
     return false;
 }
@@ -266,3 +274,6 @@ Input::~Input()
 {
 
 }
+
+	
+

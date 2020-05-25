@@ -6,6 +6,7 @@
 */
 
 #include "GameCore.hpp"
+#include "Core.hpp"
 #include "GameCoreException.hpp"
 
 GameCore::GameCore(Core *core, const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes)
@@ -17,8 +18,7 @@ GameCore::GameCore(Core *core, const std::vector<Character *> &characters, std::
 
 	auto itChar = characters.begin();
 	auto itTypes = entityTypes.begin();
-	for (int i = 1; i <= 4; ++i)
-	{
+	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (*itTypes == EntityType::EntityType::AI)
 			entity = new AI(*itChar, i, _map);
@@ -41,8 +41,17 @@ void GameCore::init()
 
 void GameCore::run()
 {
+	//+x = haut
+	//-x = bas
+	//+z = gauche
+	//-z = droite
 
-	if (!gameOver()) //toggle to skip game part
+	//	for (auto it : _entities) {
+	//		auto pos = it->getCharacter()->getPosition();
+	//		pos.Z += 10;
+	//		it->getCharacter()->moveTo(pos);
+	//	}
+	if (gameOver()) //toggle to skip game part
 	{
 		_core->setGState(Core::menu);
 		_core->setLState(Core::menuScore);
@@ -50,14 +59,16 @@ void GameCore::run()
 		_core->getScore()->spawnEntities();
 		return;
 	}
-	std::cout << "game running" << std::endl;
+	for (auto it : _entities) {
+		it->run();
+	}
+//	std::cout << "game running" << std::endl;
 }
 
 void GameCore::spawnPlayers()
 {
 	int count = 1;
-	for(auto it : _entities)
-	{
+	for (auto it : _entities) {
 		it->getCharacter()->setPosition(_spawnAreas[count]);
 		it->getCharacter()->setVisibility(true);
 		++count;
@@ -66,8 +77,7 @@ void GameCore::spawnPlayers()
 
 bool GameCore::gameOver()
 {
-	for(auto it : _entities)
-	{
+	for (auto it : _entities) {
 		if (it->getWinNumber() >= 3)
 			return (true);
 	}

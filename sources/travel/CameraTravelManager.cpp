@@ -35,7 +35,7 @@ void CameraTravelManager::doTravel(travel travel)
                 travel->start();
             } else {
                 _travels[intro] = new CircleCameraTravel(_camera, _smgr,
-                {0.0f, 100.0f, 0.0f}, {0.0f, 50.0f, 0.0f}, 500.0f, 0.00035f);
+                {0.0f, 100.0f, 0.0f}, {0.0f, 50.0f, 0.0f}, 500.0f, 0.00015f);
                 if (auto travel = getTravel(intro))
                     travel->start();
                 else

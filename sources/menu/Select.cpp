@@ -211,16 +211,6 @@ void Select::incSkin(int skin)
             break;
         }
     }
-
-    // if (_selectTab[i].second == -1) {
-    //         for (size_t j = 0; j < _selectTab.size(); j++) {
-    //             if (_selectTab[j].second == skin) {
-    //                 _selectTab[j].second = -1;
-    //             }
-    //         }
-    //         _previews[skin]->changeModel(g_modelInfos.at(_selectTab[i].first));
-    //         _selectTab[i].second = skin;
-    //     }
 }
 
 void Select::changeRole(int role)
