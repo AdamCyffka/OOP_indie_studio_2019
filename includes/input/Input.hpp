@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <map>
-#include "irrlicht.h"
+#include "../../victor/irrlicht-1.8.4/include/irrlicht.h"
 
 using namespace irr;                    // NONE A PAS OUBLIER , POUR NON TOUCHE OU TOUCHE NON BIND
 
@@ -51,6 +51,7 @@ class Input : public IEventReceiver
         void player_four(Input receiver);
         
         void keyBoard(Input receiver);
+        void define_player(Input receiver);
         std::map<int, Key_mouvement> getPlayerInput();
 	    Input();
         ~Input();
