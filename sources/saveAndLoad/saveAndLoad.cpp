@@ -150,9 +150,12 @@ void loadMap(Core &core, pt::ptree *root)
 
     for (pt::ptree::value_type &line : root->get_child("map"))
     {
+        if (line.second.data().size() != 17)
+            throw saveAndLoadException("Invalid map's size");
         map.push_back(line.second.data());
     }
-
+    if (map.size() != 11)
+        throw saveAndLoadException("Invalid map's size");
     for (int i = 1; i < MAP_HEIGHT + 1; ++i)
     {
         for (int j = 1; j < MAP_WIDTH + 1; ++j)
@@ -230,7 +233,7 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 {
     std::vector<IEntity *> entities = core.getGame()->getEntities();
     Character *character = entities[playerNB]->getCharacter();
-    std::string path = "player" + std::to_string(playerNB) + ".character";    
+    std::string path = "player" + std::to_string(playerNB) + ".character";
 }
 
 void loadPlayer(int playerNB, Core &core, pt::ptree *root)
@@ -289,19 +292,26 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         std::cerr << "Unable to open save file" << std::endl;
         return;
     }
-    loadPlayer(0, core, &root);
-    saveGame(slot, core, cameraTravelManager);
-    /*loadMap(core, &root);
-    loadBombMap(core, &root);
-    loadPlayerMap(core, &root);
+    try
+    {
+        loadPlayer(0, core, &root);
+        loadMap(core, &root);
+        loadBombMap(core, &root);
+        loadPlayerMap(core, &root);
+    }
+    catch (std::exception const &msg)
+    {
+        std::cerr << msg.what() << std::endl;
+        return;
+    }
+    return;
     core.getLoadMap()->emptyGameMap(-440, 308, 790);
     core.getLoadMap()->loadGameMap(-440, 308, 790);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideLayers();
     core.getGame()->init();
-
-    saveGame(slot, core, cameraTravelManager);*/
+    saveGame(slot, core, cameraTravelManager);
     return;
 
     //Others elements for load
