@@ -7,6 +7,11 @@
 
 #include "MyEventReceiver.hpp"
 
+MyEventReceiver::MyEventReceiver(irr::IrrlichtDevice *window, Core &core, CameraTravelManager *cameraTravelManager)
+: _window(window), _core(core), _cameraTravelManager(cameraTravelManager), _keyDown{false}
+{
+}
+
 bool MyEventReceiver::clicks(const irr::SEvent &event)
 {
     if (event.EventType == irr::EET_GUI_EVENT) {
@@ -43,9 +48,9 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getSelect()->changeRole(3);
                         return true;
                     case IMenu::GUI_ID_OPTION_RETURN:
-                        if (_core.getLState() == Core::layerState::menuSelect)
+                        if (_core.getLState() == Core::layerMenuState::menuSelect)
                             _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToMenu);
-                        else if (_core.getLState() == Core::layerState::menuScore)
+                        else if (_core.getLState() == Core::layerMenuState::menuScore)
                             _cameraTravelManager->doTravel(CameraTravelManager::travel::scoreToMenu);
                         _core.setLState(Core::menuMain);
                         return true;
@@ -101,9 +106,6 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case IMenu::GUI_ID_LOAD_BUTTON:
 						_core.setLState(Core::menuLoad);
 						return true;
-                    case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
-						_core.setLState(Core::menuPause);
-						return true;
                 }
             default:
                 break;
@@ -114,7 +116,22 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 
 bool MyEventReceiver::OnEvent(const irr::SEvent &event)
 {
+    int _key = -1;
+
     if (clicks(event))
         return true;
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+		if (event.KeyInput.Key == irr::KEY_ESCAPE) {
+			_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+		} else {
+			_key = event.KeyInput.Key;
+		}
+		return true;
+	}
     return false;
+}
+
+bool MyEventReceiver::IsKeyDown(irr::EKEY_CODE keyCode) const
+{
+    return _keyDown[keyCode];
 }

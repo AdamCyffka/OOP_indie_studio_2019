@@ -27,9 +27,8 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
     _previews[1]->setPosition({-28, 0, 225});
     _previews[2]->setPosition({-79, 0, 205});
     _previews[3]->setPosition({-127, 0, 185});
-    for (auto &i : _previews) {
+    for (auto &i : _previews)
         i->setOrientation(side::east);
-    }
 }
 
 void Select::loadTextures()
@@ -194,10 +193,9 @@ void Select::spawnEntities()
 
 int Select::getNextAvailableSkin()
 {
-    for (size_t i = 0; i < _selectTab.size(); i++) {
+    for (size_t i = 0; i < _selectTab.size(); i++)
         if (_selectTab[i].second == -1)
             return i;
-    }
 }
 
 void Select::incSkin(int skin)
@@ -270,8 +268,7 @@ const std::vector<EntityType::EntityType> &Select::getEntityTypes()
 {
 	_entitiesTypes.clear();
 
-	for (auto it : _nbRole)
-	{
+	for (auto it : _nbRole) {
 		if (*it.begin() == 1)
 			_entitiesTypes.push_back(EntityType::EntityType::AI);
 		else
@@ -283,5 +280,5 @@ const std::vector<EntityType::EntityType> &Select::getEntityTypes()
 
 std::map<std::string, irr::gui::IGUICheckBox *> Select::getCheckBox()
 {
-  return _checkBox;
+    return _checkBox;
 }

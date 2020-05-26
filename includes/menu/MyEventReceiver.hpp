@@ -15,11 +15,12 @@
 
 class MyEventReceiver : public irr::IEventReceiver {
     public:
-        MyEventReceiver(irr::IrrlichtDevice *window, Core &core, CameraTravelManager *cameraTravelManager)
-        : _window(window), _core(core), _cameraTravelManager(cameraTravelManager) {};
+        MyEventReceiver(irr::IrrlichtDevice *window, Core &core, CameraTravelManager *cameraTravelManager);
         bool OnEvent(const irr::SEvent &event) override;
         bool clicks(const irr::SEvent &event);
+        bool IsKeyDown(irr::EKEY_CODE keyCode) const;
     private:
+        bool _keyDown[irr::KEY_KEY_CODES_COUNT];
         Core &_core;
         irr::IrrlichtDevice *_window;
         CameraTravelManager *_cameraTravelManager;
