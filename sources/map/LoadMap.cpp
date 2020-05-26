@@ -180,31 +180,40 @@ void LoadMap::loadGameMap(float x, float y, float z)
 {
 	for (int i = 0; i < _map->getMap().size(); ++i) {
 		for (int j = 0; j < _map->getMap()[i].size(); ++j) {
+			irr::scene::ISceneNode *sceneBlock;
+			irr::scene::IAnimatedMesh *mesh;
 			switch (_map->getMap()[i][j]) {
 				case empty: {
 					break;
 				}
 				case breakable: {
-					irr::scene::ISceneNode *brick;
-					brick = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/brick.obj"));
-					brick->setPosition({x + (-10 * i), y, z + (-10 * j)});
-					brick->setScale({5, 5, 5});
-					if (brick)
-						brick->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-					brick->setVisible(true);
+					mesh = _smgr->getMesh("resources/models/blocks/brick.obj");
+					if (!mesh)
+						throw LoadingException("could not load mesh : brick.obj");
+					sceneBlock = _smgr->addAnimatedMeshSceneNode(mesh);
+					if (!sceneBlock)
+						throw LoadingException("could not add mesh scene node : sceneblock brick");
+					sceneBlock->setPosition({x + (-10 * i), y, z + (-10 * j)});
+					sceneBlock->setScale({5, 5, 5});
+					sceneBlock->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+					sceneBlock->setVisible(true);
 					break;
 				}
 				case unbreakable: {
-					irr::scene::ISceneNode *unbreakable;
-					unbreakable = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/solid.obj"));
-					unbreakable->setPosition({x + (-10 * i), y, z + (-10 * j)});
-					unbreakable->setScale({5, 5, 5});
-					if (unbreakable)
-						unbreakable->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-					unbreakable->setVisible(true);
+					mesh = _smgr->getMesh("resources/models/blocks/solid.obj");
+					if (!mesh)
+						throw LoadingException("could not load mesh : solid.obj");
+					sceneBlock = _smgr->addAnimatedMeshSceneNode(mesh);
+					if (!sceneBlock)
+						throw LoadingException("could not add mesh scene node : sceneblock solid");
+					sceneBlock->setPosition({x + (-10 * i), y, z + (-10 * j)});
+					sceneBlock->setScale({5, 5, 5});
+					sceneBlock->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+					sceneBlock->setVisible(true);
 					break;
 				}
 			}
+			_visualMap[i][j] = sceneBlock;
 		}
 	}
 }
@@ -212,4 +221,9 @@ void LoadMap::loadGameMap(float x, float y, float z)
 Map *LoadMap::getMap()
 {
 	return _map;
+}
+
+std::map<int, std::map<int, irr::scene::ISceneNode *>> LoadMap::getVisualMap()
+{
+	return _visualMap;
 }
