@@ -384,6 +384,12 @@ void Core::drawGameLayer()
 		case gameGame:
 			gameCase();
 			break;
+		case gameOptions:
+			optionsCase();
+			break;
+		case gameSave:
+			saveCase();
+			break;
 	}
 }
 
@@ -413,9 +419,6 @@ void Core::drawMenuLayer()
 			break;
 		case menuScore:
 			scoreCase();
-			break;
-		case menuSave:
-			saveCase();
 			break;
 		case menuLoad:
 			loadCase();

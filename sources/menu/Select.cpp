@@ -280,6 +280,7 @@ int Select::getNextAvailableSkin()
     for (size_t i = 0; i < _selectTab.size(); i++)
         if (_selectTab[i].second == -1)
             return i;
+    return 0;
 }
 
 void Select::incSkin(int skin)

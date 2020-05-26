@@ -58,6 +58,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.setLState(Core::menuMain);
                 return true;
             case IMenu::GUI_ID_OPTIONS_BUTTON:
+                _core.setLGState(Core::gameOptions);
                 _core.setLState(Core::menuOptions);
                 return true;
             case IMenu::GUI_ID_NEW_BUTTON:
@@ -103,9 +104,6 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.hideLayers();
                 _core.getGame()->init();
                 return true;
-            case IMenu::GUI_ID_SAVE_BUTTON:
-                _core.setLState(Core::menuSave);
-                return true;
             case IMenu::GUI_ID_SAVE_SLOT_1:
                 saveGame(1, _core, _cameraTravelManager);
                 return true;
@@ -133,6 +131,12 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
             case IMenu::GUI_ID_LOAD_SLOT_4:
                 loadGame(4, _core, _cameraTravelManager);
                 return true;
+            case IMenu::GUI_ID_RESUME_BUTTON:
+                _core.setLGState(Core::gameGame);
+                return true;
+            case IMenu::GUI_ID_SAVE_BUTTON:
+                _core.setLGState(Core::gameSave);
+                return true;
             case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
                 _core.setLGState(Core::gamePause);
                 return true;
@@ -151,11 +155,7 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
     if (clicks(event))
         return true;
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-		if (event.KeyInput.Key == irr::KEY_ESCAPE) {
-			_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
-		} else {
-			_key = event.KeyInput.Key;
-		}
+		_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		return true;
 	}
     return false;

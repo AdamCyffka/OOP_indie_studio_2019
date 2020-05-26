@@ -225,9 +225,7 @@ basic_key Input::keyBoard (Input receiver)
 {
 	if (receiver.IsKeyDown(irr::KEY_F12))
 		exit(84);
-	
 }
-
 
 bool Input::OnEvent(const SEvent& event) 
 {

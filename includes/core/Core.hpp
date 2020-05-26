@@ -51,6 +51,8 @@ class Core {
         enum layerGameState {
             gamePause,
             gameGame,
+            gameOptions,
+            gameSave,
 		};
 
         enum gameState {
