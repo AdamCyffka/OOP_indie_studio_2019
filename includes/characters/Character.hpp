@@ -13,6 +13,7 @@
 #include "CharacterException.hpp"
 #include "modelInfos.hpp"
 #include "side.hpp"
+#include "EnumCheck.hpp"
 
 using namespace irr;
 class Character {
@@ -28,6 +29,8 @@ class Character {
             dead,
             victory
         };
+
+        using stateCheck = EnumCheck<state, state::idle, state::running, state::dying, state::dead, state::victory>;
 
         //setters
         void setSize(f32 size);

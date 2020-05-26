@@ -11,6 +11,7 @@
 #include "saveAndLoad.hpp"
 #include "EnumCheck.hpp"
 #include "saveAndLoadException.hpp"
+#include "global.hpp"
 
 namespace pt = boost::property_tree;
 
@@ -98,8 +99,21 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     character_node.put("orientation", character->getOrientation());
     character_node.put("animationSpeed", character->getAnimationSpeed());
     character_node.put("travelTime", character->getTravelTime());
-    character_node.put("modelName", character->getModelName());
 
+    if (character->getModelName().compare("resources/models/characters/mario/mario.md3") == 0)
+        character_node.put("modelName", "mario");
+    if (character->getModelName().compare("resources/models/characters/koopa/koopa.md3") == 0)
+        character_node.put("modelName", "koopa");
+    if (character->getModelName().compare("resources/models/characters/luigi/luigi.md3") == 0)
+        character_node.put("modelName", "luigi");
+    if (character->getModelName().compare("resources/models/characters/waluigi/waluigi.md3") == 0)
+        character_node.put("modelName", "waluigi");
+    if (character->getModelName().compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
+        character_node.put("modelName", "dr_peach");
+    if (character->getModelName().compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
+        character_node.put("modelName", "dry_bones");
+    if (character->getModelName().compare("resources/models/characters/lakitu/lakitu.md3") == 0)
+        character_node.put("modelName", "lakitu");
     pt::ptree positions_node;
     pt::ptree position_node;
     core::vector3df position = character->getPosition();
@@ -160,7 +174,10 @@ void loadMap(Core &core, pt::ptree *root)
     {
         for (int j = 1; j < MAP_WIDTH + 1; ++j)
         {
-            _map[i][j] = blockState(map[i - 1][j - 1] - '0');
+            blockState block = blockState(map[i - 1][j - 1] - '0');
+            if (!blockStateCheck::is_value(block))
+                throw saveAndLoadException("Invalid Enum value");
+            _map[i][j] = block;
         }
     }
 }
@@ -172,14 +189,20 @@ void loadBombMap(Core &core, pt::ptree *root)
 
     for (pt::ptree::value_type &line : root->get_child("bombMap"))
     {
+        if (line.second.data().size() != 17)
+            throw saveAndLoadException("Invalid map's size");
         map.push_back(line.second.data());
     }
-
+    if (map.size() != 11)
+        throw saveAndLoadException("Invalid map's size");
     for (int i = 1; i < MAP_HEIGHT + 1; ++i)
     {
         for (int j = 1; j < MAP_WIDTH + 1; ++j)
         {
-            _map[i][j] = bombState(map[i - 1][j - 1] - '0');
+            bombState block = bombState(map[i - 1][j - 1] - '0');
+            if (!bombStateCheck::is_value(block))
+                throw saveAndLoadException("Invalid Enum value");
+            _map[i][j] = block;
         }
     }
 }
@@ -191,14 +214,20 @@ void loadPlayerMap(Core &core, pt::ptree *root)
 
     for (pt::ptree::value_type &line : root->get_child("playerMap"))
     {
+        if (line.second.data().size() != 17)
+            throw saveAndLoadException("Invalid map's size");
         map.push_back(line.second.data());
     }
-
+    if (map.size() != 11)
+        throw saveAndLoadException("Invalid map's size");
     for (int i = 1; i < MAP_HEIGHT + 1; ++i)
     {
         for (int j = 1; j < MAP_WIDTH + 1; ++j)
         {
-            _map[i][j] = playerState(map[i - 1][j - 1] - '0');
+            playerState block = playerState(map[i - 1][j - 1] - '0');
+            if (!playerStateCheck::is_value(block))
+                throw saveAndLoadException("Invalid Enum value");
+            _map[i][j] = block;
         }
     }
 }
@@ -233,7 +262,39 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 {
     std::vector<IEntity *> entities = core.getGame()->getEntities();
     Character *character = entities[playerNB]->getCharacter();
-    std::string path = "player" + std::to_string(playerNB) + ".character";
+    std::string path = "player" + std::to_string(playerNB) + ".character.";
+
+    try
+    {
+        character->changeModel(g_modelInfos.at(root->get<std::string>(path + "modelName", "")));
+    }
+    catch (std::exception const &msg)
+    {
+        std::cerr << msg.what() << std::endl;
+        return;
+    }
+
+    character->setSize(root->get<f32>(path + "size", 0));
+    character->setVisibility(root->get<bool>(path + "visibility", 0));
+    character->setAnimationSpeed(root->get<f32>(path + "animationSpeed", 0));
+    character->setTravelTime(root->get<u32>(path + "travelTime", 0));
+
+    side orientation = (side)root->get<int>(path + "orientation", 0);
+    if (!sideCheck::is_value(orientation))
+        throw saveAndLoadException("Invalid Enum value");
+    character->setOrientation(orientation);
+
+    Character::state state = (Character::state)root->get<int>(path + "state", 0);
+    if (!Character::stateCheck::is_value(state))
+        throw saveAndLoadException("Invalid Enum value");
+    character->setState(state);
+
+    std::vector<int> positions;
+    for (pt::ptree::value_type &line : root->get_child(path + "position"))
+        positions.push_back(std::stoi(line.second.data()));
+    if (positions.size() != 3)
+        throw saveAndLoadException("Invalid player's position");
+    character->setPosition(core::vector3df(positions[0], positions[1], positions[2]));
 }
 
 void loadPlayer(int playerNB, Core &core, pt::ptree *root)
@@ -251,37 +312,40 @@ void loadPlayer(int playerNB, Core &core, pt::ptree *root)
     catch (std::exception const &msg)
     {
         std::cerr << msg.what() << std::endl;
+        throw saveAndLoadException("Invalid Player");
         return;
     }
-    /*
-    Character *character = entity->getCharacter();
-    pt::ptree character_node;
-    character_node.put("size", character->getSize());
-    character_node.put("state", character->getState());
-    character_node.put("visibility", character->getVisibility());
-    character_node.put("orientation", character->getOrientation());
-    character_node.put("animationSpeed", character->getAnimationSpeed());
-    character_node.put("travelTime", character->getTravelTime());
-    character_node.put("modelName", character->getModelName());
+}
 
-    pt::ptree positions_node;
-    pt::ptree position_node;
-    core::vector3df position = character->getPosition();
+void checkSkins(Core &core, pt::ptree *root)
+{
+    std::string player0 = root->get<std::string>("player0.character.modelName", "");
+    std::string player1 = root->get<std::string>("player1.character.modelName", "");
+    std::string player2 = root->get<std::string>("player2.character.modelName", "");
+    std::string player3 = root->get<std::string>("player3.character.modelName", "");
 
-    position_node.put("", position.X);
-    positions_node.push_back(std::make_pair("", position_node));
-    position_node.put("", position.Y);
-    positions_node.push_back(std::make_pair("", position_node));
-    position_node.put("", position.Z);
-    positions_node.push_back(std::make_pair("", position_node));
-
-    character_node.add_child("position", positions_node);
-    player.add_child("character", character_node);
-    root->add_child("player" + std::to_string(playerNB), player);*/
+    if (player0.compare("") == 0 || player1.compare("") == 0 || player2.compare("") == 0 || player3.compare("") == 0)
+    {
+        throw saveAndLoadException("Invalid player's model");
+    }
+    if ((player0.compare("mario") != 0 && player0.compare("waluigi") != 0 && player0.compare("luigi") != 0 && player0.compare("dr_peach") != 0 && player0.compare("dry_bones") != 0 && player0.compare("lakitu") != 0)
+    || (player1.compare("mario") != 0 && player1.compare("waluigi") != 0 && player1.compare("luigi") != 0 && player1.compare("dr_peach") != 0 && player1.compare("dry_bones") != 0 && player1.compare("lakitu") != 0)
+    || (player2.compare("mario") != 0 && player2.compare("waluigi") != 0 && player2.compare("luigi") != 0 && player2.compare("dr_peach") != 0 && player2.compare("dry_bones") != 0 && player2.compare("lakitu") != 0)
+    || (player3.compare("mario") != 0 && player3.compare("waluigi") != 0 && player3.compare("luigi") != 0 && player3.compare("dr_peach") != 0 && player3.compare("dry_bones") != 0 && player3.compare("lakitu") != 0))
+    {
+        throw saveAndLoadException("Invalid player's model");
+        
+    }
+    if (player0.compare(player1) == 0 || player0.compare(player2) == 0 || player0.compare(player3) == 0 || player1.compare(player2) == 0 || player1.compare(player3) == 0 || player2.compare(player3) == 0)
+    {
+        throw saveAndLoadException("Two times the same model");
+    }
 }
 
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
+    /*saveGame(slot, core, cameraTravelManager);
+    return;*/
     pt::ptree root;
     try
     {
@@ -294,7 +358,11 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     }
     try
     {
+        checkSkins(core, &root);
         loadPlayer(0, core, &root);
+        loadPlayer(1, core, &root);
+        loadPlayer(2, core, &root);
+        loadPlayer(3, core, &root);
         loadMap(core, &root);
         loadBombMap(core, &root);
         loadPlayerMap(core, &root);
@@ -304,14 +372,12 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         std::cerr << msg.what() << std::endl;
         return;
     }
-    return;
     core.getLoadMap()->emptyGameMap(-440, 308, 790);
     core.getLoadMap()->loadGameMap(-440, 308, 790);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideLayers();
     core.getGame()->init();
-    saveGame(slot, core, cameraTravelManager);
     return;
 
     //Others elements for load
