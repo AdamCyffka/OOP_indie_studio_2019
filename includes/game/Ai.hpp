@@ -11,19 +11,26 @@
 #include "IEntity.hpp"
 #include "Map.hpp"
 
-class AI : public IEntity {
-	public:
+class AI : public IEntity
+{
+public:
 	AI(Character *, int, Map *);
 
 	void kill() override;
 	void run() override;
 	void putBomb() override;
 
+	void setFirePower(int) override;
 	int getFirePower() override;
+	void setBombAmount(int) override;
 	int getBombAmount() override;
+	void setSpeed(int) override;
 	int getSpeed() override;
+	void setWallPass(bool) override;
 	bool getWallPass() override;
+	void setBombPass(bool) override;
 	bool getBombPass() override;
+	void setEntityNumber(int) override;
 	int getEntityNumber() override;
 	void setScore(int) override;
 	int getScore() override;
@@ -31,9 +38,11 @@ class AI : public IEntity {
 	int getWinNumber() override;
 	Character *getCharacter() override;
 	void moveTo(side) override;
+	void setIsAlive(bool) override;
 	bool isAlive() override;
+	Key_mouvement getInput();
 
-	private:
+private:
 	bool _isAlive;
 	int _entityNumber;
 	int _score;
