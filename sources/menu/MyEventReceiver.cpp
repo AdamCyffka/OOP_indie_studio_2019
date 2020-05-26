@@ -68,7 +68,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 return true;
             case IMenu::GUI_ID_INTRO_BUTTON:
                 _core.getMusicEngine()->stop("resources/music/intro.mp3", false);
-                _core.getMusicEngine()->add2D("resources/music/menu.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
+                _core.getMusicEngine()->add2D("resources/music/menu.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
                 _core.setLState(Core::menuMain);
                 return true;
@@ -92,7 +92,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 return true;
             case IMenu::GUI_ID_SELECT_PLAY:
                 _core.getMusicEngine()->stop("resources/music/menu.mp3", false);
-                _core.getMusicEngine()->add2D("resources/music/game.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
+                _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                 _core.setGState(Core::game);
                 _core.hideLayers();
