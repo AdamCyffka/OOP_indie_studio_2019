@@ -112,14 +112,32 @@ Character *AI::getCharacter()
 
 void AI::moveTo(side side)
 {
-	if (getEntityNumber() != 2)
-		return;
-	if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-450, 308, 630)) {
-		_character->moveTo(core::vector3df(-450, 308, 630), 5000);
+	if (getEntityNumber() == 2) {
+		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-450, 308, 630)) {
+			_character->moveTo(core::vector3df(-450, 308, 630), 5000);
+		}
+		if (_character->getPosition() == core::vector3df(-450, 308, 630) && _character->getState() != Character::state::idle) {
+			this->putBomb();
+			_character->setState(Character::state::idle);
+		}
 	}
-	if (_character->getPosition() == core::vector3df(-450, 308, 630) && _character->getState() != Character::state::idle) {
-		this->putBomb();
-		_character->setState(Character::state::idle);
+	if (getEntityNumber() == 3) {
+		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-550, 308, 770)) {
+			_character->moveTo(core::vector3df(-550, 308, 770), 5000);
+		}
+		if (_character->getPosition() == core::vector3df(-550, 308, 770) && _character->getState() != Character::state::idle) {
+			this->putBomb();
+			_character->setState(Character::state::idle);
+		}
+	}
+	if (getEntityNumber() == 4) {
+		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-550, 308, 630)) {
+			_character->moveTo(core::vector3df(-550, 308, 630), 5000);
+		}
+		if (_character->getPosition() == core::vector3df(-550, 308, 630) && _character->getState() != Character::state::idle) {
+			this->putBomb();
+			_character->setState(Character::state::idle);
+		}
 	}
 }
 
