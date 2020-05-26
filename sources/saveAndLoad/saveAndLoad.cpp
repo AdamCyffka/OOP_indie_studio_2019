@@ -215,7 +215,15 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
         entity = new AI(characters[playerNB], playerNB, core.getMap());
     else
         entity = new Player(characters[playerNB], input, playerNB);
-    
+    entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
+    entity->setBombPass(root->get<bool>(path + "bombPass", 0));
+    entity->setWallPass(root->get<bool>(path + "wallPass", 0));
+    entity->setScore(root->get<int>(path + "score", 0));
+    entity->setEntityNumber(root->get<int>(path + "entityNumber", 0));
+    entity->setSpeed(root->get<int>(path + "speed", 0));
+    entity->setBombAmount(root->get<int>(path + "bombAmount", 0));
+    entity->setFirePower(root->get<int>(path + "firePower", 0));
+    entity->setWinNumber(root->get<int>(path + "winNumber", 0));
 }
 
 void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
@@ -242,18 +250,7 @@ void loadPlayer(int playerNB, Core &core, pt::ptree *root)
         std::cerr << msg.what() << std::endl;
         return;
     }
-
-    /*player.put("isAlive", entity->isAlive());
-    player.put("firePower", entity->getFirePower());
-    player.put("bombAmount", entity->getBombAmount());
-    player.put("speed", entity->getSpeed());
-    player.put("wallPass", entity->getWallPass());
-    player.put("bombPass", entity->getBombPass());
-    player.put("entityNumber", entity->getEntityNumber());
-    player.put("score", entity->getScore());
-    player.put("winNumber", entity->getWinNumber());
-    player.put("input", entity->getInput());
-
+    /*
     Character *character = entity->getCharacter();
     pt::ptree character_node;
     character_node.put("size", character->getSize());
