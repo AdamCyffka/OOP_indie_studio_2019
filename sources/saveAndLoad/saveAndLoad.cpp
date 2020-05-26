@@ -90,6 +90,7 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     player.put("score", entity->getScore());
     player.put("winNumber", entity->getWinNumber());
     player.put("input", entity->getInput());
+    //ADDING ELEMENTS FOR PLAYER HERE
 
     Character *character = entity->getCharacter();
     pt::ptree character_node;
@@ -99,7 +100,9 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     character_node.put("orientation", character->getOrientation());
     character_node.put("animationSpeed", character->getAnimationSpeed());
     character_node.put("travelTime", character->getTravelTime());
+    //ADDING ELEMENTS FOR CHARACTER HERE
 
+    //ALL CONDITIONS TO SAVE THE MODEL
     if (character->getModelName().compare("resources/models/characters/mario/mario.md3") == 0)
         character_node.put("modelName", "mario");
     if (character->getModelName().compare("resources/models/characters/koopa/koopa.md3") == 0)
@@ -114,6 +117,8 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
         character_node.put("modelName", "dry_bones");
     if (character->getModelName().compare("resources/models/characters/lakitu/lakitu.md3") == 0)
         character_node.put("modelName", "lakitu");
+    
+    //SAVE POSITIONS OF THE PLAYER
     pt::ptree positions_node;
     pt::ptree position_node;
     core::vector3df position = character->getPosition();
@@ -256,6 +261,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entity->setBombAmount(root->get<int>(path + "bombAmount", 0));
     entity->setFirePower(root->get<int>(path + "firePower", 0));
     entity->setWinNumber(root->get<int>(path + "winNumber", 0));
+    //ADDING ELEMNTS TO LOAD HERE FOR PLAYER
 }
 
 void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
@@ -295,6 +301,7 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
     if (positions.size() != 3)
         throw saveAndLoadException("Invalid player's position");
     character->setPosition(core::vector3df(positions[0], positions[1], positions[2]));
+    //ADDING ELEMNTS TO LOAD HERE FOR CHARACTER
 }
 
 void loadPlayer(int playerNB, Core &core, pt::ptree *root)
@@ -344,8 +351,6 @@ void checkSkins(Core &core, pt::ptree *root)
 
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
-    /*saveGame(slot, core, cameraTravelManager);
-    return;*/
     pt::ptree root;
     try
     {
@@ -358,7 +363,10 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     }
     try
     {
+        //only for the error handling
         checkSkins(core, &root);
+
+
         loadPlayer(0, core, &root);
         loadPlayer(1, core, &root);
         loadPlayer(2, core, &root);
@@ -372,8 +380,10 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         std::cerr << msg.what() << std::endl;
         return;
     }
+    //Empty the map to load the one frome the save
     core.getLoadMap()->emptyGameMap(-440, 308, 790);
     core.getLoadMap()->loadGameMap(-440, 308, 790);
+    //End of load now start the game
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideLayers();
