@@ -84,3 +84,8 @@ bool GameCore::gameOver()
 	}
 	return false;
 }
+
+std::vector<IEntity *> GameCore::getEntities() const
+{
+	return _entities;
+}

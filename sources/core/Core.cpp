@@ -46,12 +46,12 @@ Core::Core()
 	_isInitialized = false;
 	_initStep = 0;
 	_intro = nullptr;
-    _loadmap = nullptr;
+	_loadmap = nullptr;
 	_credits = nullptr;
 	_help = nullptr;
 	_splash = nullptr;
-    _menu = nullptr;
-    _options = nullptr;
+	_menu = nullptr;
+	_options = nullptr;
 	_save = nullptr;
 	_load = nullptr;
     _select = nullptr;
@@ -107,6 +107,11 @@ Music *Core::getMusicEngine()
 Intro *Core::getIntro()
 {
 	return _intro;
+}
+
+LoadMap *Core::getLoadMap()
+{
+	return _loadmap;
 }
 
 CameraTravelManager *Core::getCameraTravelManager()
@@ -219,32 +224,45 @@ void Core::pauseCase()
 
 void Core::init()
 {
-	if (_initStep == 0) {
+	if (_initStep == 0)
+	{
 		_splash->setBar(new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830)));
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 		_splash->getBar()->setProgress(5);
-	}  else if (_initStep == 1) {
+	}
+	else if (_initStep == 1)
+	{
 		if (!_music)
 			_music = new Music();
 		_splash->getBar()->setProgress(7);
-	} else if (_initStep == 2) {
+	}
+	else if (_initStep == 2)
+	{
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(10);
-	} else if (_initStep == 3) {
+	}
+	else if (_initStep == 3)
+	{
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(20);
-	} else if (_initStep == 4) {
+	}
+	else if (_initStep == 4)
+	{
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(30);
-	} else if (_initStep == 5) {
+	}
+	else if (_initStep == 5)
+	{
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(40);
-	} else if (_initStep == 6) {
+	}
+	else if (_initStep == 6)
+	{
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
@@ -293,7 +311,7 @@ void Core::init()
 		_splash->getBar()->setVisible(false);
 		_lState = menuIntro;
 		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
-		_music->add2D("resources/music/intro.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
+		_music->add2D("resources/music/intro.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
 	}
 	_initStep++;
 	hideLayers();
@@ -301,11 +319,11 @@ void Core::init()
 
 int Core::run()
 {
-	irr::gui::IGUISkin* skin = _env->getSkin();
-    irr::gui::IGUIFont* font = _env->getFont("resources/fonts/font.bmp");
-    if (font)
-        skin->setFont(font);
-    skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
+	irr::gui::IGUISkin *skin = _env->getSkin();
+	irr::gui::IGUIFont *font = _env->getFont("resources/fonts/font.bmp");
+	if (font)
+		skin->setFont(font);
+	skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
 	video::ITexture *images = _driver->getTexture("resources/images/cursor.png");
 	while (_window->run() && _driver) {
@@ -407,19 +425,22 @@ void Core::drawMenuLayer()
 
 void Core::hideLayers()
 {
-	if (_menu) {
+	if (_menu)
+	{
 		for (auto &it : _menu->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _menu->getImages())
 			it.second->setVisible(false);
 	}
-	if (_intro) {
+	if (_intro)
+	{
 		for (auto &it : _intro->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _intro->getImages())
 			it.second->setVisible(false);
 	}
-	if (_options) {
+	if (_options)
+	{
 		for (auto &it : _options->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _options->getImages())
@@ -427,13 +448,15 @@ void Core::hideLayers()
 		for (auto &it : _options->getCheckBox())
 			it.second->setVisible(false);
 	}
-	if (_splash) {
+	if (_splash)
+	{
 		for (auto &it : _splash->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _splash->getImages())
 			it.second->setVisible(false);
 	}
-	if (_select) {
+	if (_select)
+	{
 		for (auto &it : _select->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _select->getImages())
@@ -455,13 +478,15 @@ void Core::hideLayers()
 		for (auto &it : _credits->getImages())
 			it.second->setVisible(false);
 	}
-	if (_help) {
+	if (_help)
+	{
 		for (auto &it : _help->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _help->getImages())
 			it.second->setVisible(false);
 	}
-	if (_pause) {
+	if (_pause)
+	{
 		for (auto &it : _pause->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _pause->getImages())
@@ -481,7 +506,7 @@ void Core::hideLayers()
 			it.second->setVisible(false);
 }
 
-template<typename T>
+template <typename T>
 void Core::showLayer(T *layer)
 {
 	for (auto &it : layer->getButtons())

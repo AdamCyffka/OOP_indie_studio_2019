@@ -12,6 +12,7 @@
 #include "CameraTravelManager.hpp"
 #include "IMenu.hpp"
 #include "Intro.hpp"
+#include "saveAndLoad.hpp"
 
 class MyEventReceiver : public irr::IEventReceiver {
     public:

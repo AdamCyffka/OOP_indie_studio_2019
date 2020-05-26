@@ -11,6 +11,7 @@
 #include <vector>
 #include <map>
 #include <irrlicht.h>
+#include "EnumCheck.hpp"
 
 using namespace irr;                    // NONE A PAS OUBLIER , POUR NON TOUCHE OU TOUCHE NON BIND
 
@@ -37,6 +38,8 @@ enum Key_mouvement
     Ia = 42,
     None = 666
 };
+
+using Key_mouvementCheck = EnumCheck<Key_mouvement, Key_mouvement::Right, Key_mouvement::Left, Key_mouvement::Up, Key_mouvement::Down, Key_mouvement::Bomb, Key_mouvement::Ia, Key_mouvement::None>;
 
 class Input : public IEventReceiver
 {

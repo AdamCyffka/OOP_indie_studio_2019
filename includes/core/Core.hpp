@@ -78,6 +78,7 @@ class Core {
         Select *getSelect();
         Score *getScore();
 		GameCore *getGame();
+        LoadMap *getLoadMap();
 		Map *getMap();
 		Music *getMusicEngine();
         Intro *getIntro();
