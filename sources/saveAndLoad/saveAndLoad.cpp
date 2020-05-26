@@ -9,6 +9,8 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/filesystem.hpp>
 #include "saveAndLoad.hpp"
+#include "EnumCheck.hpp"
+#include "saveAndLoadException.hpp"
 
 namespace pt = boost::property_tree;
 
@@ -86,6 +88,7 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     player.put("entityNumber", entity->getEntityNumber());
     player.put("score", entity->getScore());
     player.put("winNumber", entity->getWinNumber());
+    player.put("input", entity->getInput());
 
     Character *character = entity->getCharacter();
     pt::ptree character_node;
@@ -145,7 +148,6 @@ void loadMap(Core &core, pt::ptree *root)
     std::vector<std::string> map;
     std::map<int, std::map<int, blockState>> &_map = core.getMap()->getMap();
 
-
     for (pt::ptree::value_type &line : root->get_child("map"))
     {
         map.push_back(line.second.data());
@@ -164,7 +166,6 @@ void loadBombMap(Core &core, pt::ptree *root)
 {
     std::vector<std::string> map;
     std::map<int, std::map<int, bombState>> &_map = core.getMap()->getBombMap();
-
 
     for (pt::ptree::value_type &line : root->get_child("bombMap"))
     {
@@ -185,7 +186,6 @@ void loadPlayerMap(Core &core, pt::ptree *root)
     std::vector<std::string> map;
     std::map<int, std::map<int, playerState>> &_map = core.getMap()->getPlayerMap();
 
-
     for (pt::ptree::value_type &line : root->get_child("playerMap"))
     {
         map.push_back(line.second.data());
@@ -200,6 +200,86 @@ void loadPlayerMap(Core &core, pt::ptree *root)
     }
 }
 
+void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
+{
+    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    const std::vector<Character *> &characters = core.getSelect()->getPreviews();
+    IEntity *entity = entities[playerNB];
+    IEntity *entitySaved;
+    std::string path = "player" + std::to_string(playerNB) + ".";
+
+    Key_mouvement input = (Key_mouvement)root->get<int>(path + "input");
+    if (!Key_mouvementCheck::is_value(input))
+        throw saveAndLoadException("Invalid Enum value");
+    if (input == Key_mouvement::Ia)
+        entity = new AI(characters[playerNB], playerNB, core.getMap());
+    else
+        entity = new Player(characters[playerNB], input, playerNB);
+    
+}
+
+void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
+{
+    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    Character *character = entities[playerNB]->getCharacter();
+    std::string path = "player" + std::to_string(playerNB) + ".character";    
+}
+
+void loadPlayer(int playerNB, Core &core, pt::ptree *root)
+{
+    try
+    {
+        setPlayerValues(playerNB, core, root);
+        setCharacterValues(playerNB, core, root);
+    }
+    catch (pt::ptree_bad_path)
+    {
+        std::cerr << "Corrupted save file" << std::endl;
+        return;
+    }
+    catch (std::exception const &msg)
+    {
+        std::cerr << msg.what() << std::endl;
+        return;
+    }
+
+    /*player.put("isAlive", entity->isAlive());
+    player.put("firePower", entity->getFirePower());
+    player.put("bombAmount", entity->getBombAmount());
+    player.put("speed", entity->getSpeed());
+    player.put("wallPass", entity->getWallPass());
+    player.put("bombPass", entity->getBombPass());
+    player.put("entityNumber", entity->getEntityNumber());
+    player.put("score", entity->getScore());
+    player.put("winNumber", entity->getWinNumber());
+    player.put("input", entity->getInput());
+
+    Character *character = entity->getCharacter();
+    pt::ptree character_node;
+    character_node.put("size", character->getSize());
+    character_node.put("state", character->getState());
+    character_node.put("visibility", character->getVisibility());
+    character_node.put("orientation", character->getOrientation());
+    character_node.put("animationSpeed", character->getAnimationSpeed());
+    character_node.put("travelTime", character->getTravelTime());
+    character_node.put("modelName", character->getModelName());
+
+    pt::ptree positions_node;
+    pt::ptree position_node;
+    core::vector3df position = character->getPosition();
+
+    position_node.put("", position.X);
+    positions_node.push_back(std::make_pair("", position_node));
+    position_node.put("", position.Y);
+    positions_node.push_back(std::make_pair("", position_node));
+    position_node.put("", position.Z);
+    positions_node.push_back(std::make_pair("", position_node));
+
+    character_node.add_child("position", positions_node);
+    player.add_child("character", character_node);
+    root->add_child("player" + std::to_string(playerNB), player);*/
+}
+
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
     pt::ptree root;
@@ -212,6 +292,8 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         std::cerr << "Unable to open save file" << std::endl;
         return;
     }
+    loadPlayer(0, core, &root);
+    saveGame(slot, core, cameraTravelManager);
     /*loadMap(core, &root);
     loadBombMap(core, &root);
     loadPlayerMap(core, &root);
@@ -226,7 +308,6 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     return;
 
     //Others elements for load
-    
 }
 
 //END LOAD GAME
