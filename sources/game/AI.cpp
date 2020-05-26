@@ -18,6 +18,7 @@ void AI::kill()
 
 void AI::run()
 {
+	this->moveTo(side::west);
 }
 
 void AI::putBomb()
@@ -111,6 +112,15 @@ Character *AI::getCharacter()
 
 void AI::moveTo(side side)
 {
+	if (getEntityNumber() != 2)
+		return;
+	if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-450, 308, 630)) {
+		_character->moveTo(core::vector3df(-450, 308, 630), 5000);
+	}
+	if (_character->getPosition() == core::vector3df(-450, 308, 630) && _character->getState() != Character::state::idle) {
+		this->putBomb();
+		_character->setState(Character::state::idle);
+	}
 }
 
 void AI::setIsAlive(bool isAlive)
