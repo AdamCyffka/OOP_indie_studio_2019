@@ -24,7 +24,8 @@ class CameraTravelManager {
             menuToSelect,
             selectToMenu,
             selectToGame,
-            gameToScore
+            gameToScore,
+            scoreToMenu
         };
 
         ACameraTravel *getTravel(travel travel) const;

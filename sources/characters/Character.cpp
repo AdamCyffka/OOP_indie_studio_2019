@@ -185,7 +185,7 @@ void Character::changeModel(modelInfos_t model)
 
     _model = model;
     if (_mesh) {
-        _mesh->drop();
+        _mesh->remove();
         _mesh = nullptr;
     }
     _mesh = _sManager->addAnimatedMeshSceneNode(_sManager->getMesh(_model.filename.c_str()));

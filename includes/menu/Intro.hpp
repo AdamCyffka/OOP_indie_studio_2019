@@ -11,7 +11,6 @@
 #include <iostream>
 #include <map>
 #include "IMenu.hpp"
-#include "Music.hpp"
 #include "Character.hpp"
 #include "Core.hpp"
 
@@ -22,7 +21,6 @@ class Intro : public IMenu {
 		void loadButtons();
 		void loadTextures();
 		void run();
-		void init();
         std::vector<Character *> getPreviews();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
