@@ -16,12 +16,12 @@ class LoadMap {
         LoadMap(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~LoadMap() = default;
         void run();
-
+		void loadGameMap(float x, float y, float z);
+		void emptyGameMap(float x, float y, float z);
         Map *getMap();
 
     protected:
     private:
-		void loadGameMap(float x, float y, float z);
 
     	Map *_map;
 

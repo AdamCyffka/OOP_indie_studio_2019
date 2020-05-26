@@ -12,6 +12,8 @@
 
 namespace pt = boost::property_tree;
 
+//SAVE GAME
+
 void saveMap(Core &core, pt::ptree *root)
 {
     std::map<int, std::map<int, blockState>> map = core.getMap()->getMap();
@@ -133,3 +135,98 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     core.hideLayers();
     core.getGame()->init();
 }
+
+//END SAVE GAME
+
+//LOAD GAME
+
+void loadMap(Core &core, pt::ptree *root)
+{
+    std::vector<std::string> map;
+    std::map<int, std::map<int, blockState>> &_map = core.getMap()->getMap();
+
+
+    for (pt::ptree::value_type &line : root->get_child("map"))
+    {
+        map.push_back(line.second.data());
+    }
+
+    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
+    {
+        for (int j = 1; j < MAP_WIDTH + 1; ++j)
+        {
+            _map[i][j] = blockState(map[i - 1][j - 1] - '0');
+        }
+    }
+}
+
+void loadBombMap(Core &core, pt::ptree *root)
+{
+    std::vector<std::string> map;
+    std::map<int, std::map<int, bombState>> &_map = core.getMap()->getBombMap();
+
+
+    for (pt::ptree::value_type &line : root->get_child("bombMap"))
+    {
+        map.push_back(line.second.data());
+    }
+
+    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
+    {
+        for (int j = 1; j < MAP_WIDTH + 1; ++j)
+        {
+            _map[i][j] = bombState(map[i - 1][j - 1] - '0');
+        }
+    }
+}
+
+void loadPlayerMap(Core &core, pt::ptree *root)
+{
+    std::vector<std::string> map;
+    std::map<int, std::map<int, playerState>> &_map = core.getMap()->getPlayerMap();
+
+
+    for (pt::ptree::value_type &line : root->get_child("playerMap"))
+    {
+        map.push_back(line.second.data());
+    }
+
+    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
+    {
+        for (int j = 1; j < MAP_WIDTH + 1; ++j)
+        {
+            _map[i][j] = playerState(map[i - 1][j - 1] - '0');
+        }
+    }
+}
+
+void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
+{
+    pt::ptree root;
+    try
+    {
+        pt::read_json("save" + std::to_string(slot) + ".json", root);
+    }
+    catch (pt::json_parser::json_parser_error)
+    {
+        std::cerr << "Unable to open save file" << std::endl;
+        return;
+    }
+    /*loadMap(core, &root);
+    loadBombMap(core, &root);
+    loadPlayerMap(core, &root);
+    core.getLoadMap()->emptyGameMap(-440, 308, 790);
+    core.getLoadMap()->loadGameMap(-440, 308, 790);
+    cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
+    core.setGState(Core::game);
+    core.hideLayers();
+    core.getGame()->init();
+
+    saveGame(slot, core, cameraTravelManager);*/
+    return;
+
+    //Others elements for load
+    
+}
+
+//END LOAD GAME

@@ -97,8 +97,29 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
             case IMenu::GUI_ID_SAVE_SLOT_1:
                 saveGame(1, _core, _cameraTravelManager);
                 return true;
+            case IMenu::GUI_ID_SAVE_SLOT_2:
+                saveGame(2, _core, _cameraTravelManager);
+                return true;
+            case IMenu::GUI_ID_SAVE_SLOT_3:
+                saveGame(3, _core, _cameraTravelManager);
+                return true;
+            case IMenu::GUI_ID_SAVE_SLOT_4:
+                saveGame(4, _core, _cameraTravelManager);
+                return true;
             case IMenu::GUI_ID_LOAD_BUTTON:
                 _core.setLState(Core::menuLoad);
+                return true;
+            case IMenu::GUI_ID_LOAD_SLOT_1:
+                loadGame(1, _core, _cameraTravelManager);
+                return true;
+            case IMenu::GUI_ID_LOAD_SLOT_2:
+                loadGame(2, _core, _cameraTravelManager);
+                return true;
+            case IMenu::GUI_ID_LOAD_SLOT_3:
+                loadGame(3, _core, _cameraTravelManager);
+                return true;
+            case IMenu::GUI_ID_LOAD_SLOT_4:
+                loadGame(4, _core, _cameraTravelManager);
                 return true;
             case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
                 _core.setLState(Core::menuPause);

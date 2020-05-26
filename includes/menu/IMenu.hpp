@@ -50,6 +50,10 @@ class IMenu {
             GUI_ID_SAVE_SLOT_2,
             GUI_ID_SAVE_SLOT_3,
             GUI_ID_SAVE_SLOT_4,
+            GUI_ID_LOAD_SLOT_1,
+            GUI_ID_LOAD_SLOT_2,
+            GUI_ID_LOAD_SLOT_3,
+            GUI_ID_LOAD_SLOT_4,
             GUI_ID_SAVE_BACKTOPAUSE,
         };
 

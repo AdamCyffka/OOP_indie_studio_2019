@@ -25,7 +25,8 @@
 Core::Core()
 {
 	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 32, true);
-	if (!_window) {
+	if (!_window)
+	{
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
 	}
@@ -43,19 +44,19 @@ Core::Core()
 	_isInitialized = false;
 	_initStep = 0;
 	_intro = nullptr;
-    _loadmap = nullptr;
+	_loadmap = nullptr;
 	_credits = nullptr;
 	_pause = nullptr;
 	_help = nullptr;
 	_splash = nullptr;
-    _menu = nullptr;
-    _options = nullptr;
+	_menu = nullptr;
+	_options = nullptr;
 	_save = nullptr;
 	_load = nullptr;
-    _select = nullptr;
-    _music = nullptr;
-    _inputs = nullptr;
-    _game = nullptr;
+	_select = nullptr;
+	_music = nullptr;
+	_inputs = nullptr;
+	_game = nullptr;
 	_deviceParam.Fullscreen = false;
 }
 
@@ -92,6 +93,11 @@ Music *Core::getMusicEngine()
 Intro *Core::getIntro()
 {
 	return _intro;
+}
+
+LoadMap *Core::getLoadMap()
+{
+	return _loadmap;
 }
 
 void Core::setLState(Core::layerState state)
@@ -175,66 +181,93 @@ void Core::gameCase()
 
 void Core::init()
 {
-	if (_initStep == 0) {
+	if (_initStep == 0)
+	{
 		_splash->setBar(new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830)));
 		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
 		_splash->getBar()->addBorder(2);
 		_splash->getBar()->setProgress(5);
-	}  else if (_initStep == 1) {
+	}
+	else if (_initStep == 1)
+	{
 		if (!_music)
 			_music = new Music();
 		_splash->getBar()->setProgress(7);
-	} else if (_initStep == 2) {
+	}
+	else if (_initStep == 2)
+	{
 		if (!_loadmap)
 			_loadmap = new LoadMap(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(10);
-	} else if (_initStep == 3) {
+	}
+	else if (_initStep == 3)
+	{
 		if (!_intro)
 			_intro = new Intro(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(20);
-	} else if (_initStep == 4) {
+	}
+	else if (_initStep == 4)
+	{
 		if (!_menu)
 			_menu = new Menu(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(30);
-	} else if (_initStep == 5) {
+	}
+	else if (_initStep == 5)
+	{
 		if (!_options)
 			_options = new Options(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(40);
-	} else if (_initStep == 6) {
+	}
+	else if (_initStep == 6)
+	{
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
-	} else if (_initStep == 7) {
+	}
+	else if (_initStep == 7)
+	{
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(60);
-	} else if (_initStep == 8) {
+	}
+	else if (_initStep == 8)
+	{
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(70);
-	} else if (_initStep == 9) {
+	}
+	else if (_initStep == 9)
+	{
 		if (!_save)
 			_save = new Save(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(80);
-	} else if (_initStep == 10) {
+	}
+	else if (_initStep == 10)
+	{
 		if (!_inputs)
 			_inputs = new Input();
 		_splash->getBar()->setProgress(90);
-	} else if (_initStep == 11) {
+	}
+	else if (_initStep == 11)
+	{
 		if (!_load)
 			_load = new Load(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(95);
-	} else if (_initStep == 12) {
+	}
+	else if (_initStep == 12)
+	{
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_game)
 			_game = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
 		_splash->getBar()->setProgress(100);
-	// } else if (_initStep == 9) {
-	// 	if (!_pause)
-	// 		_pause = new Pause();
-	// 	_splash->getBar()->setProgress(100);
-	} else {
+		// } else if (_initStep == 9) {
+		// 	if (!_pause)
+		// 		_pause = new Pause();
+		// 	_splash->getBar()->setProgress(100);
+	}
+	else
+	{
 		_isInitialized = true;
 		if (_loadmap)
 			_loadmap->run();
@@ -248,11 +281,11 @@ void Core::init()
 
 int Core::run()
 {
-	irr::gui::IGUISkin* skin = _env->getSkin();
-    irr::gui::IGUIFont* font = _env->getFont("resources/fonts/font.bmp");
-    if (font)
-        skin->setFont(font);
-    skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
+	irr::gui::IGUISkin *skin = _env->getSkin();
+	irr::gui::IGUIFont *font = _env->getFont("resources/fonts/font.bmp");
+	if (font)
+		skin->setFont(font);
+	skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
 	// core::stringw str = L"Irrlicht Engine [";
 	// str += _driver->getName();
@@ -261,8 +294,9 @@ int Core::run()
 	// _window->setWindowCaption(str.c_str());
 	// irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
 
-	video::ITexture* images = _driver->getTexture("resources/images/cursor.png");
-	while (_window->run() && _driver) {
+	video::ITexture *images = _driver->getTexture("resources/images/cursor.png");
+	while (_window->run() && _driver)
+	{
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
@@ -293,12 +327,12 @@ int Core::run()
 
 		_smgr->drawAll();
 		_env->drawAll();
-	
+
 		//draw cursor
 		_window->getCursorControl()->setVisible(false);
 		irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
 		_driver->draw2DImage(images, irr::core::position2d<s32>(mousePosition.X, mousePosition.Y));
-		
+
 		_driver->endScene();
 	}
 	_window->drop();
@@ -307,7 +341,8 @@ int Core::run()
 
 void Core::drawScene()
 {
-	switch (_gState) {
+	switch (_gState)
+	{
 	case menu:
 		drawLayer();
 		break;
@@ -319,55 +354,59 @@ void Core::drawScene()
 
 void Core::drawLayer()
 {
-	switch (_lState) {
-		case menuSplash:
-			splashCase();
-			break;
-		case menuIntro:
-			introCase();
-			break;
-		case menuMain:
-			menuCase();
-			break;
-		case menuOptions:
-			optionsCase();
-			break;
-		case menuPause:
-			pauseCase();
-			break;
-		case menuCredits:
-			creditsCase();
-			break;
-		case menuHelp:
-			helpCase();
-			break;
-		case menuSelect:
-			selectCase();
-			break;
-		case menuSave:
-			saveCase();
-			break;
-		case menuLoad:
-			loadCase();
-			break;
+	switch (_lState)
+	{
+	case menuSplash:
+		splashCase();
+		break;
+	case menuIntro:
+		introCase();
+		break;
+	case menuMain:
+		menuCase();
+		break;
+	case menuOptions:
+		optionsCase();
+		break;
+	case menuPause:
+		pauseCase();
+		break;
+	case menuCredits:
+		creditsCase();
+		break;
+	case menuHelp:
+		helpCase();
+		break;
+	case menuSelect:
+		selectCase();
+		break;
+	case menuSave:
+		saveCase();
+		break;
+	case menuLoad:
+		loadCase();
+		break;
 	}
 }
 
 void Core::hideLayers()
 {
-	if (_menu) {
+	if (_menu)
+	{
 		for (auto &it : _menu->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _menu->getImages())
 			it.second->setVisible(false);
 	}
-	if (_intro) {
+	if (_intro)
+	{
 		for (auto &it : _intro->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _intro->getImages())
 			it.second->setVisible(false);
 	}
-	if (_options) {
+	if (_options)
+	{
 		for (auto &it : _options->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _options->getImages())
@@ -375,13 +414,15 @@ void Core::hideLayers()
 		for (auto &it : _options->getCheckBox())
 			it.second->setVisible(false);
 	}
-	if (_splash) {
+	if (_splash)
+	{
 		for (auto &it : _splash->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _splash->getImages())
 			it.second->setVisible(false);
 	}
-	if (_select) {
+	if (_select)
+	{
 		for (auto &it : _select->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _select->getImages())
@@ -389,19 +430,22 @@ void Core::hideLayers()
 		for (auto &it : _select->getPreviews())
 			it->setVisibility(false);
 	}
-	if (_credits) {
+	if (_credits)
+	{
 		for (auto &it : _credits->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _credits->getImages())
 			it.second->setVisible(false);
 	}
-	if (_help) {
+	if (_help)
+	{
 		for (auto &it : _help->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _help->getImages())
 			it.second->setVisible(false);
 	}
-	if (_pause) {
+	if (_pause)
+	{
 		for (auto &it : _pause->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _pause->getImages())
@@ -415,7 +459,7 @@ void Core::hideLayers()
 			it.second->setVisible(false);
 }
 
-template<typename T>
+template <typename T>
 void Core::showLayer(T *layer)
 {
 	for (auto &it : layer->getButtons())

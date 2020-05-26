@@ -12,5 +12,6 @@
 #include "CameraTravelManager.hpp"
 
 void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager);
+void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager);
 
 #endif /* !SAVEANDLOAD_HPP_ */

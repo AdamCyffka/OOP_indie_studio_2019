@@ -67,6 +67,7 @@ class Core {
 		gameState getGState();
         Select *getSelect();
 		GameCore *getGame();
+        LoadMap *getLoadMap();
 		Map *getMap();
 		Music *getMusicEngine();
         Intro *getIntro();
