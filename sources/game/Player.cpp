@@ -6,6 +6,7 @@
 */
 
 #include "Player.hpp"
+#include "Bomb.hpp"
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber) : _isAlive(false), _entityNumber(entityNumber), _score(0), _winNumber(0), _character(character), _input(input),_firePower(1), _bombAmount(1), _speed(1), _wallPass(false), _bombPass(false)
 {
