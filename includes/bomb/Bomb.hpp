@@ -15,7 +15,7 @@
 #include <ctime>
 #include <vector>
 
-class Bomb : public Player {
+class Bomb {
     public:
         Bomb(int x, int y, int radius, irr::u32 delay);
         ~Bomb();
