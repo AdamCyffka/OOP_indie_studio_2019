@@ -19,18 +19,25 @@ class Core;
 
 class GameCore {
     public:
-        GameCore(Core *core, const std::vector<Character *>&, std::map<int, Key_mouvement>, const std::vector<EntityType::EntityType> &);
+        GameCore(Core *core);
         ~GameCore() = default;
 		std::vector<IEntity *> getEntities() const;
-		void init();
+		void init(const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes);
         void run();
 
+        void setPause(bool);
+        bool isInit() const;
+		bool nextBlockHasBomb(std::pair<int, int>, bool);
+		bool nextBlockHasWall(std::pair<int, int>);
+		bool nextBlockHasBlock(std::pair<int, int>, bool);
     protected:
     private:
 		void spawnPlayers();
     	bool gameOver();
 		std::map<int, irr::core::vector3df> _spawnAreas;
 		std::vector<IEntity *> _entities;
+		bool _isPaused;
+		bool _isInit;
 		Core *_core;
 		Map *_map;
 		MyEventReceiver *_receiver;

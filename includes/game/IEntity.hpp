@@ -46,7 +46,8 @@ class IEntity {
         virtual void moveTo(side) = 0;
         virtual void setIsAlive(bool) = 0;
         virtual bool isAlive() = 0;
-        virtual Key_mouvement getInput() = 0;
+		virtual void setInput(Key_mouvement) = 0;
+		virtual Key_mouvement getInput() = 0;
 };
 
 #endif /* !IENTITY_HPP_ */

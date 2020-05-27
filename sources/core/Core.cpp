@@ -25,9 +25,9 @@
 #include "Game.hpp"
 #include "GameOptions.hpp"
 
-Core::Core()
+Core::Core() : _fullscreen(FULLSCREEN)
 {
-	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080));
+	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 16, getFullscreen(), false);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
@@ -63,7 +63,26 @@ Core::Core()
 	_pause = nullptr;
 	_game = nullptr;
 	_gameOptions = nullptr;
-	_deviceParam.Fullscreen = true;
+}
+
+void Core::restartDevice(bool fullscreen)
+{
+    _window->closeDevice();
+    _window->drop();
+    _window = irr::createDevice(irr::video::EDT_OPENGL,
+        irr::core::dimension2d<irr::u32>(1920, 1080),
+        16, fullscreen, false);
+    //_window->setWindowCaption(L"Super Bomberman Bros");
+}
+
+void Core::changeFullscreen()
+{
+    _fullscreen = !_fullscreen;
+}
+
+bool Core::getFullscreen() const
+{
+    return _fullscreen;
 }
 
 Select *Core::getSelect()
@@ -109,6 +128,11 @@ Music *Core::getMusicEngine()
 Intro *Core::getIntro()
 {
 	return _intro;
+}
+
+Input *Core::getInput()
+{
+	return _inputs;
 }
 
 LoadMap *Core::getLoadMap()
@@ -214,6 +238,9 @@ void Core::splashCase()
 
 void Core::gameCase()
 {
+	if (!_gameCore->isInit())
+		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+	_game->run();
 	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
 		setLGState(Core::gamePause);
 	}
@@ -302,7 +329,7 @@ void Core::init()
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_gameCore)
-			_gameCore = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+			_gameCore = new GameCore(this);
 		_splash->getBar()->setProgress(97);
 	} else if (_initStep == 14) {
 		if (!_pause)

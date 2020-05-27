@@ -8,14 +8,17 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 
+#include "Map.hpp"
 #include "IEntity.hpp"
+
+class GameCore;
 
 class Player : public IEntity {
     public:
-        Player(Character *, const Key_mouvement &, int);
+        Player(Character *, const Key_mouvement &, int, Map *, GameCore *);
 		Player() = default;
 
-	 	void kill() final;
+		void kill() final;
 	 	void run() final;
 	 	void putBomb() final;
 
@@ -31,31 +34,43 @@ class Player : public IEntity {
 		bool getBombPass() final;
 		void setEntityNumber(int) final;
 		int getEntityNumber() final;
+
 		void setScore(int) final;
 		int getScore() final;
 		void setWinNumber(int) final;
 		int getWinNumber() final;
+
 		Character *getCharacter() final;
+		void setInput(Key_mouvement) final;
+		Key_mouvement getInput() final;
+
 		void moveTo(side) final;
 		void setIsAlive(bool) final;
 		bool isAlive() final;
-		Key_mouvement getInput();
+		bool canGoTo(Key_mouvement);
+
+		std::pair<int, int> getPosition();
+		void setPosition(std::pair<int, int>);
 
 	private:
+		void findPosition();
+
 		bool _isAlive;
 		int _entityNumber;
 		int _winNumber;
 		int _score;
+		GameCore *_gameCore;
 		Character *_character;
+		Map *_map;
+		std::pair<int, int> _position;
 
 		Key_mouvement _input;
+		Key_mouvement _isDoing;
 		int _firePower;
 		int _bombAmount;
 		int _speed;
 		bool _wallPass;
 		bool _bombPass;
-
-		std::map<int, irr::core::vector3df> _spawnAreas;
 };
 
 #endif /* !PLAYER_HPP_ */
