@@ -24,6 +24,7 @@ add_executable(bomberman
         sources/menu/Save.cpp
         sources/menu/Game.cpp
         sources/menu/Load.cpp
+        sources/menu/GameOptions.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
         sources/travel/CircleCameraTravel.cpp

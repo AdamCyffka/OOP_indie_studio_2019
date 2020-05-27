@@ -51,13 +51,13 @@ void Pause::loadButtons()
     _buttons["save"]->setImage(_textures["save"]);
     _buttons["save"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 400));
 
-    _buttons["options"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTIONS_BUTTON, L"");
+    _buttons["options"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_PAUSE_OPTIONS, L"");
 	if (_buttons.find("options") != _buttons.end() && !_buttons["options"])
 		throw LoadingException("could not add button : options");
     _buttons["options"]->setImage(_textures["options"]);
     _buttons["options"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 300));
 
-    _buttons["backToMenu"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
+    _buttons["backToMenu"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_PAUSE_MENU, L"");
 	if (_buttons.find("backToMenu") != _buttons.end() && !_buttons["backToMenu"])
 		throw LoadingException("could not add button : back");
     _buttons["backToMenu"]->setImage(_textures["backToMenu"]);

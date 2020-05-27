@@ -58,7 +58,6 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.setLState(Core::menuMain);
                 return true;
             case IMenu::GUI_ID_OPTIONS_BUTTON:
-                _core.setLGState(Core::gameOptions);
                 _core.setLState(Core::menuOptions);
                 return true;
             case IMenu::GUI_ID_NEW_BUTTON:
@@ -139,6 +138,16 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 return true;
             case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
                 _core.setLGState(Core::gamePause);
+                return true;
+            case IMenu::GUI_ID_PAUSE_RETURN:
+                _core.setLGState(Core::gamePause);
+                return true;
+            case IMenu::GUI_ID_PAUSE_OPTIONS:
+                _core.setLGState(Core::gameOptions);
+                return true;
+            case IMenu::GUI_ID_PAUSE_MENU:
+                _core.setGState(Core::menu);
+                _core.setLState(Core::menuMain);
                 return true;
             }
         default:

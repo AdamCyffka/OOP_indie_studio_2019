@@ -23,6 +23,7 @@
 #include "Save.hpp"
 #include "Load.hpp"
 #include "Game.hpp"
+#include "GameOptions.hpp"
 
 Core::Core()
 {
@@ -61,6 +62,7 @@ Core::Core()
     _gameCore = nullptr;
 	_pause = nullptr;
 	_game = nullptr;
+	_gameOptions = nullptr;
 	_deviceParam.Fullscreen = true;
 }
 
@@ -195,6 +197,12 @@ void Core::loadCase()
 	showLayer(_load);
 }
 
+void Core::gameOptionsCase()
+{
+	hideLayers();
+	showLayer(_gameOptions);
+}
+
 void Core::splashCase()
 {
 	if (!_splash)
@@ -304,6 +312,10 @@ void Core::init()
 		if (!_game)
 			_game = new Game(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
+	} else if (_initStep == 16) {
+		if (!_gameOptions)
+			_gameOptions = new GameOptions(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(100);
 	} else {
 		_isInitialized = true;
 		if (_loadmap)
@@ -385,7 +397,7 @@ void Core::drawGameLayer()
 			gameCase();
 			break;
 		case gameOptions:
-			optionsCase();
+			gameOptionsCase();
 			break;
 		case gameSave:
 			saveCase();
@@ -424,6 +436,10 @@ void Core::drawMenuLayer()
 			loadCase();
 			break;
 	}
+}
+
+void Core::hideGameLayers()
+{
 }
 
 void Core::hideLayers()
@@ -507,6 +523,14 @@ void Core::hideLayers()
 	if (_load)
 		for (auto &it : _load->getButtons())
 			it.second->setVisible(false);
+	if (_gameOptions) {
+		for (auto &it : _gameOptions->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _gameOptions->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _gameOptions->getCheckBox())
+			it.second->setVisible(false);
+	}
 }
 
 template <typename T>
