@@ -10,10 +10,12 @@
 
 #include <irrlicht.h>
 
+#include "Player.hpp"
+
 #include <ctime>
 #include <vector>
 
-class Bomb {
+class Bomb : public Player {
     public:
         Bomb(int x, int y, int radius, irr::u32 delay);
         ~Bomb();
@@ -23,7 +25,8 @@ class Bomb {
         irr::u32 getDelay() const;
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
-        int ifCanPoseBomb();
+        int canPoseBomb();
+        int checkEnoughBombToPose();
         void poseBomb();
     private:
         int _x;

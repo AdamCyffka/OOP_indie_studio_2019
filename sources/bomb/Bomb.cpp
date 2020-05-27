@@ -51,7 +51,7 @@ bool Bomb::getIsBlast() const
     return (this->_isBlast);
 }
 
-int Bomb::ifCanPoseBomb()
+int Bomb::canPoseBomb()
 {
     if (playerState::playerOne) {
         if (blockState::empty) {
@@ -83,9 +83,18 @@ int Bomb::ifCanPoseBomb()
     }
 }
 
+int Bomb::checkEnoughBombToPose()
+{
+    if (getBombAmount() <= 0 ) {
+        return (0);
+    } else {
+        return (1);
+    }
+}
+
 void Bomb::poseBomb()
 {
-    if (ifCanPoseBomb() == true && getIsBlast() == true) {
+    if (canPoseBomb() == true && checkEnoughBombToPose() == true && getIsBlast() == true) {
         if (playerState::playerOne) { // pose bomb here if player One
         }
         if (playerState::playerTwo) { // pose bomb here if player Two
