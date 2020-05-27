@@ -6,7 +6,6 @@
 */
 
 #include "Bomb.hpp"
-#include "Map.hpp"
 
 Bomb::Bomb(int x, int y, int radius, irr::u32 delay)
 {
@@ -73,7 +72,9 @@ int Bomb::checkEnoughBombToPose()
 
 void Bomb::poseBomb()
 {
+    Map map;
+
     if (canPoseBomb() == true && checkEnoughBombToPose() == true && getIsBlast() == true) {
-        //pose bombe here
+        map.getBombMap(); // only here to test don"t touch currently !
     }
 }

@@ -11,6 +11,7 @@
 #include <irrlicht.h>
 
 #include "Player.hpp"
+#include "Map.hpp"
 
 #include <ctime>
 #include <vector>
