@@ -16,30 +16,30 @@ class AI : public IEntity
 public:
 	AI(Character *, int, Map *);
 
-	void kill() override;
-	void run() override;
-	void putBomb() override;
+	void kill() final;
+	void run() final;
+	void putBomb() final;
 
-	void setFirePower(int) override;
-	int getFirePower() override;
-	void setBombAmount(int) override;
-	int getBombAmount() override;
-	void setSpeed(int) override;
-	int getSpeed() override;
-	void setWallPass(bool) override;
-	bool getWallPass() override;
-	void setBombPass(bool) override;
-	bool getBombPass() override;
-	void setEntityNumber(int) override;
-	int getEntityNumber() override;
-	void setScore(int) override;
-	int getScore() override;
-	void setWinNumber(int) override;
-	int getWinNumber() override;
-	Character *getCharacter() override;
-	void moveTo(side) override;
-	void setIsAlive(bool) override;
-	bool isAlive() override;
+	void setFirePower(int) final;
+	int getFirePower() final;
+	void setBombAmount(int) final;
+	int getBombAmount() final;
+	void setSpeed(int) final;
+	int getSpeed() final;
+	void setWallPass(bool) final;
+	bool getWallPass() final;
+	void setBombPass(bool) final;
+	bool getBombPass() final;
+	void setEntityNumber(int) final;
+	int getEntityNumber() final;
+	void setScore(int) final;
+	int getScore() final;
+	void setWinNumber(int) final;
+	int getWinNumber() final;
+	Character *getCharacter() final;
+	void moveTo(side) final;
+	void setIsAlive(bool) final;
+	bool isAlive() final;
 	Key_mouvement getInput();
 
 private:
