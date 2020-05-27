@@ -55,6 +55,9 @@ class IMenu {
             GUI_ID_LOAD_SLOT_3,
             GUI_ID_LOAD_SLOT_4,
             GUI_ID_SAVE_BACKTOPAUSE,
+            GUI_ID_PAUSE_RETURN,
+            GUI_ID_PAUSE_OPTIONS,
+            GUI_ID_PAUSE_MENU,
         };
 
         virtual ~IMenu() = default;

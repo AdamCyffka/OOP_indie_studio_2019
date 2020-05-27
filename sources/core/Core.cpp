@@ -22,18 +22,19 @@
 #include "Intro.hpp"
 #include "Save.hpp"
 #include "Load.hpp"
+#include "Game.hpp"
+#include "GameOptions.hpp"
 
 Core::Core()
 {
-	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 32, true);
-	if (!_window)
-	{
+	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080));
+	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
 	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
 	_smgr = _window->getSceneManager();
-	_camera = _smgr->addCameraSceneNode(); // addCameraSceneNodeMaya
+	_camera = _smgr->addCameraSceneNode();
 	_camera->setFarValue(42000);
 	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
 	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
@@ -42,12 +43,12 @@ Core::Core()
 	_driver = _window->getVideoDriver();
 	_lState = menuSplash;
 	_gState = menu;
+	_lGState = gameGame;
 	_isInitialized = false;
 	_initStep = 0;
 	_intro = nullptr;
 	_loadmap = nullptr;
 	_credits = nullptr;
-	_pause = nullptr;
 	_help = nullptr;
 	_splash = nullptr;
 	_menu = nullptr;
@@ -58,8 +59,11 @@ Core::Core()
 	_score = nullptr;
     _music = nullptr;
     _inputs = nullptr;
-    _game = nullptr;
-	_deviceParam.Fullscreen = false;
+    _gameCore = nullptr;
+	_pause = nullptr;
+	_game = nullptr;
+	_gameOptions = nullptr;
+	_deviceParam.Fullscreen = true;
 }
 
 Select *Core::getSelect()
@@ -74,7 +78,7 @@ Score *Core::getScore()
 
 GameCore *Core::getGame()
 {
-	return _game;
+	return _gameCore;
 }
 
 Map *Core::getMap()
@@ -82,9 +86,14 @@ Map *Core::getMap()
 	return _loadmap->getMap();
 }
 
-Core::layerState Core::getLState()
+Core::layerMenuState Core::getLState()
 {
 	return _lState;
+}
+
+Core::layerGameState Core::getLGState()
+{
+	return _lGState;
 }
 
 Core::gameState Core::getGState()
@@ -117,9 +126,14 @@ CameraTravelManager *Core::getCameraTravelManager()
 	return _cameraTravelManager;
 }
 
-void Core::setLState(Core::layerState state)
+void Core::setLState(Core::layerMenuState state)
 {
 	_lState = state;
+}
+
+void Core::setLGState(Core::layerGameState state)
+{
+	_lGState = state;
 }
 
 void Core::setGState(Core::gameState state)
@@ -129,63 +143,69 @@ void Core::setGState(Core::gameState state)
 
 void Core::introCase()
 {
-	hideLayers();
-	showLayer(_intro);
+	if (_receiver->IsKeyDown(irr::KEY_RSHIFT)) {
+		getMusicEngine()->stop("resources/music/intro.mp3", false);
+		getMusicEngine()->add2D("resources/music/menu.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
+		_cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
+		setLState(Core::menuMain);
+	}
+	hideMenuLayers();
+	showMenuLayer(_intro);
 }
 
 void Core::menuCase()
 {
-	hideLayers();
-	showLayer(_menu);
+	hideMenuLayers();
+	showMenuLayer(_menu);
 }
 
 void Core::selectCase()
 {
 	_select->run();
-	hideLayers();
-	showLayer(_select);
+	hideMenuLayers();
+	showMenuLayer(_select);
 }
 
 void Core::scoreCase()
 {
-	hideLayers();
-	showLayer(_score);
-}
-
-void Core::pauseCase()
-{
-	hideLayers();
-	showLayer(_pause);
+	hideMenuLayers();
+	showMenuLayer(_score);
 }
 
 void Core::optionsCase()
 {
-	hideLayers();
-	showLayer(_options);
+	hideMenuLayers();
+	showMenuLayer(_options);
 }
 
 void Core::creditsCase()
 {
-	hideLayers();
-	showLayer(_credits);
+	hideMenuLayers();
+	showMenuLayer(_credits);
 }
 
 void Core::helpCase()
 {
-	hideLayers();
-	showLayer(_help);
+	hideMenuLayers();
+	showMenuLayer(_help);
 }
 
 void Core::saveCase()
 {
-	hideLayers();
-	showLayer(_save);
+	hideGameLayers();
+	showGameLayer(_save);
 }
 
 void Core::loadCase()
 {
-	hideLayers();
-	showLayer(_load);
+	hideMenuLayers();
+	showMenuLayer(_load);
+}
+
+void Core::gameOptionsCase()
+{
+	hideGameLayers();
+	showGameLayer(_gameOptions);
 }
 
 void Core::splashCase()
@@ -194,14 +214,28 @@ void Core::splashCase()
 		_splash = new Splash(_env, _driver, _smgr);
 	if (!_isInitialized)
 		init();
-	showLayer(_splash);
+	showMenuLayer(_splash);
 }
 
 void Core::gameCase()
 {
-	if (!_game->isInit())
-		_game->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+	if (!_gameCore->isInit())
+		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
 	_game->run();
+	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
+		setLGState(Core::gamePause);
+	}
+	hideGameLayers();
+	showGameLayer(_game);
+}
+
+void Core::pauseCase()
+{
+	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
+		setLGState(Core::gameGame);
+	}
+	hideGameLayers();
+	showGameLayer(_pause);
 }
 
 void Core::init()
@@ -275,16 +309,22 @@ void Core::init()
 	} else if (_initStep == 13) {
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
-		if (!_game)
-			_game = new GameCore(this);
+		if (!_gameCore)
+			_gameCore = new GameCore(this);
+		_splash->getBar()->setProgress(97);
+	} else if (_initStep == 14) {
+		if (!_pause)
+			_pause = new Pause(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
-		// } else if (_initStep == 9) {
-		// 	if (!_pause)
-		// 		_pause = new Pause();
-		// 	_splash->getBar()->setProgress(100);
-	}
-	else
-	{
+	} else if (_initStep == 15) {
+		if (!_game)
+			_game = new Game(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(100);
+	} else if (_initStep == 16) {
+		if (!_gameOptions)
+			_gameOptions = new GameOptions(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(100);
+	} else {
 		_isInitialized = true;
 		if (_loadmap)
 			_loadmap->run();
@@ -294,7 +334,8 @@ void Core::init()
 		_music->add2D("resources/music/intro.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
 	}
 	_initStep++;
-	hideLayers();
+	hideMenuLayers();
+	hideGameLayers();
 }
 
 int Core::run()
@@ -305,16 +346,8 @@ int Core::run()
 		skin->setFont(font);
 	skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
-	// core::stringw str = L"Irrlicht Engine [";
-	// str += _driver->getName();
-	// str += L"] FPS: ";
-	// str += (s32)_driver->getFPS();
-	// _window->setWindowCaption(str.c_str());
-	// irr::gui::IGUIStaticText *fpsText = _env->addStaticText(str.c_str(), irr::core::rect<s32>(0, 0, 600, 28));
-
 	video::ITexture *images = _driver->getTexture("resources/images/cursor.png");
-	while (_window->run() && _driver)
-	{
+	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
@@ -336,13 +369,6 @@ int Core::run()
 		cameraPositionStr += L"]";
 		_window->setWindowCaption(cameraPositionStr.c_str());
 
-		// str = L"Irrlicht Engine [";
-		// str += _driver->getName();
-		// str += L"] FPS: ";
-		// str += (s32)_driver->getFPS();
-		// _window->setWindowCaption(str.c_str());
-		// fpsText->setText(str.c_str());
-
 		_smgr->drawAll();
 		_env->drawAll();
 
@@ -359,18 +385,38 @@ int Core::run()
 
 void Core::drawScene()
 {
-	switch (_gState)
-	{
-	case menu:
-		drawLayer();
-		break;
-	case game:
-		gameCase();
-		break;
+	switch (_gState) {
+		case menu:
+			hideGameLayers();
+			drawMenuLayer();
+			break;
+		case game:
+			hideMenuLayers();
+			_gameCore->run();
+			drawGameLayer();
+			break;
 	}
 }
 
-void Core::drawLayer()
+void Core::drawGameLayer()
+{
+	switch (_lGState) {
+		case gamePause:
+			pauseCase();
+			break;
+		case gameGame:
+			gameCase();
+			break;
+		case gameOptions:
+			gameOptionsCase();
+			break;
+		case gameSave:
+			saveCase();
+			break;
+	}
+}
+
+void Core::drawMenuLayer()
 {
 	switch (_lState) {
 		case menuSplash:
@@ -385,9 +431,6 @@ void Core::drawLayer()
 		case menuOptions:
 			optionsCase();
 			break;
-		case menuPause:
-			pauseCase();
-			break;
 		case menuCredits:
 			creditsCase();
 			break;
@@ -400,16 +443,40 @@ void Core::drawLayer()
 		case menuScore:
 			scoreCase();
 			break;
-		case menuSave:
-			saveCase();
-			break;
 		case menuLoad:
 			loadCase();
 			break;
 	}
 }
 
-void Core::hideLayers()
+void Core::hideGameLayers()
+{
+	if (_pause) {
+		for (auto &it : _pause->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _pause->getImages())
+			it.second->setVisible(false);
+	}
+	if (_game) {
+		for (auto &it : _game->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _game->getImages())
+			it.second->setVisible(false);
+	}
+	if (_save)
+		for (auto &it : _save->getButtons())
+			it.second->setVisible(false);
+	if (_gameOptions) {
+		for (auto &it : _gameOptions->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _gameOptions->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _gameOptions->getCheckBox())
+			it.second->setVisible(false);
+	}
+}
+
+void Core::hideMenuLayers()
 {
 	if (_menu)
 	{
@@ -447,16 +514,18 @@ void Core::hideLayers()
 			it.second->setVisible(false);
 		for (auto &it : _select->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _select->getPreviews())
-			it->setVisibility(false);
+		if (_gState != game)
+			for (auto &it : _select->getPreviews())
+				it->setVisibility(false);
 	}
 	if (_score) {
 		for (auto &it : _score->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _score->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _score->getPreviews())
-			it->setVisibility(false);
+		if (_gState != game)
+			for (auto &it : _score->getPreviews())
+				it->setVisibility(false);
 	}
 	if (_credits) {
 		for (auto &it : _credits->getButtons())
@@ -471,23 +540,13 @@ void Core::hideLayers()
 		for (auto &it : _help->getImages())
 			it.second->setVisible(false);
 	}
-	if (_pause)
-	{
-		for (auto &it : _pause->getButtons())
-			it.second->setVisible(false);
-		for (auto &it : _pause->getImages())
-			it.second->setVisible(false);
-	}
-	if (_save)
-		for (auto &it : _save->getButtons())
-			it.second->setVisible(false);
 	if (_load)
 		for (auto &it : _load->getButtons())
 			it.second->setVisible(false);
 }
 
 template <typename T>
-void Core::showLayer(T *layer)
+void Core::showMenuLayer(T *layer)
 {
 	for (auto &it : layer->getButtons())
 		it.second->setVisible(true);
@@ -497,4 +556,15 @@ void Core::showLayer(T *layer)
 		it.second->setVisible(true);
 	for (auto &it : layer->getPreviews())
 		it->setVisibility(true);
+}
+
+template <typename T>
+void Core::showGameLayer(T *layer)
+{
+	for (auto &it : layer->getButtons())
+		it.second->setVisible(true);
+	for (auto &it : layer->getImages())
+		it.second->setVisible(true);
+	for (auto &it : layer->getCheckBox())
+		it.second->setVisible(true);
 }

@@ -10,9 +10,8 @@
 
 #include <irrlicht.h>
 
-#include "movement.hpp"
-#include "define.hpp"
-#include "powerUp.hpp"
+#include "Player.hpp"
+#include "Map.hpp"
 
 #include <ctime>
 #include <vector>
@@ -27,8 +26,10 @@ class Bomb {
         irr::u32 getDelay() const;
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
-        int ifCanPoseBomb();
+        int canPoseBomb();
+        int checkEnoughBombToPose();
         void poseBomb();
+        int checkKilledByBomb();
     private:
         int _x;
         int _y;

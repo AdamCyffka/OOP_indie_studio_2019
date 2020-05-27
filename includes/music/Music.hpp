@@ -62,8 +62,8 @@ public:
 
    	private:
 		void destroySounds();
-		irrklang::ik_f32 _musicVolume = 0.5f;
-		irrklang::ik_f32 _sfxVolume = 0.5f;
+		irrklang::ik_f32 _musicVolume = 0.8f;
+		irrklang::ik_f32 _sfxVolume = 0.8f;
 		std::map<std::string, irrklang::ISound *> _musics;
     	std::map<std::string, irrklang::ISound *> _sfx;
     	irrklang::ISoundEngine *_engine;

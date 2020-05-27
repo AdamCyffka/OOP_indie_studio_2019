@@ -23,14 +23,14 @@ Score::Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
 void Score::loadTextures()
 {
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
-	if (_textures.find("back") != _textures.end() && !_textures["back"])
+	if (_textures.find("back") == _textures.end() || !_textures["back"])
 		throw LoadingException("could not load texture : resources/images/buttons/back.png");
 }
 
 void Score::loadButtons()
 {
     _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
-	if (_buttons.find("back") != _buttons.end() && !_buttons["back"])
+	if (_buttons.find("back") == _buttons.end() || !_buttons["back"])
 		throw LoadingException("could not add button : back");
     _buttons["back"]->setImage(_textures["back"]);
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(800, 925));

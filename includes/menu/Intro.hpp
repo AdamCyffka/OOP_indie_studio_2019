@@ -12,7 +12,9 @@
 #include <map>
 #include "IMenu.hpp"
 #include "Character.hpp"
-#include "Core.hpp"
+
+class Core;
+class MyEventReceiver;
 
 class Intro : public IMenu {
 	public:
@@ -30,6 +32,7 @@ class Intro : public IMenu {
 		irr::video::IVideoDriver *_driver;
 		irr::scene::ISceneManager *_smgr;
 		Core *_core;
+		MyEventReceiver *_receiver;
 
 		std::map<std::string, irr::gui::IGUIImage *> _images;
 		std::map<std::string, irr::video::ITexture *> _textures;

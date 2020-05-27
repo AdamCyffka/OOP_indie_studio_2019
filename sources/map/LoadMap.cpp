@@ -147,31 +147,7 @@ void LoadMap::emptyGameMap(float x, float y, float z)
 {
 	for (int i = 0; i < _map->getMap().size(); ++i) {
 		for (int j = 0; j < _map->getMap()[i].size(); ++j) {
-			switch (_map->getMap()[i][j]) {
-				case empty: {
-					break;
-				}
-				case breakable: {
-					irr::scene::ISceneNode *brick;
-					brick = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/brick.obj"));
-					brick->setPosition({x + (-10 * i), y, z + (-10 * j)});
-					brick->setScale({5, 5, 5});
-					if (brick)
-						brick->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-					brick->setVisible(true);
-					break;
-				}
-				case unbreakable: {
-					irr::scene::ISceneNode *unbreakable;
-					unbreakable = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/blocks/solid.obj"));
-					unbreakable->setPosition({x + (-10 * i), y, z + (-10 * j)});
-					unbreakable->setScale({5, 5, 5});
-					if (unbreakable)
-						unbreakable->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-					unbreakable->setVisible(true);
-					break;
-				}
-			}
+			_visualMap[i][j]->setVisible(false);
 		}
 	}
 }

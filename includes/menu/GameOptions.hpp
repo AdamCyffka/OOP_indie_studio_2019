@@ -2,21 +2,22 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Pause
+** GameOptions
 */
 
-#ifndef PAUSE_HPP_
-#define PAUSE_HPP_
+#ifndef GAMEOPTIONS_HPP_
+#define GAMEOPTIONS_HPP_
 
+#include <iostream>
 #include <map>
-#include <string>
+#include <irrlicht.h>
 #include "Character.hpp"
 #include "IMenu.hpp"
 
-class Pause : public IMenu {
+class GameOptions : public IMenu {
     public:
-        explicit Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~Pause() = default;
+        explicit GameOptions(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        ~GameOptions() = default;
 
         void loadButtons();
         void loadTextures();
@@ -29,6 +30,7 @@ class Pause : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+        irr::SIrrlichtCreationParameters _deviceParam;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
@@ -36,4 +38,4 @@ class Pause : public IMenu {
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
 };
 
-#endif /* !PAUSE_HPP_ */
+#endif /* !GAMEOPTIONS_HPP_ */

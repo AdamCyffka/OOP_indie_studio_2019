@@ -16,6 +16,7 @@ class GameCore;
 class Player : public IEntity {
     public:
         Player(Character *, const Key_mouvement &, int, Map *, GameCore *);
+		Player() = default;
 
 		void kill() override;
 	 	void run() override;

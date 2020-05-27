@@ -36,7 +36,8 @@ void Intro::loadButtons()
 }
 
 void Intro::run()
-{}
+{
+}
 
 std::vector<Character *> Intro::getPreviews()
 {

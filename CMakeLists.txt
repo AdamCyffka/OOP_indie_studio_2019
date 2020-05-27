@@ -22,7 +22,9 @@ add_executable(bomberman
         sources/menu/MyEventReceiver.cpp
         sources/menu/ProgressBar.cpp
         sources/menu/Save.cpp
+        sources/menu/Game.cpp
         sources/menu/Load.cpp
+        sources/menu/GameOptions.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
         sources/travel/CircleCameraTravel.cpp
@@ -42,6 +44,7 @@ add_executable(bomberman
         sources/powerUps/SpeedDown.cpp
         sources/powerUps/SpeedUp.cpp
         sources/powerUps/WallPass.cpp
+        sources/bomb/Bomb.cpp
         sources/saveAndLoad/saveAndLoad.cpp
         )
 
@@ -51,6 +54,7 @@ include_directories(includes
         includes/core/
         includes/menu/
         includes/characters/
+        includes/bomb/
         includes/music/
         includes/travel/
         includes/input/

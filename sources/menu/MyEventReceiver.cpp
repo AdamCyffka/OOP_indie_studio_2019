@@ -7,6 +7,11 @@
 
 #include "MyEventReceiver.hpp"
 
+MyEventReceiver::MyEventReceiver(irr::IrrlichtDevice *window, Core &core, CameraTravelManager *cameraTravelManager)
+: _window(window), _core(core), _cameraTravelManager(cameraTravelManager), _keyDown{false}
+{
+}
+
 bool MyEventReceiver::clicks(const irr::SEvent &event)
 {
     if (event.EventType == irr::EET_GUI_EVENT)
@@ -46,9 +51,9 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.getSelect()->changeRole(3);
                 return true;
             case IMenu::GUI_ID_OPTION_RETURN:
-                if (_core.getLState() == Core::layerState::menuSelect)
+                if (_core.getLState() == Core::layerMenuState::menuSelect)
                     _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToMenu);
-                else if (_core.getLState() == Core::layerState::menuScore)
+                else if (_core.getLState() == Core::layerMenuState::menuScore)
                     _cameraTravelManager->doTravel(CameraTravelManager::travel::scoreToMenu);
                 _core.setLState(Core::menuMain);
                 return true;
@@ -91,15 +96,12 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.getMusicEngine()->sfxDown();
                 return true;
             case IMenu::GUI_ID_SELECT_PLAY:
+                _core.setLGState(Core::gameGame);
                 _core.getMusicEngine()->stop("resources/music/menu.mp3", false);
                 _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                 _core.setGState(Core::game);
-                _core.hideLayers();
                 _core.getGame()->init(_core.getSelect()->getPreviews(), _core.getInput()->getPlayerInput(), _core.getSelect()->getEntityTypes());
-                return true;
-            case IMenu::GUI_ID_SAVE_BUTTON:
-                _core.setLState(Core::menuSave);
                 return true;
             case IMenu::GUI_ID_SAVE_SLOT_1:
                 saveGame(1, _core, _cameraTravelManager);
@@ -128,8 +130,27 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
             case IMenu::GUI_ID_LOAD_SLOT_4:
                 loadGame(4, _core, _cameraTravelManager);
                 return true;
+            case IMenu::GUI_ID_RESUME_BUTTON:
+                _core.setLGState(Core::gameGame);
+                return true;
+            case IMenu::GUI_ID_SAVE_BUTTON:
+                _core.setLGState(Core::gameSave);
+                return true;
             case IMenu::GUI_ID_SAVE_BACKTOPAUSE:
-                _core.setLState(Core::menuPause);
+                _core.setLGState(Core::gamePause);
+                return true;
+            case IMenu::GUI_ID_PAUSE_RETURN:
+                _core.setLGState(Core::gamePause);
+                return true;
+            case IMenu::GUI_ID_PAUSE_OPTIONS:
+                _core.setLGState(Core::gameOptions);
+                return true;
+            case IMenu::GUI_ID_PAUSE_MENU:
+                _core.getMusicEngine()->stop("resources/music/game.mp3", false);
+                _core.getMusicEngine()->add2D("resources/music/menu.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
+                _cameraTravelManager->doTravel(CameraTravelManager::travel::pauseToMenu);
+                _core.setGState(Core::menu);
+                _core.setLState(Core::menuMain);
                 return true;
             }
         default:
@@ -141,7 +162,18 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 
 bool MyEventReceiver::OnEvent(const irr::SEvent &event)
 {
+    int _key = -1;
+
     if (clicks(event))
         return true;
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+		_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+		return true;
+	}
     return false;
+}
+
+bool MyEventReceiver::IsKeyDown(irr::EKEY_CODE keyCode) const
+{
+    return _keyDown[keyCode];
 }

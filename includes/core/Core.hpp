@@ -19,6 +19,8 @@
 #include "Music.hpp"
 #include "GameCore.hpp"
 
+class GameOptions;
+class Game;
 class Load;
 class Save;
 class Intro;
@@ -34,11 +36,10 @@ class Core {
 	    ~Core() = default;
 	    int run();
 
-        enum layerState {
+        enum layerMenuState {
             menuIntro,
 			menuMain,
 			menuOptions,
-			menuPause,
 			menuSplash,
 			menuHelp,
             menuCredits,
@@ -48,15 +49,23 @@ class Core {
             menuLoad,
 		};
 
+        enum layerGameState {
+            gamePause,
+            gameGame,
+            gameOptions,
+            gameSave,
+		};
+
         enum gameState {
         	menu,
         	game
         };
 
-        void introCase();
-        void menuCase();
         void pauseCase();
         void gameCase();
+
+        void introCase();
+        void menuCase();
         void selectCase();
         void scoreCase();
         void optionsCase();
@@ -65,8 +74,10 @@ class Core {
         void splashCase();
         void saveCase();
         void loadCase();
+        void gameOptionsCase();
 
-        layerState getLState();
+        layerMenuState getLState();
+        layerGameState getLGState();
 		gameState getGState();
         Select *getSelect();
         Score *getScore();
@@ -78,16 +89,20 @@ class Core {
 		Input *getInput();
         CameraTravelManager *getCameraTravelManager();
 
-        void setLState(layerState state);
+        void setLState(layerMenuState state);
+        void setLGState(layerGameState state);
         void setGState(gameState state);
 
-		void hideLayers();
+        void hideGameLayers();
+		void hideMenuLayers();
 
     private:
 		void init();
-		template<typename T> void showLayer(T *layer);
+		template<typename T> void showMenuLayer(T *layer);
+        template<typename T> void showGameLayer(T *layer);
 		void drawScene();
-		void drawLayer();
+		void drawMenuLayer();
+        void drawGameLayer();
         Intro *_intro;
         Menu *_menu;
         Options *_options;
@@ -96,14 +111,17 @@ class Core {
         Select *_select;
         Credits *_credits;
         Help *_help;
-        Pause *_pause;
         Save *_save;
         Load *_load;
         Music *_music;
         Score *_score;
         Input *_inputs;
-        GameCore *_game;
-        layerState _lState;
+        GameCore *_gameCore;
+        Pause *_pause;
+        Game *_game;
+        GameOptions *_gameOptions;
+        layerMenuState _lState;
+        layerGameState _lGState;
         gameState _gState;
         MyEventReceiver *_receiver;
         CameraTravelManager *_cameraTravelManager;

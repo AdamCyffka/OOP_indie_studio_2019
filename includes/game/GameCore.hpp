@@ -8,12 +8,13 @@
 #ifndef GAMECORE_HPP_
 #define GAMECORE_HPP_
 
+#include <map>
 #include "IEntity.hpp"
 #include "Input.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
-#include <map>
 
+class MyEventReceiver;
 class Core;
 
 class GameCore {
@@ -39,6 +40,7 @@ class GameCore {
 		bool _isInit;
 		Core *_core;
 		Map *_map;
+		MyEventReceiver *_receiver;
 };
 
 #endif /* !GAMECORE_HPP_ */
