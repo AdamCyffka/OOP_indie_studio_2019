@@ -192,3 +192,42 @@ void Map::printMap()
 		std::cout << std::endl;
 	}
 }
+
+std::pair<int, int> Map::getPlayerPosition(int playerNb)
+{
+	std::pair<int, int> pos;
+	for (const auto &column : _playerMap) {
+		for (auto line : column.second) {
+			if ((playerNb == 1 && line.second == playerOne) ||
+				(playerNb == 2 && line.second == playerTwo) ||
+				(playerNb == 3 && line.second == playerThree) ||
+				(playerNb == 4 && line.second == playerFour)) {
+				pos = std::make_pair(column.first, line.first);
+				return pos;
+			}
+		}
+	}
+	throw MapException("Could not find player " + std::to_string(playerNb));
+}
+
+void Map::setPlayerPosition(int z, int x, int playerNb)
+{
+	std::pair<int, int> pos = getPlayerPosition(playerNb);
+	_playerMap[pos.first][pos.second] = none;
+	switch (playerNb) {
+	case 1:
+		_playerMap[pos.first + z][pos.second + x] = playerOne;
+		break;
+	case 2:
+		_playerMap[pos.first + z][pos.second + x] = playerTwo;
+		break;
+	case 3:
+		_playerMap[pos.first + z][pos.second + x] = playerThree;
+		break;
+	case 4:
+		_playerMap[pos.first + z][pos.second + x] = playerFour;
+		break;
+	default:
+		break;
+	}
+}

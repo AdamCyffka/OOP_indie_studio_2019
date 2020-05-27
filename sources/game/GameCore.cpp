@@ -9,10 +9,20 @@
 #include "Core.hpp"
 #include "GameCoreException.hpp"
 
-GameCore::GameCore(Core *core, const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes)
+GameCore::GameCore(Core *core)
 {
 	_core = core;
+	_isInit = false;
+	_isPaused = false;
 	_map = _core->getMap();
+	_spawnAreas[1] = irr::core::vector3df{-450.0f, 308.0f, 780.0f};
+	_spawnAreas[2] = irr::core::vector3df{-450.0f, 308.0f, 620.0f};
+	_spawnAreas[3] = irr::core::vector3df{-550.0f, 308.0f, 780.0f};
+	_spawnAreas[4] = irr::core::vector3df{-550.0f, 308.0f, 620.0f};
+}
+
+void GameCore::init(const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes)
+{
 	if (characters.size() != 4)
 		throw GameCoreException("Wrong size of character vector");
 
@@ -23,34 +33,21 @@ GameCore::GameCore(Core *core, const std::vector<Character *> &characters, std::
 		if (*itTypes == EntityType::EntityType::AI)
 			entity = new AI(*itChar, i, _map);
 		else
-			entity = new Player(*itChar, inputs[i], i);
+			entity = new Player(*itChar, inputs[i], i, _map, this);
 		++itChar;
 		++itTypes;
 		_entities.push_back(entity);
 	}
-	_spawnAreas[1] = irr::core::vector3df{-450.0f, 308.0f, 780.0f};
-	_spawnAreas[2] = irr::core::vector3df{-450.0f, 308.0f, 620.0f};
-	_spawnAreas[3] = irr::core::vector3df{-550.0f, 308.0f, 780.0f};
-	_spawnAreas[4] = irr::core::vector3df{-550.0f, 308.0f, 620.0f};
-}
-
-void GameCore::init()
-{
 	spawnPlayers();
+	for (auto it : _entities) {
+		it->setIsAlive(true);
+	}
+	_map->printMap();
+	_isInit = true;
 }
 
 void GameCore::run()
 {
-	//+x = haut
-	//-x = bas
-	//+z = gauche
-	//-z = droite
-
-	//	for (auto it : _entities) {
-	//		auto pos = it->getCharacter()->getPosition();
-	//		pos.Z += 10;
-	//		it->getCharacter()->moveTo(pos);
-	//	}
 	if (gameOver()) //toggle to skip game part
 	{
 		_core->setGState(Core::menu);
@@ -59,10 +56,12 @@ void GameCore::run()
 		_core->getScore()->spawnEntities();
 		return;
 	}
+	if (_isPaused)
+		return;
 	for (auto it : _entities) {
+		it->setInput(Right);
 		it->run();
 	}
-//	std::cout << "game running" << std::endl;
 }
 
 void GameCore::spawnPlayers()
@@ -87,4 +86,43 @@ bool GameCore::gameOver()
 std::vector<IEntity *> GameCore::getEntities() const
 {
 	return _entities;
+}
+
+void GameCore::setPause(bool state)
+{
+	_isPaused = state;
+}
+
+bool GameCore::isInit() const
+{
+	return _isInit;
+}
+
+bool GameCore::nextBlockHasBomb(std::pair<int, int> pos, bool powerUp)
+{
+	if (_map->getBombMap()[pos.first][pos.second] == clear)
+		return false;
+	else if (_map->getBombMap()[pos.first][pos.second] == bomb && powerUp)
+		return false;
+	else if(_map->getBombMap()[pos.first][pos.second] == bomb && !powerUp)
+		return true;
+	return false;
+}
+
+bool GameCore::nextBlockHasWall(std::pair<int, int> pos)
+{
+	if (_map->getMap()[pos.first][pos.second] == unbreakable) {
+		std::cout << "mur à position : " << pos.first << " " << pos.second << std::endl;
+		return true;
+	}
+	return false;
+}
+
+bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
+{
+	if (_map->getMap()[pos.first][pos.second] == breakable && powerUp)
+		return false;
+	else if (_map->getMap()[pos.first][pos.second] == breakable)
+		return true;
+	return false;
 }

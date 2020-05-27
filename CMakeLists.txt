@@ -85,12 +85,6 @@ target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
 #########################################
 
 ######## Boost integration ############
-#set(Boost_DEBUG 1)
-if(MSVC)
-    set(BOOST_ROOT "C:/Program Files/boost_1_69_0")
-    set(Boost_INCLUDE_DIRS "C:/Program Files/boost_1_69_0/boost")
-    set(Boost_LIBRARY_DIRS "C:/Program Files/boost_1_69_0/stage/lib")
-endif(MSVC)
 find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
 if (Boost_FOUND)
 include_directories(${Boost_INCLUDE_DIRS})

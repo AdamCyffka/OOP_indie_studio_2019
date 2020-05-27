@@ -8,13 +8,16 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 
+#include "Map.hpp"
 #include "IEntity.hpp"
+
+class GameCore;
 
 class Player : public IEntity {
     public:
-        Player(Character *, const Key_mouvement &, int);
+        Player(Character *, const Key_mouvement &, int, Map *, GameCore *);
 
-	 	void kill() override;
+		void kill() override;
 	 	void run() override;
 	 	void putBomb() override;
 
@@ -30,31 +33,43 @@ class Player : public IEntity {
 		bool getBombPass() override;
 		void setEntityNumber(int) override;
 		int getEntityNumber() override;
+
 		void setScore(int) override;
 		int getScore() override;
 		void setWinNumber(int) override;
 		int getWinNumber() override;
+
 		Character *getCharacter() override;
+		void setInput(Key_mouvement) override;
+		Key_mouvement getInput() override;
+
 		void moveTo(side) override;
 		void setIsAlive(bool) override;
 		bool isAlive() override;
-		Key_mouvement getInput();
+		bool canGoTo(Key_mouvement);
+
+		std::pair<int, int> getPosition();
+		void setPosition(std::pair<int, int>);
 
 	private:
+		void findPosition();
+
 		bool _isAlive;
 		int _entityNumber;
 		int _winNumber;
 		int _score;
+		GameCore *_gameCore;
 		Character *_character;
+		Map *_map;
+		std::pair<int, int> _position;
 
 		Key_mouvement _input;
+		Key_mouvement _isDoing;
 		int _firePower;
 		int _bombAmount;
 		int _speed;
 		bool _wallPass;
 		bool _bombPass;
-
-		std::map<int, irr::core::vector3df> _spawnAreas;
 };
 
 #endif /* !PLAYER_HPP_ */

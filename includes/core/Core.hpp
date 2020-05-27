@@ -75,6 +75,7 @@ class Core {
 		Map *getMap();
 		Music *getMusicEngine();
         Intro *getIntro();
+		Input *getInput();
         CameraTravelManager *getCameraTravelManager();
 
         void setLState(layerState state);
