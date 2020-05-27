@@ -78,6 +78,7 @@ class Core {
         void loadCase();
 
         void changeFullscreen();
+        void start();
         void restartDevice(bool fullscreen);
 
         bool getFullscreen() const;

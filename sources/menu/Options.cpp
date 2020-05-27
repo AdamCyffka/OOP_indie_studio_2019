@@ -97,7 +97,7 @@ void Options::loadButtons()
     _images["sfxVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 600));
 
   irr::core::dimension2d<u32> dim(1920, 1080);
-  _checkBox["fullScreen"] = _env->addCheckBox(_deviceParam.Fullscreen, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
+  _checkBox["fullScreen"] = _env->addCheckBox(false, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
 }
 
 void Options::run()

@@ -27,11 +27,7 @@
 
 Core::Core() : _fullscreen(FULLSCREEN)
 {
-	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 16, getFullscreen(), false);
-	if (!_window) {
-		std::cerr << "Couldn't open a window" << std::endl;
-		return;
-	}
+	start();
 	//_window->setWindowCaption(L"Super Bomberman Bros");
 	_smgr = _window->getSceneManager();
 	_camera = _smgr->addCameraSceneNode();
@@ -63,16 +59,25 @@ Core::Core() : _fullscreen(FULLSCREEN)
 	_pause = nullptr;
 	_game = nullptr;
 	_gameOptions = nullptr;
+
+	// irr::core::dimension2d<u32> dim(1920, 1080);
+  	// _env->addCheckBox(getFullscreen(), irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
+}
+
+void Core::start()
+{
+    restartDevice(_fullscreen);
 }
 
 void Core::restartDevice(bool fullscreen)
 {
-    _window->closeDevice();
-    _window->drop();
     _window = irr::createDevice(irr::video::EDT_OPENGL,
         irr::core::dimension2d<irr::u32>(1920, 1080),
         16, fullscreen, false);
-    //_window->setWindowCaption(L"Super Bomberman Bros");
+	if (!_window) {
+		std::cerr << "Couldn't open a window" << std::endl;
+		return;
+	}
 }
 
 void Core::changeFullscreen()

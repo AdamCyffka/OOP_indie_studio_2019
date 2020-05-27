@@ -22,6 +22,7 @@ class Options : public IMenu {
         void loadButtons();
         void loadTextures();
         void run();
+
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
@@ -30,7 +31,6 @@ class Options : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
-        irr::SIrrlichtCreationParameters _deviceParam;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;

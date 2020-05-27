@@ -25,6 +25,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
             {
             case IMenu::GUI_ID_QUIT_BUTTON:
                 _window->closeDevice();
+                //_core.start();
                 return true;
             case IMenu::GUI_ID_SKIN_1:
                 _core.getSelect()->incSkin(0);
