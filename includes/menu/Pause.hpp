@@ -36,5 +36,4 @@ class Pause : public IMenu {
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
 };
 
-
 #endif /* !PAUSE_HPP_ */

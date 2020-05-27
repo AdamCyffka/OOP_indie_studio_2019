@@ -6,6 +6,7 @@
 */
 
 #include "Player.hpp"
+#include "Bomb.hpp"
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber) : _isAlive(false), _entityNumber(entityNumber), _score(0), _winNumber(0), _character(character), _input(input),_firePower(1), _bombAmount(1), _speed(1), _wallPass(false), _bombPass(false)
 {
@@ -25,9 +26,19 @@ void Player::putBomb()
 {
 }
 
+void Player::setFirePower(int firePower)
+{
+	_firePower = firePower;
+}
+
 int Player::getFirePower()
 {
 	return _firePower;
+}
+
+void Player::setBombAmount(int bombAmount)
+{
+	_bombAmount = bombAmount;
 }
 
 int Player::getBombAmount()
@@ -35,9 +46,19 @@ int Player::getBombAmount()
 	return _bombAmount;
 }
 
+void Player::setSpeed(int speed)
+{
+	_speed = speed;
+}
+
 int Player::getSpeed()
 {
 	return _speed;
+}
+
+void Player::setWallPass(bool wallPass)
+{
+	_wallPass = wallPass;
 }
 
 bool Player::getWallPass()
@@ -45,9 +66,19 @@ bool Player::getWallPass()
 	return _wallPass;
 }
 
+void Player::setBombPass(bool bombPass)
+{
+	_bombPass = bombPass;
+}
+
 bool Player::getBombPass()
 {
 	return _bombPass;
+}
+
+void Player::setEntityNumber(int entityNumber)
+{
+	_entityNumber = entityNumber;
 }
 
 int Player::getEntityNumber()
@@ -86,7 +117,17 @@ void Player::moveTo(side direction)
 		_character->setOrientation(direction);
 }
 
+void Player::setIsAlive(bool isAlive)
+{
+	_isAlive = isAlive;
+}
+
 bool Player::isAlive()
 {
 	return _isAlive;
+}
+
+Key_mouvement Player::getInput()
+{
+	return _input;
 }

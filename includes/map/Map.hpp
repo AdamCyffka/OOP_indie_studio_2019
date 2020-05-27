@@ -9,6 +9,7 @@
 #define MAP_HPP
 
 #include "MapException.hpp"
+#include "EnumCheck.hpp"
 #include <vector>
 #include <random>
 #include <iostream>
@@ -37,6 +38,12 @@ enum playerState {
 	playerFour,
 	obstacle
 };
+
+using blockStateCheck = EnumCheck<blockState, blockState::empty, blockState::breakable, blockState::unbreakable>;
+
+using bombStateCheck = EnumCheck<bombState, bombState::clear, bombState::bomb, bombState::block>;
+
+using playerStateCheck = EnumCheck<playerState, playerState::none, playerState::playerOne, playerState::playerTwo, playerState::playerThree, playerState::playerFour, playerState::obstacle>;
 
 class Map {
 	public:

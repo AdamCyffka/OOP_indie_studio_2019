@@ -7,6 +7,7 @@
 
 #include "GameCore.hpp"
 #include "Core.hpp"
+#include "MyEventReceiver.hpp"
 #include "GameCoreException.hpp"
 
 GameCore::GameCore(Core *core, const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes)
@@ -82,4 +83,9 @@ bool GameCore::gameOver()
 			return (true);
 	}
 	return false;
+}
+
+std::vector<IEntity *> GameCore::getEntities() const
+{
+	return _entities;
 }

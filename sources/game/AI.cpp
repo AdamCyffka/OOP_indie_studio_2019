@@ -18,10 +18,16 @@ void AI::kill()
 
 void AI::run()
 {
+	this->moveTo(side::west);
 }
 
 void AI::putBomb()
 {
+}
+
+void AI::setFirePower(int firePower)
+{
+	_firePower = firePower;
 }
 
 int AI::getFirePower()
@@ -29,9 +35,19 @@ int AI::getFirePower()
 	return _firePower;
 }
 
+void AI::setBombAmount(int bombAmount)
+{
+	_bombAmount = bombAmount;
+}
+
 int AI::getBombAmount()
 {
 	return _bombAmount;
+}
+
+void AI::setSpeed(int speed)
+{
+	_speed = speed;
 }
 
 int AI::getSpeed()
@@ -39,14 +55,29 @@ int AI::getSpeed()
 	return _speed;
 }
 
+void AI::setWallPass(bool wallPass)
+{
+	_wallPass = wallPass;
+}
+
 bool AI::getWallPass()
 {
 	return _wallPass;
 }
 
+void AI::setBombPass(bool bombPass)
+{
+	_bombPass = bombPass;
+}
+
 bool AI::getBombPass()
 {
 	return _bombPass;
+}
+
+void AI::setEntityNumber(int entityNumber)
+{
+	_entityNumber = entityNumber;
 }
 
 int AI::getEntityNumber()
@@ -81,9 +112,46 @@ Character *AI::getCharacter()
 
 void AI::moveTo(side side)
 {
+	if (getEntityNumber() == 2) {
+		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-450, 308, 630)) {
+			_character->moveTo(core::vector3df(-450, 308, 630), 5000);
+		}
+		if (_character->getPosition() == core::vector3df(-450, 308, 630) && _character->getState() != Character::state::idle) {
+			this->putBomb();
+			_character->setState(Character::state::idle);
+		}
+	}
+	if (getEntityNumber() == 3) {
+		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-550, 308, 770)) {
+			_character->moveTo(core::vector3df(-550, 308, 770), 5000);
+		}
+		if (_character->getPosition() == core::vector3df(-550, 308, 770) && _character->getState() != Character::state::idle) {
+			this->putBomb();
+			_character->setState(Character::state::idle);
+		}
+	}
+	if (getEntityNumber() == 4) {
+		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-550, 308, 630)) {
+			_character->moveTo(core::vector3df(-550, 308, 630), 5000);
+		}
+		if (_character->getPosition() == core::vector3df(-550, 308, 630) && _character->getState() != Character::state::idle) {
+			this->putBomb();
+			_character->setState(Character::state::idle);
+		}
+	}
+}
+
+void AI::setIsAlive(bool isAlive)
+{
+	_isAlive = isAlive;
 }
 
 bool AI::isAlive()
 {
 	return _isAlive;
+}
+
+Key_mouvement AI::getInput()
+{
+	return Key_mouvement::Ia;
 }

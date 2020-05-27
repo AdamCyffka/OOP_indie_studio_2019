@@ -8,19 +8,20 @@
 #ifndef GAMECORE_HPP_
 #define GAMECORE_HPP_
 
+#include <map>
 #include "IEntity.hpp"
 #include "Input.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
-#include <map>
 
+class MyEventReceiver;
 class Core;
 
 class GameCore {
     public:
         GameCore(Core *core, const std::vector<Character *>&, std::map<int, Key_mouvement>, const std::vector<EntityType::EntityType> &);
         ~GameCore() = default;
-
+		std::vector<IEntity *> getEntities() const;
 		void init();
         void run();
 
@@ -32,6 +33,7 @@ class GameCore {
 		std::vector<IEntity *> _entities;
 		Core *_core;
 		Map *_map;
+		MyEventReceiver *_receiver;
 };
 
 #endif /* !GAMECORE_HPP_ */

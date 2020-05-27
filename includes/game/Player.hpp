@@ -9,21 +9,27 @@
 #define PLAYER_HPP_
 
 #include "IEntity.hpp"
-#include "Input.hpp"
 
 class Player : public IEntity {
     public:
         Player(Character *, const Key_mouvement &, int);
+		Player() = default;
 
 	 	void kill() override;
 	 	void run() override;
 	 	void putBomb() override;
 
+		void setFirePower(int) override;
 		int getFirePower() override;
+		void setBombAmount(int) override;
 		int getBombAmount() override;
+		void setSpeed(int) override;
 		int getSpeed() override;
+		void setWallPass(bool) override;
 		bool getWallPass() override;
+		void setBombPass(bool) override;
 		bool getBombPass() override;
+		void setEntityNumber(int) override;
 		int getEntityNumber() override;
 		void setScore(int) override;
 		int getScore() override;
@@ -31,7 +37,9 @@ class Player : public IEntity {
 		int getWinNumber() override;
 		Character *getCharacter() override;
 		void moveTo(side) override;
+		void setIsAlive(bool) override;
 		bool isAlive() override;
+		Key_mouvement getInput();
 
 	private:
 		bool _isAlive;
