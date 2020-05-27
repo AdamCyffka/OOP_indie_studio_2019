@@ -13,6 +13,7 @@
 class Player : public IEntity {
     public:
         Player(Character *, const Key_mouvement &, int);
+		Player() = default;
 
 	 	void kill() override;
 	 	void run() override;
