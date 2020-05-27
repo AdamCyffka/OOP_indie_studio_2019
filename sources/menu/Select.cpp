@@ -196,8 +196,9 @@ int Select::getNextAvailableSkin()
 {
     for (size_t i = 0; i < _selectTab.size(); i++) {
         if (_selectTab[i].second == -1)
-            return i;
+            return (int)i;
     }
+    return -1;
 }
 
 void Select::incSkin(int skin)
@@ -205,9 +206,11 @@ void Select::incSkin(int skin)
     for (size_t i = 0; i < _selectTab.size(); i++) {
         if (_selectTab[i].second == skin) {
             int newSkinIndex = getNextAvailableSkin();
-            _previews[skin]->changeModel(g_modelInfos.at(_selectTab[newSkinIndex].first));
-            _selectTab[newSkinIndex].second = skin;
-            _selectTab[i].second = -1;
+            if (newSkinIndex != -1) {
+                _previews[skin]->changeModel(g_modelInfos.at(_selectTab[newSkinIndex].first));
+                _selectTab[newSkinIndex].second = skin;
+                _selectTab[i].second = -1;
+            }
             break;
         }
     }
