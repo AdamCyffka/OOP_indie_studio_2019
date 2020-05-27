@@ -93,11 +93,12 @@ class Core {
         void setGState(gameState state);
 
         void hideGameLayers();
-		void hideLayers();
+		void hideMenuLayers();
 
     private:
 		void init();
-		template<typename T> void showLayer(T *layer);
+		template<typename T> void showMenuLayer(T *layer);
+        template<typename T> void showGameLayer(T *layer);
 		void drawScene();
 		void drawMenuLayer();
         void drawGameLayer();

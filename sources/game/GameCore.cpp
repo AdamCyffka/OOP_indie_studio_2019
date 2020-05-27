@@ -69,6 +69,7 @@ void GameCore::run()
 void GameCore::spawnPlayers()
 {
 	int count = 1;
+
 	for (auto it : _entities) {
 		it->getCharacter()->setPosition(_spawnAreas[count]);
 		it->getCharacter()->setVisibility(true);

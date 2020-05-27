@@ -144,63 +144,63 @@ void Core::introCase()
 		_cameraTravelManager->doTravel(CameraTravelManager::travel::introToMenu);
 		setLState(Core::menuMain);
 	}
-	hideLayers();
-	showLayer(_intro);
+	hideMenuLayers();
+	showMenuLayer(_intro);
 }
 
 void Core::menuCase()
 {
-	hideLayers();
-	showLayer(_menu);
+	hideMenuLayers();
+	showMenuLayer(_menu);
 }
 
 void Core::selectCase()
 {
 	_select->run();
-	hideLayers();
-	showLayer(_select);
+	hideMenuLayers();
+	showMenuLayer(_select);
 }
 
 void Core::scoreCase()
 {
-	hideLayers();
-	showLayer(_score);
+	hideMenuLayers();
+	showMenuLayer(_score);
 }
 
 void Core::optionsCase()
 {
-	hideLayers();
-	showLayer(_options);
+	hideMenuLayers();
+	showMenuLayer(_options);
 }
 
 void Core::creditsCase()
 {
-	hideLayers();
-	showLayer(_credits);
+	hideMenuLayers();
+	showMenuLayer(_credits);
 }
 
 void Core::helpCase()
 {
-	hideLayers();
-	showLayer(_help);
+	hideMenuLayers();
+	showMenuLayer(_help);
 }
 
 void Core::saveCase()
 {
-	hideLayers();
-	showLayer(_save);
+	hideGameLayers();
+	showGameLayer(_save);
 }
 
 void Core::loadCase()
 {
-	hideLayers();
-	showLayer(_load);
+	hideMenuLayers();
+	showMenuLayer(_load);
 }
 
 void Core::gameOptionsCase()
 {
-	hideLayers();
-	showLayer(_gameOptions);
+	hideGameLayers();
+	showGameLayer(_gameOptions);
 }
 
 void Core::splashCase()
@@ -209,7 +209,7 @@ void Core::splashCase()
 		_splash = new Splash(_env, _driver, _smgr);
 	if (!_isInitialized)
 		init();
-	showLayer(_splash);
+	showMenuLayer(_splash);
 }
 
 void Core::gameCase()
@@ -217,8 +217,8 @@ void Core::gameCase()
 	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
 		setLGState(Core::gamePause);
 	}
-	hideLayers();
-	showLayer(_game);
+	hideGameLayers();
+	showGameLayer(_game);
 }
 
 void Core::pauseCase()
@@ -226,8 +226,8 @@ void Core::pauseCase()
 	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
 		setLGState(Core::gameGame);
 	}
-	hideLayers();
-	showLayer(_pause);
+	hideGameLayers();
+	showGameLayer(_pause);
 }
 
 void Core::init()
@@ -326,7 +326,8 @@ void Core::init()
 		_music->add2D("resources/music/intro.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
 	}
 	_initStep++;
-	hideLayers();
+	hideMenuLayers();
+	hideGameLayers();
 }
 
 int Core::run()
@@ -378,9 +379,11 @@ void Core::drawScene()
 {
 	switch (_gState) {
 		case menu:
+			hideGameLayers();
 			drawMenuLayer();
 			break;
 		case game:
+			hideMenuLayers();
 			_gameCore->run();
 			drawGameLayer();
 			break;
@@ -440,9 +443,32 @@ void Core::drawMenuLayer()
 
 void Core::hideGameLayers()
 {
+	if (_pause) {
+		for (auto &it : _pause->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _pause->getImages())
+			it.second->setVisible(false);
+	}
+	if (_game) {
+		for (auto &it : _game->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _game->getImages())
+			it.second->setVisible(false);
+	}
+	if (_save)
+		for (auto &it : _save->getButtons())
+			it.second->setVisible(false);
+	if (_gameOptions) {
+		for (auto &it : _gameOptions->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _gameOptions->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _gameOptions->getCheckBox())
+			it.second->setVisible(false);
+	}
 }
 
-void Core::hideLayers()
+void Core::hideMenuLayers()
 {
 	if (_menu)
 	{
@@ -480,16 +506,18 @@ void Core::hideLayers()
 			it.second->setVisible(false);
 		for (auto &it : _select->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _select->getPreviews())
-			it->setVisibility(false);
+		if (_gState != game)
+			for (auto &it : _select->getPreviews())
+				it->setVisibility(false);
 	}
 	if (_score) {
 		for (auto &it : _score->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _score->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _score->getPreviews())
-			it->setVisibility(false);
+		if (_gState != game)
+			for (auto &it : _score->getPreviews())
+				it->setVisibility(false);
 	}
 	if (_credits) {
 		for (auto &it : _credits->getButtons())
@@ -504,37 +532,13 @@ void Core::hideLayers()
 		for (auto &it : _help->getImages())
 			it.second->setVisible(false);
 	}
-	if (_pause)
-	{
-		for (auto &it : _pause->getButtons())
-			it.second->setVisible(false);
-		for (auto &it : _pause->getImages())
-			it.second->setVisible(false);
-	}
-	if (_game) {
-		for (auto &it : _game->getButtons())
-			it.second->setVisible(false);
-		for (auto &it : _game->getImages())
-			it.second->setVisible(false);
-	}
-	if (_save)
-		for (auto &it : _save->getButtons())
-			it.second->setVisible(false);
 	if (_load)
 		for (auto &it : _load->getButtons())
 			it.second->setVisible(false);
-	if (_gameOptions) {
-		for (auto &it : _gameOptions->getButtons())
-			it.second->setVisible(false);
-		for (auto &it : _gameOptions->getImages())
-			it.second->setVisible(false);
-		for (auto &it : _gameOptions->getCheckBox())
-			it.second->setVisible(false);
-	}
 }
 
 template <typename T>
-void Core::showLayer(T *layer)
+void Core::showMenuLayer(T *layer)
 {
 	for (auto &it : layer->getButtons())
 		it.second->setVisible(true);
@@ -544,4 +548,15 @@ void Core::showLayer(T *layer)
 		it.second->setVisible(true);
 	for (auto &it : layer->getPreviews())
 		it->setVisibility(true);
+}
+
+template <typename T>
+void Core::showGameLayer(T *layer)
+{
+	for (auto &it : layer->getButtons())
+		it.second->setVisible(true);
+	for (auto &it : layer->getImages())
+		it.second->setVisible(true);
+	for (auto &it : layer->getCheckBox())
+		it.second->setVisible(true);
 }

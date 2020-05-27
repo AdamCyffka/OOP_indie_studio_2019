@@ -154,7 +154,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     //Others elements for load
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
-    core.hideLayers();
+    core.hideGameLayers();
     core.getGame()->init();
 }
 
@@ -386,7 +386,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     //End of load now start the game
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
-    core.hideLayers();
+    core.hideGameLayers();
     core.getGame()->init();
     return;
 

@@ -100,7 +100,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                 _core.setGState(Core::game);
-                _core.hideLayers();
+                _core.hideMenuLayers();
                 _core.getGame()->init();
                 return true;
             case IMenu::GUI_ID_SAVE_SLOT_1:
