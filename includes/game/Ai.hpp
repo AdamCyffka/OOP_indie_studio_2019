@@ -41,6 +41,7 @@ public:
 	void setIsAlive(bool) final;
 	bool isAlive() final;
 	Key_mouvement getInput() final;
+	void setInput(Key_mouvement input) final;
 
 	std::pair<int, int> getPosition();
 	void setPosition(std::pair<int, int>);
