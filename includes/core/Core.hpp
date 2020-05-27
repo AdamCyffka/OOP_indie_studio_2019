@@ -19,6 +19,7 @@
 #include "Music.hpp"
 #include "GameCore.hpp"
 
+class GameOptions;
 class Game;
 class Load;
 class Save;
@@ -73,6 +74,7 @@ class Core {
         void splashCase();
         void saveCase();
         void loadCase();
+        void gameOptionsCase();
 
         layerMenuState getLState();
         layerGameState getLGState();
@@ -90,6 +92,7 @@ class Core {
         void setLGState(layerGameState state);
         void setGState(gameState state);
 
+        void hideGameLayers();
 		void hideLayers();
 
     private:
@@ -114,6 +117,7 @@ class Core {
         GameCore *_gameCore;
         Pause *_pause;
         Game *_game;
+        GameOptions *_gameOptions;
         layerMenuState _lState;
         layerGameState _lGState;
         gameState _gState;
