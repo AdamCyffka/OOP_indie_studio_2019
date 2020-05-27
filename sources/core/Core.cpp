@@ -25,9 +25,9 @@
 #include "Game.hpp"
 #include "GameOptions.hpp"
 
-Core::Core()
+Core::Core() : _fullscreen(FULLSCREEN)
 {
-	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080));
+	_window = irr::createDevice(video::EDT_OPENGL, core::dimension2d<u32>(1920, 1080), 16, getFullscreen(), false);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
@@ -63,7 +63,26 @@ Core::Core()
 	_pause = nullptr;
 	_game = nullptr;
 	_gameOptions = nullptr;
-	_deviceParam.Fullscreen = true;
+}
+
+void Core::restartDevice(bool fullscreen)
+{
+    _window->closeDevice();
+    _window->drop();
+    _window = irr::createDevice(irr::video::EDT_OPENGL,
+        irr::core::dimension2d<irr::u32>(1920, 1080),
+        16, fullscreen, false);
+    //_window->setWindowCaption(L"Super Bomberman Bros");
+}
+
+void Core::changeFullscreen()
+{
+    _fullscreen = !_fullscreen;
+}
+
+bool Core::getFullscreen() const
+{
+    return _fullscreen;
 }
 
 Select *Core::getSelect()
