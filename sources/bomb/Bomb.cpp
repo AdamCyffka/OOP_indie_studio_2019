@@ -78,3 +78,8 @@ void Bomb::poseBomb()
         map.getBombMap(); // only here to test don"t touch currently !
     }
 }
+
+int Bomb::checkKilledByBomb()
+{
+    return (0);
+}

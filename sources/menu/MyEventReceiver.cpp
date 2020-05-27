@@ -96,11 +96,11 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.getMusicEngine()->sfxDown();
                 return true;
             case IMenu::GUI_ID_SELECT_PLAY:
+                _core.setLGState(Core::gameGame);
                 _core.getMusicEngine()->stop("resources/music/menu.mp3", false);
                 _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                 _core.setGState(Core::game);
-                _core.hideMenuLayers();
                 _core.getGame()->init();
                 return true;
             case IMenu::GUI_ID_SAVE_SLOT_1:
@@ -146,6 +146,9 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.setLGState(Core::gameOptions);
                 return true;
             case IMenu::GUI_ID_PAUSE_MENU:
+                _core.getMusicEngine()->stop("resources/music/game.mp3", false);
+                _core.getMusicEngine()->add2D("resources/music/menu.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
+                _cameraTravelManager->doTravel(CameraTravelManager::travel::pauseToMenu);
                 _core.setGState(Core::menu);
                 _core.setLState(Core::menuMain);
                 return true;

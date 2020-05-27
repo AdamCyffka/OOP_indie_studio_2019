@@ -114,6 +114,18 @@ void CameraTravelManager::doTravel(travel travel)
                     throw CameraTravelException("Camera travel manager can't access to camera travel for: scoreToMenu");
             }
             break;
+        case travel::pauseToMenu:
+            if (auto travel = getTravel(pauseToMenu)) {
+                travel->start();
+            } else {
+                _travels[pauseToMenu] = new StraightCameraTravel(_camera, _smgr,
+                    {-539.4f, 453.6f, 710.3f}, {-179.2f, 55.8f, -36.1f}, {-111.0f, 45.0f, -24.0f}, u32(2000));
+                if (auto travel = getTravel(pauseToMenu))
+                    travel->start();
+                else
+                    throw CameraTravelException("Camera travel manager can't access to camera travel for: pauseToMenu");
+            }
+            break;
         default:
             break;
     }

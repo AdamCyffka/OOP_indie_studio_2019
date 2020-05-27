@@ -29,6 +29,7 @@ class Bomb {
         int canPoseBomb();
         int checkEnoughBombToPose();
         void poseBomb();
+        int checkKilledByBomb();
     private:
         int _x;
         int _y;
