@@ -146,6 +146,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.setLGState(Core::gameOptions);
                 return true;
             case IMenu::GUI_ID_PAUSE_MENU:
+                _cameraTravelManager->doTravel(CameraTravelManager::travel::pauseToMenu);
                 _core.setGState(Core::menu);
                 _core.setLState(Core::menuMain);
                 return true;
