@@ -10,10 +10,6 @@
 
 #include <irrlicht.h>
 
-#include "movement.hpp"
-#include "define.hpp"
-#include "powerUp.hpp"
-
 #include <ctime>
 #include <vector>
 

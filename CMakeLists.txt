@@ -43,6 +43,7 @@ add_executable(bomberman
         sources/powerUps/SpeedDown.cpp
         sources/powerUps/SpeedUp.cpp
         sources/powerUps/WallPass.cpp
+        sources/bomb/Bomb.cpp
         sources/saveAndLoad/saveAndLoad.cpp
         )
 
@@ -52,6 +53,7 @@ include_directories(includes
         includes/core/
         includes/menu/
         includes/characters/
+        includes/bomb/
         includes/music/
         includes/travel/
         includes/input/
