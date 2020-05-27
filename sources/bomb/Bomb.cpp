@@ -62,7 +62,9 @@ int Bomb::canPoseBomb()
 
 int Bomb::checkEnoughBombToPose()
 {
-    if (0 <= 0 ) {
+    Player player;
+
+    if (player.getBombAmount() <= 0 ) {
         return (0);
     } else {
         return (1);
