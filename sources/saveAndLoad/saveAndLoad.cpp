@@ -154,8 +154,8 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     //Others elements for load
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
-    core.hideGameLayers();
-    core.getGame()->init();
+	core.hideGameLayers();
+	core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
 }
 
 //END SAVE GAME
@@ -251,7 +251,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     if (input == Key_mouvement::Ia)
         entity = new AI(characters[playerNB], playerNB, core.getMap());
     else
-        entity = new Player(characters[playerNB], input, playerNB);
+        entity = new Player(characters[playerNB], input, playerNB, core.getMap(), core.getGame());
     entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entity->setBombPass(root->get<bool>(path + "bombPass", 0));
     entity->setWallPass(root->get<bool>(path + "wallPass", 0));
@@ -387,7 +387,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideGameLayers();
-    core.getGame()->init();
+    core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
     return;
 
     //Others elements for load

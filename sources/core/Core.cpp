@@ -130,6 +130,11 @@ Intro *Core::getIntro()
 	return _intro;
 }
 
+Input *Core::getInput()
+{
+	return _inputs;
+}
+
 LoadMap *Core::getLoadMap()
 {
 	return _loadmap;
@@ -233,6 +238,9 @@ void Core::splashCase()
 
 void Core::gameCase()
 {
+	if (!_gameCore->isInit())
+		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+	_game->run();
 	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
 		setLGState(Core::gamePause);
 	}
@@ -321,7 +329,7 @@ void Core::init()
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_gameCore)
-			_gameCore = new GameCore(this, _select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+			_gameCore = new GameCore(this);
 		_splash->getBar()->setProgress(97);
 	} else if (_initStep == 14) {
 		if (!_pause)

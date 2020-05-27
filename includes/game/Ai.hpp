@@ -40,7 +40,12 @@ public:
 	void moveTo(side) override;
 	void setIsAlive(bool) override;
 	bool isAlive() override;
-	Key_mouvement getInput();
+	void setInput(Key_mouvement) override;
+	Key_mouvement getInput() override;
+
+	std::pair<int, int> getPosition();
+	void setPosition(std::pair<int, int>);
+	void findPosition();
 
 private:
 	bool _isAlive;
@@ -49,6 +54,7 @@ private:
 	int _winNumber;
 	Character *_character;
 	Map *_map;
+	std::pair<int, int> _position;
 
 	int _firePower;
 	int _bombAmount;

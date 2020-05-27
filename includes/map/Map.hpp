@@ -12,6 +12,7 @@
 #include "EnumCheck.hpp"
 #include <vector>
 #include <random>
+#include <string>
 #include <iostream>
 #include <map>
 
@@ -53,6 +54,8 @@ class Map {
 		std::map<int, std::map<int, blockState>> &getMap();
 		std::map<int, std::map<int, bombState>> &getBombMap();
 		std::map<int, std::map<int, playerState>> &getPlayerMap();
+		void setPlayerPosition(int, int, int);
+		std::pair <int, int> getPlayerPosition(int);
 		void printMap();
 
 	private:

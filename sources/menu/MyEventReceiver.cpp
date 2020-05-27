@@ -20,7 +20,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
         switch (event.GUIEvent.EventType)
         {
         case irr::gui::EGET_BUTTON_CLICKED:
-            _core.getMusicEngine()->add2D("resources/sfx/click.mp3", false, false, true, irrklang::ESM_AUTO_DETECT);
+            _core.getMusicEngine()->add2D("resources/sfx/click.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
             switch (id)
             {
             case IMenu::GUI_ID_QUIT_BUTTON:
@@ -101,7 +101,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                 _core.setGState(Core::game);
-                _core.getGame()->init();
+                _core.getGame()->init(_core.getSelect()->getPreviews(), _core.getInput()->getPlayerInput(), _core.getSelect()->getEntityTypes());
                 return true;
             case IMenu::GUI_ID_SAVE_SLOT_1:
                 saveGame(1, _core, _cameraTravelManager);
