@@ -22,21 +22,24 @@ GameCore::GameCore(Core *core)
 	_spawnAreas[4] = irr::core::vector3df{-550.0f, 308.0f, 620.0f};
 }
 
-void GameCore::init(const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes)
+void GameCore::reset()
 {
-	if (characters.size() != 4)
-		throw GameCoreException("Wrong size of character vector");
+	for (auto it : _entities) {
+		delete it;
+	}
+	_entities.clear();
+	_isPaused = false;
+	_isInit = false;
+}
 
-	auto itChar = characters.begin();
-	auto itTypes = entityTypes.begin();
+void GameCore::init(const std::vector<Character *> characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> entityTypes)
+{
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
-		if (*itTypes == EntityType::EntityType::AI)
-			entity = new AI(*itChar, i, _map);
+		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
+			entity = new AI(characters.at(i - 1), i, _map);
 		else
-			entity = new Player(*itChar, inputs[i], i, _map, this);
-		++itChar;
-		++itTypes;
+			entity = new Player(characters.at(i - 1), inputs[i], i, _map, this);
 		_entities.push_back(entity);
 	}
 	spawnPlayers();
@@ -101,29 +104,15 @@ bool GameCore::isInit() const
 
 bool GameCore::nextBlockHasBomb(std::pair<int, int> pos, bool powerUp)
 {
-	if (_map->getBombMap()[pos.first][pos.second] == clear)
-		return false;
-	else if (_map->getBombMap()[pos.first][pos.second] == bomb && powerUp)
-		return false;
-	else if(_map->getBombMap()[pos.first][pos.second] == bomb && !powerUp)
-		return true;
-	return false;
+	return _map->getBombMap()[pos.first][pos.second] == bomb && !powerUp;
 }
 
 bool GameCore::nextBlockHasWall(std::pair<int, int> pos)
 {
-	if (_map->getMap()[pos.first][pos.second] == unbreakable) {
-		std::cout << "mur à position : " << pos.first << " " << pos.second << std::endl;
-		return true;
-	}
-	return false;
+	return _map->getMap()[pos.first][pos.second] == unbreakable;
 }
 
 bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
 {
-	if (_map->getMap()[pos.first][pos.second] == breakable && powerUp)
-		return false;
-	else if (_map->getMap()[pos.first][pos.second] == breakable)
-		return true;
-	return false;
+	return _map->getMap()[pos.first][pos.second] == breakable && !powerUp;
 }

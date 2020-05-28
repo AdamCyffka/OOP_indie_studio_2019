@@ -26,8 +26,11 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
     _previews[1]->setPosition({-28, 0, 225});
     _previews[2]->setPosition({-79, 0, 205});
     _previews[3]->setPosition({-127, 0, 185});
-    for (auto &i : _previews)
+    for (auto &i : _previews) {
+        i->setVisibility(true);
         i->setOrientation(side::east);
+        i->setState(Character::state::idle);
+    }
 }
 
 void Select::loadTextures()
@@ -227,6 +230,7 @@ void Select::changeRole(int role)
 
 void Select::run()
 {
+    // std::cout << "preview 0 pos = " << _previews[0]->getPosition().X << " " << _previews[0]->getPosition().Y << " " << _previews[0]->getPosition().Z << std::endl;
     _images["p1"]->setImage(_textures[_selectRole[0][0][_nbRole[0][0]]]);
     _images["ia1"]->setImage(_textures[_selectRole[0][1][_nbRole[0][1]]]);
     _images["p2"]->setImage(_textures[_selectRole[0][0][_nbRole[1][0]]]);

@@ -22,10 +22,11 @@ class GameCore {
         GameCore(Core *core);
         ~GameCore() = default;
 		std::vector<IEntity *> getEntities() const;
-		void init(const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes);
+		void init(const std::vector<Character *> characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> entityTypes);
         void run();
 
         void setPause(bool);
+        void reset();
         bool isInit() const;
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
 		bool nextBlockHasWall(std::pair<int, int>);
