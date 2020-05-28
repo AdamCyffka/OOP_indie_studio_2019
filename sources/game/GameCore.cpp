@@ -101,29 +101,15 @@ bool GameCore::isInit() const
 
 bool GameCore::nextBlockHasBomb(std::pair<int, int> pos, bool powerUp)
 {
-	if (_map->getBombMap()[pos.first][pos.second] == clear)
-		return false;
-	else if (_map->getBombMap()[pos.first][pos.second] == bomb && powerUp)
-		return false;
-	else if(_map->getBombMap()[pos.first][pos.second] == bomb && !powerUp)
-		return true;
-	return false;
+	return _map->getBombMap()[pos.first][pos.second] == bomb && !powerUp;
 }
 
 bool GameCore::nextBlockHasWall(std::pair<int, int> pos)
 {
-	if (_map->getMap()[pos.first][pos.second] == unbreakable) {
-		std::cout << "mur à position : " << pos.first << " " << pos.second << std::endl;
-		return true;
-	}
-	return false;
+	return _map->getMap()[pos.first][pos.second] == unbreakable;
 }
 
 bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
 {
-	if (_map->getMap()[pos.first][pos.second] == breakable && powerUp)
-		return false;
-	else if (_map->getMap()[pos.first][pos.second] == breakable)
-		return true;
-	return false;
+	return _map->getMap()[pos.first][pos.second] == breakable && !powerUp;
 }
