@@ -22,6 +22,12 @@ GameCore::GameCore(Core *core)
 	_spawnAreas[4] = irr::core::vector3df{-550.0f, 308.0f, 620.0f};
 }
 
+void GameCore::reset()
+{
+	_entities.clear();
+	_isInit = false;
+}
+
 void GameCore::init(const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes)
 {
 	if (characters.size() != 4)
