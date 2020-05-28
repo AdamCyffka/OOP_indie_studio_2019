@@ -9,12 +9,11 @@
 #define SELECT_HPP_
 
 #include <irrlicht.h>
-#include <map>
 #include <string>
 #include <vector>
+#include "IMenu.hpp"
 #include "IEntity.hpp"
 #include "Character.hpp"
-#include "IMenu.hpp"
 
 class Select : public IMenu {
     public:
