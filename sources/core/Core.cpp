@@ -246,18 +246,12 @@ void Core::gameCase()
 	if (!_gameCore->isInit())
 		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
 	_game->run();
-	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
-		setLGState(Core::gamePause);
-	}
 	hideGameLayers();
 	showGameLayer(_game);
 }
 
 void Core::pauseCase()
 {
-	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
-		setLGState(Core::gameGame);
-	}
 	hideGameLayers();
 	showGameLayer(_pause);
 }

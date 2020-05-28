@@ -168,10 +168,17 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
     if (clicks(event))
         return true;
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+        if(event.KeyInput.Key == KEY_ESCAPE && event.KeyInput.PressedDown == false && _core.getGState() == Core::game)
+            _core.setLGState(_core.getLGState() == Core::gameGame ? Core::gamePause : Core::gameGame);
 		_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		return true;
 	}
     return false;
+}
+
+bool MyEventReceiver::keyHasBeenPressed(irr::EKEY_CODE keyCode) const
+{
+    return _keyPressed[keyCode];
 }
 
 bool MyEventReceiver::IsKeyDown(irr::EKEY_CODE keyCode) const
