@@ -388,3 +388,8 @@ void Music::destroySounds()
 		}
 	}
 }
+
+irrklang::ISoundEngine *Music::getEngine()
+{
+	return _engine;
+}

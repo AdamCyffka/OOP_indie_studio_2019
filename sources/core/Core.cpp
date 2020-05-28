@@ -236,8 +236,9 @@ void Core::splashCase()
 {
 	if (!_splash)
 		_splash = new Splash(_env, _driver, _smgr);
-	if (!_isInitialized)
+	if (!_isInitialized) {
 		init();
+	}
 	showMenuLayer(_splash);
 }
 
@@ -269,6 +270,7 @@ void Core::init()
 	{
 		if (!_music)
 			_music = new Music();
+//		_music->getEngine()->setSoundVolume(0.0f); __MUSIC__
 		_splash->getBar()->setProgress(7);
 	}
 	else if (_initStep == 2)
