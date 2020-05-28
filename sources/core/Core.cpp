@@ -27,7 +27,13 @@
 
 Core::Core() : _fullscreen(FULLSCREEN)
 {
-	start();
+	_window = irr::createDevice(irr::video::EDT_OPENGL,
+        irr::core::dimension2d<irr::u32>(1920, 1080),
+        16, getFullscreen(), false);
+	if (!_window) {
+		std::cerr << "Couldn't open a window" << std::endl;
+		return;
+	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
 	_smgr = _window->getSceneManager();
 	_camera = _smgr->addCameraSceneNodeMaya();
@@ -71,6 +77,11 @@ void Core::start()
 
 void Core::restartDevice(bool fullscreen)
 {
+	if (_window) {
+		_window->closeDevice();
+		_window->run();
+		_window->drop();
+	}
     _window = irr::createDevice(irr::video::EDT_OPENGL,
         irr::core::dimension2d<irr::u32>(1920, 1080),
         16, fullscreen, false);
@@ -78,6 +89,36 @@ void Core::restartDevice(bool fullscreen)
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
 	}
+	_smgr = _window->getSceneManager();
+	_camera = _smgr->addCameraSceneNodeMaya();
+	_camera->setFarValue(42000);
+	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
+	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
+	_window->setEventReceiver(_receiver);
+	_env = _window->getGUIEnvironment();
+	_driver = _window->getVideoDriver();
+	_lState = menuSplash;
+	_gState = menu;
+	_lGState = gameGame;
+	_isInitialized = false;
+	_initStep = 0;
+	_intro = nullptr;
+	_loadmap = nullptr;
+	_credits = nullptr;
+	_help = nullptr;
+	_splash = nullptr;
+	_menu = nullptr;
+	_options = nullptr;
+	_save = nullptr;
+	_load = nullptr;
+    _select = nullptr;
+	_score = nullptr;
+    _music = nullptr;
+    _inputs = nullptr;
+    _gameCore = nullptr;
+	_pause = nullptr;
+	_game = nullptr;
+	_gameOptions = nullptr;
 }
 
 void Core::changeFullscreen()
