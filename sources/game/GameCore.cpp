@@ -43,7 +43,6 @@ void GameCore::init(const std::vector<Character *> &characters, std::map<int, Ke
 	for (auto it : _entities) {
 		it->setIsAlive(true);
 	}
-	_map->printMap();
 	_isInit = true;
 }
 
