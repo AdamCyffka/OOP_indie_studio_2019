@@ -63,8 +63,8 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 return true;
             case IMenu::GUI_ID_NEW_BUTTON:
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
-                _core.getSelect()->spawnEntities();
                 _core.setLState(Core::menuSelect);
+                _core.getSelect()->spawnEntities();
                 return true;
             case IMenu::GUI_ID_CREDITS_BUTTON:
                 _core.setLState(Core::menuCredits);

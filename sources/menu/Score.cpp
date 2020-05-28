@@ -36,10 +36,6 @@ void Score::loadButtons()
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(800, 925));
 }
 
-void Score::run()
-{
-}
-
 void Score::spawnEntities()
 {
     _previews[0]->setPosition({244.0f, 319.0f, 982.0f});

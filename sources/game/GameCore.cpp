@@ -48,7 +48,7 @@ void GameCore::init(const std::vector<Character *> &characters, std::map<int, Ke
 
 void GameCore::run()
 {
-	if (!gameOver()) //toggle to skip game part
+	if (gameOver()) //toggle to skip game part
 	{
 		_core->setGState(Core::menu);
 		_core->setLState(Core::menuScore);

@@ -245,7 +245,7 @@ void Core::gameCase()
 {
 	if (!_gameCore->isInit())
 		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
-	_game->run();
+	_gameCore->run();
 	hideGameLayers();
 	showGameLayer(_game);
 }
@@ -410,7 +410,6 @@ void Core::drawScene()
 			break;
 		case game:
 			hideMenuLayers();
-			_gameCore->run();
 			drawGameLayer();
 			break;
 	}

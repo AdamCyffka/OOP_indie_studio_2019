@@ -30,7 +30,7 @@ void Player::run()
 		auto pos = getCharacter()->getPosition();
 		if (_isDoing != _input) {
 			switch (_input) {
-			case Right:
+			case Right:	
 				if (canGoTo(Right)) {
 					pos.Z -= 10;
 					_map->setPlayerPosition(0, 1, _entityNumber);

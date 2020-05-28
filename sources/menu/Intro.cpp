@@ -35,10 +35,6 @@ void Intro::loadButtons()
     _buttons["press"]->setRelativePosition(irr::core::position2d<irr::s32>(790, 800));
 }
 
-void Intro::run()
-{
-}
-
 std::vector<Character *> Intro::getPreviews()
 {
     return {};

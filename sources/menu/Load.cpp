@@ -46,9 +46,6 @@ void Load::loadButtons()
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
 }
 
-void Load::run()
-{}
-
 std::vector<Character *> Load::getPreviews()
 {
     return {};

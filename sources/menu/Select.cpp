@@ -185,6 +185,7 @@ void Select::spawnEntities()
     _previews[2]->setPosition({-79, 0, 205});
     _previews[3]->setPosition({-127, 0, 185});
     for (auto &i : _previews) {
+        i->setVisibility(true);
         i->setOrientation(side::east);
         i->setState(Character::state::idle);
     }

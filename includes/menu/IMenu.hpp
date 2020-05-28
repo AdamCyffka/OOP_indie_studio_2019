@@ -64,7 +64,6 @@ class IMenu {
 
         virtual void loadButtons() = 0;
         virtual void loadTextures() = 0;
-        virtual void run() = 0;
 };
 
 #endif /* !IMENU_HPP_ */

@@ -100,9 +100,6 @@ void Options::loadButtons()
   _checkBox["fullScreen"] = _env->addCheckBox(false, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
 }
 
-void Options::run()
-{}
-
 std::vector<Character *> Options::getPreviews()
 {
   return {};

@@ -42,9 +42,6 @@ void Splash::loadButtons()
 	_images["title"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 100));
 }
 
-void Splash::run()
-{}
-
 std::vector<Character *> Splash::getPreviews()
 {
     return {};
