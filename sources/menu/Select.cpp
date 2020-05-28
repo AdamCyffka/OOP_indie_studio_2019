@@ -230,7 +230,7 @@ void Select::changeRole(int role)
 
 void Select::run()
 {
-    std::cout << "preview 0 pos = " << _previews[0]->getPosition().X << " " << _previews[0]->getPosition().Y << " " << _previews[0]->getPosition().Z << std::endl;
+    // std::cout << "preview 0 pos = " << _previews[0]->getPosition().X << " " << _previews[0]->getPosition().Y << " " << _previews[0]->getPosition().Z << std::endl;
     _images["p1"]->setImage(_textures[_selectRole[0][0][_nbRole[0][0]]]);
     _images["ia1"]->setImage(_textures[_selectRole[0][1][_nbRole[0][1]]]);
     _images["p2"]->setImage(_textures[_selectRole[0][0][_nbRole[1][0]]]);

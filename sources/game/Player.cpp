@@ -185,24 +185,39 @@ Key_mouvement Player::getInput()
 
 bool Player::canGoTo(Key_mouvement movement)
 {
-	std::pair<int, int> tmp = std::make_pair(_position.first, _position.second);
+	std::pair<int, int> pos = _map->getPlayerPosition(_entityNumber);
+	std::pair<int, int> nextpos;
 	switch (movement) {
 	case Right:
-		tmp.second += 1;
+		nextpos = std::make_pair(pos.first, pos.second + 1);
+		if (_gameCore->nextBlockHasBomb(nextpos, _bombPass) || _gameCore->nextBlockHasBlock(nextpos, _wallPass) || _gameCore->nextBlockHasWall(nextpos))
+			return false;
+		_map->setPlayerPosition(0, 1, _entityNumber);
+		_position.second += 1;
 		break;
 	case Left:
-		tmp.second -= 1;
+		nextpos = std::make_pair(pos.first, pos.second - 1);
+		if (_gameCore->nextBlockHasBomb(nextpos, _bombPass) || _gameCore->nextBlockHasBlock(nextpos, _wallPass) || _gameCore->nextBlockHasWall(nextpos))
+			return false;
+		_map->setPlayerPosition(0, -1, _entityNumber);
+		_position.second -= 1;
 		break;
 	case Up:
-		tmp.first -= 1;
+		nextpos = std::make_pair(pos.first - 1, pos.second);
+		if (_gameCore->nextBlockHasBomb(nextpos, _bombPass) || _gameCore->nextBlockHasBlock(nextpos, _wallPass) || _gameCore->nextBlockHasWall(nextpos))
+			return false;
+		_map->setPlayerPosition(-1, 0, _entityNumber);
+		_position.first -= 1;
 		break;
 	case Down:
-		tmp.first += 1;
-		break;
-	default:
+		nextpos = std::make_pair(pos.first + 1, pos.second);
+		if (_gameCore->nextBlockHasBomb(nextpos, _bombPass) || _gameCore->nextBlockHasBlock(nextpos, _wallPass) || _gameCore->nextBlockHasWall(nextpos))
+			return false;
+		_map->setPlayerPosition(1, 0, _entityNumber);
+		_position.first += 1;
 		break;
 	}
-	return !(_gameCore->nextBlockHasBomb(tmp, _bombPass) || _gameCore->nextBlockHasBlock(tmp, _wallPass) || _gameCore->nextBlockHasWall(tmp));
+	return true;
 }
 
 std::pair<int, int> Player::getPosition()

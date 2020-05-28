@@ -58,6 +58,7 @@ public:
 
 	void setSoundVolume();
 
+	irrklang::ISoundEngine *getEngine();
 	irrklang::ISound *getSound(const std::string &, bool isSFX);
 
    	private:

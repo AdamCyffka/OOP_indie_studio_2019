@@ -22,6 +22,16 @@ GameCore::GameCore(Core *core)
 	_spawnAreas[4] = irr::core::vector3df{-550.0f, 308.0f, 620.0f};
 }
 
+void GameCore::reset()
+{
+	for (auto it : _entities) {
+		delete it;
+	}
+	_entities.clear();
+	_isPaused = false;
+	_isInit = false;
+}
+
 void GameCore::init(const std::vector<Character *> characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> entityTypes)
 {
 	for (int i = 1; i <= 4; ++i) {
@@ -62,7 +72,6 @@ void GameCore::spawnPlayers()
 	int count = 1;
 
 	for (auto it : _entities) {
-		std::cout << "print ici" << std::endl;
 		it->getCharacter()->setPosition(_spawnAreas[count]);
 		it->getCharacter()->setVisibility(true);
 		++count;
@@ -95,29 +104,15 @@ bool GameCore::isInit() const
 
 bool GameCore::nextBlockHasBomb(std::pair<int, int> pos, bool powerUp)
 {
-	if (_map->getBombMap()[pos.first][pos.second] == clear)
-		return false;
-	else if (_map->getBombMap()[pos.first][pos.second] == bomb && powerUp)
-		return false;
-	else if(_map->getBombMap()[pos.first][pos.second] == bomb && !powerUp)
-		return true;
-	return false;
+	return _map->getBombMap()[pos.first][pos.second] == bomb && !powerUp;
 }
 
 bool GameCore::nextBlockHasWall(std::pair<int, int> pos)
 {
-	if (_map->getMap()[pos.first][pos.second] == unbreakable) {
-		std::cout << "mur à position : " << pos.first << " " << pos.second << std::endl;
-		return true;
-	}
-	return false;
+	return _map->getMap()[pos.first][pos.second] == unbreakable;
 }
 
 bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
 {
-	if (_map->getMap()[pos.first][pos.second] == breakable && powerUp)
-		return false;
-	else if (_map->getMap()[pos.first][pos.second] == breakable)
-		return true;
-	return false;
+	return _map->getMap()[pos.first][pos.second] == breakable && !powerUp;
 }

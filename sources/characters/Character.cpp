@@ -42,6 +42,7 @@ void Character::setSize(f32 size)
 
 void Character::setPosition(core::vector3df position)
 {
+    std::cout << "Character::setPosition a été call avec comme param : " << position.X << ", " << position.Y << ", " << position.Z << std::endl;
     _mesh->setPosition(position);
 }
 
@@ -158,6 +159,7 @@ bool Character::moveTo(core::vector3df position, u32 travelTime)
     core::vector3df currentPosition = getPosition();
     scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelTime != 0) ? travelTime : _travelTime, false);
 
+    std::cout << "Character::moveTo a été call avec comme param : " << position.X << ", " << position.Y << ", " << position.Z << ", " <<  travelTime << std::endl;
     if (animation) {
         if (_mesh) {
             setState(Character::state::running);
