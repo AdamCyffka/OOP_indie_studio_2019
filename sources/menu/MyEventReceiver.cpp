@@ -63,8 +63,8 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 return true;
             case IMenu::GUI_ID_NEW_BUTTON:
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
-                _core.getSelect()->spawnEntities();
                 _core.setLState(Core::menuSelect);
+                _core.getSelect()->spawnEntities();
                 return true;
             case IMenu::GUI_ID_CREDITS_BUTTON:
                 _core.setLState(Core::menuCredits);
@@ -168,10 +168,17 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
     if (clicks(event))
         return true;
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+        if(event.KeyInput.Key == KEY_ESCAPE && event.KeyInput.PressedDown == false && _core.getGState() == Core::game)
+            _core.setLGState(_core.getLGState() == Core::gameGame ? Core::gamePause : Core::gameGame);
 		_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		return true;
 	}
     return false;
+}
+
+bool MyEventReceiver::keyHasBeenPressed(irr::EKEY_CODE keyCode) const
+{
+    return _keyPressed[keyCode];
 }
 
 bool MyEventReceiver::IsKeyDown(irr::EKEY_CODE keyCode) const

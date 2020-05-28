@@ -26,9 +26,6 @@ void Game::loadButtons()
 {
 }
 
-void Game::run()
-{}
-
 std::vector<Character *> Game::getPreviews()
 {
     return {};

@@ -245,19 +245,13 @@ void Core::gameCase()
 {
 	if (!_gameCore->isInit())
 		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
-	_game->run();
-	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
-		setLGState(Core::gamePause);
-	}
+	_gameCore->run();
 	hideGameLayers();
 	showGameLayer(_game);
 }
 
 void Core::pauseCase()
 {
-	if (_receiver->IsKeyDown(irr::KEY_ESCAPE)) {
-		setLGState(Core::gameGame);
-	}
 	hideGameLayers();
 	showGameLayer(_pause);
 }
@@ -416,7 +410,6 @@ void Core::drawScene()
 			break;
 		case game:
 			hideMenuLayers();
-			_gameCore->run();
 			drawGameLayer();
 			break;
 	}

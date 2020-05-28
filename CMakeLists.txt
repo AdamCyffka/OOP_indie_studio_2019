@@ -7,6 +7,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(bomberman
         sources/main.cpp
+        sources/core/global.cpp
         sources/core/Core.cpp
         sources/menu/Menu.cpp
         sources/map/Map.cpp

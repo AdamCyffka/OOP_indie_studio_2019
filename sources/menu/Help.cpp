@@ -42,9 +42,6 @@ void Help::loadButtons()
     _images["help"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
 }
 
-void Help::run()
-{}
-
 std::vector<Character *> Help::getPreviews()
 {
     return {};

@@ -20,8 +20,10 @@ class MyEventReceiver : public irr::IEventReceiver {
         bool OnEvent(const irr::SEvent &event) override;
         bool clicks(const irr::SEvent &event);
         bool IsKeyDown(irr::EKEY_CODE keyCode) const;
+        bool keyHasBeenPressed(irr::EKEY_CODE keyCode) const;
     private:
         bool _keyDown[irr::KEY_KEY_CODES_COUNT];
+        bool _keyPressed[irr::KEY_KEY_CODES_COUNT];
         Core &_core;
         irr::IrrlichtDevice *_window;
         CameraTravelManager *_cameraTravelManager;

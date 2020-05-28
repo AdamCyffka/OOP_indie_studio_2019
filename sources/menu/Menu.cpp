@@ -82,9 +82,6 @@ void Menu::loadButtons()
     _buttons["menuHelpButton"]->setRelativePosition(irr::core::position2d<irr::s32>(1300, 450));
 }
 
-void Menu::run()
-{}
-
 std::vector<Character *> Menu::getPreviews()
 {
     return {};

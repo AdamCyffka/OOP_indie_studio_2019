@@ -70,9 +70,6 @@ void Pause::loadButtons()
     _buttons["backToDesktop"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 600));
 }
 
-void Pause::run()
-{}
-
 std::vector<Character *> Pause::getPreviews()
 {
     return {};

@@ -33,12 +33,18 @@ void LoadMap::run()
 	irr::scene::ISceneNodeAnimator *rotatePlanet;
 	irr::scene::ISceneNodeAnimator *core;
 
+	irr::scene::IAnimatedMesh *meshObservatory;
+
 	// observatory
-	observatory = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/observatory.obj"));
+	meshObservatory = _smgr->getMesh("resources/models/planets/observatory/observatory.obj");
+	if (!meshObservatory)
+		throw LoadingException("could not load mesh : observatory.obj");
+	observatory = _smgr->addAnimatedMeshSceneNode(meshObservatory);
+	if (!observatory)
+		throw LoadingException("could not add scene mesh node : observatory");
+	observatory->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	observatory->setPosition({0, 0, 0});
 	observatory->setScale({5, 5, 5});
-	if (observatory)
-		observatory->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	// arena
 	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));

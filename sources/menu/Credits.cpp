@@ -42,9 +42,6 @@ void Credits::loadButtons()
     _images["credits"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
 }
 
-void Credits::run()
-{}
-
 std::vector<Character *> Credits::getPreviews()
 {
     return {};
