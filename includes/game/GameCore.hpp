@@ -22,7 +22,7 @@ class GameCore {
         GameCore(Core *core);
         ~GameCore() = default;
 		std::vector<IEntity *> getEntities() const;
-		void init(const std::vector<Character *> &characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> &entityTypes);
+		void init(const std::vector<Character *> characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> entityTypes);
         void run();
 
         void setPause(bool);

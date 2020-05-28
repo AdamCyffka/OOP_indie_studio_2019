@@ -150,6 +150,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                 _core.getMusicEngine()->stop("resources/music/game.mp3", false);
                 _core.getMusicEngine()->add2D("resources/music/menu.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                 _cameraTravelManager->doTravel(CameraTravelManager::travel::pauseToMenu);
+                _core.getGame()->setPause(false);
                 _core.setGState(Core::menu);
                 _core.setLState(Core::menuMain);
                 return true;
