@@ -208,6 +208,7 @@ void Select::incSkin(int skin)
         if (_selectTab[i].second == skin) {
             int newSkinIndex = getNextAvailableSkin(i);
             if (newSkinIndex != -1) {
+                std::cout << "je change le skin de " << skin << " avec " << _selectTab[newSkinIndex].first << " state : " << _selectTab[newSkinIndex].second << std::endl;
                 _previews[skin]->changeModel(g_modelInfos.at(_selectTab[newSkinIndex].first));
                 _selectTab[newSkinIndex].second = skin;
                 _selectTab[i].second = -1;
