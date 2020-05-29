@@ -17,7 +17,7 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 
     loadTextures();
     loadButtons();
-    _selectTab = {{"waluigi", 0}, {"mario", 1}, {"lakitu", 2}, {"koopa", 3}, {"dr_peach", -1}};
+    _selectTab = {{"waluigi", 0}, {"mario", 1}, {"lakitu", 2}, {"koopa", 3}, {"red_toad", -1}, {"yellow_toad", -1}, {"blue_toad", -1}, {"green_toad", -1}, {"dr_peach", -1}};
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[0].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[1].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[2].first)));

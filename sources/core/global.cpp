@@ -95,20 +95,71 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "toad", // INDEX
+        "green_toad", // INDEX
         { // MODELINFOS_T
-            "toad", // NAME
+            "green_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
             {
-                "resources/models/characters/toad/toad.png",
-                "resources/models/characters/toad/toad.png" // TEXTURES
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09G_body_m2.png"
             },
             {0, 120}, // IDLE
-            {121, 142}, // RUNNING
-            {143, 281}, // DYING
-            {282, 368}, // DEAD
-            {369, 423}, // VICTORY
-            10 // SCALE SIZE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
+        }
+    },
+    {
+        "red_toad", // INDEX
+        { // MODELINFOS_T
+            "red_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
+        }
+    },
+    {
+        "blue_toad", // INDEX
+        { // MODELINFOS_T
+            "blue_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09B_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
+        }
+    },
+    {
+        "yellow_toad", // INDEX
+        { // MODELINFOS_T
+            "yellow_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09Y_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
         }
     }
 };
