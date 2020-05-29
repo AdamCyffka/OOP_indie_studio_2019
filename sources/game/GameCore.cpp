@@ -27,6 +27,7 @@ void GameCore::reset()
 	for (auto it : _entities) {
 		delete it;
 	}
+	_map->generateMap();
 	_entities.clear();
 	_isPaused = false;
 	_isInit = false;
