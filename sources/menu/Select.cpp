@@ -194,19 +194,19 @@ void Select::spawnEntities()
     }
 }
 
-int Select::getNextAvailableSkin()
+int Select::getNextAvailableSkin(size_t start)
 {
-    for (size_t i = 0; i < _selectTab.size(); i++)
+    for (size_t i = start; i < _selectTab.size(); i++)
         if (_selectTab[i].second == -1)
             return (int)i;
-    return -1;
+    return getNextAvailableSkin();
 }
 
 void Select::incSkin(int skin)
 {
     for (size_t i = 0; i < _selectTab.size(); i++) {
         if (_selectTab[i].second == skin) {
-            int newSkinIndex = getNextAvailableSkin();
+            int newSkinIndex = getNextAvailableSkin(i);
             if (newSkinIndex != -1) {
                 _previews[skin]->changeModel(g_modelInfos.at(_selectTab[newSkinIndex].first));
                 _selectTab[newSkinIndex].second = skin;
@@ -230,7 +230,6 @@ void Select::changeRole(int role)
 
 void Select::run()
 {
-    // std::cout << "preview 0 pos = " << _previews[0]->getPosition().X << " " << _previews[0]->getPosition().Y << " " << _previews[0]->getPosition().Z << std::endl;
     _images["p1"]->setImage(_textures[_selectRole[0][0][_nbRole[0][0]]]);
     _images["ia1"]->setImage(_textures[_selectRole[0][1][_nbRole[0][1]]]);
     _images["p2"]->setImage(_textures[_selectRole[0][0][_nbRole[1][0]]]);

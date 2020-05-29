@@ -61,7 +61,7 @@ class Character {
             //irr
         scene::ISceneManager *_sManager;
         video::IVideoDriver *_driver;
-        scene::IAnimatedMeshSceneNode *_mesh;
+        scene::IAnimatedMeshSceneNode *_meshNode;
             //non irr
         Character::state _state;
         side _orientation;
