@@ -9,8 +9,9 @@
 
 const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
-        "waluigi", // STRING
+        "waluigi", // INDEX
         { // MODELINFOS_T
+            "waluigi", // NAME
             "resources/models/characters/waluigi/waluigi.md3", // MODEL MD3
             {
                 "resources/models/characters/waluigi/Tex_0001_0.png", // TEXTURES
@@ -26,8 +27,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "dr_peach", // STRING
+        "dr_peach", // INDEX
         { // MODELINFOS_T
+            "dr_peach", // NAME
             "resources/models/characters/dr_peach/dr_peach.md3", // MODEL MD3
             {
                 "resources/models/characters/dr_peach/dr.peach_crown_dif.png", // TEXTURES
@@ -42,8 +44,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "koopa", // STRING
+        "koopa", // INDEX
         { // MODELINFOS_T
+            "koopa", // NAME
             "resources/models/characters/koopa/koopa.md3", // MODEL MD3
             {
                 "resources/models/characters/koopa/koopaBody.png", // TEXTURES
@@ -58,8 +61,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "lakitu", // STRING
+        "lakitu", // INDEX
         { // MODELINFOS_T
+            "lakitu", // NAME
             "resources/models/characters/lakitu/lakitu.md3", // MODEL MD3
             {
                 "resources/models/characters/lakitu/lakituFace.png", // TEXTURES
@@ -74,8 +78,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "mario", // STRING
+        "mario", // INDEX
         { // MODELINFOS_T
+            "mario", // NAME
             "resources/models/characters/mario/mario.md3", // MODEL MD3
             {
                 "resources/models/characters/mario/mario_eye.0.png", // TEXTURES
@@ -87,6 +92,23 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {282, 368}, // DEAD
             {369, 423}, // VICTORY
             20 // SCALE SIZE
+        }
+    },
+    {
+        "toad", // INDEX
+        { // MODELINFOS_T
+            "toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/toad.png",
+                "resources/models/characters/toad/toad.png" // TEXTURES
+            },
+            {0, 120}, // IDLE
+            {121, 142}, // RUNNING
+            {143, 281}, // DYING
+            {282, 368}, // DEAD
+            {369, 423}, // VICTORY
+            10 // SCALE SIZE
         }
     }
 };

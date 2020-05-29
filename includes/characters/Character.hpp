@@ -49,9 +49,10 @@ class Character {
         side getOrientation() const;
         f32 getAnimationSpeed() const;
         u32 getTravelTime() const;
-        std::string getModelName() const;
+        modelInfos_t getModelInfos() const;
 
         //methods
+        void removeAnimators();
         bool moveTo(core::vector3df position, u32 travelTime = 0);
         void changeModel(modelInfos_t model);
     protected:
