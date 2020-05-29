@@ -408,6 +408,8 @@ int Core::run()
 	skin->setFont(_env->getBuiltInFont(), irr::gui::EGDF_MENU);
 
 	video::ITexture *images = _driver->getTexture("resources/images/cursor.png");
+	_driver->makeColorKeyTexture(images, core::position2d<s32>(0,0));
+
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
@@ -436,7 +438,8 @@ int Core::run()
 		//draw cursor
 		_window->getCursorControl()->setVisible(false);
 		irr::core::position2d<int> mousePosition = _window->getCursorControl()->getPosition();
-		_driver->draw2DImage(images, irr::core::position2d<s32>(mousePosition.X, mousePosition.Y));
+		_driver->draw2DImage(images, irr::core::position2d<s32>(mousePosition.X, mousePosition.Y), core::rect<s32>(0, 0, 28, 26), 0,
+            video::SColor(255, 255, 255, 255), true);
 
 		_driver->endScene();
 	}
