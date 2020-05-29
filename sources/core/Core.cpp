@@ -85,18 +85,24 @@ void Core::restartDevice(bool fullscreen)
     _window = irr::createDevice(irr::video::EDT_OPENGL,
         irr::core::dimension2d<irr::u32>(1920, 1080),
         16, fullscreen, false);
-	if (!_window) {
-		std::cerr << "Couldn't open a window" << std::endl;
-		return;
-	}
+	if (!_window)
+		throw CoreException("Error : Window could not be loaded");
 	_smgr = _window->getSceneManager();
+	if (!_smgr)
+		throw CoreException("Error : Scene manager could not be loaded");
+	_env = _window->getGUIEnvironment();
+	if (!_env)
+		throw CoreException("Error : GUI environment could not be loaded");
+	_driver = _window->getVideoDriver();
+	if (!_driver)
+		throw CoreException("Error : Driver could not be loaded");
 	_camera = _smgr->addCameraSceneNodeMaya();
+	if (!_camera)
+		throw CoreException("Error : Camera could not be loaded");
 	_camera->setFarValue(42000);
 	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
 	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
 	_window->setEventReceiver(_receiver);
-	_env = _window->getGUIEnvironment();
-	_driver = _window->getVideoDriver();
 	_lState = menuSplash;
 	_gState = menu;
 	_lGState = gameGame;
