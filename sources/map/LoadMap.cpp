@@ -34,6 +34,14 @@ void LoadMap::run()
 	irr::scene::ISceneNodeAnimator *core;
 
 	irr::scene::IAnimatedMesh *meshObservatory;
+	irr::scene::IAnimatedMesh *meshArena;
+	irr::scene::IAnimatedMesh *meshTowerPlanet;
+	irr::scene::IAnimatedMesh *meshDreadnoughtPlanet;
+	irr::scene::IAnimatedMesh *meshDustyPlanet;
+	irr::scene::IAnimatedMesh *meshGatewayPlanet;
+	irr::scene::IAnimatedMesh *meshBeanPlanet;
+	irr::scene::IAnimatedMesh *meshPlateA;
+	irr::scene::IAnimatedMesh *meshPlateB;
 
 	// observatory
 	meshObservatory = _smgr->getMesh("resources/models/planets/observatory/observatory.obj");
@@ -47,69 +55,101 @@ void LoadMap::run()
 	observatory->setScale({5, 5, 5});
 
 	// arena
-	arena = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/arena/Main.obj"));
+	meshArena = _smgr->getMesh("resources/models/planets/arena/Main.obj");
+	if (!meshArena)
+		throw LoadingException("could not load mesh : Main.obj");
+	arena = _smgr->addAnimatedMeshSceneNode(meshArena);
+	if (!arena)
+		throw LoadingException("could not add scene mesh node : arena");
+	arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	arena->setPosition({-500, 303, 700});
 	arena->setScale({0.047f, 0.047f, 0.047f});
-	if (arena)
-		arena->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	// beanPlanet
-	beanPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/bean_planet/bean_planet.obj"));
+	meshBeanPlanet = _smgr->getMesh("resources/models/planets/bean_planet/bean_planet.obj");
+	if (!meshBeanPlanet)
+		throw LoadingException("could not load mesh : bean_planet.obj");
+	beanPlanet = _smgr->addAnimatedMeshSceneNode(meshBeanPlanet);
+	if (!beanPlanet)
+		throw LoadingException("could not add scene mesh node : beanPlanet");
+	beanPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	beanPlanet->setPosition({200, 300, 1000});
 	beanPlanet->setRotation({0, 200, 0});
 	beanPlanet->setScale({5, 5, 5});
-	if (beanPlanet)
-		beanPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	// towerPlanet
-	towerPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/tower_planet/tower_planet.obj"));
+	meshTowerPlanet = _smgr->getMesh("resources/models/planets/tower_planet/tower_planet.obj");
+	if (!meshTowerPlanet)
+		throw LoadingException("could not load mesh : tower_planet.obj");
+	towerPlanet = _smgr->addAnimatedMeshSceneNode(meshTowerPlanet);
+	if (!towerPlanet)
+		throw LoadingException("could not add scene mesh node : towerPlanet");
+	towerPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	towerPlanet->setPosition({1000, 400, 500});
 	towerPlanet->setScale({10, 10, 10});
-	if (towerPlanet)
-		towerPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	// dreadnoughtPlanet
-	dreadnoughtPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/dreadnought_planet/dreadnought_planet.obj"));
+	meshDreadnoughtPlanet = _smgr->getMesh("resources/models/planets/dreadnought_planet/dreadnought_planet.obj");
+	if (!meshDreadnoughtPlanet)
+		throw LoadingException("could not load mesh : dreadnought_planet.obj");
+	dreadnoughtPlanet = _smgr->addAnimatedMeshSceneNode(meshDreadnoughtPlanet);
+	if (!dreadnoughtPlanet)
+		throw LoadingException("could not add scene mesh node : dreadnoughtPlanet");
+	dreadnoughtPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	dreadnoughtPlanet->setPosition({-4000, 400, -2000});
 	dreadnoughtPlanet->setScale({15, 15, 15});
 	dreadnoughtPlanet->setRotation({50, 0, 0});
-	if (dreadnoughtPlanet)
-		dreadnoughtPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	// dustyPlanet
-	dustyPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/dusty_planet/dusty_planet.obj"));
+	meshDustyPlanet = _smgr->getMesh("resources/models/planets/dusty_planet/dusty_planet.obj");
+	if (!meshDustyPlanet)
+		throw LoadingException("could not load mesh : dusty_planet.obj");
+	dustyPlanet = _smgr->addAnimatedMeshSceneNode(meshDustyPlanet);
+	if (!dustyPlanet)
+		throw LoadingException("could not add scene mesh node : dustyPlanet");
+	dustyPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	dustyPlanet->setPosition({-1000, -1500, 2000});
 	dustyPlanet->setScale({15, 15, 15});
 	dustyPlanet->setRotation({50, 0, 0});
-	if (dustyPlanet)
-		dustyPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	// gatewayPlanet
-	gatewayPlanet = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/gateway_planet/gateway_planet.obj"));
+	meshGatewayPlanet = _smgr->getMesh("resources/models/planets/gateway_planet/gateway_planet.obj");
+	if (!meshGatewayPlanet)
+		throw LoadingException("could not load mesh : gateway_planet.obj");
+	gatewayPlanet = _smgr->addAnimatedMeshSceneNode(meshGatewayPlanet);
+	if (!gatewayPlanet)
+		throw LoadingException("could not add scene mesh node : gatewayPlanet");
 	gatewayPlanet->setPosition({4000, 0, -3000});
 	gatewayPlanet->setScale({500, 500, 500});
-	if (gatewayPlanet)
-		gatewayPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	gatewayPlanet->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	rotatePlanet = _smgr->createRotationAnimator({0.05f, 0.0f, 0.0f});
 	gatewayPlanet->addAnimator(rotatePlanet);
 	rotatePlanet->drop();
 
 	// plateA
-	plateA = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateA.obj"));
+	meshPlateA = _smgr->getMesh("resources/models/planets/observatory/plateA.obj");
+	if (!meshPlateA)
+		throw LoadingException("could not load mesh : plateA.obj");
+	plateA = _smgr->addAnimatedMeshSceneNode(meshPlateA);
+	if (!plateA)
+		throw LoadingException("could not add scene mesh node : plateA");
+	plateA->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	plateA->setPosition({0, 0, 0});
 	plateA->setScale({3, 3, 3});
-	if (plateA)
-		plateA->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	animA = _smgr->createRotationAnimator({0.0f, -0.2f, 0.0f});
 	plateA->addAnimator(animA);
 	animA->drop();
 
 	// plateB
-	plateB = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/planets/observatory/plateB.obj"));
+	meshPlateB = _smgr->getMesh("resources/models/planets/observatory/plateB.obj");
+	if (!meshPlateB)
+		throw LoadingException("could not load mesh : plateB.obj");
+	plateB = _smgr->addAnimatedMeshSceneNode(meshPlateB);
+	if (!plateB)
+		throw LoadingException("could not add scene mesh node : plateB");
+	plateB->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	plateB->setPosition({0, 10, 0});
 	plateB->setScale({3, 3, 3});
-	if (plateB)
-		plateB->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	animB = _smgr->createRotationAnimator({0.0f, -0.1f, 0.0f});
 	plateB->addAnimator(animB);
 	animB->drop();

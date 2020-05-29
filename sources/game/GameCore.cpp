@@ -25,6 +25,7 @@ GameCore::GameCore(Core *core)
 void GameCore::reset()
 {
 	for (auto it : _entities) {
+		it->getCharacter()->removeAnimators();
 		delete it;
 	}
 	_map->generateMap();

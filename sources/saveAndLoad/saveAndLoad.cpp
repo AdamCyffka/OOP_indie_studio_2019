@@ -103,19 +103,19 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     //ADDING ELEMENTS FOR CHARACTER HERE
 
     //ALL CONDITIONS TO SAVE THE MODEL
-    if (character->getModelName().compare("resources/models/characters/mario/mario.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/mario/mario.md3") == 0)
         character_node.put("modelName", "mario");
-    if (character->getModelName().compare("resources/models/characters/koopa/koopa.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/koopa/koopa.md3") == 0)
         character_node.put("modelName", "koopa");
-    if (character->getModelName().compare("resources/models/characters/luigi/luigi.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/luigi/luigi.md3") == 0)
         character_node.put("modelName", "luigi");
-    if (character->getModelName().compare("resources/models/characters/waluigi/waluigi.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/waluigi/waluigi.md3") == 0)
         character_node.put("modelName", "waluigi");
-    if (character->getModelName().compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
         character_node.put("modelName", "dr_peach");
-    if (character->getModelName().compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
         character_node.put("modelName", "dry_bones");
-    if (character->getModelName().compare("resources/models/characters/lakitu/lakitu.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/lakitu/lakitu.md3") == 0)
         character_node.put("modelName", "lakitu");
     
     //SAVE POSITIONS OF THE PLAYER
@@ -249,9 +249,9 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     if (!Key_mouvementCheck::is_value(input))
         throw saveAndLoadException("Invalid Enum value");
     if (input == Key_mouvement::Ia)
-        entity = new AI(characters[playerNB], playerNB, core.getMap());
+        entity = new AI(characters[playerNB], playerNB + 1, core.getMap());
     else
-        entity = new Player(characters[playerNB], input, playerNB, core.getMap(), core.getGame());
+        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getGame());
     entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entity->setBombPass(root->get<bool>(path + "bombPass", 0));
     entity->setWallPass(root->get<bool>(path + "wallPass", 0));
@@ -335,10 +335,10 @@ void checkSkins(Core &core, pt::ptree *root)
     {
         throw saveAndLoadException("Invalid player's model");
     }
-    if ((player0.compare("mario") != 0 && player0.compare("waluigi") != 0 && player0.compare("luigi") != 0 && player0.compare("dr_peach") != 0 && player0.compare("dry_bones") != 0 && player0.compare("lakitu") != 0)
-    || (player1.compare("mario") != 0 && player1.compare("waluigi") != 0 && player1.compare("luigi") != 0 && player1.compare("dr_peach") != 0 && player1.compare("dry_bones") != 0 && player1.compare("lakitu") != 0)
-    || (player2.compare("mario") != 0 && player2.compare("waluigi") != 0 && player2.compare("luigi") != 0 && player2.compare("dr_peach") != 0 && player2.compare("dry_bones") != 0 && player2.compare("lakitu") != 0)
-    || (player3.compare("mario") != 0 && player3.compare("waluigi") != 0 && player3.compare("luigi") != 0 && player3.compare("dr_peach") != 0 && player3.compare("dry_bones") != 0 && player3.compare("lakitu") != 0))
+    if ((player0.compare("mario") != 0 && player0.compare("waluigi") != 0 && player0.compare("luigi") != 0 && player0.compare("dr_peach") != 0 && player0.compare("dry_bones") != 0 && player0.compare("lakitu") != 0 && player0.compare("koopa") != 0)
+    || (player1.compare("mario") != 0 && player1.compare("waluigi") != 0 && player1.compare("luigi") != 0 && player1.compare("dr_peach") != 0 && player1.compare("dry_bones") != 0 && player1.compare("lakitu") != 0 && player1.compare("koopa") != 0)
+    || (player2.compare("mario") != 0 && player2.compare("waluigi") != 0 && player2.compare("luigi") != 0 && player2.compare("dr_peach") != 0 && player2.compare("dry_bones") != 0 && player2.compare("lakitu") != 0 && player2.compare("koopa") != 0)
+    || (player3.compare("mario") != 0 && player3.compare("waluigi") != 0 && player3.compare("luigi") != 0 && player3.compare("dr_peach") != 0 && player3.compare("dry_bones") != 0 && player3.compare("lakitu") != 0 && player3.compare("koopa") != 0))
     {
         throw saveAndLoadException("Invalid player's model");
         
@@ -351,6 +351,9 @@ void checkSkins(Core &core, pt::ptree *root)
 
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
+    //INIT GAME JUST IN CASE
+    core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+
     pt::ptree root;
     try
     {
@@ -366,7 +369,6 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         //only for the error handling
         checkSkins(core, &root);
 
-
         loadPlayer(0, core, &root);
         loadPlayer(1, core, &root);
         loadPlayer(2, core, &root);
@@ -377,6 +379,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     }
     catch (std::exception const &msg)
     {
+        core.getGame()->reset();
         std::cerr << msg.what() << std::endl;
         return;
     }
@@ -384,10 +387,12 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     core.getLoadMap()->emptyGameMap(-440, 308, 790);
     core.getLoadMap()->loadGameMap(-440, 308, 790);
     //End of load now start the game
+    std::cout << "Save correct" << std::endl;
+    core.getMusicEngine()->stop("resources/music/menu.mp3", false);
+    core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideGameLayers();
-    core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
     return;
 
     //Others elements for load

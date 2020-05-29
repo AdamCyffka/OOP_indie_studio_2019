@@ -6,6 +6,7 @@
 */
 
 #include "Load.hpp"
+#include "LoadingException.hpp"
 
 Load::Load(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
@@ -20,7 +21,11 @@ Load::Load(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr
 void Load::loadTextures()
 {
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
+    if (_textures.find("back") != _textures.end() && !_textures["back"])
+		throw LoadingException("could not load texture : resources/images/buttons/back.png");
     _textures["slot"] = _driver->getTexture("resources/images/buttons/slot.png");
+    if (_textures.find("slot") != _textures.end() && !_textures["slot"])
+		throw LoadingException("could not load texture : resources/images/buttons/slot.png");
 }
 
 void Load::loadButtons()

@@ -9,8 +9,9 @@
 
 const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
-        "waluigi", // STRING
+        "waluigi", // INDEX
         { // MODELINFOS_T
+            "waluigi", // NAME
             "resources/models/characters/waluigi/waluigi.md3", // MODEL MD3
             {
                 "resources/models/characters/waluigi/Tex_0001_0.png", // TEXTURES
@@ -26,8 +27,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "dr_peach", // STRING
+        "dr_peach", // INDEX
         { // MODELINFOS_T
+            "dr_peach", // NAME
             "resources/models/characters/dr_peach/dr_peach.md3", // MODEL MD3
             {
                 "resources/models/characters/dr_peach/dr.peach_crown_dif.png", // TEXTURES
@@ -42,8 +44,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "koopa", // STRING
+        "koopa", // INDEX
         { // MODELINFOS_T
+            "koopa", // NAME
             "resources/models/characters/koopa/koopa.md3", // MODEL MD3
             {
                 "resources/models/characters/koopa/koopaBody.png", // TEXTURES
@@ -58,8 +61,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "lakitu", // STRING
+        "lakitu", // INDEX
         { // MODELINFOS_T
+            "lakitu", // NAME
             "resources/models/characters/lakitu/lakitu.md3", // MODEL MD3
             {
                 "resources/models/characters/lakitu/lakituFace.png", // TEXTURES
@@ -74,8 +78,9 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         }
     },
     {
-        "mario", // STRING
+        "mario", // INDEX
         { // MODELINFOS_T
+            "mario", // NAME
             "resources/models/characters/mario/mario.md3", // MODEL MD3
             {
                 "resources/models/characters/mario/mario_eye.0.png", // TEXTURES
@@ -87,6 +92,74 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {282, 368}, // DEAD
             {369, 423}, // VICTORY
             20 // SCALE SIZE
+        }
+    },
+    {
+        "green_toad", // INDEX
+        { // MODELINFOS_T
+            "green_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09G_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
+        }
+    },
+    {
+        "red_toad", // INDEX
+        { // MODELINFOS_T
+            "red_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
+        }
+    },
+    {
+        "blue_toad", // INDEX
+        { // MODELINFOS_T
+            "blue_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09B_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
+        }
+    },
+    {
+        "yellow_toad", // INDEX
+        { // MODELINFOS_T
+            "yellow_toad", // NAME
+            "resources/models/characters/toad/toad.md3", // MODEL MD3
+            {
+                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09Y_body_m2.png"
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 293}, // DYING
+            {294, 376}, // DEAD
+            {377, 923}, // VICTORY
+            2.5 // SCALE SIZE
         }
     }
 };
