@@ -28,6 +28,7 @@ void GameCore::reset()
 		it->getCharacter()->removeAnimators();
 		delete it;
 	}
+	_map->generateMap();
 	_entities.clear();
 	_isPaused = false;
 	_isInit = false;

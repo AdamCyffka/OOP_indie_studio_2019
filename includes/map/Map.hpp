@@ -57,9 +57,9 @@ class Map {
 		void setPlayerPosition(int, int, int);
 		std::pair <int, int> getPlayerPosition(int);
 		void printMap();
+		void generateMap();
 
 	private:
-		void generateMap();
 		int generateBlock();
 		void addHeaderLine();
 		void addFooterLine();
