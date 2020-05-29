@@ -29,6 +29,7 @@ class Game : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+        Character *_character;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;

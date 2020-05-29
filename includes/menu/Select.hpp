@@ -13,6 +13,7 @@
 #include <vector>
 #include "IMenu.hpp"
 #include "IEntity.hpp"
+#include "Music.hpp"
 #include "Character.hpp"
 
 class Select : public IMenu {
@@ -54,6 +55,8 @@ class Select : public IMenu {
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
         std::vector<Character *> _previews;
+        Character *_character;
+        Music *_music;
 		std::vector<EntityType::EntityType> _entitiesTypes;
         std::vector<std::pair<std::string, int>> _selectTab;
         std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};

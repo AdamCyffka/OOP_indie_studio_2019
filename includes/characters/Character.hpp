@@ -16,6 +16,7 @@
 #include "EnumCheck.hpp"
 
 using namespace irr;
+
 class Character {
     public:
         Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model,
