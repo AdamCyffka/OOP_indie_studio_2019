@@ -41,7 +41,7 @@ class Select : public IMenu {
 
 		const std::vector<EntityType::EntityType> &getEntityTypes();
         void switchSkin(int pos);
-        int getNextAvailableSkin();
+        int getNextAvailableSkin(size_t start = 0);
     private:
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
