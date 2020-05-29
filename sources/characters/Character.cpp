@@ -143,6 +143,11 @@ u32 Character::getTravelTime() const
     return _travelTime;
 }
 
+modelInfos_t Character::getModelInfos() const
+{
+    return _model;
+}
+
 //methods
 side Character::getOrientationFromPath(core::vector3df posA, core::vector3df posB)
 {
@@ -154,12 +159,16 @@ side Character::getOrientationFromPath(core::vector3df posA, core::vector3df pos
         return _orientation;
 }
 
+void Character::removeAnimators()
+{
+    _mesh->removeAnimators();
+}
+
 bool Character::moveTo(core::vector3df position, u32 travelTime)
 {
     core::vector3df currentPosition = getPosition();
     scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelTime != 0) ? travelTime : _travelTime, false);
 
-    std::cout << "Character::moveTo a été call avec comme param : " << position.X << ", " << position.Y << ", " << position.Z << ", " <<  travelTime << std::endl;
     if (animation) {
         if (_mesh) {
             setState(Character::state::running);
@@ -207,9 +216,4 @@ void Character::changeModel(modelInfos_t model)
     setSize(_model.size);
     setAnimationSpeed(animationSpeed);
     setState(state);
-}
-
-std::string Character::getModelName() const
-{
-    return _model.filename;
 }

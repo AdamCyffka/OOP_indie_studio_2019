@@ -103,19 +103,19 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     //ADDING ELEMENTS FOR CHARACTER HERE
 
     //ALL CONDITIONS TO SAVE THE MODEL
-    if (character->getModelName().compare("resources/models/characters/mario/mario.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/mario/mario.md3") == 0)
         character_node.put("modelName", "mario");
-    if (character->getModelName().compare("resources/models/characters/koopa/koopa.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/koopa/koopa.md3") == 0)
         character_node.put("modelName", "koopa");
-    if (character->getModelName().compare("resources/models/characters/luigi/luigi.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/luigi/luigi.md3") == 0)
         character_node.put("modelName", "luigi");
-    if (character->getModelName().compare("resources/models/characters/waluigi/waluigi.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/waluigi/waluigi.md3") == 0)
         character_node.put("modelName", "waluigi");
-    if (character->getModelName().compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
         character_node.put("modelName", "dr_peach");
-    if (character->getModelName().compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
         character_node.put("modelName", "dry_bones");
-    if (character->getModelName().compare("resources/models/characters/lakitu/lakitu.md3") == 0)
+    if (character->getModelInfos().filename.compare("resources/models/characters/lakitu/lakitu.md3") == 0)
         character_node.put("modelName", "lakitu");
     
     //SAVE POSITIONS OF THE PLAYER

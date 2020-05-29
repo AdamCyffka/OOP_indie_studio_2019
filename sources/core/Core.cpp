@@ -36,7 +36,7 @@ Core::Core() : _fullscreen(FULLSCREEN)
 	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
 	_smgr = _window->getSceneManager();
-	_camera = _smgr->addCameraSceneNodeMaya();
+	_camera = _smgr->addCameraSceneNode();
 	_camera->setFarValue(42000);
 	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
 	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
