@@ -293,6 +293,7 @@ void Core::gameCase()
 {
 	if (!_gameCore->isInit())
 		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+	_game->run();
 	_gameCore->run();
 	hideGameLayers();
 	showGameLayer(_game);
@@ -350,7 +351,7 @@ void Core::init()
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
 	} else if (_initStep == 7) {
-		if (!_score)
+		if (!_score && _select)
 			_score = new Score(_env, _driver, _smgr, _select->getPreviews());
 		_splash->getBar()->setProgress(50);
 	} else if (_initStep == 8) {
@@ -384,8 +385,8 @@ void Core::init()
 			_pause = new Pause(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
 	} else if (_initStep == 15) {
-		if (!_game)
-			_game = new Game(_env, _driver, _smgr);
+		if (!_game && _select)
+			_game = new Game(_env, _driver, _smgr, _select->getPreviews());
 		_splash->getBar()->setProgress(100);
 	} else if (_initStep == 16) {
 		if (!_gameOptions)

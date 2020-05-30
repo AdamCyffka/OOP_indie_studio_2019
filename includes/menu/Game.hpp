@@ -15,12 +15,17 @@
 
 class Game : public IMenu {
     public:
-        explicit Game(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        explicit Game(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<Character *> previews);
         ~Game() = default;
 
         void loadButtons();
         void loadTextures();
         void run();
+        void printUpLeft();
+        void printUpRight();
+        void printDownLeft();
+        void printDownRight();
+
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
@@ -29,7 +34,7 @@ class Game : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
-        Character *_character;
+        std::vector<Character *> _previews;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
