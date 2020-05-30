@@ -117,7 +117,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             "red_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
             {
-                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09_eye.1.png", // TEXTURES
                 "resources/models/characters/toad/pc09_body_m2.png"
             },
             {0, 120}, // IDLE
@@ -134,7 +134,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             "blue_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
             {
-                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09_eye.2.png", // TEXTURES
                 "resources/models/characters/toad/pc09B_body_m2.png"
             },
             {0, 120}, // IDLE
@@ -151,7 +151,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             "yellow_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
             {
-                "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
+                "resources/models/characters/toad/pc09_eye.3.png", // TEXTURES
                 "resources/models/characters/toad/pc09Y_body_m2.png"
             },
             {0, 120}, // IDLE
