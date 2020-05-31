@@ -7,12 +7,8 @@
 
 #include "Bomb.hpp"
 
-Bomb::Bomb(int x, int y, int radius, irr::u32 delay)
+Bomb::Bomb(): _radius(2), _delay(TIMER)
 {
-    this->_x = x;
-    this->_y = y;
-    this->_radius = radius;
-    this->_delay = delay;
     this->_isBlast = false;
 }
 
@@ -50,6 +46,12 @@ bool Bomb::getIsBlast() const
     return (this->_isBlast);
 }
 
+bool Bomb::addExplosion(int x, int y, bool inGame)
+{
+    if (inGame == true) {
+    }
+}
+
 int Bomb::canPoseBomb()
 {
     if (blockState::empty) {
@@ -59,7 +61,7 @@ int Bomb::canPoseBomb()
     }
 }
 
-int Bomb::checkEnoughBombToPose()
+int Bomb::enoughBombToPose()
 {
     Player player;
 
@@ -74,12 +76,12 @@ void Bomb::poseBomb()
 {
     Map map;
 
-    if (canPoseBomb() == true && checkEnoughBombToPose() == true && getIsBlast() == true) {
-        map.getBombMap(); // only here to test don"t touch currently !
+    setIsBlast(true);
+    if (canPoseBomb() == true && enoughBombToPose() == true && getIsBlast() == true) {
+        map.printMap();
     }
 }
 
-int Bomb::checkKilledByBomb()
+int Bomb::killedByBomb()
 {
-    return (0);
 }

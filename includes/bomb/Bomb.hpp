@@ -16,9 +16,11 @@
 #include <ctime>
 #include <vector>
 
+#define TIMER (3000)
+
 class Bomb {
     public:
-        Bomb(int x, int y, int radius, irr::u32 delay);
+        Bomb();
         ~Bomb();
         int getX() const;
         int getY() const;
@@ -27,15 +29,16 @@ class Bomb {
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
         int canPoseBomb();
-        int checkEnoughBombToPose();
+        int enoughBombToPose();
         void poseBomb();
-        int checkKilledByBomb();
+        int killedByBomb();
     private:
         int _x;
         int _y;
         int _radius;
         irr::u32 _delay;
         bool _isBlast;
+        bool addExplosion(int x, int y, bool inGame);
     protected:
 };
 
