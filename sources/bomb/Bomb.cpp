@@ -49,7 +49,9 @@ bool Bomb::getIsBlast() const
 bool Bomb::addExplosion(int x, int y, bool inGame)
 {
     if (inGame == true) {
+        return (true);
     }
+    return (false);
 }
 
 int Bomb::canPoseBomb()
@@ -84,4 +86,5 @@ void Bomb::poseBomb()
 
 int Bomb::killedByBomb()
 {
+    return (0);
 }
