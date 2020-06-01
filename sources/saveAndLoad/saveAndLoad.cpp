@@ -117,7 +117,9 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
         character_node.put("modelName", "dry_bones");
     if (character->getModelInfos().filename.compare("resources/models/characters/lakitu/lakitu.md3") == 0)
         character_node.put("modelName", "lakitu");
-    
+    if (character->getModelInfos().filename.compare("resources/models/characters/lakitu/toad.md3") == 0)
+        character_node.put("modelName", character->getModelInfos().name);
+
     //SAVE POSITIONS OF THE PLAYER
     pt::ptree positions_node;
     pt::ptree position_node;
