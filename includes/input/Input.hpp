@@ -54,14 +54,17 @@ class Input : public IEventReceiver
 	    virtual bool OnEvent(const SEvent& event);
         virtual bool IsKeyDown(EKEY_CODE keyCode) const;
        
-        void player_one(Input receiver);
-        void player_two(Input receiver);
-        void player_three(Input receiver);
-        void player_four(Input receiver);
-        
+        void player_one_keyboard(Input receiver, const SEvent& event);
+        void player_one_joystick(Input receiver, const SEvent& event);
+        void player_two(Input receiver, const SEvent& event);
+        void player_three(Input receiver, const SEvent& event);
+        void player_four(Input receiver, const SEvent& event);
+        void detect_player(Input receiver, const SEvent& event);
+        void detect_input(Input receiver, const SEvent& event);
+
         basic_key keyBoard(Input receiver);
         void define_player(Input receiver);
-        std::map<int, Key_mouvement> getPlayerInput();
+        std::map<int, Key_mouvement> getPlayerInput(Input receiver, const SEvent& event);
 	    Input();
         ~Input();
 
@@ -70,7 +73,7 @@ class Input : public IEventReceiver
         bool _keyIsPressed;
 
         std::map<int, Key_mouvement> _playerInput;
-        std::map<int, device> _player;
+        std::vector<device> _player;
 
         SEvent::SJoystickEvent JoystickStatePone;
         SEvent::SJoystickEvent JoystickStatePtwo;
