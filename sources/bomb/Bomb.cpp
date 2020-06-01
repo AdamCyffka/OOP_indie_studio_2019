@@ -7,23 +7,12 @@
 
 #include "Bomb.hpp"
 
-Bomb::Bomb(): _radius(2), _delay(TIMER)
+Bomb::Bomb(Character *character, Map *map, Player *player): _radius(2), _delay(TIMER), _map(map), _character(character), _player(player), _isBlast(false)
 {
-    this->_isBlast = false;
 }
 
 Bomb::~Bomb()
 {
-}
-
-int	Bomb::getX() const
-{
-    return (this->_x);
-}
-
-int	Bomb::getY() const
-{
-    return (this->_y);
 }
 
 int	Bomb::getRadius() const
@@ -31,9 +20,9 @@ int	Bomb::getRadius() const
     return (this->_radius);
 }
 
-irr::u32 Bomb::getDelay() const
+void Bomb::setRadius(int radius)
 {
-    return (this->_delay);
+    this->_radius = radius;
 }
 
 void Bomb::setIsBlast(bool isBlast)
@@ -46,9 +35,19 @@ bool Bomb::getIsBlast() const
     return (this->_isBlast);
 }
 
-bool Bomb::addExplosion(int x, int y, bool inGame)
+std::pair<int, int> Bomb::getPosition()
 {
-    if (inGame == true) {
+    return (this->_position);
+}
+
+void Bomb::setPosition(std::pair<int, int> position)
+{
+    this->_position = position;
+}
+
+bool Bomb::addExplosion(bool inGame)
+{
+    if (inGame == true) { // pas finis...
         return (true);
     }
     return (false);
@@ -63,11 +62,9 @@ int Bomb::canPoseBomb()
     }
 }
 
-int Bomb::enoughBombToPose()
+int Bomb::hasEnoughBombToPose()
 {
-    Player player;
-
-    if (player.getBombAmount() <= 0 ) {
+    if (_player->getBombAmount() <= 0 ) {
         return (0);
     } else {
         return (1);
@@ -76,15 +73,13 @@ int Bomb::enoughBombToPose()
 
 void Bomb::poseBomb()
 {
-    Map map;
-
     setIsBlast(true);
-    if (canPoseBomb() == true && enoughBombToPose() == true && getIsBlast() == true) {
-        map.printMap();
+    if (canPoseBomb() == true && hasEnoughBombToPose() == true && getIsBlast() == true) {
+        _map->printMap();
     }
 }
 
-int Bomb::killedByBomb()
+int Bomb::isKilledByBomb()
 {
     return (0);
 }
