@@ -7,7 +7,7 @@
 
 #include "FireDown.hpp"
 
-FireDown::FireDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z)
+FireDown::FireDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
 	_driver = driver;
 	_env = env;
@@ -16,7 +16,7 @@ FireDown::FireDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *dri
     irr::scene::ISceneNode *fire;
 	irr::scene::ISceneNodeAnimator *anim;
     fire = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/fires/fireDown.obj"));
-	fire->setPosition({x, 310, z});
+	fire->setPosition(pos);
 	fire->setScale({5, 5, 5});
 	if (fire)
 		fire->setMaterialFlag(irr::video::EMF_LIGHTING, false);

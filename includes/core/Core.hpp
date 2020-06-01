@@ -132,6 +132,8 @@ class Core {
         MyEventReceiver *_receiver;
         CameraTravelManager *_cameraTravelManager;
 
+        int _height;
+        int _width;
         bool _fullscreen;
         bool _isInitialized;
         unsigned int _initStep;

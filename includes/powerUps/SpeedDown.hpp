@@ -12,7 +12,7 @@
 
 class SpeedDown : public IPowerUps {
     public:
-        explicit SpeedDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
+        explicit SpeedDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~SpeedDown() = default;
 
         void spawn();

@@ -25,10 +25,13 @@
 #include "Game.hpp"
 #include "GameOptions.hpp"
 
-Core::Core() : _fullscreen(FULLSCREEN)
+Core::Core()
 {
+	_fullscreen = FULLSCREEN;
+	_width = 1920;
+	_height = 1080;
 	_window = irr::createDevice(irr::video::EDT_OPENGL,
-        irr::core::dimension2d<irr::u32>(1920, 1080),
+        irr::core::dimension2d<irr::u32>(_width, _height),
         16, getFullscreen(), false);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
@@ -336,7 +339,7 @@ void Core::init()
 	else if (_initStep == 4)
 	{
 		if (!_menu)
-			_menu = new Menu(_env, _driver, _smgr);
+			_menu = new Menu(_env, _driver, _smgr, _width, _height);
 		_splash->getBar()->setProgress(30);
 	}
 	else if (_initStep == 5)
