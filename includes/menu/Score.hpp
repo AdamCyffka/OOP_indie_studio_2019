@@ -28,6 +28,7 @@ class Score : public IMenu {
         std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
         std::vector<Character *> getPreviews();
 
+        void updateRanking(const std::vector<int> ranking);
         void spawnEntities();
         void loadButtons();
         void loadTextures();
@@ -41,6 +42,8 @@ class Score : public IMenu {
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
         std::vector<Character *> _previews;
+
+        std::vector<int> _ranking;
 };
 
 #endif /* !SCORE_HPP_ */
