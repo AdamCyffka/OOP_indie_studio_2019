@@ -55,25 +55,6 @@ void saveBombMap(Core &core, pt::ptree *root)
     root->add_child("bombMap", map_node);
 }
 
-void savePlayerMap(Core &core, pt::ptree *root)
-{
-    std::map<int, std::map<int, playerState>> playerMap = core.getMap()->getPlayerMap();
-    pt::ptree map_node;
-
-    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
-    {
-        pt::ptree line_node;
-        std::string lineInString = "";
-        for (int j = 1; j < MAP_WIDTH + 1; ++j)
-        {
-            lineInString += std::to_string(playerMap[i][j]);
-        }
-        line_node.put("", lineInString);
-        map_node.push_back(std::make_pair("", line_node));
-    }
-    root->add_child("playerMap", map_node);
-}
-
 void savePlayer(int playerNB, Core &core, pt::ptree *root)
 {
     std::vector<IEntity *> entities = core.getGameCore()->getEntities();
@@ -132,7 +113,6 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     savePlayer(3, core, &root);
     saveMap(core, &root);
     saveBombMap(core, &root);
-    savePlayerMap(core, &root);
 
     //Write save in save file
     pt::write_json("save" + std::to_string(slot) + ".json", root);
@@ -199,37 +179,12 @@ void loadBombMap(Core &core, pt::ptree *root)
     }
 }
 
-void loadPlayerMap(Core &core, pt::ptree *root)
-{
-    std::vector<std::string> map;
-    std::map<int, std::map<int, playerState>> &_map = core.getMap()->getPlayerMap();
-
-    for (pt::ptree::value_type &line : root->get_child("playerMap"))
-    {
-        if (line.second.data().size() != 17)
-            throw saveAndLoadException("Invalid map's size");
-        map.push_back(line.second.data());
-    }
-    if (map.size() != 11)
-        throw saveAndLoadException("Invalid map's size");
-    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
-    {
-        for (int j = 1; j < MAP_WIDTH + 1; ++j)
-        {
-            playerState block = playerState(map[i - 1][j - 1] - '0');
-            if (!playerStateCheck::is_value(block))
-                throw saveAndLoadException("Invalid Enum value");
-            _map[i][j] = block;
-        }
-    }
-}
-
 void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 {
     std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     const std::vector<Character *> &characters = core.getSelect()->getPreviews();
     IEntity *entity = entities[playerNB];
-    IEntity *entitySaved;
+    IEntity *entitySaved = nullptr;
     std::string path = "player" + std::to_string(playerNB) + ".";
 
     Key_mouvement input = (Key_mouvement)root->get<int>(path + "input");
@@ -359,7 +314,6 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         loadPlayer(3, core, &root);
         loadMap(core, &root);
         loadBombMap(core, &root);
-        loadPlayerMap(core, &root);
     }
     catch (std::exception const &msg)
     {

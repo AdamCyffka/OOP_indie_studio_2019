@@ -43,9 +43,7 @@ public:
 	Key_mouvement getInput() final;
 	void setInput(Key_mouvement input) final;
 
-	std::pair<int, int> getPosition();
 	void setPosition(std::pair<int, int>);
-	void findPosition();
 
 private:
 	bool _isAlive;
@@ -54,7 +52,6 @@ private:
 	int _winNumber;
 	Character *_character;
 	Map *_map;
-	std::pair<int, int> _position;
 
 	int _firePower;
 	int _bombAmount;

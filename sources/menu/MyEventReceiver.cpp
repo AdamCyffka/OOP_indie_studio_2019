@@ -173,8 +173,8 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
             _core.setGState(Core::menu);
             _core.setLState(Core::menuScore);
             _core.getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
+            _core.getScore()->updateRanking({{3, 3}, {1, 2}, {0, 1}, {2, 0}});
             _core.getScore()->spawnEntities();
-            _core.getScore()->updateRanking({0, 1, 2, 3});
         }
 		_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		return true;
