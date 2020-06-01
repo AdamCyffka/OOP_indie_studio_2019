@@ -38,7 +38,7 @@ bool Input::IsKeyDown(EKEY_CODE keyCode) const {
 		return KeyIsDown[keyCode];
 }
 
-void Input::player_one_joystick(Input receiver, const SEvent& event)
+void Input::player_one_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -87,7 +87,7 @@ void Input::player_one_keyboard(Input receiver, const SEvent& event)
 	}
 }
 
-void Input::player_two(Input receiver, const SEvent& event)
+void Input::player_two_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -117,7 +117,11 @@ void Input::player_two(Input receiver, const SEvent& event)
 			_playerInput[2] = None;
 		}
 	}
+}
 
+void Input::player_two_keyboard(Input receiver, const SEvent& event)
+{
+	
 	if (receiver.IsKeyDown(irr::KEY_UP)) {
         _playerInput[2] = Up;
     } else if (receiver.IsKeyDown(irr::KEY_DOWN) && (event.KeyInput.PressedDown == false)) {
@@ -133,7 +137,7 @@ void Input::player_two(Input receiver, const SEvent& event)
 	}
 }
 
-void Input::player_three(Input receiver, const SEvent& event)
+void Input::player_three_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -162,6 +166,10 @@ void Input::player_three(Input receiver, const SEvent& event)
 			_playerInput[3] = None;
 		}
 	}
+}
+
+void Input::player_three_keyboard(Input receiver, const SEvent& event)
+{
 
 	if (receiver.IsKeyDown(irr::KEY_KEY_Y) && (event.KeyInput.PressedDown == false)) {
         _playerInput[3] = Up;
@@ -178,7 +186,7 @@ void Input::player_three(Input receiver, const SEvent& event)
 	}
 }
 
-void Input::player_four(Input receiver, const SEvent& event)
+void Input::player_four_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -209,6 +217,11 @@ void Input::player_four(Input receiver, const SEvent& event)
 		}
 	}
 
+}
+
+void Input::player_four_keyboard(Input receiver, const SEvent& event)
+{
+	
 	if (receiver.IsKeyDown(irr::KEY_KEY_Y) && (event.KeyInput.PressedDown == false)) {
         _playerInput[4] = Up;
     } else if (receiver.IsKeyDown(irr::KEY_KEY_H) && (event.KeyInput.PressedDown == false)) {
@@ -280,7 +293,7 @@ std::map<int, Key_mouvement> Input::getPlayerInput(Input receiver, const SEvent&
 	if (_player[0] == Keyboard) {
 		player_one_keyboard(receiver, event);
 	} else if (_player[1] == Controller) {
-		player_one_joystick(receiver, event);
+		player_one_joystick(receiver);
 	} else {
 		_playerInput[1] = None;
 	}
@@ -292,7 +305,9 @@ Input::Input()
 	for (u32 i=0; i < KEY_KEY_CODES_COUNT; ++i)
     	KeyIsDown[i] = false;
 	_playerInput[1] = None;
-	_playerInput[2] = None;
+	_playerInput[2] = Ia;
+	_playerInput[3] = Ia;
+	_playerInput[4] = Ia;
 	_keyIsPressed = false;
 	_player[0] = Keyboard; //tempo
 	_player[1] = No_device;

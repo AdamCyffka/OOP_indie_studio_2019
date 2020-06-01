@@ -55,10 +55,13 @@ class Input : public IEventReceiver
         virtual bool IsKeyDown(EKEY_CODE keyCode) const;
        
         void player_one_keyboard(Input receiver, const SEvent& event);
-        void player_one_joystick(Input receiver, const SEvent& event);
-        void player_two(Input receiver, const SEvent& event);
-        void player_three(Input receiver, const SEvent& event);
-        void player_four(Input receiver, const SEvent& event);
+        void player_one_joystick(Input receiver);
+        void player_two_joystick(Input receiver);
+        void player_two_keyboard(Input receiver, const SEvent& event);
+        void player_three_joystick(Input receiver);
+        void player_three_keyboard(Input receiver, const SEvent& event);
+        void player_four_joystick(Input receiver);
+        void player_four_keyboard(Input receiver, const SEvent& event);
         void detect_player(Input receiver, const SEvent& event);
         void detect_input(Input receiver, const SEvent& event);
 
