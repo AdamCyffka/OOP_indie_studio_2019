@@ -76,14 +76,14 @@ bool Bomby::hasEnoughBombToPose()
 
 void Bomby::poseBomb()
 {
-    std::cout << "User call poseBomb" << std::endl;
+    //std::cout << "User call poseBomb" << std::endl;
     if (canPoseBomb() == true && hasEnoughBombToPose() == true) {
-        std::cout << "Check right - can pose bomb" << std::endl;
+        //std::cout << "Check right - can pose bomb" << std::endl;
         setIsBlast(true);
         if (getIsBlast() == true) {
             //std::this_thread::sleep_until(std::chrono::system_clock::now() + 3s); // probleme est que durant 3s tout le programme est en standBY (dois trouver une autre facon de le faire)
             //appeler l'animation de bomb et agir sur la map!
-            std::cout << "BAM!!!" << std::endl;
+            //std::cout << "BAM!!!" << std::endl;
             setIsBlast(false);
         }
     }
