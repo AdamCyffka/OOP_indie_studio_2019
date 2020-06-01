@@ -22,18 +22,29 @@ Score::Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, i
     loadButtons();
 }
 
-void Score::updateRanking(const std::vector<int> ranking)
+void Score::updateRanking(std::vector<std::pair<int, int>> ranking)
 {
     if (ranking.size() != 4)
         throw MenuException("Given ranking has a wrong number of players");
 
     for (int i = 0; i < 4; i++) {
-        std::string modelName = _previews[ranking.at(i)]->getModelInfos().name;
+        std::string modelName = _previews[ranking.at(i).first]->getModelInfos().name;
         _images[modelName] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find(modelName) != _images.end() && !_images[modelName])
             throw LoadingException("could not add image : " + modelName);
         _images[modelName]->setImage(_textures[modelName]);
-        _images[modelName]->setRelativePosition(irr::core::position2d<irr::s32>(128, 160 * (ranking.at(i) + 1)));
+        _images[modelName]->setRelativePosition(irr::core::position2d<irr::s32>(128, 160 * (i + 1)));
+
+        for (int j = 0; j < 3; j++) {
+            std::string imageName = modelName + "_star" + std::to_string(j);
+            _images[imageName] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 480, 480));
+            if (_images.find(imageName) != _images.end() && !_images[imageName])
+                throw LoadingException("could not add image : " + imageName);
+            _images[imageName]->setImage(_textures[(j >= ranking.at(i).second) ? "grey_star" : "star"]);
+            _images[imageName]->setRelativePosition(irr::core::position2d<irr::s32>(256 + 50 * (j + 1), 200 + 160 * (i)));
+        }
+
+        _ranking[i] = ranking.at(i).first;
     }
 }
 
@@ -69,6 +80,12 @@ void Score::loadTextures()
     _textures["red_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Red.png");
 	if (_textures.find("red_toad") == _textures.end() || !_textures["red_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Red.png");
+    _textures["grey_star"] = _driver->getTexture("resources/images/starGrey.png");
+	if (_textures.find("grey_star") == _textures.end() || !_textures["grey_star"])
+		throw LoadingException("could not load texture : resources/images/starGrey.png");
+    _textures["star"] = _driver->getTexture("resources/images/star.png");
+	if (_textures.find("star") == _textures.end() || !_textures["star"])
+		throw LoadingException("could not load texture : resources/images/star.png");
 }
 
 void Score::loadButtons()
@@ -90,7 +107,7 @@ void Score::spawnEntities()
         i->setOrientation(side::north);
         i->setState(Character::state::idle);
     }
-    _previews[0]->setState(Character::state::victory);
+    _previews[_ranking.at(0)]->setState(Character::state::victory);
 }
 
 std::vector<Character *> Score::getPreviews()
