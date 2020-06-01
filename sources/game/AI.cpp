@@ -208,27 +208,6 @@ Key_mouvement AI::getInput()
 	return Key_mouvement::Ia;
 }
 
-std::pair<int, int> AI::getPosition()
-{
-	return _position;
-}
-
-void AI::setPosition(std::pair<int, int> pos)
-{
-	_position = pos;
-}
-
-void AI::findPosition()
-{
-	for (const auto &column : _map->getPlayerMap())
-		for (auto line : column.second)
-		{
-			if (line.second == _entityNumber)
-				_position = std::make_pair(column.first, line.first);
-			return;
-		}
-}
-
 void AI::setInput(Key_mouvement input)
 {
 }
