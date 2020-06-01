@@ -66,11 +66,12 @@ bool Bomby::canPoseBomb()
 
 bool Bomby::hasEnoughBombToPose()
 {
-    if (_ai->getBombAmount() > 0 ) {
-        return (true);
-    } else {
-        return (false);
-    }
+    //if (_ai->getBombAmount() > 0 ) {
+    //    return (true);
+    //} else {
+    //    return (false);
+    //}
+    return (true);
 }
 
 void Bomby::poseBomb()

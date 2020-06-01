@@ -49,10 +49,6 @@ class Bomby : public IEntity {
 
         int _radius;
         irr::u32 _delay;
-        clock_t _startTime;
-        clock_t _time;
-        clock_t _timePassed;
-        double _secondsPassed;
 
         bool _isBlast;
         bool addExplosion(bool);
