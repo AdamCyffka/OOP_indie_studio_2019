@@ -24,11 +24,6 @@ std::map<int, std::map<int, bombState>> &Map::getBombMap()
 	return _bombMap;
 }
 
-std::map<int, std::map<int, playerState>> &Map::getPlayerMap()
-{
-	return _playerMap;
-}
-
 void Map::generateMap()
 {
 	std::map<int, blockState> line;
@@ -63,7 +58,6 @@ void Map::generateMap()
 		playerLine[MAP_WIDTH + 1] = obstacle;
 		_map[i] = line;
 		_bombMap[i] = bombLine;
-		_playerMap[i] = playerLine;
 		line.clear();
 		bombLine.clear();
 		playerLine.clear();
@@ -97,7 +91,6 @@ void Map::addHeaderLine()
 	}
 	_map[0] = line;
 	_bombMap[0] = bombLine;
-	_playerMap[0] = playerLine;
 	line.clear();
 }
 
@@ -114,7 +107,6 @@ void Map::addFooterLine()
 	}
 	_map[MAP_HEIGHT + 1] = line;
 	_bombMap[MAP_HEIGHT + 1] = bombLine;
-	_playerMap[MAP_HEIGHT + 1] = playerLine;
 }
 
 void Map::addPlayersSpawns()
@@ -129,7 +121,6 @@ void Map::addPlayersSpawns()
 	_bombMap[1][1] = clear;
 	_bombMap[1][2] = clear;
 	_bombMap[2][1] = clear;
-	_playerMap[1][1] = playerOne;
 
 	//Player 2
 	_map[1][lineLen] = empty;
@@ -138,7 +129,6 @@ void Map::addPlayersSpawns()
 	_bombMap[1][lineLen] = clear;
 	_bombMap[1][lineLen - 1] = clear;
 	_bombMap[2][lineLen] = clear;
-	_playerMap[1][lineLen] = playerTwo;
 
 	//Player 3
 	_map[columnLen][1] = empty;
@@ -147,7 +137,6 @@ void Map::addPlayersSpawns()
 	_bombMap[columnLen][1] = clear;
 	_bombMap[columnLen][2] = clear;
 	_bombMap[columnLen - 1][1] = clear;
-	_playerMap[columnLen][1] = playerThree;
 
 	//Player 4
 	_map[columnLen][lineLen] = empty;
@@ -156,7 +145,6 @@ void Map::addPlayersSpawns()
 	_bombMap[columnLen][lineLen] = clear;
 	_bombMap[columnLen][lineLen - 1] = clear;
 	_bombMap[columnLen - 1][lineLen] = clear;
-	_playerMap[columnLen][lineLen] = playerFour;
 }
 
 void Map::addWalls()
@@ -165,7 +153,6 @@ void Map::addWalls()
 		for (int j = 2; j < MAP_WIDTH; j += 2) {
 			_map[i][j] = unbreakable;
 			_bombMap[i][j] = block;
-			_playerMap[i][j] = obstacle;
 		}
 }
 
@@ -183,51 +170,5 @@ void Map::printMap()
 		for (auto &it : l.second)
 			std::cout << it.second << " ";
 		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	std::cout << "Player map" << std::endl;
-	for (auto &l : _playerMap) {
-		for (auto &it : l.second)
-			std::cout << it.second << " ";
-		std::cout << std::endl;
-	}
-}
-
-std::pair<int, int> Map::getPlayerPosition(int playerNb)
-{
-	std::pair<int, int> pos;
-	for (const auto &column : _playerMap) {
-		for (auto line : column.second) {
-			if ((playerNb == 1 && line.second == playerOne) ||
-				(playerNb == 2 && line.second == playerTwo) ||
-				(playerNb == 3 && line.second == playerThree) ||
-				(playerNb == 4 && line.second == playerFour)) {
-				pos = std::make_pair(column.first, line.first);
-				return pos;
-			}
-		}
-	}
-	throw MapException("Could not find player " + std::to_string(playerNb));
-}
-
-void Map::setPlayerPosition(int z, int x, int playerNb)
-{
-	std::pair<int, int> pos = getPlayerPosition(playerNb);
-	_playerMap[pos.first][pos.second] = none;
-	switch (playerNb) {
-	case 1:
-		_playerMap[pos.first + z][pos.second + x] = playerOne;
-		break;
-	case 2:
-		_playerMap[pos.first + z][pos.second + x] = playerTwo;
-		break;
-	case 3:
-		_playerMap[pos.first + z][pos.second + x] = playerThree;
-		break;
-	case 4:
-		_playerMap[pos.first + z][pos.second + x] = playerFour;
-		break;
-	default:
-		break;
 	}
 }

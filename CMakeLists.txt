@@ -32,6 +32,7 @@ add_executable(bomberman
         sources/travel/StraightCameraTravel.cpp
         sources/travel/CameraTravelManager.cpp
         sources/input/Input.cpp
+        sources/game/hitbox.cpp
         sources/game/Player.cpp
         sources/game/AI.cpp
         sources/game/GameCore.cpp

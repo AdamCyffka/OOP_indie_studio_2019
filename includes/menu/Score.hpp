@@ -12,6 +12,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <utility>
 #include "Character.hpp"
 #include "IMenu.hpp"
 
@@ -28,6 +29,7 @@ class Score : public IMenu {
         std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
         std::vector<Character *> getPreviews();
 
+        void updateRanking(std::vector<std::pair<int, int>> ranking);
         void spawnEntities();
         void loadButtons();
         void loadTextures();
@@ -41,6 +43,8 @@ class Score : public IMenu {
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
         std::vector<Character *> _previews;
+
+        std::vector<int> _ranking;
 };
 
 #endif /* !SCORE_HPP_ */

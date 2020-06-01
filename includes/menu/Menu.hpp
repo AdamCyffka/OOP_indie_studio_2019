@@ -16,7 +16,7 @@
 
 class Menu : public IMenu {
     public:
-        explicit Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        explicit Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, int const &width, int const &height);
         ~Menu() override = default;
 
         void loadButtons();
@@ -27,6 +27,9 @@ class Menu : public IMenu {
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
         std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
 	private:
+        int _height;
+        int _width;
+
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;

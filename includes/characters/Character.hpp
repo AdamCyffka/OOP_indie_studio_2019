@@ -16,6 +16,7 @@
 #include "EnumCheck.hpp"
 
 using namespace irr;
+
 class Character {
     public:
         Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model,
@@ -49,9 +50,10 @@ class Character {
         side getOrientation() const;
         f32 getAnimationSpeed() const;
         u32 getTravelTime() const;
-        std::string getModelName() const;
+        modelInfos_t getModelInfos() const;
 
         //methods
+        void removeAnimators();
         bool moveTo(core::vector3df position, u32 travelTime = 0);
         void changeModel(modelInfos_t model);
     protected:
@@ -60,7 +62,7 @@ class Character {
             //irr
         scene::ISceneManager *_sManager;
         video::IVideoDriver *_driver;
-        scene::IAnimatedMeshSceneNode *_mesh;
+        scene::IAnimatedMeshSceneNode *_meshNode;
             //non irr
         Character::state _state;
         side _orientation;

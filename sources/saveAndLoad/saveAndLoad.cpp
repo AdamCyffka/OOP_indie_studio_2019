@@ -55,28 +55,9 @@ void saveBombMap(Core &core, pt::ptree *root)
     root->add_child("bombMap", map_node);
 }
 
-void savePlayerMap(Core &core, pt::ptree *root)
-{
-    std::map<int, std::map<int, playerState>> playerMap = core.getMap()->getPlayerMap();
-    pt::ptree map_node;
-
-    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
-    {
-        pt::ptree line_node;
-        std::string lineInString = "";
-        for (int j = 1; j < MAP_WIDTH + 1; ++j)
-        {
-            lineInString += std::to_string(playerMap[i][j]);
-        }
-        line_node.put("", lineInString);
-        map_node.push_back(std::make_pair("", line_node));
-    }
-    root->add_child("playerMap", map_node);
-}
-
 void savePlayer(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     IEntity *entity = entities[playerNB];
     pt::ptree player;
 
@@ -103,21 +84,8 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     //ADDING ELEMENTS FOR CHARACTER HERE
 
     //ALL CONDITIONS TO SAVE THE MODEL
-    if (character->getModelName().compare("resources/models/characters/mario/mario.md3") == 0)
-        character_node.put("modelName", "mario");
-    if (character->getModelName().compare("resources/models/characters/koopa/koopa.md3") == 0)
-        character_node.put("modelName", "koopa");
-    if (character->getModelName().compare("resources/models/characters/luigi/luigi.md3") == 0)
-        character_node.put("modelName", "luigi");
-    if (character->getModelName().compare("resources/models/characters/waluigi/waluigi.md3") == 0)
-        character_node.put("modelName", "waluigi");
-    if (character->getModelName().compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
-        character_node.put("modelName", "dr_peach");
-    if (character->getModelName().compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
-        character_node.put("modelName", "dry_bones");
-    if (character->getModelName().compare("resources/models/characters/lakitu/lakitu.md3") == 0)
-        character_node.put("modelName", "lakitu");
-    
+    character_node.put("modelName", character->getModelInfos().name);
+
     //SAVE POSITIONS OF THE PLAYER
     pt::ptree positions_node;
     pt::ptree position_node;
@@ -145,7 +113,6 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     savePlayer(3, core, &root);
     saveMap(core, &root);
     saveBombMap(core, &root);
-    savePlayerMap(core, &root);
 
     //Write save in save file
     pt::write_json("save" + std::to_string(slot) + ".json", root);
@@ -155,7 +122,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
 	core.hideGameLayers();
-	core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+	core.getGameCore()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
 }
 
 //END SAVE GAME
@@ -212,46 +179,21 @@ void loadBombMap(Core &core, pt::ptree *root)
     }
 }
 
-void loadPlayerMap(Core &core, pt::ptree *root)
-{
-    std::vector<std::string> map;
-    std::map<int, std::map<int, playerState>> &_map = core.getMap()->getPlayerMap();
-
-    for (pt::ptree::value_type &line : root->get_child("playerMap"))
-    {
-        if (line.second.data().size() != 17)
-            throw saveAndLoadException("Invalid map's size");
-        map.push_back(line.second.data());
-    }
-    if (map.size() != 11)
-        throw saveAndLoadException("Invalid map's size");
-    for (int i = 1; i < MAP_HEIGHT + 1; ++i)
-    {
-        for (int j = 1; j < MAP_WIDTH + 1; ++j)
-        {
-            playerState block = playerState(map[i - 1][j - 1] - '0');
-            if (!playerStateCheck::is_value(block))
-                throw saveAndLoadException("Invalid Enum value");
-            _map[i][j] = block;
-        }
-    }
-}
-
 void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     const std::vector<Character *> &characters = core.getSelect()->getPreviews();
     IEntity *entity = entities[playerNB];
-    IEntity *entitySaved;
+    IEntity *entitySaved = nullptr;
     std::string path = "player" + std::to_string(playerNB) + ".";
 
     Key_mouvement input = (Key_mouvement)root->get<int>(path + "input");
     if (!Key_mouvementCheck::is_value(input))
         throw saveAndLoadException("Invalid Enum value");
     if (input == Key_mouvement::Ia)
-        entity = new AI(characters[playerNB], playerNB, core.getMap());
+        entity = new AI(characters[playerNB], playerNB + 1, core.getMap());
     else
-        entity = new Player(characters[playerNB], input, playerNB, core.getMap(), core.getGame());
+        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getGameCore());
     entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entity->setBombPass(root->get<bool>(path + "bombPass", 0));
     entity->setWallPass(root->get<bool>(path + "wallPass", 0));
@@ -266,7 +208,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 
 void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     Character *character = entities[playerNB]->getCharacter();
     std::string path = "player" + std::to_string(playerNB) + ".character.";
 
@@ -326,24 +268,21 @@ void loadPlayer(int playerNB, Core &core, pt::ptree *root)
 
 void checkSkins(Core &core, pt::ptree *root)
 {
-    std::string player0 = root->get<std::string>("player0.character.modelName", "");
-    std::string player1 = root->get<std::string>("player1.character.modelName", "");
-    std::string player2 = root->get<std::string>("player2.character.modelName", "");
-    std::string player3 = root->get<std::string>("player3.character.modelName", "");
+    std::vector<std::string> players;
+    players.push_back(root->get<std::string>("player0.character.modelName", ""));
+    players.push_back(root->get<std::string>("player1.character.modelName", ""));
+    players.push_back(root->get<std::string>("player2.character.modelName", ""));
+    players.push_back(root->get<std::string>("player3.character.modelName", ""));
 
-    if (player0.compare("") == 0 || player1.compare("") == 0 || player2.compare("") == 0 || player3.compare("") == 0)
+    for (auto player: players)
     {
-        throw saveAndLoadException("Invalid player's model");
+        if (player.compare("") == 0)
+            throw saveAndLoadException("Invalid player's model");
+        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0
+        && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
+            throw saveAndLoadException("Invalid player's model");
     }
-    if ((player0.compare("mario") != 0 && player0.compare("waluigi") != 0 && player0.compare("luigi") != 0 && player0.compare("dr_peach") != 0 && player0.compare("dry_bones") != 0 && player0.compare("lakitu") != 0)
-    || (player1.compare("mario") != 0 && player1.compare("waluigi") != 0 && player1.compare("luigi") != 0 && player1.compare("dr_peach") != 0 && player1.compare("dry_bones") != 0 && player1.compare("lakitu") != 0)
-    || (player2.compare("mario") != 0 && player2.compare("waluigi") != 0 && player2.compare("luigi") != 0 && player2.compare("dr_peach") != 0 && player2.compare("dry_bones") != 0 && player2.compare("lakitu") != 0)
-    || (player3.compare("mario") != 0 && player3.compare("waluigi") != 0 && player3.compare("luigi") != 0 && player3.compare("dr_peach") != 0 && player3.compare("dry_bones") != 0 && player3.compare("lakitu") != 0))
-    {
-        throw saveAndLoadException("Invalid player's model");
-        
-    }
-    if (player0.compare(player1) == 0 || player0.compare(player2) == 0 || player0.compare(player3) == 0 || player1.compare(player2) == 0 || player1.compare(player3) == 0 || player2.compare(player3) == 0)
+    if (players[0].compare(players[1]) == 0 || players[0].compare(players[2]) == 0 || players[0].compare(players[3]) == 0 || players[1].compare(players[2]) == 0 || players[1].compare(players[3]) == 0 || players[2].compare(players[3]) == 0)
     {
         throw saveAndLoadException("Two times the same model");
     }
@@ -351,6 +290,9 @@ void checkSkins(Core &core, pt::ptree *root)
 
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
+    //INIT GAME JUST IN CASE
+    core.getGameCore()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+
     pt::ptree root;
     try
     {
@@ -366,17 +308,16 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         //only for the error handling
         checkSkins(core, &root);
 
-
         loadPlayer(0, core, &root);
         loadPlayer(1, core, &root);
         loadPlayer(2, core, &root);
         loadPlayer(3, core, &root);
         loadMap(core, &root);
         loadBombMap(core, &root);
-        loadPlayerMap(core, &root);
     }
     catch (std::exception const &msg)
     {
+        core.getGameCore()->reset();
         std::cerr << msg.what() << std::endl;
         return;
     }
@@ -384,10 +325,12 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     core.getLoadMap()->emptyGameMap(-440, 308, 790);
     core.getLoadMap()->loadGameMap(-440, 308, 790);
     //End of load now start the game
+    std::cout << "Save correct" << std::endl;
+    core.getMusicEngine()->stop("resources/music/menu.mp3", false);
+    core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideGameLayers();
-    core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
     return;
 
     //Others elements for load

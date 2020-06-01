@@ -10,32 +10,41 @@
 
 #include <irrlicht.h>
 
+#include "IEntity.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
 
 #include <ctime>
 #include <vector>
 
-class Bomb {
+#define TIMER (3000)
+
+class Bomb : public IEntity {
     public:
-        Bomb(int x, int y, int radius, irr::u32 delay);
+        Bomb(Character *character, Map *map, Player *player);
         ~Bomb();
-        int getX() const;
-        int getY() const;
+        void setRadius(int radius);
         int getRadius() const;
-        irr::u32 getDelay() const;
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
-        int canPoseBomb();
-        int checkEnoughBombToPose();
+        void setPosition(std::pair<int, int>);
+        std::pair<int, int> getPosition() const;
+
         void poseBomb();
-        int checkKilledByBomb();
+        bool canPoseBomb();
+        bool hasEnoughBombToPose();
+        bool isKilledByBomb();
     private:
-        int _x;
-        int _y;
+        Map *_map;
+        std::pair<int, int> _position;
+        Player *_player;
+        Character *_character;
+
         int _radius;
         irr::u32 _delay;
+
         bool _isBlast;
+        bool addExplosion(bool inGame);
     protected:
 };
 

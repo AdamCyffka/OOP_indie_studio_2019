@@ -25,8 +25,10 @@ GameCore::GameCore(Core *core)
 void GameCore::reset()
 {
 	for (auto it : _entities) {
+		it->getCharacter()->removeAnimators();
 		delete it;
 	}
+	_map->generateMap();
 	_entities.clear();
 	_isPaused = false;
 	_isInit = false;
@@ -62,7 +64,7 @@ void GameCore::run()
 	if (_isPaused)
 		return;
 	for (auto it : _entities) {
-		it->setInput(Right);
+		it->setInput(Up);
 		it->run();
 	}
 }

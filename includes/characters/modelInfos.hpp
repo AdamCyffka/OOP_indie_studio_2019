@@ -12,6 +12,7 @@
 #include <vector>
 
 typedef struct modelInfos_s {
+    std::string name;
     std::string filename;
     std::vector<std::string> textures;
     std::pair<int, int> idleLoop;

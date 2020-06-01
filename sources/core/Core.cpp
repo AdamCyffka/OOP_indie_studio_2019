@@ -15,20 +15,21 @@
 #include "MyEventReceiver.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
-#include "Score.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "Intro.hpp"
 #include "Save.hpp"
 #include "Load.hpp"
-#include "Game.hpp"
 #include "GameOptions.hpp"
 
-Core::Core() : _fullscreen(FULLSCREEN)
+Core::Core()
 {
+	_fullscreen = FULLSCREEN;
+	_width = 1920;
+	_height = 1080;
 	_window = irr::createDevice(irr::video::EDT_OPENGL,
-        irr::core::dimension2d<irr::u32>(1920, 1080),
+        irr::core::dimension2d<irr::u32>(_width, _height),
         16, getFullscreen(), false);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
@@ -36,7 +37,7 @@ Core::Core() : _fullscreen(FULLSCREEN)
 	}
 	//_window->setWindowCaption(L"Super Bomberman Bros");
 	_smgr = _window->getSceneManager();
-	_camera = _smgr->addCameraSceneNodeMaya();
+	_camera = _smgr->addCameraSceneNode();
 	_camera->setFarValue(42000);
 	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
 	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
@@ -147,9 +148,14 @@ Score *Core::getScore()
 	return _score;
 }
 
-GameCore *Core::getGame()
+GameCore *Core::getGameCore()
 {
 	return _gameCore;
+}
+
+Game *Core::getGame()
+{
+	return _game;
 }
 
 Map *Core::getMap()
@@ -335,7 +341,7 @@ void Core::init()
 	else if (_initStep == 4)
 	{
 		if (!_menu)
-			_menu = new Menu(_env, _driver, _smgr);
+			_menu = new Menu(_env, _driver, _smgr, _width, _height);
 		_splash->getBar()->setProgress(30);
 	}
 	else if (_initStep == 5)
@@ -350,7 +356,7 @@ void Core::init()
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
 	} else if (_initStep == 7) {
-		if (!_score)
+		if (!_score && _select)
 			_score = new Score(_env, _driver, _smgr, _select->getPreviews());
 		_splash->getBar()->setProgress(50);
 	} else if (_initStep == 8) {
@@ -384,8 +390,8 @@ void Core::init()
 			_pause = new Pause(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
 	} else if (_initStep == 15) {
-		if (!_game)
-			_game = new Game(_env, _driver, _smgr);
+		if (!_game && _select)
+			_game = new Game(_env, _driver, _smgr, _select->getPreviews());
 		_splash->getBar()->setProgress(100);
 	} else if (_initStep == 16) {
 		if (!_gameOptions)

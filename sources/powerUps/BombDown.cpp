@@ -7,7 +7,7 @@
 
 #include "BombDown.hpp"
 
-BombDown::BombDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z)
+BombDown::BombDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
 	_driver = driver;
 	_env = env;
@@ -16,7 +16,7 @@ BombDown::BombDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *dri
     irr::scene::ISceneNode *bomb;
 	irr::scene::ISceneNodeAnimator *anim;
     bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/bombs/bombDown.obj"));
-	bomb->setPosition({x, 310, z});
+	bomb->setPosition(pos); // y = 310
 	bomb->setScale({5, 5, 5});
 	if (bomb)
 		bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
