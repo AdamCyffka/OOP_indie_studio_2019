@@ -31,9 +31,9 @@ class Bomb : public IEntity {
         std::pair<int, int> getPosition() const;
 
         void poseBomb();
-        int canPoseBomb();
-        int hasEnoughBombToPose();
-        int isKilledByBomb();
+        bool canPoseBomb();
+        bool hasEnoughBombToPose();
+        bool isKilledByBomb();
     private:
         Map *_map;
         std::pair<int, int> _position;
