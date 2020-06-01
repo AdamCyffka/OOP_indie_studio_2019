@@ -99,7 +99,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                         _core.setGState(Core::game);
-                        _core.getGameCore()->init(_core.getSelect()->getPreviews(), _core.getInput()->getPlayerInput(), _core.getSelect()->getEntityTypes());
+                        _core.getGameCore()->init(_core.getSelect()->getPreviews(), _core.getSelect()->getEntityTypes());
                         return true;
                     case IMenu::GUI_ID_SAVE_SLOT_1:
                         saveGame(1, _core, _cameraTravelManager);
@@ -165,6 +165,8 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
 
     if (clicks(event))
         return true;
+//	if (_core.getInput()->inputEvent(event))
+//		return true;
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
         if(event.KeyInput.Key == KEY_ESCAPE && event.KeyInput.PressedDown == false && _core.getGState() == Core::game)
             _core.setLGState(_core.getLGState() == Core::gameGame ? Core::gamePause : Core::gameGame);

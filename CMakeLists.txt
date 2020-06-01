@@ -65,7 +65,6 @@ include_directories(includes
         includes/saveAndLoad/
         )
 
-
 set_target_properties(bomberman PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}
         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXECUTABLE_OUTPUT_PATH}

@@ -34,14 +34,14 @@ void GameCore::reset()
 	_isInit = false;
 }
 
-void GameCore::init(const std::vector<Character *> characters, std::map<int, Key_mouvement> inputs, const std::vector<EntityType::EntityType> entityTypes)
+void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes)
 {
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
 			entity = new AI(characters.at(i - 1), i, _map);
 		else
-			entity = new Player(characters.at(i - 1), inputs[i], i, _map, this);
+			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this);
 		_entities.push_back(entity);
 	}
 	spawnPlayers();
