@@ -165,8 +165,8 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
 
     if (clicks(event))
         return true;
-//	if (_core.getInput()->inputEvent(event))
-//		return true;
+	if (_core.getInput() && _core.getInput()->inputEvent(event))
+		return true;
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
         if(event.KeyInput.Key == KEY_ESCAPE && event.KeyInput.PressedDown == false && _core.getGState() == Core::game)
             _core.setLGState(_core.getLGState() == Core::gameGame ? Core::gamePause : Core::gameGame);

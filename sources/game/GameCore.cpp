@@ -63,9 +63,9 @@ void GameCore::run()
 	}
 	if (_isPaused)
 		return;
-	for (auto it : _entities) {
-		it->setInput(Up);
-		it->run();
+	auto inputs = _core->getInput()->getPlayerInputs();
+	for (int i = 1; i <= 4; ++i) {
+		_entities.at(i - 1)->run(inputs.at(i));
 	}
 }
 

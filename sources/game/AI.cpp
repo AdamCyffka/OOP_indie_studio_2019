@@ -15,7 +15,7 @@ void AI::kill()
 {
 }
 
-void AI::run()
+void AI::run(Key_mouvement input)
 {
 	this->moveTo(side::west);
 }
