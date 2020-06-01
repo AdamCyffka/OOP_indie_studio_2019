@@ -12,7 +12,7 @@
 
 class WallPass : public IPowerUps {
     public:
-        explicit WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
+        explicit WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~WallPass() = default;
 
         void spawn();

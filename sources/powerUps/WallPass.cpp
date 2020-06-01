@@ -7,7 +7,7 @@
 
 #include "WallPass.hpp"
 
-WallPass::WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z)
+WallPass::WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
     _driver = driver;
 	_env = env;
@@ -16,7 +16,7 @@ WallPass::WallPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *dri
 	irr::scene::ISceneNode *mushRoom;
 	irr::scene::ISceneNodeAnimator *anim;
     mushRoom = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/wallPass/wallPass.obj"));
-	mushRoom->setPosition({x, 310, z});
+	mushRoom->setPosition(pos);
 	mushRoom->setRotation({-50, 0, 0});
 	mushRoom->setScale({4, 4, 4});
 	if (mushRoom)

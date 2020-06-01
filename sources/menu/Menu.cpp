@@ -8,11 +8,13 @@
 #include "Menu.hpp"
 #include "LoadingException.hpp"
 
-Menu::Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
+Menu::Menu(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, int const &width, int const &height)
 {
     _driver = driver;
     _env = env;
     _smgr = smgr;
+    _height = height;
+    _width = width;
 
     loadTextures();
     loadButtons();
