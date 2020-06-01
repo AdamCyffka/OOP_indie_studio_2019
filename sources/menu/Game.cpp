@@ -8,6 +8,7 @@
 #include "Character.hpp"
 #include "Game.hpp"
 #include "LoadingException.hpp"
+#include "MenuException.hpp"
 
 Game::Game(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<Character *> previews)
 {
@@ -332,10 +333,6 @@ void Game::run()
 {
 }
 
-std::vector<Character *> Game::getPreviews()
-{
-    return {};
-}
 
 std::map<std::string, irr::gui::IGUIButton *> Game::getButtons()
 {

@@ -53,21 +53,21 @@ bool Bomb::addExplosion(bool inGame)
     return (false);
 }
 
-int Bomb::canPoseBomb()
+bool Bomb::canPoseBomb()
 {
     if (blockState::empty) {
-        return (1);
+        return (true);
     } else {
-        return (0);
+        return (false);
     }
 }
 
-int Bomb::hasEnoughBombToPose()
+bool Bomb::hasEnoughBombToPose()
 {
-    if (_player->getBombAmount() <= 0 ) {
-        return (0);
+    if (_player->getBombAmount() > 0 ) {
+        return (true);
     } else {
-        return (1);
+        return (false);
     }
 }
 
@@ -79,7 +79,7 @@ void Bomb::poseBomb()
     }
 }
 
-int Bomb::isKilledByBomb()
+bool Bomb::isKilledByBomb()
 {
-    return (0);
+    return (false);
 }
