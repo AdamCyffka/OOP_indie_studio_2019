@@ -16,6 +16,21 @@ int isInside(float x, float z, float xBlock, float zBlock)
 	return 0;
 }
 
+float overLap(float x, float z, float xBlock, float zBlock)
+{
+	float x_overLap = std::min(x - 10.0, xBlock - 10.0) - std::max(x, xBlock);
+	float z_overLap = std::min(z - 10.0, zBlock - 10.0) - std::max(z, zBlock);
+
+	return (200 - (x_overLap * z_overLap));
+}
+
+bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
+{
+	if (overLap(x, z, xBlock, zBlock) >= 20.0) //20 is the pourcent of the character's body you need for the hitbox
+		return true;
+	return false;
+}
+
 int canMove(core::vector3df characterPosition, Map *map)
 {
 	int x = -440;
@@ -29,21 +44,22 @@ int canMove(core::vector3df characterPosition, Map *map)
 			float xBlock = x + (-10 * i);
 			float zBlock = z + (-10 * j);
 			//x + (-10 * i) = position X inGame [1][1] = -450
-			//z + (-10 * j) = position Z inGame [1][1] = -780
+			//z + (-10 * j) = position Z inGame [1][1] = 780
 
 			//Pour les collisions je pars du principe que le x et Z sont en haut à gauche de l'élèment
 			if (characterPosition.X == xBlock && characterPosition.Z == zBlock) // si == alors c'est good le character n'est aps dans le bloc
 			{
-				std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is in position " << i << " " << j << std::endl;
+				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is in position " << i << " " << j << std::endl;
 			}
 			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z) // Si le bloc et sur un des axes du character
-			&&
-			((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock)) //check le côté haut gauche
-			|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock))) //check le côté bas droit
+				&&
+				((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock))			   //check le côté haut gauche
+				 || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock))) //check le côté bas droit
 			{
-				std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is inside: " << i << " " << j << std::endl;
+				if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock)) //Check Hitbox for bombs
+					std::cout << "Hitbox touch" << std::endl;
+				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is inside: " << i << " " << j << std::endl;
 			}
-
 		}
 	}
 	return 1;
