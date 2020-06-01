@@ -103,22 +103,7 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     //ADDING ELEMENTS FOR CHARACTER HERE
 
     //ALL CONDITIONS TO SAVE THE MODEL
-    if (character->getModelInfos().filename.compare("resources/models/characters/mario/mario.md3") == 0)
-        character_node.put("modelName", "mario");
-    if (character->getModelInfos().filename.compare("resources/models/characters/koopa/koopa.md3") == 0)
-        character_node.put("modelName", "koopa");
-    if (character->getModelInfos().filename.compare("resources/models/characters/luigi/luigi.md3") == 0)
-        character_node.put("modelName", "luigi");
-    if (character->getModelInfos().filename.compare("resources/models/characters/waluigi/waluigi.md3") == 0)
-        character_node.put("modelName", "waluigi");
-    if (character->getModelInfos().filename.compare("resources/models/characters/dr_peach/dr_peach.md3") == 0)
-        character_node.put("modelName", "dr_peach");
-    if (character->getModelInfos().filename.compare("resources/models/characters/dry_bones/dry_bones.md3") == 0)
-        character_node.put("modelName", "dry_bones");
-    if (character->getModelInfos().filename.compare("resources/models/characters/lakitu/lakitu.md3") == 0)
-        character_node.put("modelName", "lakitu");
-    if (character->getModelInfos().filename.compare("resources/models/characters/lakitu/toad.md3") == 0)
-        character_node.put("modelName", character->getModelInfos().name);
+    character_node.put("modelName", character->getModelInfos().name);
 
     //SAVE POSITIONS OF THE PLAYER
     pt::ptree positions_node;
@@ -328,24 +313,21 @@ void loadPlayer(int playerNB, Core &core, pt::ptree *root)
 
 void checkSkins(Core &core, pt::ptree *root)
 {
-    std::string player0 = root->get<std::string>("player0.character.modelName", "");
-    std::string player1 = root->get<std::string>("player1.character.modelName", "");
-    std::string player2 = root->get<std::string>("player2.character.modelName", "");
-    std::string player3 = root->get<std::string>("player3.character.modelName", "");
+    std::vector<std::string> players;
+    players.push_back(root->get<std::string>("player0.character.modelName", ""));
+    players.push_back(root->get<std::string>("player1.character.modelName", ""));
+    players.push_back(root->get<std::string>("player2.character.modelName", ""));
+    players.push_back(root->get<std::string>("player3.character.modelName", ""));
 
-    if (player0.compare("") == 0 || player1.compare("") == 0 || player2.compare("") == 0 || player3.compare("") == 0)
+    for (auto player: players)
     {
-        throw saveAndLoadException("Invalid player's model");
+        if (player.compare("") == 0)
+            throw saveAndLoadException("Invalid player's model");
+        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0
+        && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
+            throw saveAndLoadException("Invalid player's model");
     }
-    if ((player0.compare("mario") != 0 && player0.compare("waluigi") != 0 && player0.compare("luigi") != 0 && player0.compare("dr_peach") != 0 && player0.compare("dry_bones") != 0 && player0.compare("lakitu") != 0 && player0.compare("koopa") != 0)
-    || (player1.compare("mario") != 0 && player1.compare("waluigi") != 0 && player1.compare("luigi") != 0 && player1.compare("dr_peach") != 0 && player1.compare("dry_bones") != 0 && player1.compare("lakitu") != 0 && player1.compare("koopa") != 0)
-    || (player2.compare("mario") != 0 && player2.compare("waluigi") != 0 && player2.compare("luigi") != 0 && player2.compare("dr_peach") != 0 && player2.compare("dry_bones") != 0 && player2.compare("lakitu") != 0 && player2.compare("koopa") != 0)
-    || (player3.compare("mario") != 0 && player3.compare("waluigi") != 0 && player3.compare("luigi") != 0 && player3.compare("dr_peach") != 0 && player3.compare("dry_bones") != 0 && player3.compare("lakitu") != 0 && player3.compare("koopa") != 0))
-    {
-        throw saveAndLoadException("Invalid player's model");
-        
-    }
-    if (player0.compare(player1) == 0 || player0.compare(player2) == 0 || player0.compare(player3) == 0 || player1.compare(player2) == 0 || player1.compare(player3) == 0 || player2.compare(player3) == 0)
+    if (players[0].compare(players[1]) == 0 || players[0].compare(players[2]) == 0 || players[0].compare(players[3]) == 0 || players[1].compare(players[2]) == 0 || players[1].compare(players[3]) == 0 || players[2].compare(players[3]) == 0)
     {
         throw saveAndLoadException("Two times the same model");
     }
