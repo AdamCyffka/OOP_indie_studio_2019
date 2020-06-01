@@ -10,6 +10,7 @@
 
 #include "MapException.hpp"
 #include "EnumCheck.hpp"
+#include <irrlicht.h>
 #include <vector>
 #include <random>
 #include <string>
@@ -53,9 +54,7 @@ class Map {
 
 		std::map<int, std::map<int, blockState>> &getMap();
 		std::map<int, std::map<int, bombState>> &getBombMap();
-		std::map<int, std::map<int, playerState>> &getPlayerMap();
-		void setPlayerPosition(int, int, int);
-		std::pair <int, int> getPlayerPosition(int);
+		std::map<int, std::map<irr::f32, irr::f32>> &getPlayerMap();
 		void printMap();
 		void generateMap();
 
@@ -67,7 +66,6 @@ class Map {
 		void addWalls();
 		std::map<int, std::map<int, blockState>> _map;
 		std::map<int, std::map<int, bombState>> _bombMap;
-		std::map<int, std::map<int, playerState>> _playerMap;
 };
 
 #endif

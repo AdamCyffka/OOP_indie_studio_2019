@@ -47,14 +47,8 @@ class Player : public IEntity {
 		void moveTo(side) final;
 		void setIsAlive(bool) final;
 		bool isAlive() final;
-		bool canGoTo(Key_mouvement);
-
-		std::pair<int, int> getPosition();
-		void setPosition(std::pair<int, int>);
 
 	private:
-		void findPosition();
-
 		bool _isAlive;
 		int _entityNumber;
 		int _winNumber;
@@ -62,7 +56,6 @@ class Player : public IEntity {
 		GameCore *_gameCore;
 		Character *_character;
 		Map *_map;
-		std::pair<int, int> _position;
 
 		Key_mouvement _input;
 		Key_mouvement _isDoing;
