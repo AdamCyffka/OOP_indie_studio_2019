@@ -35,7 +35,7 @@ bool Bomb::getIsBlast() const
     return (this->_isBlast);
 }
 
-std::pair<int, int> Bomb::getPosition()
+std::pair<int, int> Bomb::getPosition() const
 {
     return (this->_position);
 }

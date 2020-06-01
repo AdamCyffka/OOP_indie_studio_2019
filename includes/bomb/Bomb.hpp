@@ -28,7 +28,7 @@ class Bomb : public IEntity {
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
         void setPosition(std::pair<int, int>);
-        std::pair<int, int> getPosition();
+        std::pair<int, int> getPosition() const;
 
         void poseBomb();
         int canPoseBomb();
