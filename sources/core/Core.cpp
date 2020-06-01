@@ -15,14 +15,12 @@
 #include "MyEventReceiver.hpp"
 #include "Character.hpp"
 #include "Select.hpp"
-#include "Score.hpp"
 #include "Credits.hpp"
 #include "Help.hpp"
 #include "Pause.hpp"
 #include "Intro.hpp"
 #include "Save.hpp"
 #include "Load.hpp"
-#include "Game.hpp"
 #include "GameOptions.hpp"
 
 Core::Core()
@@ -150,9 +148,14 @@ Score *Core::getScore()
 	return _score;
 }
 
-GameCore *Core::getGame()
+GameCore *Core::getGameCore()
 {
 	return _gameCore;
+}
+
+Game *Core::getGame()
+{
+	return _game;
 }
 
 Map *Core::getMap()
@@ -296,7 +299,6 @@ void Core::gameCase()
 {
 	if (!_gameCore->isInit())
 		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
-	_game->run();
 	_gameCore->run();
 	hideGameLayers();
 	showGameLayer(_game);

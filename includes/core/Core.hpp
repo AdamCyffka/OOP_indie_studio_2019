@@ -14,6 +14,7 @@
 #include "CameraTravelManager.hpp"
 #include "Menu.hpp"
 #include "Score.hpp"
+#include "Game.hpp"
 #include "Select.hpp"
 #include "Options.hpp"
 #include "LoadMap.hpp"
@@ -22,7 +23,6 @@
 #include "GameCore.hpp"
 
 class GameOptions;
-class Game;
 class Load;
 class Save;
 class Intro;
@@ -87,7 +87,8 @@ class Core {
 		gameState getGState();
         Select *getSelect();
         Score *getScore();
-		GameCore *getGame();
+		GameCore *getGameCore();
+        Game *getGame();
         LoadMap *getLoadMap();
 		Map *getMap();
 		Music *getMusicEngine();

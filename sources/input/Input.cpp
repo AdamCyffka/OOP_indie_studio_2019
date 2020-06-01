@@ -38,7 +38,7 @@ bool Input::IsKeyDown(EKEY_CODE keyCode) const {
 		return KeyIsDown[keyCode];
 }
 
-void Input::player_one(Input receiver)
+void Input::player_one_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -68,23 +68,26 @@ void Input::player_one(Input receiver)
 			_playerInput[1] = None;
 		}
 	}
+}
 
-	if (receiver.IsKeyDown(irr::KEY_KEY_Z)) {
+void Input::player_one_keyboard(Input receiver, const SEvent& event)
+{
+	if (receiver.IsKeyDown(irr::KEY_KEY_Z) && (event.KeyInput.PressedDown == false)) {
         _playerInput[1] = Up;
-    } else if(receiver.IsKeyDown(irr::KEY_KEY_S)) {
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_S) && (event.KeyInput.PressedDown == false)) {
         _playerInput[1] = Down;
-    } else if(receiver.IsKeyDown(irr::KEY_KEY_Q)) {
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_Q) && (event.KeyInput.PressedDown == false)) {
         _playerInput[1] = Left;
-    } else if(receiver.IsKeyDown(irr::KEY_KEY_D)) {
+    } else if(receiver.IsKeyDown(irr::KEY_KEY_D) && (event.KeyInput.PressedDown == false)) {
         _playerInput[1] = Right;
-	} else if(receiver.IsKeyDown(irr::KEY_SPACE)) {
+	} else if(receiver.IsKeyDown(irr::KEY_SPACE) && (event.KeyInput.PressedDown == false)) {
         _playerInput[1] = Bomb;
     } else {
 		_playerInput[1] = None;
 	}
 }
 
-void Input::player_two(Input receiver)
+void Input::player_two_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -114,23 +117,27 @@ void Input::player_two(Input receiver)
 			_playerInput[2] = None;
 		}
 	}
+}
 
+void Input::player_two_keyboard(Input receiver, const SEvent& event)
+{
+	
 	if (receiver.IsKeyDown(irr::KEY_UP)) {
         _playerInput[2] = Up;
-    } else if (receiver.IsKeyDown(irr::KEY_DOWN)) {
+    } else if (receiver.IsKeyDown(irr::KEY_DOWN) && (event.KeyInput.PressedDown == false)) {
         _playerInput[2] = Down;
-    } else if (receiver.IsKeyDown(irr::KEY_LEFT)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_LEFT) && (event.KeyInput.PressedDown == false)) { 
         _playerInput[2] = Left;
-    } else if (receiver.IsKeyDown(irr::KEY_RIGHT)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_RIGHT) && (event.KeyInput.PressedDown == false)) { 
         _playerInput[2] = Right;
-	} else if (receiver.IsKeyDown(irr::KEY_ACCEPT)) {
+	} else if (receiver.IsKeyDown(irr::KEY_ACCEPT) && (event.KeyInput.PressedDown == false)) {
 		_playerInput[2] = Bomb;
     } else {
 		_playerInput[2] = None;
 	}
 }
 
-void Input::player_three(Input receiver)
+void Input::player_three_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -159,23 +166,27 @@ void Input::player_three(Input receiver)
 			_playerInput[3] = None;
 		}
 	}
+}
 
-	if (receiver.IsKeyDown(irr::KEY_KEY_Y)) {
+void Input::player_three_keyboard(Input receiver, const SEvent& event)
+{
+
+	if (receiver.IsKeyDown(irr::KEY_KEY_Y) && (event.KeyInput.PressedDown == false)) {
         _playerInput[3] = Up;
-    } else if (receiver.IsKeyDown(irr::KEY_KEY_H)) {
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_H) && (event.KeyInput.PressedDown == false)) {
         _playerInput[3] = Down;
-    } else if (receiver.IsKeyDown(irr::KEY_KEY_J)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_J) && (event.KeyInput.PressedDown == false)) { 
         _playerInput[3] = Left;
-    } else if (receiver.IsKeyDown(irr::KEY_KEY_G)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_G) && (event.KeyInput.PressedDown == false)) { 
         _playerInput[3] = Right;
-	} else if (receiver.IsKeyDown(irr::KEY_KEY_B)) {
+	} else if (receiver.IsKeyDown(irr::KEY_KEY_B) && (event.KeyInput.PressedDown == false)) {
 		_playerInput[3] = Bomb;
     } else {
 		_playerInput[3] = None;
 	}
 }
 
-void Input::player_four(Input receiver)
+void Input::player_four_joystick(Input receiver)
 {
 	core::array<SJoystickInfo> joystickInfo;
 	f32 moveHorizontal = 0.f;
@@ -206,22 +217,27 @@ void Input::player_four(Input receiver)
 		}
 	}
 
-	if (receiver.IsKeyDown(irr::KEY_KEY_Y)) {
+}
+
+void Input::player_four_keyboard(Input receiver, const SEvent& event)
+{
+	
+	if (receiver.IsKeyDown(irr::KEY_KEY_Y) && (event.KeyInput.PressedDown == false)) {
         _playerInput[4] = Up;
-    } else if (receiver.IsKeyDown(irr::KEY_KEY_H)) {
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_H) && (event.KeyInput.PressedDown == false)) {
         _playerInput[4] = Down;
-    } else if (receiver.IsKeyDown(irr::KEY_KEY_J)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_J) && (event.KeyInput.PressedDown == false)) { 
         _playerInput[4] = Left;
-    } else if (receiver.IsKeyDown(irr::KEY_KEY_G)) { 
+    } else if (receiver.IsKeyDown(irr::KEY_KEY_G) && (event.KeyInput.PressedDown == false)) { 
         _playerInput[4] = Right;
-	} else if (receiver.IsKeyDown(irr::KEY_KEY_B)) {
+	} else if (receiver.IsKeyDown(irr::KEY_KEY_B) && (event.KeyInput.PressedDown == false)) {
 		_playerInput[4] = Bomb;
     } else {
 		_playerInput[4] = None;
 	}	
 }
 
-basic_key Input::keyBoard (Input receiver)
+basic_key Input::keyBoard (Input receiver) // fonction tempo
 {
 	if (receiver.IsKeyDown(irr::KEY_F12))
 		exit(84);
@@ -253,19 +269,51 @@ bool Input::OnEvent(const SEvent& event)
     return false;
 }
 
-
-std::map<int, Key_mouvement> Input::getPlayerInput()
+void Input::detect_player(Input receiver, const SEvent& event)
 {
-    return (_playerInput);
+	if (receiver.IsKeyDown(irr::KEY_KEY_1) && _player[0] != Keyboard) {
+		_player[0] = Keyboard;
+	}
+
+	if (receiver.IsKeyDown(irr::KEY_KEY_2) && _player[1] != Keyboard) {
+		_player[1] = Keyboard;
+	}
+
+	if (receiver.IsKeyDown(irr::KEY_KEY_3) && _player[2] != Keyboard) {
+		_player[0] = Keyboard;
+	}
+
+	if (receiver.IsKeyDown(irr::KEY_KEY_4) && _player[3] != Keyboard) {
+		_player[0] = Keyboard;
+	}
+}
+
+std::map<int, Key_mouvement> Input::getPlayerInput(Input receiver, const SEvent& event)
+{
+	if (_player[0] == Keyboard) {
+		player_one_keyboard(receiver, event);
+	} else if (_player[1] == Controller) {
+		player_one_joystick(receiver);
+	} else {
+		_playerInput[1] = None;
+	}
+	return (_playerInput);
 }
 
 Input::Input()
 {
-	for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
+	for (u32 i=0; i < KEY_KEY_CODES_COUNT; ++i)
     	KeyIsDown[i] = false;
 	_playerInput[1] = None;
-	_playerInput[2] = None;
+	_playerInput[2] = Ia;
+	_playerInput[3] = Ia;
+	_playerInput[4] = Ia;
 	_keyIsPressed = false;
+	_player[0] = Keyboard; //tempo
+	_player[1] = No_device;
+	_player[2] = No_device;
+	_player[3] = No_device;
+
 }
 
 Input::~Input()
