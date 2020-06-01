@@ -45,7 +45,6 @@ void Character::setSize(f32 size)
 
 void Character::setPosition(core::vector3df position)
 {
-    std::cout << "Character::setPosition a été call avec comme param : " << position.X << ", " << position.Y << ", " << position.Z << std::endl;
     _meshNode->setPosition(position);
 }
 

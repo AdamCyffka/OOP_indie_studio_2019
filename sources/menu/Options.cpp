@@ -10,12 +10,12 @@
 
 Options::Options(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
-  _driver = driver;
-  _env = env;
-  _smgr = smgr;
+    _driver = driver;
+    _env = env;
+    _smgr = smgr;
 
-  loadTextures();
-  loadButtons();
+    loadTextures();
+    loadButtons();
 }
 
 void Options::loadTextures()
@@ -96,26 +96,26 @@ void Options::loadButtons()
     _images["sfxVolume"]->setImage(_textures["sfxVolume"]);
     _images["sfxVolume"]->setRelativePosition(irr::core::position2d<irr::s32>(1200, 600));
 
-  irr::core::dimension2d<u32> dim(1920, 1080);
-  _checkBox["fullScreen"] = _env->addCheckBox(false, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
+    irr::core::dimension2d<u32> dim(1920, 1080);
+    _checkBox["fullScreen"] = _env->addCheckBox(false, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
 }
 
 std::vector<Character *> Options::getPreviews()
 {
-  return {};
+    return {};
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Options::getButtons()
 {
-  return _buttons;
+    return _buttons;
 }
 
 std::map<std::string, irr::gui::IGUIImage *> Options::getImages()
 {
-  return _images;
+    return _images;
 }
 
 std::map<std::string, irr::gui::IGUICheckBox *> Options::getCheckBox()
 {
-  return _checkBox;
+    return _checkBox;
 }
