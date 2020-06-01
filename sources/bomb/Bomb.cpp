@@ -7,79 +7,88 @@
 
 #include "Bomb.hpp"
 
-Bomb::Bomb(Character *character, Map *map, Player *player): _radius(2), _delay(TIMER), _map(map), _character(character), _player(player), _isBlast(false)
+Bomby::Bomby(Character *character, Map *map, Player *player, AI *ai): _radius(2), _delay(TIMER), _map(map),
+_character(character), _player(player), _ai(ai), _isBlast(false)
 {
 }
 
-Bomb::~Bomb()
+Bomby::~Bomby()
 {
 }
 
-int	Bomb::getRadius() const
-{
-    return (this->_radius);
-}
-
-void Bomb::setRadius(int radius)
+void Bomby::setRadius(int radius)
 {
     this->_radius = radius;
 }
 
-void Bomb::setIsBlast(bool isBlast)
+int	Bomby::getRadius() const
+{
+    return (this->_radius);
+}
+
+void Bomby::setIsBlast(bool isBlast)
 {
     this->_isBlast = isBlast;
 }
 
-bool Bomb::getIsBlast() const
+bool Bomby::getIsBlast() const
 {
     return (this->_isBlast);
 }
 
-std::pair<int, int> Bomb::getPosition() const
+std::pair<int, int> Bomby::getPosition() const
 {
     return (this->_position);
 }
 
-void Bomb::setPosition(std::pair<int, int> position)
+void Bomby::setPosition(std::pair<int, int> position)
 {
     this->_position = position;
 }
 
-bool Bomb::addExplosion(bool inGame)
+bool Bomby::addExplosion(bool inGame)
 {
-    if (inGame == true) { // pas finis...
+    if (inGame == true) { // mis en pause !...
         return (true);
     }
     return (false);
 }
 
-bool Bomb::canPoseBomb()
+bool Bomby::canPoseBomb()
 {
-    if (blockState::empty) {
+    //if ((_map->getMap() == blockState::empty) && (_map->getBombMap() == bombState::clear)) { // Erreur bad used
+    //    return (true);
+    //} else {
+    //    return (false);
+    //}
+    return (true);
+}
+
+bool Bomby::hasEnoughBombToPose()
+{
+    if (_ai->getBombAmount() > 0 ) {
         return (true);
     } else {
         return (false);
     }
 }
 
-bool Bomb::hasEnoughBombToPose()
+void Bomby::poseBomb()
 {
-    if (_player->getBombAmount() > 0 ) {
-        return (true);
-    } else {
-        return (false);
+    //std::cout << "User call poseBomb" << std::endl;
+    if (canPoseBomb() == true && hasEnoughBombToPose() == true) {
+        //std::cout << "Check right - can pose bomb" << std::endl;
+        setIsBlast(true);
+        if (getIsBlast() == true) {
+            //std::this_thread::sleep_until(std::chrono::system_clock::now() + 3s); // probleme est que durant 3s tout le programme est en standBY (dois trouver une autre facon de le faire)
+            //appeler l'animation de bomb et agir sur la map!
+            //std::cout << "BAM!!!" << std::endl;
+            setIsBlast(false);
+        }
     }
 }
 
-void Bomb::poseBomb()
+bool Bomby::isKilledByBomb()
 {
-    setIsBlast(true);
-    if (canPoseBomb() == true && hasEnoughBombToPose() == true && getIsBlast() == true) {
-        _map->printMap();
-    }
-}
-
-bool Bomb::isKilledByBomb()
-{
-    return (false);
+    return (false); // pas encore implementer!
 }
