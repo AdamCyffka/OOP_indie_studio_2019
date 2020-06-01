@@ -10,6 +10,7 @@
 
 #include "IEntity.hpp"
 #include "Map.hpp"
+#include "hitbox.hpp"
 
 class AI : public IEntity
 {
@@ -42,8 +43,6 @@ public:
 	bool isAlive() final;
 	Key_mouvement getInput() final;
 	void setInput(Key_mouvement input) final;
-
-	void setPosition(std::pair<int, int>);
 
 private:
 	bool _isAlive;

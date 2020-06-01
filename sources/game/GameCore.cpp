@@ -64,7 +64,7 @@ void GameCore::run()
 	if (_isPaused)
 		return;
 	for (auto it : _entities) {
-		it->setInput(Right);
+		it->setInput(Up);
 		it->run();
 	}
 }

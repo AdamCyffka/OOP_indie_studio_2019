@@ -10,6 +10,7 @@
 
 #include "Map.hpp"
 #include "IEntity.hpp"
+#include "hitbox.hpp"
 
 class GameCore;
 

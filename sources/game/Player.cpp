@@ -7,9 +7,10 @@
 
 #include "Player.hpp"
 #include "GameCore.hpp"
+//#include "hitbox.cpp" //TODO REMOVE
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, GameCore *gameCore) : _isAlive(false), _entityNumber(entityNumber), _map(map), _gameCore(gameCore),
-	_score(0), _winNumber(0), _character(character), _input(input), _firePower(1), _bombAmount(1), _speed(1), _wallPass(true), _bombPass(false)
+	_score(0), _winNumber(0), _character(character), _input(input), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
 }
 
@@ -20,13 +21,29 @@ void Player::kill()
 
 void Player::run()
 {
-	//+x = haut
-	//-x = bas
-	//+z = gauche
-	//-z = droite
 	//	std::cout << _map->getPlayerPosition(_entityNumber).first << " " << _map->getPlayerPosition(_entityNumber).second << std::endl;
 	if (isAlive()) {
-		auto pos = getCharacter()->getPosition();
+		switch (_input) {
+		case Right:
+			moveTo(east);
+			break;
+		case Left:
+			moveTo(west);
+			break;
+		case Up:
+			moveTo(north);
+			break;
+		case Down:
+			moveTo(south);
+			break;
+		case Bomb:
+			putBomb();
+			break;
+		case Ia:
+			break;
+		case None:
+			break;
+		}
 	}
 }
 
@@ -121,8 +138,53 @@ Character *Player::getCharacter()
 
 void Player::moveTo(side direction)
 {
-	if (_character->getOrientation() != direction)
-		_character->setOrientation(direction);
+	//+x = haut
+	//-x = bas
+	//+z = gauche
+	//-z = droite
+	irr::core::vector3df pos = _character->getPosition();
+	switch (direction) {
+	case north:
+		if (canMove(this, _map, north)) {
+			if (_character->getOrientation() != west)
+				_character->setOrientation(west);
+			if (_character->getState() != Character::running)
+				_character->setState(Character::running);
+			pos.X += 0.01f * _speed;
+			_character->setPosition(pos);
+		}
+		break;
+	case south:
+		if (canMove(this, _map, south)) {
+			if (_character->getOrientation() != east)
+				_character->setOrientation(east);
+			if (_character->getState() != Character::running)
+				_character->setState(Character::running);
+			pos.X -= 0.01f * _speed;
+			_character->setPosition(pos);
+		}
+		break;
+	case east:
+		if (canMove(this, _map, east)) {
+			if (_character->getOrientation() != north)
+				_character->setOrientation(north);
+			if (_character->getState() != Character::running)
+				_character->setState(Character::running);
+			pos.Z -= 0.01f * _speed;
+			_character->setPosition(pos);
+		}
+		break;
+	case west:
+		if (canMove(this, _map, west)) {
+			if (_character->getOrientation() != south)
+				_character->setOrientation(south);
+			if (_character->getState() != Character::running)
+				_character->setState(Character::running);
+			pos.Z += 0.03f * _speed;
+			_character->setPosition(pos);
+		}
+		break;
+	}
 }
 
 void Player::setIsAlive(bool isAlive)
