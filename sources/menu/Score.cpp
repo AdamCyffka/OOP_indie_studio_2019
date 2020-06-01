@@ -110,5 +110,5 @@ std::map<std::string, irr::gui::IGUIImage *> Score::getImages()
 
 std::map<std::string, irr::gui::IGUICheckBox *> Score::getCheckBox()
 {
-  return _checkBox;
+    return _checkBox;
 }

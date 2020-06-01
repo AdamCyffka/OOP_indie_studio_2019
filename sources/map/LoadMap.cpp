@@ -167,7 +167,7 @@ void LoadMap::run()
 
 	// light core
 	irr::scene::IParticleSystemSceneNode *ps = _smgr->addParticleSystemSceneNode(false);
-	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+	irr::scene::IParticleEmitter *em = ps->createBoxEmitter(
         core::aabbox3d<f32>(-3, 0, -3, 3, 1, 3),
         core::vector3df(0.0f, 0.10f, 0.0f),
         80, 100,
@@ -179,10 +179,11 @@ void LoadMap::run()
 	em->drop();
 	ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
-	ps->setMaterialTexture(0, _driver->getTexture("resources/images/fx/fireball.bmp"));
+	irr::video::ITexture *fireBall = _driver->getTexture("resources/images/fx/fireball.bmp");
+	ps->setMaterialTexture(0, fireBall);
 	ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	core = _smgr->createFlyCircleAnimator(core::vector3df(0, 0, 0), 70.0f,
-            0.001f, core::vector3df(0.2f, 0.9f, 0.f));
+		0.001f, core::vector3df(0.2f, 0.9f, 0.f));
     core->drop();
 
 	// gameMap

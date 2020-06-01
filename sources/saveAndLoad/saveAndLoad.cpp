@@ -76,7 +76,7 @@ void savePlayerMap(Core &core, pt::ptree *root)
 
 void savePlayer(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     IEntity *entity = entities[playerNB];
     pt::ptree player;
 
@@ -142,7 +142,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
 	core.hideGameLayers();
-	core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+	core.getGameCore()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
 }
 
 //END SAVE GAME
@@ -226,7 +226,7 @@ void loadPlayerMap(Core &core, pt::ptree *root)
 
 void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     const std::vector<Character *> &characters = core.getSelect()->getPreviews();
     IEntity *entity = entities[playerNB];
     IEntity *entitySaved;
@@ -238,7 +238,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     if (input == Key_mouvement::Ia)
         entity = new AI(characters[playerNB], playerNB + 1, core.getMap());
     else
-        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getGame());
+        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getGameCore());
     entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entity->setBombPass(root->get<bool>(path + "bombPass", 0));
     entity->setWallPass(root->get<bool>(path + "wallPass", 0));
@@ -253,7 +253,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 
 void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGame()->getEntities();
+    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
     Character *character = entities[playerNB]->getCharacter();
     std::string path = "player" + std::to_string(playerNB) + ".character.";
 
@@ -336,7 +336,7 @@ void checkSkins(Core &core, pt::ptree *root)
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
     //INIT GAME JUST IN CASE
-    core.getGame()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+    core.getGameCore()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
 
     pt::ptree root;
     try
@@ -363,7 +363,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     }
     catch (std::exception const &msg)
     {
-        core.getGame()->reset();
+        core.getGameCore()->reset();
         std::cerr << msg.what() << std::endl;
         return;
     }
