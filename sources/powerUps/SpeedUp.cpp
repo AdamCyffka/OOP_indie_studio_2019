@@ -7,7 +7,7 @@
 
 #include "SpeedUp.hpp"
 
-SpeedUp::SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z)
+SpeedUp::SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
     _driver = driver;
     _env = env;
@@ -16,7 +16,7 @@ SpeedUp::SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *drive
     irr::scene::ISceneNode *speed;
     irr::scene::ISceneNodeAnimator *anim;
     speed = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/speeds/speedUp.obj"));
-    speed->setPosition({x, 310, z});
+    speed->setPosition(pos);
     speed->setScale({5, 5, 5});
     if (speed)
         speed->setMaterialFlag(irr::video::EMF_LIGHTING, false);

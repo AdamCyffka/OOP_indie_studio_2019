@@ -54,6 +54,10 @@ void Game::loadTextures()
 
 void Game::loadButtons()
 {
+    printUpLeft();
+    printUpRight();
+    printDownLeft();
+    printDownRight();
 }
 
 void Game::printUpLeft()
@@ -326,10 +330,6 @@ void Game::printDownRight()
 
 void Game::run()
 {
-    printUpLeft();
-    printUpRight();
-    printDownLeft();
-    printDownRight();
 }
 
 std::vector<Character *> Game::getPreviews()

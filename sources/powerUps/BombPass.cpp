@@ -7,7 +7,7 @@
 
 #include "BombPass.hpp"
 
-BombPass::BombPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z)
+BombPass::BombPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
     _driver = driver;
 	_env = env;
@@ -16,7 +16,7 @@ BombPass::BombPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *dri
     irr::scene::ISceneNode *bomb;
 	irr::scene::ISceneNodeAnimator *anim;
     bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/bombs/bombPass.obj"));
-	bomb->setPosition({x, 310, z});
+	bomb->setPosition(pos);
 	bomb->setScale({4, 4, 4});
 	if (bomb)
 		bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);

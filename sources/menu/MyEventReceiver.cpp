@@ -167,6 +167,14 @@ bool MyEventReceiver::OnEvent(const irr::SEvent &event)
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
         if(event.KeyInput.Key == KEY_ESCAPE && event.KeyInput.PressedDown == false && _core.getGState() == Core::game)
             _core.setLGState(_core.getLGState() == Core::gameGame ? Core::gamePause : Core::gameGame);
+        if(event.KeyInput.Key == KEY_KEY_P && event.KeyInput.PressedDown == false && _core.getGState() == Core::game) { // pour Valentin
+            _core.getGame()->reset();
+            _core.setGState(Core::menu);
+            _core.setLState(Core::menuScore);
+            _core.getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
+            _core.getScore()->updateRanking({{3, 3}, {1, 2}, {0, 1}, {2, 0}});
+            _core.getScore()->spawnEntities();
+        }
 		_keyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 		return true;
 	}

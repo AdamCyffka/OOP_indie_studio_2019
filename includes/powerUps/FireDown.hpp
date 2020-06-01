@@ -12,7 +12,7 @@
 
 class FireDown : public IPowerUps {
     public:
-        explicit FireDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
+        explicit FireDown(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~FireDown() = default;
 
         void spawn();

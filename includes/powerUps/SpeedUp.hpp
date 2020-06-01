@@ -12,7 +12,7 @@
 
 class SpeedUp : public IPowerUps {
     public:
-        explicit SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, float x, float z);
+        explicit SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~SpeedUp() = default;
 
         void spawn();
