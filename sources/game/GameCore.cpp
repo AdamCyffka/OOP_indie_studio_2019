@@ -53,8 +53,10 @@ void GameCore::init(const std::vector<Character *> characters, std::map<int, Key
 
 void GameCore::run()
 {
-	if (gameOver()) //toggle to skip game part
+	if (gameOver())
 	{
+		_core->getMusicEngine()->stop("resources/music/game.mp3", false);
+		_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
 		_core->setGState(Core::menu);
 		_core->setLState(Core::menuScore);
 		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
