@@ -15,7 +15,7 @@
 class AI : public IEntity
 {
 public:
-	AI(Character *, int, Map *);
+	AI(Character *, int, Map *, std::vector<IEntity *> entities);
 
 	void kill() final;
 	void run(Key_mouvement) final;
@@ -51,6 +51,7 @@ private:
 	int _winNumber;
 	Character *_character;
 	Map *_map;
+	std::vector<IEntity *> _entities;
 
 	int _firePower;
 	int _bombAmount;

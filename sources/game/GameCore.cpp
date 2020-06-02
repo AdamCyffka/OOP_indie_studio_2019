@@ -39,7 +39,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
-			entity = new AI(characters.at(i - 1), i, _map);
+			entity = new AI(characters.at(i - 1), i, _map, _entities);
 		else
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this);
 		_entities.push_back(entity);
