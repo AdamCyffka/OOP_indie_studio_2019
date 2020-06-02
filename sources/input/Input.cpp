@@ -10,6 +10,12 @@
 
 using namespace irr;
 
+
+void Input::set_controller(int player, device devices)
+{
+	_player[player - 1] = devices;
+}
+
 bool Input::IsKeyPressed() const
 {
 	return _keyIsPressed;
