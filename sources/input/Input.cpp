@@ -311,7 +311,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	} else if (_player[1] == Controller) {
 		player_two_joystick(receiver);
 	} else {
-		_playerInput[1] = Ia;
+		_playerInput[2] = Ia;
 	}
 
 	if (_player[2] == Keyboard) {
@@ -319,7 +319,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	} else if (_player[2] == Controller) {
 		player_three_joystick(receiver);
 	} else {
-		_playerInput[2] = Ia;
+		_playerInput[3] = Ia;
 	}
 
 	if (_player[3] == Keyboard) {
@@ -327,9 +327,9 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	} else if (_player[3] == Controller) {
 		player_three_joystick(receiver);
 	} else {
-		_playerInput[3] = Ia;
+		_playerInput[4] = Ia;
 	}
-	
+
 	return (true);
 }
 
