@@ -42,7 +42,8 @@ void Player::run(Key_mouvement input)
 		case Ia:
 			break;
 		case None:
-			_character->setState(Character::idle);
+			if (_character->getState() != Character::idle)
+				_character->setState(Character::idle);
 			break;
 		}
 	}
@@ -154,7 +155,6 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.X += 0.01f * _speed;
 			_character->setPosition(pos);
-			std::cout << "haut" << std::endl;
 		}
 		break;
 	case south:
@@ -165,7 +165,6 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.X -= 0.01f * _speed;
 			_character->setPosition(pos);
-			std::cout << "bas" << std::endl;
 		}
 		break;
 	case east:
@@ -176,7 +175,6 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.Z -= 0.01f * _speed;
 			_character->setPosition(pos);
-			std::cout << "droite" << std::endl;
 		}
 		break;
 	case west:
@@ -185,9 +183,8 @@ void Player::moveTo(side direction)
 				_character->setOrientation(south);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.Z += 0.03f * _speed;
+			pos.Z += 0.01f * _speed;
 			_character->setPosition(pos);
-			std::cout << "gauche" << std::endl;
 		}
 		break;
 	}

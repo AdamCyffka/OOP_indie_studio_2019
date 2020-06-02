@@ -39,7 +39,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
-			entity = new AI(characters.at(i - 1), i, _map);
+			entity = new AI(characters.at(i - 1), i, _map, _entities);
 		else
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this);
 		_entities.push_back(entity);
@@ -53,8 +53,10 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 
 void GameCore::run()
 {
-	if (gameOver()) //toggle to skip game part
+	if (gameOver())
 	{
+		_core->getMusicEngine()->stop("resources/music/game.mp3", false);
+		_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
 		_core->setGState(Core::menu);
 		_core->setLState(Core::menuScore);
 		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
@@ -65,7 +67,10 @@ void GameCore::run()
 		return;
 	auto inputs = _core->getInput()->getPlayerInputs();
 	for (int i = 1; i <= 4; ++i) {
-		_entities.at(i - 1)->run(inputs.at(i));
+		if (_entities.at(i - 1)->getInput() == Key_mouvement::Ia) {
+			static_cast<AI*>(_entities.at(i - 1))->run(inputs.at(i), _entities);
+		} else
+			_entities.at(i - 1)->run(inputs.at(i));
 	}
 }
 

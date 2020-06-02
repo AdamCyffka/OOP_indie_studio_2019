@@ -5,9 +5,12 @@
 ** AI
 */
 
-#include "Ai.hpp"
+#pragma warning(disable : 4244)
 
-AI::AI(Character *character, int entityNumber, Map *map) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+#include "Ai.hpp"
+#include "hitbox.hpp"
+
+AI::AI(Character *character, int entityNumber, Map *map, std::vector<IEntity *> entities) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _entities(entities), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
 }
 
@@ -107,6 +110,54 @@ int AI::getWinNumber()
 Character *AI::getCharacter()
 {
 	return _character;
+}
+
+bool AI::isSafe()
+{
+	return 1;
+}
+
+bool AI::canMoveToTarget(std::vector<IEntity *> entities)
+{
+	for (auto it : entities) {
+		if (it->getEntityNumber() != this->getEntityNumber()) {
+			if (it->getCharacter()->getPosition().X == _character->getPosition().X) {
+				int x = (_character->getPosition().X - MAP_DEFAULT_X) / -10;
+				//std::cout << "x: " << x << std::endl;
+			}
+			if (it->getCharacter()->getPosition().Z == _character->getPosition().Z) {
+				int z = (_character->getPosition().Z - MAP_DEFAULT_Z) / -10;
+				//std::cout << "z: " << z << std::endl;
+			}
+		}
+	}
+	return 0;
+}
+
+void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
+{
+	this->moveTo(side::west);
+
+	if (getEntityNumber() == 3)
+	{
+		// J'appelle la fonction ici seulement pour lakitu
+		squareWherePlayerIs(this, _map);
+		if (this->isSafe())
+		{
+			if (canMoveToTarget(entities))
+			{
+				return;
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+	}	
 }
 
 void AI::moveTo(side side)
