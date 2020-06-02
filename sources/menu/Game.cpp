@@ -25,31 +25,31 @@ Game::Game(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr
 void Game::loadTextures()
 {
     _textures["mario"] = _driver->getTexture("resources/images/characters/MK8_Icon_Mario.png");
-	if (_textures.find("mario") != _textures.end() && !_textures["mario"])
+	if (_textures.find("mario") == _textures.end() || !_textures["mario"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Mario.png");
     _textures["koopa"] = _driver->getTexture("resources/images/characters/MK8_Icon_Koopa_Troopa.png");
-	if (_textures.find("koopa") != _textures.end() && !_textures["koopa"])
+	if (_textures.find("koopa") == _textures.end() || !_textures["koopa"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Koopa_Troopa.png");
     _textures["lakitu"] = _driver->getTexture("resources/images/characters/MK8_Icon_Lakitu.png");
-	if (_textures.find("lakitu") != _textures.end() && !_textures["lakitu"])
+	if (_textures.find("lakitu") == _textures.end() || !_textures["lakitu"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Lakitu.png");
     _textures["dr_peach"] = _driver->getTexture("resources/images/characters/MK8_Icon_Peach.png");
-	if (_textures.find("dr_peach") != _textures.end() && !_textures["dr_peach"])
+	if (_textures.find("dr_peach") == _textures.end() || !_textures["dr_peach"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Peach.png");
     _textures["waluigi"] = _driver->getTexture("resources/images/characters/MK8_Icon_Waluigi.png");
-	if (_textures.find("waluigi") != _textures.end() && !_textures["waluigi"])
+	if (_textures.find("waluigi") == _textures.end() || !_textures["waluigi"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Waluigi.png");
     _textures["yellow_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Yellow.png");
-	if (_textures.find("yellow_toad") != _textures.end() && !_textures["yellow_toad"])
+	if (_textures.find("yellow_toad") == _textures.end() || !_textures["yellow_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Yellow.png");
     _textures["blue_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Bleu.png");
-	if (_textures.find("blue_toad") != _textures.end() && !_textures["blue_toad"])
+	if (_textures.find("blue_toad") == _textures.end() || !_textures["blue_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Bleu.png");
     _textures["green_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Green.png");
-	if (_textures.find("green_toad") != _textures.end() && !_textures["green_toad"])
+	if (_textures.find("green_toad") == _textures.end() || !_textures["green_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Green.png");
     _textures["red_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Red.png");
-	if (_textures.find("red_toad") != _textures.end() && !_textures["red_toad"])
+	if (_textures.find("red_toad") == _textures.end() || !_textures["red_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Red.png");
 }
 
