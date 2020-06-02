@@ -29,29 +29,64 @@ bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
 	return overLap(x, z, xBlock, zBlock) >= 20.0;
 }
 
+Point squareWherePlayerIs(IEntity *entity, Map *map)
+{
+	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
+	Point point = { 0, 0 };
+	float overlap = 0.0;
+
+	for (unsigned int i = 0; i < map->getMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
+		{
+			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
+			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
+			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z)
+				&& ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))
+					|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock, 10.0)))
+			{
+				if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock) > overlap)
+				{
+					//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
+					overlap = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock);
+					point = { int(i) , int(j) };
+				}
+			}
+		}
+	}
+	//print de x et z et le pourcentage du perso dans le bloc pour le débug
+	std::cout << point.x << " " << point.y << " " << overlap << std::endl;
+	return point;
+}
+
 bool getNextPosIsValid(const irr::core::vector3df &characterPosition, Map *map, unsigned int i, unsigned int j, side direction, bool wallPass, float xBlock, float zBlock)
 {
-	switch (direction) {
+	switch (direction)
+	{
 	case north:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) {
+		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))
+		{
 			if (map->getMap()[i - 1][j] == unbreakable || (map->getMap()[i - 1][j] == breakable && !wallPass))
 				return false;
 		}
 		break;
 	case south:
-		if (isInside(characterPosition.X - 1.0f, characterPosition.Z, xBlock, zBlock, 10.0)) {
+		if (isInside(characterPosition.X - 1.0f, characterPosition.Z, xBlock, zBlock, 10.0))
+		{
 			if (map->getMap()[i + 1][j] == unbreakable || (map->getMap()[i + 1][j] == breakable && !wallPass))
 				return false;
 		}
 		break;
 	case east:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) {
+		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))
+		{
 			if (map->getMap()[i][j + 1] == unbreakable || (map->getMap()[i][j + 1] == breakable && !wallPass))
 				return false;
 		}
 		break;
 	case west:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) {
+		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))
+		{
 			if (map->getMap()[i][j - 1] == unbreakable || (map->getMap()[i][j - 1] == breakable && !wallPass))
 				return false;
 		}
@@ -64,8 +99,10 @@ bool canMove(IEntity *entity, Map *map, side direction)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
 
-	for (unsigned int i = 0; i < map->getMap().size(); ++i) {
-		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j) {
+	for (unsigned int i = 0; i < map->getMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
+		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
 			//x + (-10 * i) = position X inGame [1][1] = -450
@@ -76,16 +113,17 @@ bool canMove(IEntity *entity, Map *map, side direction)
 			{
 				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is in position " << i << " " << j << std::endl;
 			}
-			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z) // Si le bloc est sur un des axes du character
-				&& ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))               //check le côté haut gauche
-				|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock, 10.0))) //check le côté bas droit
+			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z)							// Si le bloc est sur un des axes du character
+				&& ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))				//check le côté haut gauche
+					|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock, 10.0))) //check le côté bas droit
 			{
-				if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock)) {//Check Hitbox for bombs
-//					std::cout << "Hitbox touch" << std::endl;
+				if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock))
+				{	//Check Hitbox for bombs
+					//					std::cout << "Hitbox touch" << std::endl;
 				}
 				if (!getNextPosIsValid(characterPosition, map, i, j, direction, entity->getWallPass(), xBlock, zBlock)) //check that next block is walkable
 					return false;
-//				std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is inside: " << i << " " << j << std::endl;
+				//				std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is inside: " << i << " " << j << std::endl;
 			}
 		}
 	}

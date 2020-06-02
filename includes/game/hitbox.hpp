@@ -17,6 +17,11 @@
 #define MAP_DEFAULT_Y 308.0f
 #define MAP_DEFAULT_Z 790.0f
 
+struct Point { 
+    int x, y; 
+}; 
+
 bool canMove(IEntity *characterPosition, Map *map, side direction);
+Point squareWherePlayerIs(IEntity *entity, Map *map);
 
 #endif

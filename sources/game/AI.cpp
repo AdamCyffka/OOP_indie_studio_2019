@@ -137,8 +137,11 @@ bool AI::canMoveToTarget(std::vector<IEntity *> entities)
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	this->moveTo(side::west);
+
 	if (getEntityNumber() == 3)
 	{
+		// J'appelle la fonction ici seulement pour lakitu
+		squareWherePlayerIs(this, _map);
 		if (this->isSafe())
 		{
 			if (canMoveToTarget(entities))
