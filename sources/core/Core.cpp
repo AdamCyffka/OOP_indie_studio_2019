@@ -297,8 +297,9 @@ void Core::splashCase()
 
 void Core::gameCase()
 {
-	if (!_gameCore->isInit())
-		_gameCore->init(_select->getPreviews(), _inputs->getPlayerInput(), _select->getEntityTypes());
+	if (!_gameCore->isInit()) {
+		_gameCore->init(_select->getPreviews(), _select->getEntityTypes());
+	}
 	_gameCore->run();
 	hideGameLayers();
 	showGameLayer(_game);

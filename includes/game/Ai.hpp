@@ -10,14 +10,16 @@
 
 #include "IEntity.hpp"
 #include "Map.hpp"
+#include "hitbox.hpp"
 
 class AI : public IEntity
 {
 public:
-	AI(Character *, int, Map *);
+	AI(Character *, int, Map *, std::vector<IEntity *> entities);
 
 	void kill() final;
-	void run() final;
+	void run(Key_mouvement) final;
+	void run(Key_mouvement input, std::vector<IEntity *> entities);
 	void putBomb() final;
 
 	void setFirePower(int) final;
@@ -43,7 +45,8 @@ public:
 	Key_mouvement getInput() final;
 	void setInput(Key_mouvement input) final;
 
-	void setPosition(std::pair<int, int>);
+	bool isSafe();
+	bool canMoveToTarget(std::vector<IEntity *> entities);
 
 private:
 	bool _isAlive;
@@ -52,6 +55,8 @@ private:
 	int _winNumber;
 	Character *_character;
 	Map *_map;
+	std::vector<IEntity *> _entities;
+	Key_mouvement wantedMovement;
 
 	int _firePower;
 	int _bombAmount;

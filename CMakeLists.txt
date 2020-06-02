@@ -32,6 +32,7 @@ add_executable(bomberman
         sources/travel/StraightCameraTravel.cpp
         sources/travel/CameraTravelManager.cpp
         sources/input/Input.cpp
+        sources/game/hitbox.cpp
         sources/game/Player.cpp
         sources/game/AI.cpp
         sources/game/GameCore.cpp
@@ -63,7 +64,6 @@ include_directories(includes
         includes/game/
         includes/saveAndLoad/
         )
-
 
 set_target_properties(bomberman PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}

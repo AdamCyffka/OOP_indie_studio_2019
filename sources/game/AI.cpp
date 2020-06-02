@@ -5,76 +5,20 @@
 ** AI
 */
 
+#pragma warning(disable : 4244)
+
 #include "Ai.hpp"
+#include "hitbox.hpp"
 
-int isInside(float x, float z, float xBlock, float zBlock)
+AI::AI(Character *character, int entityNumber, Map *map, std::vector<IEntity *> entities) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _entities(entities), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
-	if (x < xBlock && x > xBlock - 10.0)
-		return 1;
-	if (z < zBlock && z > zBlock - 10.0)
-		return 1;
-	return 0;
-}
-
-float overLap(float x, float z, float xBlock, float zBlock)
-{
-	float x_overLap = std::min(x - 10.0, xBlock - 10.0) - std::max(x, xBlock);
-	float z_overLap = std::min(z - 10.0, zBlock - 10.0) - std::max(z, zBlock);
-
-	return (200 - (x_overLap * z_overLap));
-}
-
-bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
-{
-	if (overLap(x, z, xBlock, zBlock) >= 20.0) //20 is the pourcent of the character's body you need for the hitbox
-		return true;
-	return false;
-}
-
-int canMove(core::vector3df characterPosition, Map *map)
-{
-	int x = -440;
-	int y = 308; //Toujours pareil on le laisse ou on le mets en dur ?
-	int z = 790;
-
-	for (int i = 0; i < map->getMap().size(); ++i)
-	{
-		for (int j = 0; j < map->getMap()[i].size(); ++j)
-		{
-			float xBlock = x + (-10 * i);
-			float zBlock = z + (-10 * j);
-			//x + (-10 * i) = position X inGame [1][1] = -450
-			//z + (-10 * j) = position Z inGame [1][1] = 780
-
-			//Pour les collisions je pars du principe que le x et Z sont en haut à gauche de l'élèment
-			if (characterPosition.X == xBlock && characterPosition.Z == zBlock) // si == alors c'est good le character n'est aps dans le bloc
-			{
-				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is in position " << i << " " << j << std::endl;
-			}
-			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z) // Si le bloc et sur un des axes du character
-				&&
-				((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock))			   //check le côté haut gauche
-				 || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock))) //check le côté bas droit
-			{
-				if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock)) //Check Hitbox for bombs
-					std::cout << "Hitbox touch" << std::endl;
-				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is inside: " << i << " " << j << std::endl;
-			}
-		}
-	}
-	return 1;
-}
-
-AI::AI(Character *character, int entityNumber, Map *map) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(1), _wallPass(false), _bombPass(false)
-{
-	std::cout << "created AI" << std::endl;
 }
 
 void AI::kill()
 {
 }
 
-void AI::run()
+void AI::run(Key_mouvement input)
 {
 	this->moveTo(side::west);
 }
@@ -168,11 +112,56 @@ Character *AI::getCharacter()
 	return _character;
 }
 
+bool AI::isSafe()
+{
+	return 1;
+}
+
+bool AI::canMoveToTarget(std::vector<IEntity *> entities)
+{
+	for (auto it : entities) {
+		if (it->getEntityNumber() != this->getEntityNumber()) {
+			if (it->getCharacter()->getPosition().X == _character->getPosition().X) {
+				int x = (_character->getPosition().X - MAP_DEFAULT_X) / -10;
+				//std::cout << "x: " << x << std::endl;
+			}
+			if (it->getCharacter()->getPosition().Z == _character->getPosition().Z) {
+				int z = (_character->getPosition().Z - MAP_DEFAULT_Z) / -10;
+				//std::cout << "z: " << z << std::endl;
+			}
+		}
+	}
+	return 0;
+}
+
+void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
+{
+	this->moveTo(side::west);
+	if (getEntityNumber() == 3)
+	{
+		if (this->isSafe())
+		{
+			if (canMoveToTarget(entities))
+			{
+				return;
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+	}	
+}
+
 void AI::moveTo(side side)
 {
 	if (getEntityNumber() == 2)
 	{
-		canMove(_character->getPosition(), _map);
+		canMove(this, _map, side);
 		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-460.0f, 308.0f, 620.0f))
 		{
 			_character->moveTo(core::vector3df(-460.0f, 308.0f, 620.0f), 5000);

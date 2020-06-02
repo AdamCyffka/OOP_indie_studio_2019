@@ -10,16 +10,16 @@
 
 #include "Map.hpp"
 #include "IEntity.hpp"
+#include "hitbox.hpp"
 
 class GameCore;
 
 class Player : public IEntity {
     public:
         Player(Character *, const Key_mouvement &, int, Map *, GameCore *);
-		Player() = default;
 
 		void kill() final;
-	 	void run() final;
+	 	void run(Key_mouvement) final;
 	 	void putBomb() final;
 
 		void setFirePower(int) final;
