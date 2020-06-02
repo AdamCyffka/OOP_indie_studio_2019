@@ -46,7 +46,7 @@ class Input
     public:
         bool IsKeyPressed() const;
         
-        void Input::reset();
+        void reset();
         std::map<int, Key_mouvement> getPlayerInputs();
 		const SEvent::SJoystickEvent &GetJoystickStatePone(void) const;
         const SEvent::SJoystickEvent &GetJoystickStatePtwo(void) const;
