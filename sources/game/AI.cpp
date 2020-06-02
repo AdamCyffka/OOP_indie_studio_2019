@@ -9,6 +9,7 @@
 
 #include "Ai.hpp"
 #include "hitbox.hpp"
+#include "Bomb.hpp"
 
 AI::AI(Character *character, int entityNumber, Map *map, std::vector<IEntity *> entities) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _entities(entities), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
@@ -25,6 +26,9 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
+	Bomby *bomb;
+
+	bomb->poseBomb();
 }
 
 void AI::setFirePower(int firePower)

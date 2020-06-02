@@ -93,7 +93,6 @@ void Bomby::poseBomb()
             setIsBlast(true); // active l'explosion
             if (getIsBlast() == true) {
                 //anim explosion
-                std::cout << "BAM!!!" << std::endl;
                 setIsBlast(false); // explosion fini
             }
         }
