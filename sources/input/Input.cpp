@@ -69,15 +69,15 @@ void Input::player_one_joystick(Input *receiver)
 
 void Input::player_one_keyboard(Input *receiver, const SEvent& event)
 {
-	if (receiver->IsKeyDown(irr::KEY_KEY_Z) && (event.KeyInput.PressedDown == false)) {
-        _playerInput[1] = Up;
-    } else if(receiver->IsKeyDown(irr::KEY_KEY_S) && (event.KeyInput.PressedDown == false)) {
+	if (receiver->IsKeyDown(irr::KEY_KEY_Z)) {
+	    _playerInput[1] = Up;
+    } else if(receiver->IsKeyDown(irr::KEY_KEY_S)) {
         _playerInput[1] = Down;
-    } else if(receiver->IsKeyDown(irr::KEY_KEY_Q) && (event.KeyInput.PressedDown == false)) {
+    } else if(receiver->IsKeyDown(irr::KEY_KEY_Q)) {
         _playerInput[1] = Left;
-    } else if(receiver->IsKeyDown(irr::KEY_KEY_D) && (event.KeyInput.PressedDown == false)) {
+    } else if(receiver->IsKeyDown(irr::KEY_KEY_D)) {
         _playerInput[1] = Right;
-	} else if(receiver->IsKeyDown(irr::KEY_SPACE) && (event.KeyInput.PressedDown == false)) {
+	} else if(receiver->IsKeyDown(irr::KEY_SPACE)) {
         _playerInput[1] = Bomb;
     } else {
 		_playerInput[1] = None;
@@ -285,10 +285,10 @@ void Input::detect_player(Input *receiver, const SEvent& event)
 }
 
 bool Input::getPlayerInput(Input *receiver, const SEvent& event)
-{
+{ 
 	if (_player[0] == Keyboard) {
 		player_one_keyboard(receiver, event);
-	} else if (_player[1] == Controller) {
+	} else if (_player[0] == Controller) {
 		player_one_joystick(receiver);
 	} else {
 		_playerInput[1] = None;
