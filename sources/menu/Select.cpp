@@ -91,7 +91,7 @@ void Select::loadButtons()
     _buttons["changeSkin1"]->setRelativePosition(irr::core::position2d<irr::s32>(200, 650));
 
     _buttons["changeSkin2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_SKIN_2, L"");
-	if (_buttons.find("changeSkin3") == _buttons.end() || !_buttons["changeSkin2"])
+	if (_buttons.find("changeSkin2") == _buttons.end() || !_buttons["changeSkin2"])
 		throw LoadingException("could not add button : changeSkin2");
     _buttons["changeSkin2"]->setImage(_textures["changeSkin2"]);
     _buttons["changeSkin2"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 650));
