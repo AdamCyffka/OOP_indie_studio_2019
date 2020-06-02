@@ -7,11 +7,11 @@
 
 #include "hitbox.hpp"
 
-int isInside(float x, float z, float xBlock, float zBlock)
+int isInside(float x, float z, float xBlock, float zBlock, float degree)
 {
-	if (x < xBlock && x > xBlock - 10.0f)
+	if (x < xBlock && x > xBlock - ((1.0f) * degree))
 		return 1;
-	if (z < zBlock && z > zBlock - 10.0f)
+	if (z < zBlock && z > zBlock - ((1.0f) * degree))
 		return 1;
 	return 0;
 }
@@ -26,40 +26,38 @@ float overLap(float x, float z, float xBlock, float zBlock)
 
 bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
 {
-	if (overLap(x, z, xBlock, zBlock) >= 20.0) //20 is the pourcent of the character's body you need for the hitbox
-		return true;
-	return false;
+	return overLap(x, z, xBlock, zBlock) >= 20.0;
 }
 
 bool getNextPosIsValid(const irr::core::vector3df &characterPosition, Map *map, unsigned int i, unsigned int j, side direction, bool wallPass, float xBlock, float zBlock)
 {
 	switch (direction) {
 	case north:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock) || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock)) {
-			if (map->getMap()[i][j] == empty || (map->getMap()[i][j] == breakable && wallPass))
-				return true;
+		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) {
+			if (map->getMap()[i - 1][j] == unbreakable || (map->getMap()[i - 1][j] == breakable && !wallPass))
+				return false;
 		}
 		break;
 	case south:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock) || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock)) {
-			if (map->getMap()[i][j] == empty || (map->getMap()[i][j] == breakable && wallPass))
-				return true;
+		if (isInside(characterPosition.X - 1.0f, characterPosition.Z, xBlock, zBlock, 10.0)) {
+			if (map->getMap()[i + 1][j] == unbreakable || (map->getMap()[i + 1][j] == breakable && !wallPass))
+				return false;
 		}
 		break;
 	case east:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock) || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock)) {
-			if (map->getMap()[i][j] == empty || (map->getMap()[i][j] == breakable && wallPass))
-				return true;
+		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) {
+			if (map->getMap()[i][j + 1] == unbreakable || (map->getMap()[i][j + 1] == breakable && !wallPass))
+				return false;
 		}
 		break;
 	case west:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock) || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock)) {
-			if (map->getMap()[i][j] == empty || (map->getMap()[i][j] == breakable && wallPass))
-				return true;
+		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) {
+			if (map->getMap()[i][j - 1] == unbreakable || (map->getMap()[i][j - 1] == breakable && !wallPass))
+				return false;
 		}
 		break;
 	}
-	return false;
+	return true;
 }
 
 bool canMove(IEntity *entity, Map *map, side direction)
@@ -78,9 +76,9 @@ bool canMove(IEntity *entity, Map *map, side direction)
 			{
 				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is in position " << i << " " << j << std::endl;
 			}
-			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z) // Si le bloc et sur un des axes du character
-				&& ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock))               //check le côté haut gauche
-				|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock))) //check le côté bas droit
+			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z) // Si le bloc est sur un des axes du character
+				&& ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))               //check le côté haut gauche
+				|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock, 10.0))) //check le côté bas droit
 			{
 				if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock)) {//Check Hitbox for bombs
 //					std::cout << "Hitbox touch" << std::endl;
