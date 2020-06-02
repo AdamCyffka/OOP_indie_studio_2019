@@ -136,6 +136,7 @@ bool AI::canMoveToTarget(std::vector<IEntity *> entities)
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
+	this->moveTo(side::west);
 	if (getEntityNumber() == 3)
 	{
 		if (this->isSafe())
