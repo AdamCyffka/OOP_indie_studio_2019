@@ -13,7 +13,7 @@
 #include <irrlicht.h>
 #include "EnumCheck.hpp"
 
-using namespace irr;                    // NONE A PAS OUBLIER , POUR NON TOUCHE OU TOUCHE NON BIND
+using namespace irr;                    
 
 enum basic_key 
 {
@@ -45,7 +45,8 @@ class Input
 {
     public:
         bool IsKeyPressed() const;
-
+        
+        void Input::reset();
         std::map<int, Key_mouvement> getPlayerInputs();
 		const SEvent::SJoystickEvent &GetJoystickStatePone(void) const;
         const SEvent::SJoystickEvent &GetJoystickStatePtwo(void) const;
