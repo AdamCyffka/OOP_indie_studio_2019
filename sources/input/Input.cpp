@@ -10,6 +10,12 @@
 
 using namespace irr;
 
+
+void Input::set_controller(int player, device devices)
+{
+	_player[player - 1] = devices;
+}
+
 bool Input::IsKeyPressed() const
 {
 	return _keyIsPressed;
@@ -217,15 +223,15 @@ void Input::player_four_joystick(Input *receiver)
 void Input::player_four_keyboard(Input *receiver, const SEvent& event)
 {
 	
-	if (receiver->IsKeyDown(irr::KEY_KEY_Y)) {
+	if (receiver->IsKeyDown(irr::KEY_KEY_O)) {
         _playerInput[4] = Up;
-    } else if (receiver->IsKeyDown(irr::KEY_KEY_H)) {
+    } else if (receiver->IsKeyDown(irr::KEY_KEY_L)) {
         _playerInput[4] = Down;
-    } else if (receiver->IsKeyDown(irr::KEY_KEY_J)) {
+    } else if (receiver->IsKeyDown(irr::KEY_KEY_K)) {
         _playerInput[4] = Left;
-    } else if (receiver->IsKeyDown(irr::KEY_KEY_G)) {
+    } else if (receiver->IsKeyDown(irr::KEY_KEY_M)) {
         _playerInput[4] = Right;
-	} else if (receiver->IsKeyDown(irr::KEY_KEY_B)) {
+	} else if (receiver->IsKeyDown(irr::KEY_KEY_P)) {
 		_playerInput[4] = Bomb;
     } else {
 		_playerInput[4] = None;
