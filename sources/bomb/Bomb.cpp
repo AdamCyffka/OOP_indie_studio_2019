@@ -74,17 +74,28 @@ bool Bomby::hasEnoughBombToPose()
     return (true);
 }
 
+void waiter()
+{
+    //std::cout << "Bomb waiting" << std::endl;
+    std::this_thread::sleep_for(3s);
+}
+
 void Bomby::poseBomb()
 {
-    //std::cout << "User call poseBomb" << std::endl;
+    std::mutex mutex;
     if (canPoseBomb() == true && hasEnoughBombToPose() == true) {
-        //std::cout << "Check right - can pose bomb" << std::endl;
-        setIsBlast(true);
-        if (getIsBlast() == true) {
-            //std::this_thread::sleep_until(std::chrono::system_clock::now() + 3s); // probleme est que durant 3s tout le programme est en standBY (dois trouver une autre facon de le faire)
-            //appeler l'animation de bomb et agir sur la map!
-            //std::cout << "BAM!!!" << std::endl;
-            setIsBlast(false);
+        //pose la bombe et edit map
+        {
+            mutex.lock();
+            std::thread t1(waiter); // attend 3 s
+            t1.detach();
+            mutex.unlock();
+            setIsBlast(true); // active l'explosion
+            if (getIsBlast() == true) {
+                //anim explosion
+                std::cout << "BAM!!!" << std::endl;
+                setIsBlast(false); // explosion fini
+            }
         }
     }
 }

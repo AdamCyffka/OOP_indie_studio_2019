@@ -16,6 +16,7 @@
 #include "Ai.hpp"
 #include "Map.hpp"
 
+#include <mutex>
 #include <chrono>
 #include <thread>
 #include <ctime>
@@ -54,5 +55,7 @@ class Bomby : public IEntity {
         bool addExplosion(bool);
     protected:
 };
+
+void waiter();
 
 #endif /* !__BOMB_HPP__ */
