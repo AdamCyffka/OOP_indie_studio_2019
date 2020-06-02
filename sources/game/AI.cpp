@@ -5,6 +5,8 @@
 ** AI
 */
 
+#pragma warning( disable : 4244 ) 
+
 #include "Ai.hpp"
 
 AI::AI(Character *character, int entityNumber, Map *map) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)

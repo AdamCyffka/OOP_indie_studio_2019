@@ -5,6 +5,8 @@
 ** save
 */
 
+#pragma warning( disable : 4244 ) 
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/filesystem.hpp>
@@ -242,7 +244,7 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
         positions.push_back(std::stoi(line.second.data()));
     if (positions.size() != 3)
         throw saveAndLoadException("Invalid player's position");
-    character->setPosition(core::vector3df(positions[0], positions[1], positions[2]));
+    character->setPosition(core::vector3df(f32(positions[0]), f32(positions[1]), f32(positions[2])));
     //ADDING ELEMNTS TO LOAD HERE FOR CHARACTER
 }
 
