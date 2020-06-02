@@ -65,7 +65,10 @@ void GameCore::run()
 		return;
 	auto inputs = _core->getInput()->getPlayerInputs();
 	for (int i = 1; i <= 4; ++i) {
-		_entities.at(i - 1)->run(inputs.at(i));
+		if (_entities.at(i - 1)->getInput() == Key_mouvement::Ia) {
+			static_cast<AI*>(_entities.at(i - 1))->run(inputs.at(i), _entities);
+		} else
+			_entities.at(i - 1)->run(inputs.at(i));
 	}
 }
 
