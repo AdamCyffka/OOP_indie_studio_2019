@@ -18,7 +18,7 @@ public:
 	AI(Character *, int, Map *);
 
 	void kill() final;
-	void run() final;
+	void run(Key_mouvement) final;
 	void putBomb() final;
 
 	void setFirePower(int) final;

@@ -124,7 +124,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
 	core.hideGameLayers();
-	core.getGameCore()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+	core.getGameCore()->init(core.getSelect()->getPreviews(), core.getSelect()->getEntityTypes());
 }
 
 //END SAVE GAME
@@ -293,7 +293,7 @@ void checkSkins(Core &core, pt::ptree *root)
 void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
     //INIT GAME JUST IN CASE
-    core.getGameCore()->init(core.getSelect()->getPreviews(), core.getInput()->getPlayerInput(), core.getSelect()->getEntityTypes());
+    core.getGameCore()->init(core.getSelect()->getPreviews(), core.getSelect()->getEntityTypes());
 
     pt::ptree root;
     try

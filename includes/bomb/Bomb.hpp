@@ -11,18 +11,24 @@
 #include <irrlicht.h>
 
 #include "IEntity.hpp"
+
 #include "Player.hpp"
+#include "Ai.hpp"
 #include "Map.hpp"
 
+#include <chrono>
+#include <thread>
 #include <ctime>
 #include <vector>
 
 #define TIMER (3000)
 
-class Bomb : public IEntity {
+using namespace std::chrono_literals;
+
+class Bomby : public IEntity {
     public:
-        Bomb(Character *character, Map *map, Player *player);
-        ~Bomb();
+        Bomby(Character *, Map *, Player *, AI *);
+        ~Bomby();
         void setRadius(int radius);
         int getRadius() const;
         void setIsBlast(bool isBlast);
@@ -37,14 +43,15 @@ class Bomb : public IEntity {
     private:
         Map *_map;
         std::pair<int, int> _position;
-        Player *_player;
         Character *_character;
+        Player *_player;
+        AI *_ai;
 
         int _radius;
         irr::u32 _delay;
 
         bool _isBlast;
-        bool addExplosion(bool inGame);
+        bool addExplosion(bool);
     protected:
 };
 

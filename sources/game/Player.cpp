@@ -19,11 +19,11 @@ void Player::kill()
 	_character->setState(Character::dead);
 }
 
-void Player::run()
+void Player::run(Key_mouvement input)
 {
 	//	std::cout << _map->getPlayerPosition(_entityNumber).first << " " << _map->getPlayerPosition(_entityNumber).second << std::endl;
 	if (isAlive()) {
-		switch (_input) {
+		switch (input) {
 		case Right:
 			moveTo(east);
 			break;
@@ -42,6 +42,7 @@ void Player::run()
 		case Ia:
 			break;
 		case None:
+			_character->setState(Character::idle);
 			break;
 		}
 	}
@@ -142,6 +143,7 @@ void Player::moveTo(side direction)
 	//-x = bas
 	//+z = gauche
 	//-z = droite
+//		std::cout << canMove(this, _map, north) << std::endl;
 	irr::core::vector3df pos = _character->getPosition();
 	switch (direction) {
 	case north:
@@ -152,6 +154,7 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.X += 0.01f * _speed;
 			_character->setPosition(pos);
+			std::cout << "haut" << std::endl;
 		}
 		break;
 	case south:
@@ -162,6 +165,7 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.X -= 0.01f * _speed;
 			_character->setPosition(pos);
+			std::cout << "bas" << std::endl;
 		}
 		break;
 	case east:
@@ -172,6 +176,7 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.Z -= 0.01f * _speed;
 			_character->setPosition(pos);
+			std::cout << "droite" << std::endl;
 		}
 		break;
 	case west:
@@ -182,6 +187,7 @@ void Player::moveTo(side direction)
 				_character->setState(Character::running);
 			pos.Z += 0.03f * _speed;
 			_character->setPosition(pos);
+			std::cout << "gauche" << std::endl;
 		}
 		break;
 	}
