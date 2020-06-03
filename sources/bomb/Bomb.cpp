@@ -60,8 +60,10 @@ bool Bomby::canPoseBomb()
 bool Bomby::hasEnoughBombToPose()
 {
     if (_ai->getInput() == Key_mouvement::Ia && _ai->getBombAmount() >= 0) {
+        _ai->setBombAmount(_ai->getBombAmount() - 1);
         return (true);
     //} else if (_player->getInput() == Key_mouvement::Bomb && _player->getBombAmount() >= 0) { //crash pour le player why not even using like ai!!
+    //    _player->setBombAmout(_ai->getBombAmount() - 1);
     //    return (true);
     } else {
         return (false);
@@ -90,6 +92,10 @@ void Bomby::poseBomb()
                 //anim explosion
                 //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear; // edit map bomb a explosé | crash why ?! bad used probably
                 setIsBlast(false); // explosion fini
+                if (_ai->getInput() == Key_mouvement::Ia)
+                    _ai->setBombAmount(_ai->getBombAmount() + 1);
+                //if (_player->getInput() == Key_mouvement::Down || _player->getInput() == Key_mouvement::Left || _player->getInput() == Key_mouvement::Right || _player->getInput() == Key_mouvement::Up)
+                //    _player->setBombAmount(_ai->getBombAmount() + 1); // crash with player class like hasEnoughtBombToPose function
             }
         }
     }
