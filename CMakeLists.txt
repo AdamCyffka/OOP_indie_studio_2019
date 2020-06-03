@@ -9,10 +9,12 @@ add_executable(bomberman
         sources/main.cpp
         sources/core/global.cpp
         sources/core/Core.cpp
-        sources/menu/Menu.cpp
         sources/map/Map.cpp
         sources/map/LoadMap.cpp
-        sources/menu/Options.cpp
+        sources/menu/Menu.cpp
+        sources/menu/options/Controls.cpp
+        sources/menu/options/Videos.cpp
+        sources/menu/options/Sounds.cpp
         sources/menu/Splash.cpp
         sources/menu/Select.cpp
         sources/menu/Intro.cpp
@@ -55,6 +57,7 @@ include_directories(includes
         includes/map
         includes/core/
         includes/menu/
+        includes/menu/options
         includes/characters/
         includes/bomb/
         includes/music/

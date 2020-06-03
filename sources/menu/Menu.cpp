@@ -59,7 +59,7 @@ void Menu::loadButtons()
     _buttons["menuLoad"]->setImage(_textures["menuLoadButton"]);
     _buttons["menuLoad"]->setRelativePosition(irr::core::position2d<irr::s32>(400, 550));
 
-    _buttons["menuOptions"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTIONS_BUTTON, L"");
+    _buttons["menuOptions"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_SOUNDS_BUTTON, L"");
 	if (_buttons.find("menuOptions") == _buttons.end() || !_buttons["menuOptions"])
 		throw LoadingException("could not add button : menuOptions");
     _buttons["menuOptions"]->setImage(_textures["menuOptionsButton"]);

@@ -15,7 +15,9 @@ class IMenu {
         enum button {
             GUI_ID_NEW_BUTTON,
             GUI_ID_LOAD_BUTTON,
-            GUI_ID_OPTIONS_BUTTON,
+            GUI_ID_SOUNDS_BUTTON,
+            GUI_ID_VIDEOS_BUTTON,
+            GUI_ID_CONTROLS_BUTTON,
             GUI_ID_QUIT_BUTTON,
             GUI_ID_HELP_BUTTON,
             GUI_ID_CREDITS_BUTTON,

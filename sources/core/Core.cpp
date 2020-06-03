@@ -55,7 +55,9 @@ Core::Core()
 	_help = nullptr;
 	_splash = nullptr;
 	_menu = nullptr;
-	_options = nullptr;
+	_sounds = nullptr;
+	_videos = nullptr;
+	_controls = nullptr;
 	_save = nullptr;
 	_load = nullptr;
     _select = nullptr;
@@ -66,9 +68,6 @@ Core::Core()
 	_pause = nullptr;
 	_game = nullptr;
 	_gameOptions = nullptr;
-
-	// irr::core::dimension2d<u32> dim(1920, 1080);
-  	// _env->addCheckBox(getFullscreen(), irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 80), nullptr, -1, L"Fullscreen");
 }
 
 void Core::start()
@@ -115,7 +114,9 @@ void Core::restartDevice(bool fullscreen)
 	_help = nullptr;
 	_splash = nullptr;
 	_menu = nullptr;
-	_options = nullptr;
+	_sounds = nullptr;
+	_videos = nullptr;
+	_controls = nullptr;
 	_save = nullptr;
 	_load = nullptr;
     _select = nullptr;
@@ -249,10 +250,22 @@ void Core::scoreCase()
 	showMenuLayer(_score);
 }
 
-void Core::optionsCase()
+void Core::soundsCase()
 {
 	hideMenuLayers();
-	showMenuLayer(_options);
+	showMenuLayer(_sounds);
+}
+
+void Core::videosCase()
+{
+	hideMenuLayers();
+	showMenuLayer(_videos);
+}
+
+void Core::controlsCase()
+{
+	hideMenuLayers();
+	showMenuLayer(_controls);
 }
 
 void Core::creditsCase()
@@ -347,58 +360,92 @@ void Core::init()
 	}
 	else if (_initStep == 5)
 	{
-		if (!_options)
-			_options = new Options(_env, _driver, _smgr);
+		if (!_sounds)
+			_sounds = new Sounds(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(40);
 	}
 	else if (_initStep == 6)
 	{
+		if (!_videos)
+			_videos = new Videos(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(40);
+	}
+	else if (_initStep == 7)
+	{
+		if (!_controls)
+			_controls = new Controls(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(40);
+	}
+	else if (_initStep == 8)
+	{
 		if (!_select)
 			_select = new Select(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(50);
-	} else if (_initStep == 7) {
+	}
+	else if (_initStep == 9)
+	{
 		if (!_score && _select)
 			_score = new Score(_env, _driver, _smgr, _select->getPreviews());
 		_splash->getBar()->setProgress(50);
-	} else if (_initStep == 8) {
+	}
+	else if (_initStep == 10)
+	{
 		if (!_help)
 			_help = new Help(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(60);
-	} else if (_initStep == 9) {
+	}
+	else if (_initStep == 11)
+	{
 		if (!_credits)
 			_credits = new Credits(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(70);
-	} else if (_initStep == 10) {
+	}
+	else if (_initStep == 12)
+	{
 		if (!_save)
 			_save = new Save(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(80);
-	} else if (_initStep == 11) {
+	}
+	else if (_initStep == 13)
+	{
 		if (!_inputs)
 			_inputs = new Input();
 		_splash->getBar()->setProgress(90);
-	} else if (_initStep == 12) {
+	}
+	else if (_initStep == 14)
+	{
 		if (!_load)
 			_load = new Load(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(95);
-	} else if (_initStep == 13) {
+	}
+	else if (_initStep == 15)
+	{
 		if (!_select)
 			throw CoreException("Select hasn't been initialized, cannot get characters previews");
 		if (!_gameCore)
 			_gameCore = new GameCore(this);
 		_splash->getBar()->setProgress(97);
-	} else if (_initStep == 14) {
+	}
+	else if (_initStep == 16)
+	{
 		if (!_pause)
 			_pause = new Pause(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
-	} else if (_initStep == 15) {
+	}
+	else if (_initStep == 17)
+	{
 		if (!_game && _select)
 			_game = new Game(_env, _driver, _smgr, _select->getPreviews());
 		_splash->getBar()->setProgress(100);
-	} else if (_initStep == 16) {
+	}
+	else if (_initStep == 18)
+	{
 		if (!_gameOptions)
 			_gameOptions = new GameOptions(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
-	} else {
+	}
+	else
+	{
 		_isInitialized = true;
 		if (_loadmap)
 			_loadmap->run();
@@ -504,8 +551,14 @@ void Core::drawMenuLayer()
 		case menuMain:
 			menuCase();
 			break;
-		case menuOptions:
-			optionsCase();
+		case menuSounds:
+			soundsCase();
+			break;
+		case menuControls:
+			controlsCase();
+			break;
+		case menuVideos:
+			videosCase();
 			break;
 		case menuCredits:
 			creditsCase();
@@ -568,13 +621,29 @@ void Core::hideMenuLayers()
 		for (auto &it : _intro->getImages())
 			it.second->setVisible(false);
 	}
-	if (_options)
+	if (_sounds)
 	{
-		for (auto &it : _options->getButtons())
+		for (auto &it : _sounds->getButtons())
 			it.second->setVisible(false);
-		for (auto &it : _options->getImages())
+		for (auto &it : _sounds->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _options->getCheckBox())
+	}
+	if (_videos)
+	{
+		for (auto &it : _videos->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _videos->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _videos->getCheckBox())
+			it.second->setVisible(false);
+	}
+	if (_controls)
+	{
+		for (auto &it : _controls->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _controls->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _controls->getCheckBox())
 			it.second->setVisible(false);
 	}
 	if (_splash)
@@ -594,7 +663,8 @@ void Core::hideMenuLayers()
 			for (auto &it : _select->getPreviews())
 				it->setVisibility(false);
 	}
-	if (_score) {
+	if (_score)
+	{
 		for (auto &it : _score->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _score->getImages())
@@ -603,7 +673,8 @@ void Core::hideMenuLayers()
 			for (auto &it : _score->getPreviews())
 				it->setVisibility(false);
 	}
-	if (_credits) {
+	if (_credits)
+	{
 		for (auto &it : _credits->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _credits->getImages())
