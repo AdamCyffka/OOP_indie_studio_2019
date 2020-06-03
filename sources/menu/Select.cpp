@@ -17,7 +17,7 @@ Select::Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver,
 
     loadTextures();
     loadButtons();
-    _selectTab = {{"waluigi", 0}, {"mario", 1}, {"lakitu", 2}, {"koopa", 3}, {"red_toad", -1}, {"yellow_toad", -1}, {"blue_toad", -1}, {"green_toad", -1}, {"dr_peach", -1}};
+    _selectTab = {{"mario", 0}, {"luigi", 1}, {"waluigi", 2}, {"red_toad", 3}, {"koopa", -1}, {"yellow_toad", -1}, {"blue_toad", -1}, {"green_toad", -1}, {"dr_peach", -1}, {"dry_bones", -1}, {"lakitu", -1}, {"luigi_fire", -1}};
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[0].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[1].first)));
     _previews.push_back(new Character(_smgr, _driver, g_modelInfos.at(_selectTab[2].first)));
@@ -208,7 +208,6 @@ void Select::incSkin(int skin)
         if (_selectTab[i].second == skin) {
             int newSkinIndex = getNextAvailableSkin(i);
             if (newSkinIndex != -1) {
-                std::cout << "je change le skin de " << skin << " avec " << _selectTab[newSkinIndex].first << " state : " << _selectTab[newSkinIndex].second << std::endl;
                 _previews[skin]->changeModel(g_modelInfos.at(_selectTab[newSkinIndex].first));
                 _selectTab[newSkinIndex].second = skin;
                 _selectTab[i].second = -1;

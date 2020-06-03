@@ -161,5 +161,62 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {377, 923}, // VICTORY
             2.5 // SCALE SIZE
         }
+    },
+    {
+        "dry_bones", // INDEX
+        { // MODELINFOS_T
+            "dry_bones", // NAME
+            "resources/models/characters/dry_bones/dry_bones.md3", // MODEL MD3
+            {
+                "resources/models/characters/dry_bones/Karon.png", // TEXTURES
+                "resources/models/characters/dry_bones/Karon2.png" // TEXTURES
+            },
+            {0, 120}, // IDLE
+            {121, 154}, // RUNNING
+            {155, 292}, // DYING
+            {293, 373}, // DEAD
+            {374, 733}, // VICTORY
+            0.13 // SCALE SIZE
+        }
+    },
+    {
+        "luigi", // INDEX
+        { // MODELINFOS_T
+            "luigi", // NAME
+            "resources/models/characters/luigi/classic/luigi.md3", // MODEL MD3
+            {
+                "resources/models/characters/luigi/classic/player_dw01_MarioHand_dif.png",
+                "resources/models/characters/luigi/classic/player_dw01_MarioHand_dif2.png",
+                "resources/models/characters/luigi/classic/player_dw01_MarioBody_dif.png", // TEXTURES
+                "resources/models/characters/luigi/classic/player_dw01_MarioEye_dif.0.png",
+                "resources/models/characters/luigi/classic/player_dw01_MarioHead_dif.png"
+            },
+            {0, 120}, // IDLE
+            {121, 142}, // RUNNING
+            {143, 281}, // DYING
+            {282, 364}, // DEAD
+            {365, 460}, // VICTORY
+            0.2 // SCALE SIZE
+        }
+    },
+    {
+        "luigi_fire", // INDEX
+        { // MODELINFOS_T
+            "luigi_fire", // NAME
+            "resources/models/characters/luigi/fire/luigi.md3", // MODEL MD3
+            {
+                "resources/models/characters/luigi/fire/player_dw01_MarioHand_dif.png",
+                "resources/models/characters/luigi/fire/player_dw01_MarioHand_dif2.png",
+                "resources/models/characters/luigi/fire/player_dw01_MarioBody_dif.png", // TEXTURES
+                "resources/models/characters/luigi/fire/player_dw01_MarioEye_dif.0.png",
+                "resources/models/characters/luigi/fire/player_dw01_MarioHead_dif.png"
+            },
+            {0, 120}, // IDLE
+            {121, 142}, // RUNNING
+            {143, 281}, // DYING
+            {282, 364}, // DEAD
+            {365, 460}, // VICTORY
+            0.2 // SCALE SIZE
+        }
     }
 };
