@@ -7,8 +7,8 @@
 
 #include "Bomb.hpp"
 
-Bomby::Bomby(Character *character, Map *map, Player *player, AI *ai): _radius(2), _delay(TIMER), _map(map),
-_character(character), _player(player), _ai(ai), _isBlast(false)
+Bomby::Bomby(Character *character, Map *map, Player *player, AI *ai, std::vector<IEntity *> entities): _radius(2), _delay(TIMER), _map(map),
+_character(character), _player(player), _ai(ai), _entities(entities), _isBlast(false)
 {
 }
 
@@ -46,53 +46,49 @@ void Bomby::setPosition(std::pair<int, int> position)
     this->_position = position;
 }
 
-bool Bomby::addExplosion(bool inGame)
-{
-    if (inGame == true) { // mis en pause !...
-        return (true);
-    }
-    return (false);
-}
-
 bool Bomby::canPoseBomb()
 {
-    //if ((_map->getMap() == blockState::empty) && (_map->getBombMap() == bombState::clear)) { // Erreur bad used
-    //    return (true);
+
+    //if ((_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == blockState::empty)
+    //&& (_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear)) { // crash why ?! bad used probably
+        return (true);
     //} else {
     //    return (false);
     //}
-    return (true);
 }
 
 bool Bomby::hasEnoughBombToPose()
 {
-    if (_player->getBombAmount() > 0 ) {
+    if (_ai->getInput() == Key_mouvement::Ia && _ai->getBombAmount() >= 0) {
         return (true);
+    //} else if (_player->getInput() == Key_mouvement::Bomb && _player->getBombAmount() >= 0) { //crash pour le player why not even using like ai!!
+    //    return (true);
     } else {
         return (false);
     }
-    //return (true);
 }
 
 void waiter()
 {
-    //std::cout << "Bomb waiting" << std::endl;
     std::this_thread::sleep_for(3s);
 }
 
 void Bomby::poseBomb()
 {
     std::mutex mutex;
+    //irr::core::vector3df pos = _character->getPosition(); crash ?!
+
     if (canPoseBomb() == true && hasEnoughBombToPose() == true) {
-        //pose la bombe et edit map
+        //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::bomb; // edit map to pose bomb | crash why ?! bad used probably
         {
             mutex.lock();
-            std::thread t1(waiter); // attend 3 s
+            std::thread t1(waiter); // attend 3 s some bug currently
             t1.detach();
             mutex.unlock();
             setIsBlast(true); // active l'explosion
             if (getIsBlast() == true) {
                 //anim explosion
+                //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear; // edit map bomb a explosé | crash why ?! bad used probably
                 setIsBlast(false); // explosion fini
             }
         }

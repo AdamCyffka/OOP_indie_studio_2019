@@ -15,6 +15,7 @@
 #include "Player.hpp"
 #include "Ai.hpp"
 #include "Map.hpp"
+#include "hitbox.hpp"
 
 #include <mutex>
 #include <chrono>
@@ -28,7 +29,7 @@ using namespace std::chrono_literals;
 
 class Bomby : public IEntity {
     public:
-        Bomby(Character *, Map *, Player *, AI *);
+        Bomby(Character *, Map *, Player *, AI *, std::vector<IEntity *> entities);
         ~Bomby();
         void setRadius(int radius);
         int getRadius() const;
@@ -45,6 +46,7 @@ class Bomby : public IEntity {
         Map *_map;
         std::pair<int, int> _position;
         Character *_character;
+        std::vector<IEntity *> _entities;
         Player *_player;
         AI *_ai;
 
@@ -52,7 +54,6 @@ class Bomby : public IEntity {
         irr::u32 _delay;
 
         bool _isBlast;
-        bool addExplosion(bool);
     protected:
 };
 
