@@ -62,7 +62,7 @@ bool Bomby::hasEnoughBombToPose()
     //if (_ai->getInput() == Key_mouvement::Ia && _ai->getBombAmount() > 0) { // crash random
     //    _ai->setBombAmount(_ai->getBombAmount() - 1);
         return (true);
-    //} else if (_player->getInput() == Key_mouvement::Bomb && _player->getBombAmount() > 0) { //crash pour le player why not even using like ai!!
+    //} else if (_player->getInput() == Key_mouvement::Bomb && _player->getBombAmount() > 0) {
     //    _player->setBombAmount(_player->getBombAmount() - 1);
     //    return (true);
     //} else {
@@ -78,7 +78,6 @@ void waiter()
 void Bomby::poseBomb()
 {
     std::mutex mutex;
-    //irr::core::vector3df pos = _character->getPosition(); crash ?!
 
     if (canPoseBomb() == true && hasEnoughBombToPose() == true) {
         //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::bomb; // edit map to pose bomb | crash why ?! bad used probably
@@ -90,6 +89,26 @@ void Bomby::poseBomb()
             setIsBlast(true); // active l'explosion
             if (getIsBlast() == true) {
                 //anim explosion
+                { // edit map to break block
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x + 1][squareWherePlayerIs(this, _map).y] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x + 1][squareWherePlayerIs(this, _map).y] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x + 1][squareWherePlayerIs(this, _map).y] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x + 2][squareWherePlayerIs(this, _map).y] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x + 2][squareWherePlayerIs(this, _map).y] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x + 2][squareWherePlayerIs(this, _map).y] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x - 1][squareWherePlayerIs(this, _map).y] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x - 1][squareWherePlayerIs(this, _map).y] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x - 1][squareWherePlayerIs(this, _map).y] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x - 2][squareWherePlayerIs(this, _map).y] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x - 2][squareWherePlayerIs(this, _map).y] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x - 2][squareWherePlayerIs(this, _map).y] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + 1] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + 1] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + 1] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + 2] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + 2] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + 2] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - 1] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - 1] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - 1] == blockState::empty;
+                    //if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - 2] == blockState::breakable || _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - 2] == blockState::empty)
+                    //    _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - 2] == blockState::empty;
+                }
                 //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear; // edit map bomb a explosé | crash why ?! bad used probably
                 setIsBlast(false); // explosion fini
                 //if (_ai->getInput() == Key_mouvement::Ia)
