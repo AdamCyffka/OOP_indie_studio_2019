@@ -280,7 +280,7 @@ void checkSkins(Core &core, pt::ptree *root)
     {
         if (player.compare("") == 0)
             throw saveAndLoadException("Invalid player's model");
-        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0
+        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("luigi_fire") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0
         && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
             throw saveAndLoadException("Invalid player's model");
     }
