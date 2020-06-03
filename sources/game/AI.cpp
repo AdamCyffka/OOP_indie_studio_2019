@@ -151,7 +151,7 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 	if (getEntityNumber() == 3)
 	{
 		// J'appelle la fonction ici seulement pour lakitu
-		squareWherePlayerIs(this, _map);
+		//squareWherePlayerIs(this, _map);
 		if (this->isSafe())
 		{
 			if (canMoveToTarget(entities))
@@ -167,7 +167,7 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 		{
 			return;
 		}
-	}	
+	}
 }
 
 void AI::moveTo(side side)

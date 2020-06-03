@@ -54,8 +54,13 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                             _cameraTravelManager->doTravel(CameraTravelManager::travel::scoreToMenu);
                         _core.setLState(Core::menuMain);
                         return true;
-                    case IMenu::GUI_ID_OPTIONS_BUTTON:
-                        _core.setLState(Core::menuOptions);
+                    case IMenu::GUI_ID_SOUNDS_BUTTON:
+                        _core.setLState(Core::menuSounds);
+                        return true;
+                    case IMenu::GUI_ID_VIDEOS_BUTTON:
+                        _core.setLState(Core::menuVideos);
+                        return true;
+                    case IMenu::GUI_ID_CONTROLS_BUTTON:
                         return true;
                     case IMenu::GUI_ID_NEW_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
@@ -161,8 +166,6 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
 
 bool MyEventReceiver::OnEvent(const irr::SEvent &event)
 {
-    int _key = -1;
-
     if (clicks(event))
         return true;
 	if (_core.getInput() && _core.getInput()->inputEvent(event))

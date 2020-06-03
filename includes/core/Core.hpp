@@ -16,11 +16,13 @@
 #include "Score.hpp"
 #include "Game.hpp"
 #include "Select.hpp"
-#include "Options.hpp"
 #include "LoadMap.hpp"
 #include "Splash.hpp"
 #include "Music.hpp"
 #include "GameCore.hpp"
+#include "Sounds.hpp"
+#include "Videos.hpp"
+#include "Controls.hpp"
 
 class GameOptions;
 class Load;
@@ -41,7 +43,9 @@ class Core {
         enum layerMenuState {
             menuIntro,
 			menuMain,
-			menuOptions,
+			menuSounds,
+            menuVideos,
+            menuControls,
 			menuSplash,
 			menuHelp,
             menuCredits,
@@ -70,7 +74,9 @@ class Core {
         void menuCase();
         void selectCase();
         void scoreCase();
-        void optionsCase();
+        void soundsCase();
+        void controlsCase();
+        void videosCase();
         void helpCase();
         void creditsCase();
         void splashCase();
@@ -112,7 +118,9 @@ class Core {
         void drawGameLayer();
         Intro *_intro;
         Menu *_menu;
-        Options *_options;
+        Controls *_controls;
+        Videos *_videos;
+        Sounds *_sounds;
         Splash *_splash;
         LoadMap *_loadmap;
         Select *_select;
