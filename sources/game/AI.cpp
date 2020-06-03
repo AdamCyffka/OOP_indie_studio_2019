@@ -127,6 +127,12 @@ bool AI::canMoveToTarget(std::vector<IEntity *> entities)
 		if (it->getEntityNumber() != this->getEntityNumber()) {
 			if (it->getCharacter()->getPosition().X == _character->getPosition().X) {
 				int x = (_character->getPosition().X - MAP_DEFAULT_X) / -10;
+				int z = _character->getPosition().Z;
+				if (it->getCharacter()->getPosition().X < _character->getPosition().X)
+					z = it->getCharacter()->getPosition().Z;
+				for (unsigned int j = 0; j < _map->getMap()[x].size(); ++j) {
+					
+				}
 				//std::cout << "x: " << x << std::endl;
 			}
 			if (it->getCharacter()->getPosition().Z == _character->getPosition().Z) {
