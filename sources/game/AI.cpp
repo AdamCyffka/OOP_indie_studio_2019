@@ -160,28 +160,30 @@ bool AI::canMoveToTargetZ(IEntity *it)
 	return true;
 }
 
-bool AI::canMoveToTarget(std::vector<IEntity *> entities)
+IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 {
 	for (auto it : entities)
 	{
 		if (it->getEntityNumber() != this->getEntityNumber())
 		{
-			if (it->getCharacter()->getPosition().X == _character->getPosition().X)
+			if ((it->getCharacter()->getPosition().X == _character->getPosition().X)
+			&& canMoveToTargetX(it))
 			{
-				return canMoveToTargetX(it);
+				return it;
 			}
-			if (it->getCharacter()->getPosition().Z == _character->getPosition().Z)
+			if ((it->getCharacter()->getPosition().Z == _character->getPosition().Z)
+			&& canMoveToTargetZ(it))
 			{
-				return canMoveToTargetZ(it);
+				return it;
 			}
 		}
 	}
-	return false;
+	return nullptr;
 }
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
-	this->moveTo(side::west);
+	//this->moveTo(side::west);
 
 	if (getEntityNumber() == 3)
 	{
@@ -189,7 +191,8 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 		//squareWherePlayerIs(this, _map);
 		if (this->isSafe())
 		{
-			if (canMoveToTarget(entities))
+			IEntity *target = canMoveToTarget(entities);
+			if (canMoveToTarget(entities) != nullptr)
 			{
 				return;
 			}

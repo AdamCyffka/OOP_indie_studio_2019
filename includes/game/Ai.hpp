@@ -46,9 +46,9 @@ public:
 	void setInput(Key_mouvement input) final;
 
 	bool isSafe();
-	bool canMoveToTarget(std::vector<IEntity *> entities);
-	bool AI::canMoveToTargetX(IEntity *it);
-	bool AI::canMoveToTargetZ(IEntity *it);
+	IEntity *canMoveToTarget(std::vector<IEntity *> entities);
+	bool canMoveToTargetX(IEntity *it);
+	bool canMoveToTargetZ(IEntity *it);
 
 private:
 	bool _isAlive;
