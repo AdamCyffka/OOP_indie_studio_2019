@@ -11,6 +11,8 @@ add_executable(bomberman
         sources/core/Core.cpp
         sources/map/Map.cpp
         sources/map/LoadMap.cpp
+        sources/menu/gameOptions/GameControls.cpp
+        sources/menu/gameOptions/GameSounds.cpp
         sources/menu/Menu.cpp
         sources/menu/options/Controls.cpp
         sources/menu/options/Videos.cpp
@@ -27,7 +29,6 @@ add_executable(bomberman
         sources/menu/Save.cpp
         sources/menu/Game.cpp
         sources/menu/Load.cpp
-        sources/menu/GameOptions.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
         sources/travel/CircleCameraTravel.cpp
@@ -57,7 +58,8 @@ include_directories(includes
         includes/map
         includes/core/
         includes/menu/
-        includes/menu/options
+        includes/menu/options/
+        includes/menu/gameOptions/
         includes/characters/
         includes/bomb/
         includes/music/

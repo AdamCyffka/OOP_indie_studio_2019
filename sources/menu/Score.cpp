@@ -80,6 +80,15 @@ void Score::loadTextures()
     _textures["red_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Red.png");
 	if (_textures.find("red_toad") == _textures.end() || !_textures["red_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Red.png");
+    _textures["luigi"] = _driver->getTexture("resources/images/characters/MK8_Icon_Luigi.png");
+	if (_textures.find("luigi") == _textures.end() || !_textures["luigi"])
+		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Luigi.png");
+    _textures["luigi_fire"] = _driver->getTexture("resources/images/characters/MK8_Icon_Luigi_Fire.png");
+	if (_textures.find("luigi_fire") == _textures.end() || !_textures["luigi_fire"])
+		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Luigi_Fire.png");
+    _textures["dry_bones"] = _driver->getTexture("resources/images/characters/MK8_Icon_DryBones.png");
+	if (_textures.find("dry_bones") == _textures.end() || !_textures["dry_bones"])
+		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_DryBones.png");
     _textures["grey_star"] = _driver->getTexture("resources/images/starGrey.png");
 	if (_textures.find("grey_star") == _textures.end() || !_textures["grey_star"])
 		throw LoadingException("could not load texture : resources/images/starGrey.png");

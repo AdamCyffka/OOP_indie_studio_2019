@@ -36,6 +36,7 @@ void GameCore::reset()
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes)
 {
+	_bomb = new Bomber(_map);
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
@@ -52,6 +53,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (auto it : _entities) {
 		it->setIsAlive(true);
 	}
+	_bomb->setEntities(_entities);
 	_isInit = true;
 }
 

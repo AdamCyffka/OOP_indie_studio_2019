@@ -96,10 +96,10 @@ std::map<std::string, irr::gui::IGUIButton *> Menu::getButtons()
 
 std::map<std::string, irr::gui::IGUIImage *> Menu::getImages()
 {
-	return _images;
+	  return _images;
 }
 
 std::map<std::string, irr::gui::IGUICheckBox *> Menu::getCheckBox()
 {
-  return _checkBox;
+    return _checkBox;
 }

@@ -51,7 +51,7 @@ void Pause::loadButtons()
     _buttons["save"]->setImage(_textures["save"]);
     _buttons["save"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 400));
 
-    _buttons["options"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_PAUSE_OPTIONS, L"");
+    _buttons["options"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_PAUSE_SOUNDS, L"");
 	if (_buttons.find("options") == _buttons.end() || !_buttons["options"])
 		throw LoadingException("could not add button : options");
     _buttons["options"]->setImage(_textures["options"]);

@@ -10,10 +10,10 @@
 
 #include <irrlicht.h>
 
-#include "IEntity.hpp"
 #include "Map.hpp"
 #include "hitbox.hpp"
 #include "AnimExplo.hpp"
+#include "IEntity.hpp"
 
 #include <chrono>
 #include <ctime>
@@ -21,10 +21,9 @@
 
 #define TIMER (3000)
 
-class Core;
-class Bomber : public IEntity {
+class Bomber {
     public:
-        Bomber(Map *, std::vector<IEntity *>);
+        Bomber(Map *);
         ~Bomber();
         void run();
 
@@ -32,22 +31,26 @@ class Bomber : public IEntity {
         void setRadius(int radius);
         int getRadius() const;
 
+        //Recover entities
+        void setEntities(std::vector<IEntity *> entities);
+        std::vector<IEntity *> getEntities() const;
+
         //Blast
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
 
          //Error handling
-        bool canPoseBomb();
+        bool canPoseBomb(IEntity *);
         bool hasEnoughBombToPose();
 
         //Pose bomb and blast
-        void putBomb();
-        void epicenter();
-        void blastNorth();
-        void blastSouth();
-        void blastEast();
-        void blastWest();
-        void clearMapAfterBlast();
+        void putBomb(std::vector<IEntity *>, IEntity *);
+        void epicenter(IEntity *);
+        void blastNorth(IEntity *);
+        void blastSouth(IEntity *);
+        void blastEast(IEntity *);
+        void blastWest(IEntity *);
+        void clearMapAfterBlast(IEntity *);
 
         //Remove and give bomb
         void removeBombFromInventory();

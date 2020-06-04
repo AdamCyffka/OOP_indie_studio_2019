@@ -51,6 +51,15 @@ void Game::loadTextures()
     _textures["red_toad"] = _driver->getTexture("resources/images/characters/MK8_Icon_Toad_Red.png");
 	if (_textures.find("red_toad") == _textures.end() || !_textures["red_toad"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Toad_Red.png");
+    _textures["dry_bones"] = _driver->getTexture("resources/images/characters/MK8_Icon_DryBones.png");
+	if (_textures.find("dry_bones") == _textures.end() || !_textures["dry_bones"])
+		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_DryBones.png");
+    _textures["luigi"] = _driver->getTexture("resources/images/characters/MK8_Icon_Luigi.png");
+	if (_textures.find("luigi") == _textures.end() || !_textures["luigi"])
+		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Luigi.png");
+    _textures["luigi_fire"] = _driver->getTexture("resources/images/characters/MK8_Icon_Luigi_Fire.png");
+	if (_textures.find("luigi_fire") == _textures.end() || !_textures["luigi_fire"])
+		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Luigi_Fire.png");
 }
 
 void Game::loadButtons()
@@ -119,12 +128,33 @@ void Game::printUpLeft()
         _images["yellow_toad"]->setImage(_textures["yellow_toad"]);
         _images["yellow_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
     }
+    else if (_previews[0]->getModelInfos().name == "dry_bones") {
+        _images["dry_bones"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("dry_bones") != _images.end() && !_images["dry_bones"])
+            throw LoadingException("could not add image : dry_bones");
+        _images["dry_bones"]->setImage(_textures["dry_bones"]);
+        _images["dry_bones"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
+    }
     else if (_previews[0]->getModelInfos().name == "red_toad") {
         _images["red_toad"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("red_toad") != _images.end() && !_images["red_toad"])
             throw LoadingException("could not add image : red_toad");
         _images["red_toad"]->setImage(_textures["red_toad"]);
         _images["red_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
+    }
+    else if (_previews[0]->getModelInfos().name == "luigi") {
+        _images["luigi"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi") != _images.end() && !_images["luigi"])
+            throw LoadingException("could not add image : luigi");
+        _images["luigi"]->setImage(_textures["luigi"]);
+        _images["luigi"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
+    }
+    else if (_previews[0]->getModelInfos().name == "luigi_fire") {
+        _images["luigi_fire"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi_fire") != _images.end() && !_images["luigi_fire"])
+            throw LoadingException("could not add image : luigi_fire");
+        _images["luigi_fire"]->setImage(_textures["luigi_fire"]);
+        _images["luigi_fire"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
     }
 }
 
@@ -186,12 +216,33 @@ void Game::printDownLeft()
         _images["yellow_toad"]->setImage(_textures["yellow_toad"]);
         _images["yellow_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 953));
     }
+    else if (_previews[2]->getModelInfos().name == "dry_bones") {
+        _images["dry_bones"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("dry_bones") != _images.end() && !_images["dry_bones"])
+            throw LoadingException("could not add image : dry_bones");
+        _images["dry_bones"]->setImage(_textures["dry_bones"]);
+        _images["dry_bones"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 953));
+    }
     else if (_previews[2]->getModelInfos().name == "red_toad") {
         _images["red_toad"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("red_toad") != _images.end() && !_images["red_toad"])
             throw LoadingException("could not add image : red_toad");
         _images["red_toad"]->setImage(_textures["red_toad"]);
         _images["red_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 953));
+    }
+    else if (_previews[2]->getModelInfos().name == "luigi") {
+        _images["luigi"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi") != _images.end() && !_images["luigi"])
+            throw LoadingException("could not add image : luigi");
+        _images["luigi"]->setImage(_textures["luigi"]);
+        _images["luigi"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 953));
+    }
+    else if (_previews[2]->getModelInfos().name == "luigi_fire") {
+        _images["luigi_fire"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi_fire") != _images.end() && !_images["luigi_fire"])
+            throw LoadingException("could not add image : luigi_fire");
+        _images["luigi_fire"]->setImage(_textures["luigi_fire"]);
+        _images["luigi_fire"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 953));
     }
 }
 
@@ -253,12 +304,33 @@ void Game::printUpRight()
         _images["yellow_toad"]->setImage(_textures["yellow_toad"]);
         _images["yellow_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 0));
     }
+    else if (_previews[1]->getModelInfos().name == "dry_bones") {
+        _images["dry_bones"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("dry_bones") != _images.end() && !_images["dry_bones"])
+            throw LoadingException("could not add image : dry_bones");
+        _images["dry_bones"]->setImage(_textures["dry_bones"]);
+        _images["dry_bones"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 0));
+    }
     else if (_previews[1]->getModelInfos().name == "red_toad") {
         _images["red_toad"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("red_toad") != _images.end() && !_images["red_toad"])
             throw LoadingException("could not add image : red_toad");
         _images["red_toad"]->setImage(_textures["red_toad"]);
         _images["red_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 0));
+    }
+    else if (_previews[1]->getModelInfos().name == "luigi") {
+        _images["luigi"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi") != _images.end() && !_images["luigi"])
+            throw LoadingException("could not add image : luigi");
+        _images["luigi"]->setImage(_textures["luigi"]);
+        _images["luigi"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 0));
+    }
+    else if (_previews[1]->getModelInfos().name == "luigi_fire") {
+        _images["luigi_fire"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi_fire") != _images.end() && !_images["luigi_fire"])
+            throw LoadingException("could not add image : luigi_fire");
+        _images["luigi_fire"]->setImage(_textures["luigi_fire"]);
+        _images["luigi_fire"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 0));
     }
 }
 
@@ -320,12 +392,33 @@ void Game::printDownRight()
         _images["yellow_toad"]->setImage(_textures["yellow_toad"]);
         _images["yellow_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 953));
     }
+    else if (_previews[3]->getModelInfos().name == "dry_bones") {
+        _images["dry_bones"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("dry_bones") != _images.end() && !_images["dry_bones"])
+            throw LoadingException("could not add image : dry_bones");
+        _images["dry_bones"]->setImage(_textures["dry_bones"]);
+        _images["dry_bones"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 953));
+    }
     else if (_previews[3]->getModelInfos().name == "red_toad") {
         _images["red_toad"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("red_toad") != _images.end() && !_images["red_toad"])
             throw LoadingException("could not add image : red_toad");
         _images["red_toad"]->setImage(_textures["red_toad"]);
         _images["red_toad"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 953));
+    }
+    else if (_previews[3]->getModelInfos().name == "luigi") {
+        _images["luigi"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi") != _images.end() && !_images["luigi"])
+            throw LoadingException("could not add image : luigi");
+        _images["luigi"]->setImage(_textures["luigi"]);
+        _images["luigi"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 953));
+    }
+    else if (_previews[3]->getModelInfos().name == "luigi_fire") {
+        _images["luigi_fire"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("luigi_fire") != _images.end() && !_images["luigi_fire"])
+            throw LoadingException("could not add image : luigi_fire");
+        _images["luigi_fire"]->setImage(_textures["luigi_fire"]);
+        _images["luigi_fire"]->setRelativePosition(irr::core::position2d<irr::s32>(1793, 953));
     }
 }
 
