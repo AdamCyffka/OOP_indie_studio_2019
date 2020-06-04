@@ -32,6 +32,7 @@ bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
 Point squareWherePlayerIs(IEntity *entity, Map *map)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
+	//std::cout << characterPosition.X << " " << characterPosition.Y << " " << characterPosition.Z << std::endl;
 	Point point = {0, 0};
 	float overlap = 0.0;
 
@@ -41,14 +42,11 @@ Point squareWherePlayerIs(IEntity *entity, Map *map)
 		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
-			if ((xBlock == characterPosition.X || zBlock == characterPosition.Z) && ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0)) || isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock, 10.0)))
+			if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock) > overlap)
 			{
-				if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock) > overlap)
-				{
-					//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
-					overlap = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock);
-					point = {int(i), int(j)};
-				}
+				//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
+				overlap = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock);
+				point = {int(i), int(j)};
 			}
 		}
 	}
