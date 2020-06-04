@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** GameOptions
+** GameControls
 */
 
-#ifndef GAMEOPTIONS_HPP_
-#define GAMEOPTIONS_HPP_
+#ifndef GAMECONTROLS_HPP_
+#define GAMECONTROLS_HPP_
 
 #include <iostream>
 #include <map>
@@ -14,14 +14,14 @@
 #include "Character.hpp"
 #include "IMenu.hpp"
 
-class GameOptions : public IMenu {
+class GameControls : public IMenu {
     public:
-        explicit GameOptions(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~GameOptions() = default;
+        explicit GameControls(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        ~GameControls() = default;
 
         void loadButtons();
         void loadTextures();
-        void run();
+
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
@@ -30,7 +30,6 @@ class GameOptions : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
-        irr::SIrrlichtCreationParameters _deviceParam;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;
@@ -38,4 +37,4 @@ class GameOptions : public IMenu {
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
 };
 
-#endif /* !GAMEOPTIONS_HPP_ */
+#endif /* !GAMECONTROLS_HPP_ */
