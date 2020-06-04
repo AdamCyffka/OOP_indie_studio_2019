@@ -118,27 +118,65 @@ bool AI::isSafe()
 	return 1;
 }
 
-bool AI::canMoveToTarget(std::vector<IEntity *> entities)
+bool AI::canMoveToTargetX(IEntity *it)
 {
-	for (auto it : entities) {
-		if (it->getEntityNumber() != this->getEntityNumber()) {
-			if (it->getCharacter()->getPosition().X == _character->getPosition().X) {
-				int x = (_character->getPosition().X - MAP_DEFAULT_X) / -10;
-				int z = _character->getPosition().Z;
-				if (it->getCharacter()->getPosition().X < _character->getPosition().X)
-					z = it->getCharacter()->getPosition().Z;
-				for (unsigned int j = 0; j < _map->getMap()[x].size(); ++j) {
-					
-				}
-				//std::cout << "x: " << x << std::endl;
-			}
-			if (it->getCharacter()->getPosition().Z == _character->getPosition().Z) {
-				int z = (_character->getPosition().Z - MAP_DEFAULT_Z) / -10;
-				//std::cout << "z: " << z << std::endl;
+	int x = (_character->getPosition().X - MAP_DEFAULT_X) / -10;
+	int z = std::min(it->getCharacter()->getPosition().Z, _character->getPosition().Z);
+	int zMax = std::max(it->getCharacter()->getPosition().Z, _character->getPosition().Z);
+	for (z; z < zMax - 10; z++)
+	{
+		for (int j = 0; j < MAP_DEFAULT_Y; j++)
+		{
+			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
+			if (isInside(_character->getPosition().X, z, x, zBlock, 10))
+			{
+				if (_map->getMap()[x][j] == unbreakable || (_map->getMap()[x][j] == breakable && !_wallPass))
+					return false;
 			}
 		}
 	}
-	return 0;
+	//std::cout << "x: " << x << std::endl;
+	return true;
+}
+
+bool AI::canMoveToTargetZ(IEntity *it)
+{
+	int z = (_character->getPosition().Z - MAP_DEFAULT_Z) / -10;
+	int x = std::min(it->getCharacter()->getPosition().X, _character->getPosition().X);
+	int xMax = std::max(it->getCharacter()->getPosition().X, _character->getPosition().X);
+	for (x; x < xMax - 10; x++)
+	{
+		for (int i = 0; i < MAP_DEFAULT_X; i++)
+		{
+			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
+			if (isInside(_character->getPosition().X, z, xBlock, z, 10))
+			{
+				if (_map->getMap()[i][z] == unbreakable || (_map->getMap()[i][z] == breakable && !_wallPass))
+					return false;
+			}
+		}
+	}
+	//std::cout << "z: " << x << std::endl;
+	return true;
+}
+
+bool AI::canMoveToTarget(std::vector<IEntity *> entities)
+{
+	for (auto it : entities)
+	{
+		if (it->getEntityNumber() != this->getEntityNumber())
+		{
+			if (it->getCharacter()->getPosition().X == _character->getPosition().X)
+			{
+				return canMoveToTargetX(it);
+			}
+			if (it->getCharacter()->getPosition().Z == _character->getPosition().Z)
+			{
+				return canMoveToTargetZ(it);
+			}
+		}
+	}
+	return false;
 }
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)

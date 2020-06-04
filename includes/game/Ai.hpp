@@ -47,6 +47,8 @@ public:
 
 	bool isSafe();
 	bool canMoveToTarget(std::vector<IEntity *> entities);
+	bool AI::canMoveToTargetX(IEntity *it);
+	bool AI::canMoveToTargetZ(IEntity *it);
 
 private:
 	bool _isAlive;
