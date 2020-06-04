@@ -39,7 +39,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
-			entity = new AI(characters.at(i - 1), i, _map, _entities);
+			entity = new AI(characters.at(i - 1), i, _map, _entities, _bomb);
 		else
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this);
 		_entities.push_back(entity);
@@ -122,4 +122,9 @@ bool GameCore::nextBlockHasWall(std::pair<int, int> pos)
 bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
 {
 	return _map->getMap()[pos.first][pos.second] == breakable && !powerUp;
+}
+
+Bomber *GameCore::getBomb()
+{
+	return _bomb;
 }

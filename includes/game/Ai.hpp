@@ -11,11 +11,12 @@
 #include "IEntity.hpp"
 #include "Map.hpp"
 #include "hitbox.hpp"
+#include "Bomb.hpp"
 
 class AI : public IEntity
 {
 public:
-	AI(Character *, int, Map *, std::vector<IEntity *> entities);
+	AI(Character *, int, Map *, std::vector<IEntity *> entities, Bomber *bomb);
 
 	void kill() final;
 	void run(Key_mouvement) final;
@@ -62,6 +63,7 @@ private:
 	std::vector<IEntity *> _entities;
 	Key_mouvement _wantedMovement;
 	core::vector3df _wantedPosition;
+	Bomber *_bomb;
 
 	int _firePower;
 	int _bombAmount;

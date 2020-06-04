@@ -11,7 +11,7 @@
 #include "hitbox.hpp"
 #include "Bomb.hpp"
 
-AI::AI(Character *character, int entityNumber, Map *map, std::vector<IEntity *> entities) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _entities(entities), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+AI::AI(Character *character, int entityNumber, Map *map, std::vector<IEntity *> entities, Bomber *bomb) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _entities(entities), _bomb(bomb), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
 }
 
@@ -222,7 +222,6 @@ void AI::checkMovement()
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	this->moveTo(side::west);
-
 	//checkMovement();
 	if (getEntityNumber() == 3)
 	{

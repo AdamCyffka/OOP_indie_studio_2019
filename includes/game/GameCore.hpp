@@ -32,6 +32,7 @@ class GameCore {
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
 		bool nextBlockHasWall(std::pair<int, int>);
 		bool nextBlockHasBlock(std::pair<int, int>, bool);
+		Bomber *getBomb();
     protected:
     private:
 		void spawnPlayers();
