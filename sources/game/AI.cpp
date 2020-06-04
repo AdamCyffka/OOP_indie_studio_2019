@@ -126,7 +126,7 @@ bool AI::canMoveToTargetX(IEntity *it)
 	int zMax = std::max(it->getCharacter()->getPosition().Z, _character->getPosition().Z);
 	for (z; z < zMax - 10; z++)
 	{
-		for (int j = 0; j < MAP_DEFAULT_Y; j++)
+		for (int j = 0; j < MAP_WIDTH; j++)
 		{
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
 			if (isInside(_character->getPosition().X, z, x, zBlock, 10))
@@ -147,7 +147,7 @@ bool AI::canMoveToTargetZ(IEntity *it)
 	int xMax = std::max(it->getCharacter()->getPosition().X, _character->getPosition().X);
 	for (x; x < xMax - 10; x++)
 	{
-		for (int i = 0; i < MAP_DEFAULT_X; i++)
+		for (int i = 0; i < MAP_HEIGHT; i++)
 		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			if (isInside(_character->getPosition().X, z, xBlock, z, 10))
@@ -182,9 +182,44 @@ IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 	return nullptr;
 }
 
+void AI::actionWithTarget(IEntity *target)
+{
+	if (_character->getState() != Character::state::idle)
+		return;
+	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z
+	&& target->getCharacter()->getPosition().X == _character->getPosition().X)
+	{ 
+		return;
+	}
+	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z)
+	{
+		int speedMult = 1;
+		if (_character->getPosition().X > target->getCharacter()->getPosition().X)
+			speedMult = -1;
+		_wantedPosition = core::vector3df(_character->getPosition().X + (5 * speedMult), _character->getPosition().Y, _character->getPosition().Z);
+		_character->moveTo(_wantedPosition, 1000 - (_speed * 100));
+	} else {
+		int speedMult = 1;
+		if (_character->getPosition().Z > target->getCharacter()->getPosition().Z)
+			speedMult = -1;
+		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + (5 * speedMult));
+		_character->moveTo(_wantedPosition, 1000 - (_speed * 100));
+	}
+}
+
+void AI::checkMovement()
+{
+	if (_character->getState() != Character::state::idle
+	&& _character->getPosition() == _wantedPosition)
+	{
+		_character->setState(Character::state::idle);
+	}
+}
+
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	this->moveTo(side::west);
+	this->checkMovement();
 
 	if (getEntityNumber() == 3)
 	{
@@ -193,9 +228,9 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 		if (this->isSafe())
 		{
 			IEntity *target = canMoveToTarget(entities);
-			if (canMoveToTarget(entities) != nullptr)
+			if (target != nullptr)
 			{
-				std::cout << "Move to target" << std::endl;
+				actionWithTarget(target);
 				return;
 			}
 			else
@@ -225,7 +260,7 @@ void AI::moveTo(side side)
 			_character->setState(Character::state::idle);
 		}
 	}
-	if (getEntityNumber() == 3)
+	/*if (getEntityNumber() == 3)
 	{
 		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-550, 308, 770))
 		{
@@ -236,7 +271,7 @@ void AI::moveTo(side side)
 			this->putBomb();
 			_character->setState(Character::state::idle);
 		}
-	}
+	}*/
 	if (getEntityNumber() == 4)
 	{
 		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-550, 308, 630))

@@ -23,8 +23,9 @@
 #include "Sounds.hpp"
 #include "Videos.hpp"
 #include "Controls.hpp"
+#include "GameControls.hpp"
+#include "GameSounds.hpp"
 
-class GameOptions;
 class Load;
 class Save;
 class Intro;
@@ -58,7 +59,8 @@ class Core {
         enum layerGameState {
             gamePause,
             gameGame,
-            gameOptions,
+            gameSounds,
+            gameControls,
             gameSave,
 		};
 
@@ -69,7 +71,8 @@ class Core {
 
         void pauseCase();
         void gameCase();
-        void gameOptionsCase();
+        void gameSoundsCase();
+        void gameControlsCase();
         void introCase();
         void menuCase();
         void selectCase();
@@ -134,7 +137,8 @@ class Core {
         GameCore *_gameCore;
         Pause *_pause;
         Game *_game;
-        GameOptions *_gameOptions;
+        GameControls *_gameControls;
+        GameSounds *_gameSounds;
         layerMenuState _lState;
         layerGameState _lGState;
         gameState _gState;

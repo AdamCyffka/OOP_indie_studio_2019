@@ -39,10 +39,14 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	_bomb = new Bomber(_map);
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
-		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
+		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
 			entity = new AI(characters.at(i - 1), i, _map, _entities, _bomb);
-		else
+			entity->setInput(Key_mouvement::Ia);
+		}
+		else {
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this, _bomb);
+			entity->setInput(Key_mouvement::None);
+		}
 		_entities.push_back(entity);
 	}
 	spawnPlayers();

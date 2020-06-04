@@ -21,7 +21,6 @@
 #include "Intro.hpp"
 #include "Save.hpp"
 #include "Load.hpp"
-#include "GameOptions.hpp"
 
 Core::Core()
 {
@@ -35,7 +34,7 @@ Core::Core()
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
 	}
-	//_window->setWindowCaption(L"Super Bomberman Bros");
+	_window->setWindowCaption(L"Super Bomberman Bros");
 	_smgr = _window->getSceneManager();
 	_camera = _smgr->addCameraSceneNode();
 	_camera->setFarValue(42000);
@@ -67,7 +66,8 @@ Core::Core()
     _gameCore = nullptr;
 	_pause = nullptr;
 	_game = nullptr;
-	_gameOptions = nullptr;
+	_gameSounds = nullptr;
+	_gameControls = nullptr;
 }
 
 void Core::start()
@@ -126,7 +126,8 @@ void Core::restartDevice(bool fullscreen)
     _gameCore = nullptr;
 	_pause = nullptr;
 	_game = nullptr;
-	_gameOptions = nullptr;
+	_gameSounds = nullptr;
+	_gameControls = nullptr;
 }
 
 void Core::changeFullscreen()
@@ -292,10 +293,16 @@ void Core::loadCase()
 	showMenuLayer(_load);
 }
 
-void Core::gameOptionsCase()
+void Core::gameControlsCase()
 {
 	hideGameLayers();
-	showGameLayer(_gameOptions);
+	showGameLayer(_gameControls);
+}
+
+void Core::gameSoundsCase()
+{
+	hideGameLayers();
+	showGameLayer(_gameSounds);
 }
 
 void Core::splashCase()
@@ -440,8 +447,14 @@ void Core::init()
 	}
 	else if (_initStep == 18)
 	{
-		if (!_gameOptions)
-			_gameOptions = new GameOptions(_env, _driver, _smgr);
+		if (!_gameSounds)
+			_gameSounds = new GameSounds(_env, _driver, _smgr);
+		_splash->getBar()->setProgress(100);
+	}
+	else if (_initStep == 19)
+	{
+		if (!_gameControls)
+			_gameControls = new GameControls(_env, _driver, _smgr);
 		_splash->getBar()->setProgress(100);
 	}
 	else
@@ -474,23 +487,6 @@ int Core::run()
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
 		drawScene();
-
-		core::vector3df cameraPosition = _camera->getPosition();
-		core::vector3df cameraTargetPosition = _camera->getTarget();
-		core::stringw cameraPositionStr = L"CAMERA POSITION [";
-		cameraPositionStr += cameraPosition.X;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraPosition.Y;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraPosition.Z;
-		cameraPositionStr += L"] CAMERA TARGET POSITION [";
-		cameraPositionStr += cameraTargetPosition.X;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraTargetPosition.Y;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraTargetPosition.Z;
-		cameraPositionStr += L"]";
-		_window->setWindowCaption(cameraPositionStr.c_str());
 
 		_smgr->drawAll();
 		_env->drawAll();
@@ -530,8 +526,11 @@ void Core::drawGameLayer()
 		case gameGame:
 			gameCase();
 			break;
-		case gameOptions:
-			gameOptionsCase();
+		case gameSounds:
+			gameSoundsCase();
+			break;
+		case gameControls:
+			gameControlsCase();
 			break;
 		case gameSave:
 			saveCase();
@@ -595,12 +594,20 @@ void Core::hideGameLayers()
 	if (_save)
 		for (auto &it : _save->getButtons())
 			it.second->setVisible(false);
-	if (_gameOptions) {
-		for (auto &it : _gameOptions->getButtons())
+	if (_gameControls) {
+		for (auto &it : _gameControls->getButtons())
 			it.second->setVisible(false);
-		for (auto &it : _gameOptions->getImages())
+		for (auto &it : _gameControls->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _gameOptions->getCheckBox())
+		for (auto &it : _gameControls->getCheckBox())
+			it.second->setVisible(false);
+	}
+	if (_gameSounds) {
+		for (auto &it : _gameSounds->getButtons())
+			it.second->setVisible(false);
+		for (auto &it : _gameSounds->getImages())
+			it.second->setVisible(false);
+		for (auto &it : _gameSounds->getCheckBox())
 			it.second->setVisible(false);
 	}
 }

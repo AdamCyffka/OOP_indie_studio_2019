@@ -145,8 +145,11 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case IMenu::GUI_ID_PAUSE_RETURN:
                         _core.setLGState(Core::gamePause);
                         return true;
-                    case IMenu::GUI_ID_PAUSE_OPTIONS:
-                        _core.setLGState(Core::gameOptions);
+                    case IMenu::GUI_ID_PAUSE_SOUNDS:
+                        _core.setLGState(Core::gameSounds);
+                        return true;
+                    case IMenu::GUI_ID_PAUSE_CONTROLS:
+                        _core.setLGState(Core::gameControls);
                         return true;
                     case IMenu::GUI_ID_PAUSE_MENU:
                         _core.getMusicEngine()->stop("resources/music/game.mp3", false);

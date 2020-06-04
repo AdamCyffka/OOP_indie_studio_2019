@@ -66,20 +66,6 @@ void Videos::loadButtons()
     _buttons["videos"]->setImage(_textures["videos"]);
     _buttons["videos"]->setRelativePosition(irr::core::position2d<irr::s32>(400, 600));
 
-    // irr::core::dimension2d<u32> dim(1920, 1080);
-    // _checkBox["fullScreen"] = _env->addCheckBox(false, irr::core::rect<s32>(dim.Width - 320, 150, dim.Width - 300, 166), nullptr, -1, L"");
-    // _images["fullScreen"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47));
-    // if (_images.find("fullScreen") == _images.end() || !_images["fullScreen"])
-    //     throw LoadingException("could not add image : fullScreen");
-    // _images["fullScreen"]->setImage(_textures["fullScreen"]);
-    // _images["fullScreen"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 900));
-
-    // _checkBox["vsync"] = _env->addCheckBox(false, irr::core::rect<s32>(dim.Width - 600, 20, dim.Width - 300, 1000), nullptr, -1, L"");
-    // _images["vsync"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47));
-    // if (_images.find("vsync") == _images.end() || !_images["vsync"])
-    //     throw LoadingException("could not add image : vsync");
-    // _images["vsync"]->setImage(_textures["vsync"]);
-    // _images["vsync"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 1000));
 }
 
 std::vector<Character *> Videos::getPreviews()
