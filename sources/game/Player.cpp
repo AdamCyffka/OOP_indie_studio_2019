@@ -153,7 +153,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(west);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.X += 0.01f * _speed;
+			pos.X += 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
@@ -163,7 +163,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(east);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.X -= 0.01f * _speed;
+			pos.X -= 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
@@ -173,7 +173,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(north);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.Z -= 0.01f * _speed;
+			pos.Z -= 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
@@ -183,7 +183,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(south);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.Z += 0.01f * _speed;
+			pos.Z += 1.0f;
 			_character->setPosition(pos);
 		}
 		break;

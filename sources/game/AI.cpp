@@ -196,14 +196,14 @@ void AI::actionWithTarget(IEntity *target)
 		int speedMult = 1;
 		if (_character->getPosition().X > target->getCharacter()->getPosition().X)
 			speedMult = -1;
-		_wantedPosition = core::vector3df(_character->getPosition().X + (5 * speedMult), _character->getPosition().Y, _character->getPosition().Z);
-		_character->moveTo(_wantedPosition, 1000 - (_speed * 100));
+		_wantedPosition = core::vector3df(_character->getPosition().X + (1 * speedMult), _character->getPosition().Y, _character->getPosition().Z);
+		_character->moveTo(_wantedPosition, 800 - (_speed * 100));
 	} else {
 		int speedMult = 1;
 		if (_character->getPosition().Z > target->getCharacter()->getPosition().Z)
 			speedMult = -1;
-		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + (5 * speedMult));
-		_character->moveTo(_wantedPosition, 1000 - (_speed * 100));
+		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + (1 * speedMult));
+		_character->moveTo(_wantedPosition, 800 - (_speed * 100));
 	}
 }
 
