@@ -7,7 +7,6 @@
 
 #include "Player.hpp"
 #include "GameCore.hpp"
-//#include "hitbox.cpp" //TODO REMOVE
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, GameCore *gameCore, Bomber *bomb) : _isAlive(false), _entityNumber(entityNumber), _map(map), _gameCore(gameCore),
 	_score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
@@ -153,7 +152,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(west);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.X += 0.01f * _speed;
+			pos.X += 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
@@ -163,7 +162,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(east);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.X -= 0.01f * _speed;
+			pos.X -= 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
@@ -173,7 +172,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(north);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.Z -= 0.01f * _speed;
+			pos.Z -= 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
@@ -183,7 +182,7 @@ void Player::moveTo(side direction)
 				_character->setOrientation(south);
 			if (_character->getState() != Character::running)
 				_character->setState(Character::running);
-			pos.Z += 0.01f * _speed;
+			pos.Z += 1.0f;
 			_character->setPosition(pos);
 		}
 		break;
