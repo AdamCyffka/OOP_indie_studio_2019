@@ -183,7 +183,7 @@ IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
-	//this->moveTo(side::west);
+	this->moveTo(side::west);
 
 	if (getEntityNumber() == 3)
 	{
@@ -194,6 +194,7 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 			IEntity *target = canMoveToTarget(entities);
 			if (canMoveToTarget(entities) != nullptr)
 			{
+				std::cout << "Move to target" << std::endl;
 				return;
 			}
 			else
