@@ -41,7 +41,7 @@ enum Key_mouvement
 
 using Key_mouvementCheck = EnumCheck<Key_mouvement, Key_mouvement::Right, Key_mouvement::Left, Key_mouvement::Up, Key_mouvement::Down, Key_mouvement::Bomb, Key_mouvement::Ia, Key_mouvement::None>;
 
-class Input : public IEventReceiver
+class Input
 {
     public:
         void setJoystick(IrrlichtDevice*device);
