@@ -183,7 +183,7 @@ void Input::reset()
 		_playerInput[4] = None;
 }
 
-bool Input::OnEvent(const SEvent& event)
+bool Input::inputEvent(const SEvent& event)
 {
 	reset();
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {

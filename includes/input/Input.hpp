@@ -55,7 +55,7 @@ class Input
         const SEvent::SJoystickEvent &getJoystickStatePfour(void) const;
         
         void reset();
-	    bool OnEvent(const SEvent& event);
+	    bool inputEvent(const SEvent& event);
         bool isKeyDown(irr::EKEY_CODE keyCode);
        
         void player_one_keyboard(Input *receiver, const SEvent& event);
