@@ -41,7 +41,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI)
 			entity = new AI(characters.at(i - 1), i, _map, _entities, _bomb);
 		else
-			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this);
+			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this, _bomb);
 		_entities.push_back(entity);
 	}
 	spawnPlayers();

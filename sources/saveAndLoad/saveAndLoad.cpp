@@ -195,7 +195,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     if (input == Key_mouvement::Ia)
         entity = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getGameCore()->getEntities(), core.getGameCore()->getBomb());
     else
-        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getGameCore());
+        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getGameCore(), core.getGameCore()->getBomb());
     entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entity->setBombPass(root->get<bool>(path + "bombPass", 0));
     entity->setWallPass(root->get<bool>(path + "wallPass", 0));

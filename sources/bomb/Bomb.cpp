@@ -65,6 +65,7 @@ bool Bomber::hasEnoughBombToPose()
             return (false);
         }
 	}
+    return (true);
 }
 
 void Bomber::putBomb()
@@ -152,4 +153,5 @@ bool Bomber::isKilledByBomb()
         it->setIsAlive(false);
         it->getCharacter()->setVisibility(false);
 	}
+    return (true);
 }
