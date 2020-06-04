@@ -11,48 +11,56 @@
 #include <irrlicht.h>
 
 #include "IEntity.hpp"
-
-#include "Player.hpp"
-#include "Ai.hpp"
 #include "Map.hpp"
 #include "hitbox.hpp"
+#include "AnimExplo.hpp"
 
-#include <mutex>
 #include <chrono>
-#include <thread>
 #include <ctime>
 #include <vector>
 
 #define TIMER (3000)
 
-using namespace std::chrono_literals;
-
-class Bomby : public IEntity {
+class Core;
+class Bomber : public IEntity {
     public:
-        Bomby(Character *, Map *, Player *, AI *, std::vector<IEntity *> entities);
-        ~Bomby();
+        Bomber(Map *, std::vector<IEntity *>);
+        ~Bomber();
+        void run();
+
+        //Radius
         void setRadius(int radius);
         int getRadius() const;
+
+        //Blast
         void setIsBlast(bool isBlast);
         bool getIsBlast() const;
-        void setPosition(std::pair<int, int>);
-        std::pair<int, int> getPosition() const;
 
-        void poseBomb();
+         //Error handling
         bool canPoseBomb();
         bool hasEnoughBombToPose();
+
+        //Pose bomb and blast
+        void putBomb();
+        void epicenter();
+        void blastNorth();
+        void blastSouth();
+        void blastEast();
+        void blastWest();
+        void clearMapAfterBlast();
+
+        //Remove and give bomb
+        void removeBombFromInventory();
+        void giveNewBombInInventory();
+
+        //Dead handling
         bool isKilledByBomb();
     private:
         Map *_map;
-        std::pair<int, int> _position;
-        Character *_character;
         std::vector<IEntity *> _entities;
-        Player *_player;
-        AI *_ai;
-
         int _radius;
-        irr::u32 _delay;
-
+        std::chrono::milliseconds _delay;
+        std::vector<int> _bomb;
         bool _isBlast;
     protected:
 };

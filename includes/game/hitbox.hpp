@@ -23,5 +23,6 @@ struct Point {
 
 bool canMove(IEntity *characterPosition, Map *map, side direction);
 Point squareWherePlayerIs(IEntity *entity, Map *map);
+int isInside(float x, float z, float xBlock, float zBlock, float degree);
 
 #endif

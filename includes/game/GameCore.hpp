@@ -13,6 +13,7 @@
 #include "Input.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
+#include "Bomb.hpp"
 
 class MyEventReceiver;
 class Core;
@@ -31,6 +32,7 @@ class GameCore {
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
 		bool nextBlockHasWall(std::pair<int, int>);
 		bool nextBlockHasBlock(std::pair<int, int>, bool);
+		Bomber *getBomb();
     protected:
     private:
 		void spawnPlayers();
@@ -42,6 +44,7 @@ class GameCore {
 		Core *_core;
 		Map *_map;
 		MyEventReceiver *_receiver;
+		Bomber *_bomb;
 };
 
 #endif /* !GAMECORE_HPP_ */

@@ -7,101 +7,151 @@
 
 #include "Bomb.hpp"
 
-Bomby::Bomby(Character *character, Map *map, Player *player, AI *ai, std::vector<IEntity *> entities): _radius(2), _delay(TIMER), _map(map),
-_character(character), _player(player), _ai(ai), _entities(entities), _isBlast(false)
+Bomber::Bomber(Map *map, std::vector<IEntity *> entities): _radius(2), _delay(TIMER), _map(map), _entities(entities), _isBlast(false)
 {
 }
 
-Bomby::~Bomby()
+Bomber::~Bomber()
 {
 }
 
-void Bomby::setRadius(int radius)
+void Bomber::run()
+{
+    auto timeWhenPutBomb = std::chrono::system_clock::now();
+
+    if (timeWhenPutBomb + _delay >= std::chrono::system_clock::now()) {
+        setIsBlast(true);
+    }
+
+}
+
+void Bomber::setRadius(int radius)
 {
     this->_radius = radius;
 }
 
-int	Bomby::getRadius() const
+int	Bomber::getRadius() const
 {
     return (this->_radius);
 }
 
-void Bomby::setIsBlast(bool isBlast)
+void Bomber::setIsBlast(bool isBlast)
 {
     this->_isBlast = isBlast;
 }
 
-bool Bomby::getIsBlast() const
+bool Bomber::getIsBlast() const
 {
     return (this->_isBlast);
 }
 
-std::pair<int, int> Bomby::getPosition() const
-{
-    return (this->_position);
-}
-
-void Bomby::setPosition(std::pair<int, int> position)
-{
-    this->_position = position;
-}
-
-bool Bomby::canPoseBomb()
+bool Bomber::canPoseBomb()
 {
 
-    //if ((_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == blockState::empty)
-    //&& (_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear)) { // crash why ?! bad used probably
+    if ((_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == blockState::empty) &&
+    (_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear)) {
         return (true);
-    //} else {
-    //    return (false);
-    //}
+    } else {
+        return (false);
+    }
 }
 
-bool Bomby::hasEnoughBombToPose()
+bool Bomber::hasEnoughBombToPose()
 {
-    //if (_ai->getInput() == Key_mouvement::Ia && _ai->getBombAmount() > 0) { // crash random
-    //    _ai->setBombAmount(_ai->getBombAmount() - 1);
-        return (true);
-    //} else if (_player->getInput() == Key_mouvement::Bomb && _player->getBombAmount() > 0) { //crash pour le player why not even using like ai!!
-    //    _player->setBombAmount(_player->getBombAmount() - 1);
-    //    return (true);
-    //} else {
-    //    return (false);
-    //}
+    for (auto it : _entities) {
+		if (it->getBombAmount() > 0) {
+            return (true);
+        } else {
+            return (false);
+        }
+	}
+    return (true);
 }
 
-void waiter()
+void Bomber::putBomb()
 {
-    std::this_thread::sleep_for(3s);
-}
-
-void Bomby::poseBomb()
-{
-    std::mutex mutex;
-    //irr::core::vector3df pos = _character->getPosition(); crash ?!
-
-    if (canPoseBomb() == true && hasEnoughBombToPose() == true) {
-        //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::bomb; // edit map to pose bomb | crash why ?! bad used probably
-        {
-            mutex.lock();
-            std::thread t1(waiter); // attend 3 s some bug currently
-            t1.detach();
-            mutex.unlock();
-            setIsBlast(true); // active l'explosion
-            if (getIsBlast() == true) {
-                //anim explosion
-                //_map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear; // edit map bomb a explosé | crash why ?! bad used probably
-                setIsBlast(false); // explosion fini
-                //if (_ai->getInput() == Key_mouvement::Ia)
-                //    _ai->setBombAmount(_ai->getBombAmount() + 1);
-                //if (_player->getInput() == Key_mouvement::Down || _player->getInput() == Key_mouvement::Left || _player->getInput() == Key_mouvement::Right || _player->getInput() == Key_mouvement::Up)
-                //    _player->setBombAmount(_player->getBombAmount() + 1); // crash with player class like hasEnoughtBombToPose function
+    if (canPoseBomb() && hasEnoughBombToPose()) {
+        epicenter();
+        removeBombFromInventory();
+        if (getIsBlast() == true) {
+            {
+                blastNorth();
+                blastSouth();
+                blastEast();
+                blastWest();
             }
+            clearMapAfterBlast();
+            setIsBlast(false);
+            giveNewBombInInventory();
         }
     }
 }
 
-bool Bomby::isKilledByBomb()
+void Bomber::epicenter()
 {
-    return (false); // pas encore implementer!
+    _map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::bomb;
+}
+
+void Bomber::blastNorth()
+{
+    for (int i = 0; i != _radius; i++) {
+        if (_map->getMap()[squareWherePlayerIs(this, _map).x + i][squareWherePlayerIs(this, _map).y] == blockState::breakable ||
+        _map->getMap()[squareWherePlayerIs(this, _map).x + i][squareWherePlayerIs(this, _map).y] == blockState::empty)
+            _map->getMap()[squareWherePlayerIs(this, _map).x + i][squareWherePlayerIs(this, _map).y] == blockState::empty;
+    }
+}
+
+void Bomber::blastSouth()
+{
+    for (int i = 0; i != _radius; i++) {
+        if (_map->getMap()[squareWherePlayerIs(this, _map).x - i][squareWherePlayerIs(this, _map).y] == blockState::breakable ||
+        _map->getMap()[squareWherePlayerIs(this, _map).x - i][squareWherePlayerIs(this, _map).y] == blockState::empty)
+            _map->getMap()[squareWherePlayerIs(this, _map).x - i][squareWherePlayerIs(this, _map).y] == blockState::empty;
+    }
+}
+
+void Bomber::blastEast()
+{
+    for (int i = 0; i != _radius; i++) {
+        if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + i] == blockState::breakable ||
+        _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + i] == blockState::empty)
+            _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y + i] == blockState::empty;
+    }
+}
+
+void Bomber::blastWest()
+{
+    for (int i = 0; i != _radius; i++) {
+        if (_map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - i] == blockState::breakable ||
+        _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - i] == blockState::empty)
+            _map->getMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y - i] == blockState::empty;
+    }
+}
+
+void Bomber::clearMapAfterBlast()
+{
+    _map->getBombMap()[squareWherePlayerIs(this, _map).x][squareWherePlayerIs(this, _map).y] == bombState::clear;
+}
+
+void Bomber::removeBombFromInventory()
+{
+    for (auto it : _entities) {
+		it->setBombAmount(it->getBombAmount() - 1);
+	}
+}
+
+void Bomber::giveNewBombInInventory()
+{
+    for (auto it : _entities) {
+		it->setBombAmount(it->getBombAmount() + 1);
+	}
+}
+
+bool Bomber::isKilledByBomb()
+{
+    for (auto it : _entities) {
+        it->setIsAlive(false);
+        it->getCharacter()->setVisibility(false);
+	}
+    return (true);
 }

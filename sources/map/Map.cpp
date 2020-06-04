@@ -36,7 +36,7 @@ void Map::generateMap()
 		bombLine[0] = block;
 		playerLine[0] = obstacle;
 		for (int j = 1; j < MAP_WIDTH + 1; ++j) {
-			int res = generateBlock();
+			int res = generateBlock(); //Start comment here to empty the map
 			if (res == 0) {
 				line[j] = empty;
 				bombLine[j] = clear;
@@ -51,7 +51,7 @@ void Map::generateMap()
 				playerLine[j] = obstacle;
 			} else {
 				throw MapException("Unexpected value found : generateBlock()");
-			}
+			} //End comment here to empty the map
 		}
 		line[MAP_WIDTH + 1] = unbreakable;
 		bombLine[MAP_WIDTH + 1] = block;
