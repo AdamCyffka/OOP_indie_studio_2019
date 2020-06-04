@@ -26,9 +26,9 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
-	Bomby *bomb;
+	// Bomby *bomb;
 
-	bomb->poseBomb();
+	// bomb->poseBomb();
 }
 
 void AI::setFirePower(int firePower)
