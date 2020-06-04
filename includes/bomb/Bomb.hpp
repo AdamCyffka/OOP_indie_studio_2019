@@ -15,6 +15,7 @@
 #include "AnimExplo.hpp"
 #include "IEntity.hpp"
 
+#include <utility>
 #include <chrono>
 #include <ctime>
 #include <vector>
@@ -23,7 +24,7 @@
 
 class Bomber {
     public:
-        Bomber(Map *);
+        Bomber(Map *, irr::scene::ISceneManager *);
         ~Bomber();
         void run();
 
@@ -44,7 +45,7 @@ class Bomber {
         bool hasEnoughBombToPut();
 
         //Pose bomb and blast
-        void putBomb(std::vector<IEntity *>, IEntity *);
+        void putBomb(IEntity *);
         void epicenter(IEntity *);
         void blastNorth(IEntity *);
         void blastSouth(IEntity *);
@@ -59,12 +60,18 @@ class Bomber {
         //Dead handling
         bool isKilledByBomb();
     private:
+        enum bombAvailability {
+            free,
+            planted,
+            blasting
+        };
         Map *_map;
         std::vector<IEntity *> _entities;
         int _radius;
         std::chrono::milliseconds _delay;
-        std::vector<int> _bomb;
         bool _isBlast;
+        irr::scene::ISceneManager *_smgr;
+        std::vector<std::pair<irr::scene::ISceneNode *, bombAvailability>> _bombs;
     protected:
 };
 
