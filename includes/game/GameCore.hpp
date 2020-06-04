@@ -13,6 +13,7 @@
 #include "Input.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
+#include "Bomb.hpp"
 
 class MyEventReceiver;
 class Core;
@@ -42,6 +43,7 @@ class GameCore {
 		Core *_core;
 		Map *_map;
 		MyEventReceiver *_receiver;
+		Bomber *_bomb;
 };
 
 #endif /* !GAMECORE_HPP_ */
