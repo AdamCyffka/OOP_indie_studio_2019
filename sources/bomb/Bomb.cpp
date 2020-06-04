@@ -15,7 +15,7 @@ Bomber::Bomber(Map *map, irr::scene::ISceneManager *smgr): _smgr(smgr), _radius(
         if (bomb) {
             bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             bomb->setPosition({0, 0, 0});
-            bomb->setScale({100, 100, 100});
+            bomb->setScale({7, 7, 7});
             bomb->setVisible(false);
             _bombs.push_back({bomb, bombAvailability::free});
         }
@@ -113,9 +113,9 @@ void Bomber::putBomb(IEntity *it)
                 blastWest(it);
             }
             clearMapAfterBlast(it);
-            // for (auto bomb: _bombs) {
-            //     bomb.first->setVisible(false);
-            // }
+            //for (auto bomb: _bombs) {
+            //    bomb.first->setVisible(false);
+            //}
             setIsBlast(false);
             giveNewBombInInventory();
         }
