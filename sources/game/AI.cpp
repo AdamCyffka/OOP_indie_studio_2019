@@ -126,7 +126,7 @@ bool AI::canMoveToTargetX(IEntity *it)
 	int zMax = std::max(it->getCharacter()->getPosition().Z, _character->getPosition().Z);
 	for (z; z < zMax - 10; z++)
 	{
-		for (int j = 0; j < MAP_DEFAULT_Y; j++)
+		for (int j = 0; j < MAP_WIDTH; j++)
 		{
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
 			if (isInside(_character->getPosition().X, z, x, zBlock, 10))
@@ -147,7 +147,7 @@ bool AI::canMoveToTargetZ(IEntity *it)
 	int xMax = std::max(it->getCharacter()->getPosition().X, _character->getPosition().X);
 	for (x; x < xMax - 10; x++)
 	{
-		for (int i = 0; i < MAP_DEFAULT_X; i++)
+		for (int i = 0; i < MAP_HEIGHT; i++)
 		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			if (isInside(_character->getPosition().X, z, xBlock, z, 10))
