@@ -40,8 +40,8 @@ class Bomber {
         bool getIsBlast() const;
 
          //Error handling
-        bool canPoseBomb(IEntity *);
-        bool hasEnoughBombToPose();
+        bool canPutBomb(IEntity *);
+        bool hasEnoughBombToPut();
 
         //Pose bomb and blast
         void putBomb(std::vector<IEntity *>, IEntity *);

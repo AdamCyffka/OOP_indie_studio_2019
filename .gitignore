@@ -7,9 +7,6 @@
 bomberman*
 a.out
 
-# dll at the root of the repository
-/*.dll
-
 # compilation files
 *.o
 *.gcda
@@ -35,7 +32,6 @@ CMakeCache.txt
 out/
 cmake-build-debug
 .idea/
-bin/*
 cmake/Modules/FindIrrklang.cmake
 build/x64
 build/*.sln

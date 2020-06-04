@@ -44,31 +44,30 @@ using Key_mouvementCheck = EnumCheck<Key_mouvement, Key_mouvement::Right, Key_mo
 class Input
 {
     public:
-        bool IsKeyPressed() const;
-        void set_controller(int player, device devices);
+        void setJoystick(IrrlichtDevice*device);
+        const SEvent::SJoystickEvent changeController(Input *receiver, int controller);
+        bool isKeyPressed() const;
+        void setDevice(int player, device devices);
         std::map<int, Key_mouvement> getPlayerInputs();
-		const SEvent::SJoystickEvent &GetJoystickStatePone(void) const;
-        const SEvent::SJoystickEvent &GetJoystickStatePtwo(void) const;
-        const SEvent::SJoystickEvent &GetJoystickStatePthree(void) const;
-        const SEvent::SJoystickEvent &GetJoystickStatePfour(void) const;
+		const SEvent::SJoystickEvent &getJoystickStatePone(void) const;
+        const SEvent::SJoystickEvent &getJoystickStatePtwo(void) const;
+        const SEvent::SJoystickEvent &getJoystickStatePthree(void) const;
+        const SEvent::SJoystickEvent &getJoystickStatePfour(void) const;
         
         void reset();
 	    bool inputEvent(const SEvent& event);
-        bool IsKeyDown(irr::EKEY_CODE keyCode);
+        bool isKeyDown(irr::EKEY_CODE keyCode);
        
         void player_one_keyboard(Input *receiver, const SEvent& event);
-        void player_one_joystick(Input *receiver);
-        void player_two_joystick(Input *receiver);
+        void playerJoystick(Input *receiver, int controller, int player);
         void player_two_keyboard(Input *receiver, const SEvent& event);
-        void player_three_joystick(Input *receiver);
         void player_three_keyboard(Input *receiver, const SEvent& event);
-        void player_four_joystick(Input *receiver);
         void player_four_keyboard(Input *receiver, const SEvent& event);
-        void detect_player(Input *receiver, const SEvent& event);
-        void detect_input(Input *receiver, const SEvent& event);
+        void detectPlayer(Input *receiver, const SEvent& event);
+        void detectInput(Input *receiver, const SEvent& event);
 
         basic_key keyBoard(Input *receiver);
-        void define_player(Input *receiver);
+        void definePlayer(Input *receiver);
         bool getPlayerInput(Input *receiver, const SEvent& event);
 	    Input();
         ~Input();
@@ -80,6 +79,7 @@ class Input
         std::map<int, Key_mouvement> _playerInput;
         std::map<int, device> _player;
 
+        core::array<SJoystickInfo> joystickInfo;
         SEvent::SJoystickEvent JoystickStatePone;
         SEvent::SJoystickEvent JoystickStatePtwo;
         SEvent::SJoystickEvent JoystickStatePthree;

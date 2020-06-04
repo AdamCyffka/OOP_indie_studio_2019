@@ -3,7 +3,7 @@ project(OOP_indie_studio_2019)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
 
 add_executable(bomberman
         sources/main.cpp
@@ -53,7 +53,6 @@ add_executable(bomberman
         sources/saveAndLoad/saveAndLoad.cpp
         )
 
-
 include_directories(includes
         includes/map
         includes/core/
@@ -82,7 +81,6 @@ find_package(Irrlicht REQUIRED)
 if (Irrlicht_FOUND)
     target_link_libraries(bomberman ${Irrlicht_LIBRARIES})
     include_directories(${Irrlicht_INCLUDE_DIRS})
-
 endif (Irrlicht_FOUND)
 #########################################
 
@@ -103,36 +101,9 @@ endif (Boost_FOUND)
 #########################################
 
 ######## Components integration #########
-file(COPY "${CMAKE_SOURCE_DIR}/resources"
-        DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-
 if (MSVC)
-    add_custom_command(TARGET bomberman PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_MODULE_PATH}/irrLicht/Irrlicht.dll"
-            ${CMAKE_SOURCE_DIR}/bin)
-    add_custom_command(TARGET bomberman PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_MODULE_PATH}/irrKlang/irrKlang.dll"
-            ${CMAKE_SOURCE_DIR}/bin)
-    add_custom_command(TARGET bomberman PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_MODULE_PATH}/irrKlang/ikpFlac.dll"
-            ${CMAKE_SOURCE_DIR}/bin)
-    add_custom_command(TARGET bomberman PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_MODULE_PATH}/irrKlang/ikpMP3.dll"
-            ${CMAKE_SOURCE_DIR}/bin)
     target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/irrKlang.lib)
 ELSE (MSVC)
-    add_custom_command(TARGET bomberman PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_MODULE_PATH}/irrKlang/ikpFlac.so"
-            ${CMAKE_SOURCE_DIR}/bin)
-    add_custom_command(TARGET bomberman PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_MODULE_PATH}/irrKlang/ikpMP3.so"
-            ${CMAKE_SOURCE_DIR}/bin)
     target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/libIrrKlang.so)
 ENDIF(MSVC)
 #########################################

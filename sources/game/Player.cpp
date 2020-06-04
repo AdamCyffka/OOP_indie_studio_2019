@@ -7,7 +7,6 @@
 
 #include "Player.hpp"
 #include "GameCore.hpp"
-//#include "hitbox.cpp" //TODO REMOVE
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, GameCore *gameCore, Bomber *bomb) : _isAlive(false), _entityNumber(entityNumber), _map(map), _gameCore(gameCore),
 	_score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
