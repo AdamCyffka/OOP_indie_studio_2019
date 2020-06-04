@@ -55,9 +55,8 @@ bool Bomber::getIsBlast() const
     return (this->_isBlast);
 }
 
-bool Bomber::canPoseBomb(IEntity *it)
+bool Bomber::canPutBomb(IEntity *it)
 {
-
     if ((_map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] == blockState::empty) &&
     (_map->getBombMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] == bombState::clear)) {
         return (true);
@@ -66,9 +65,10 @@ bool Bomber::canPoseBomb(IEntity *it)
     }
 }
 
-bool Bomber::hasEnoughBombToPose()
+bool Bomber::hasEnoughBombToPut()
 {
     for (auto it : getEntities()) {
+        std::cout << "BombAmount: " << it->getBombAmount() << std::endl;
 		if (it->getBombAmount() > 0) {
             return (true);
         } else {
@@ -80,11 +80,15 @@ bool Bomber::hasEnoughBombToPose()
 
 void Bomber::putBomb(std::vector<IEntity *> entities, IEntity *it)
 {
-    if (canPoseBomb(it) && hasEnoughBombToPose()) {
+    std::cout << "bomb function" << std::endl;
+    if (canPutBomb(it) && hasEnoughBombToPut()) {
+        std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory();
+        setIsBlast(true);
         if (getIsBlast() == true) {
             {
+                std::cout << "blast" << std::endl;
                 blastNorth(it);
                 blastSouth(it);
                 blastEast(it);
