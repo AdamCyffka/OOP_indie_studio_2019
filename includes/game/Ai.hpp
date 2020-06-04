@@ -49,6 +49,8 @@ public:
 	IEntity *canMoveToTarget(std::vector<IEntity *> entities);
 	bool canMoveToTargetX(IEntity *it);
 	bool canMoveToTargetZ(IEntity *it);
+	void actionWithTarget(IEntity *target);
+	void checkMovement();
 
 private:
 	bool _isAlive;
@@ -58,7 +60,8 @@ private:
 	Character *_character;
 	Map *_map;
 	std::vector<IEntity *> _entities;
-	Key_mouvement wantedMovement;
+	Key_mouvement _wantedMovement;
+	core::vector3df _wantedPosition;
 
 	int _firePower;
 	int _bombAmount;

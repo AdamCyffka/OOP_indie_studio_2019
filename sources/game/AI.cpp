@@ -166,13 +166,11 @@ IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 	{
 		if (it->getEntityNumber() != this->getEntityNumber())
 		{
-			if ((it->getCharacter()->getPosition().X == _character->getPosition().X)
-			&& canMoveToTargetX(it))
+			if ((it->getCharacter()->getPosition().X == _character->getPosition().X) && canMoveToTargetX(it))
 			{
 				return it;
 			}
-			if ((it->getCharacter()->getPosition().Z == _character->getPosition().Z)
-			&& canMoveToTargetZ(it))
+			if ((it->getCharacter()->getPosition().Z == _character->getPosition().Z) && canMoveToTargetZ(it))
 			{
 				return it;
 			}
@@ -181,10 +179,51 @@ IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 	return nullptr;
 }
 
+void AI::actionWithTarget(IEntity *target)
+{
+	if (target->getCharacter()->getPosition().X == _character->getPosition().X
+	&& (target->getCharacter()->getPosition().Z == _character->getPosition().Z))
+		return;
+
+	if (target->getCharacter()->getPosition().X == _character->getPosition().X)
+	{
+		int speedMult = 1;
+		if (_character->getPosition().Z > target->getCharacter()->getPosition().Z)
+			speedMult = -1;
+		if (_character->getState() == Character::state::idle)
+		{
+			_wantedPosition = (core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + (5 * speedMult)));
+			_character->moveTo(core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + (5 * speedMult)), 1000 - (_speed * 100));
+		}
+	}
+	else
+	{
+		int speedMult = 1;
+		if (_character->getPosition().X > target->getCharacter()->getPosition().X)
+			speedMult = -1;
+		if (_character->getState() == Character::state::idle)
+		{
+			_wantedPosition = (core::vector3df(_character->getPosition().X + (5 * speedMult), _character->getPosition().Y, _character->getPosition().Z));
+			_character->moveTo(core::vector3df(_character->getPosition().X + (5 * speedMult), _character->getPosition().Y, _character->getPosition().Z), 1000 - (_speed * 100));
+		}
+	}
+}
+
+void AI::checkMovement()
+{
+	if (_character->getState() != Character::state::idle)
+	{
+		if (_character->getPosition() == _wantedPosition) {
+			_character->setState(Character::state::idle);
+		}
+	}
+}
+
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	this->moveTo(side::west);
 
+	//checkMovement();
 	if (getEntityNumber() == 3)
 	{
 		// J'appelle la fonction ici seulement pour lakitu
@@ -194,7 +233,7 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 			IEntity *target = canMoveToTarget(entities);
 			if (canMoveToTarget(entities) != nullptr)
 			{
-				std::cout << "Move to target" << std::endl;
+				actionWithTarget(target);
 				return;
 			}
 			else
