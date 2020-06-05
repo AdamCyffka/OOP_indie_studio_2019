@@ -10,7 +10,7 @@
 
 using namespace irr;
 
-void Input::setJoystick(IrrlichtDevice*device)
+void Input::setJoystick(IrrlichtDevice *device)
 {
 	device->activateJoysticks(joystickInfo);
 }
@@ -186,6 +186,10 @@ void Input::reset()
 bool Input::inputEvent(const SEvent& event)
 {
 	reset();
+	std::cout << "-------------------------" << std::endl;
+	for (auto i : _player)
+		std::cout << i.first << " " << i.second << std::endl;
+	std::cout << "-------------------------" << std::endl;
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
 		JoystickStatePone = event.JoystickEvent;
     }
@@ -206,29 +210,11 @@ bool Input::inputEvent(const SEvent& event)
     return false;
 }
 
-void Input::detectPlayer(Input *receiver, const SEvent& event)
-{
-	if (receiver->isKeyDown(irr::KEY_KEY_1) && _player[0] != Keyboard) {
-		_player[0] = Keyboard;
-	}
-
-	if (receiver->isKeyDown(irr::KEY_KEY_2) && _player[1] != Keyboard) {
-		_player[1] = Keyboard;
-	}
-
-	if (receiver->isKeyDown(irr::KEY_KEY_3) && _player[2] != Keyboard) {
-		_player[0] = Keyboard;
-	}
-
-	if (receiver->isKeyDown(irr::KEY_KEY_4) && _player[3] != Keyboard) {
-		_player[0] = Keyboard;
-	}
-}
-
 bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 { 
 	int controller = 1;
 	int player = 1;
+
 	if (_player[0] == Keyboard) {
 		player_one_keyboard(receiver, event);
 	} else if (_player[0] == Controller) {

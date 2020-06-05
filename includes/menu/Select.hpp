@@ -21,6 +21,13 @@ class Select : public IMenu {
         Select(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
         ~Select() = default;
         void run();
+        void loadButtons();
+        void loadTextures();
+        void spawnEntities();
+        void incSkin(int skin);
+        void changeRole(int role);
+        void switchSkin(int pos);
+        int getNextAvailableSkin(size_t start = 0);
 
         // Getter
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
@@ -30,33 +37,23 @@ class Select : public IMenu {
         std::vector<Character *> getPreviews();
         std::vector<std::vector<std::vector<std::string>>> getSelectRole();
         std::vector<std::vector<int>> getNbRole(); 
-
-        // Loader
-        void loadButtons();
-        void loadTextures();
-        Character *getPreview(int preview) const;
         irr::video::ITexture *getRole(int role);
-        void spawnEntities();
-        void incSkin(int skin);
-        void changeRole(int role);
-
 		const std::vector<EntityType::EntityType> &getEntityTypes();
-        void switchSkin(int pos);
-        int getNextAvailableSkin(size_t start = 0);
+        Character *getPreview(int preview) const;
     private:
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 
-        std::vector<int> _pos;
-        std::vector<bool> _playersIA;
+        Character *_character;
+        Music *_music;
 		std::map<std::string, irr::gui::IGUIImage *> _images;
 		std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
         std::vector<Character *> _previews;
-        Character *_character;
-        Music *_music;
+        std::vector<int> _pos;
+        std::vector<bool> _playersIA;
 		std::vector<EntityType::EntityType> _entitiesTypes;
         std::vector<std::pair<std::string, int>> _selectTab;
         std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"p", "p_grey"}, {"ia", "ia_grey"}}};

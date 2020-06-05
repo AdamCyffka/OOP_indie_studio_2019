@@ -34,7 +34,7 @@ void GameCore::reset()
 	_isInit = false;
 }
 
-void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes)
+void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)
 {
 	_bomber = new Bomber(_map);
 	for (int i = 1; i <= 4; ++i) {
@@ -42,10 +42,18 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
 			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, _bomber);
 			entity->setInput(Key_mouvement::Ia);
+			if (controlTypes.at(i - 1) == EntityType::ControlType::NoDevice)
+				_core->getInput()->setDevice(i, No_device);
 		}
 		else {
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber);
 			entity->setInput(Key_mouvement::None);
+			if (controlTypes.at(i - 1) == EntityType::ControlType::Keyboard)
+				_core->getInput()->setDevice(i, Controller);
+			else if (controlTypes.at(i - 1) == EntityType::ControlType::Controller) {
+				_core->getInput()->setJoystick(_core->getWindow());
+				_core->getInput()->setDevice(i, Keyboard);
+			}
 		}
 		_entities.push_back(entity);
 	}
