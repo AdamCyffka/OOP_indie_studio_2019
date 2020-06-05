@@ -108,49 +108,49 @@ void Select::loadButtons()
     _buttons["changeSkin4"]->setImage(_textures["changeSkin4"]);
     _buttons["changeSkin4"]->setRelativePosition(irr::core::position2d<irr::s32>(1400, 650));
 
-    _images["ia1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_IA_1, L"");
+    _images["ia1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("ia1") == _images.end() || !_images["ia1"])
 		throw LoadingException("could not add image : ia1");
     _images["ia1"]->setImage(_textures["ia"]);
     _images["ia1"]->setRelativePosition(irr::core::position2d<irr::s32>(368, 750));
 
-    _images["ia2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_IA_2, L"");
+    _images["ia2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("ia2") == _images.end() || !_images["ia2"])
 		throw LoadingException("could not add image : ia2");
     _images["ia2"]->setImage(_textures["ia"]);
     _images["ia2"]->setRelativePosition(irr::core::position2d<irr::s32>(768, 750));
 
-    _images["ia3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_IA_3, L"");
+    _images["ia3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("ia3") == _images.end() || !_images["ia3"])
 		throw LoadingException("could not add image : ia3");
     _images["ia3"]->setImage(_textures["ia"]);
     _images["ia3"]->setRelativePosition(irr::core::position2d<irr::s32>(1168, 750));
 
-    _images["ia4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_IA_4, L"");
+    _images["ia4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("ia4") == _images.end() || !_images["ia4"])
 		throw LoadingException("could not add image : ia4");
     _images["ia4"]->setImage(_textures["ia"]);
     _images["ia4"]->setRelativePosition(irr::core::position2d<irr::s32>(1568, 750));
 
-    _images["p1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_1, L"");
+    _images["p1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("p1") == _images.end() || !_images["p1"])
 		throw LoadingException("could not add image : p1");
     _images["p1"]->setImage(_textures["p"]);
     _images["p1"]->setRelativePosition(irr::core::position2d<irr::s32>(200, 750));
 
-    _images["p2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_2, L"");
+    _images["p2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("p2") == _images.end() || !_images["p2"])
 		throw LoadingException("could not add image : p2");
     _images["p2"]->setImage(_textures["p"]);
     _images["p2"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 750));
 
-    _images["p3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_3, L"");
+    _images["p3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("p3") == _images.end() || !_images["p3"])
 		throw LoadingException("could not add image : p3");
     _images["p3"]->setImage(_textures["p"]);
     _images["p3"]->setRelativePosition(irr::core::position2d<irr::s32>(1000, 750));
 
-    _images["p4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, GUI_ID_P_4, L"");
+    _images["p4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("p4") == _images.end() || !_images["p4"])
 		throw LoadingException("could not add image : p4");
     _images["p4"]->setImage(_textures["p"]);
@@ -236,8 +236,8 @@ void Select::run()
     _images["ia2"]->setImage(_textures[_selectRole[0][1][_nbRole[1][1]]]);
     _images["p3"]->setImage(_textures[_selectRole[0][0][_nbRole[2][0]]]);
     _images["ia3"]->setImage(_textures[_selectRole[0][1][_nbRole[2][1]]]);
-    _images["ia4"]->setImage(_textures[_selectRole[0][1][_nbRole[3][1]]]);
     _images["p4"]->setImage(_textures[_selectRole[0][0][_nbRole[3][0]]]);
+    _images["ia4"]->setImage(_textures[_selectRole[0][1][_nbRole[3][1]]]);
 }
 
 std::vector<Character *> Select::getPreviews()

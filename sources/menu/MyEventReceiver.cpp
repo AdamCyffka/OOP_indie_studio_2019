@@ -61,6 +61,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.setLState(Core::menuVideos);
                         return true;
                     case IMenu::GUI_ID_CONTROLS_BUTTON:
+                        _core.setLState(Core::menuControls);
                         return true;
                     case IMenu::GUI_ID_NEW_BUTTON:
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::menuToSelect);
