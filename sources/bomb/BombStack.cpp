@@ -22,12 +22,12 @@ BombStack::~BombStack()
 void BombStack::addBomb()
 {
     irr::scene::IMeshSceneNode *node;
-    irr::scene::IAnimatedMesh *mesh = _smgr->getMesh("resources/models/bomb/model.obj");
+    irr::scene::IAnimatedMesh *mesh = _smgr->getMesh("resources/models/bomb/bomb.obj");
     if (!mesh)
-        throw BombException("can't load model \"bomb/model.obj\"");
+        throw BombException("can't load model \"bomb/bomb.obj\"");
     node = _smgr->addMeshSceneNode(mesh);
     if (!node)
-        throw BombException("can't add mesh \"bomb/model.obj\" to a node");
+        throw BombException("can't add mesh \"bomb/bomb.obj\" to a node");
     node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     node->setPosition({0, 0, 0});
     node->setScale({1, 1, 1});
@@ -52,6 +52,5 @@ int BombStack::bombsAvailable()
 
 void BombStack::explodeBomb(Map *map, irr::core::vector3df bombPosition)
 {
-    std::cout << ""
     std::cout << "et BOOOM, dans le sanglier" << std::endl;
 }

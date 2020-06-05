@@ -66,7 +66,6 @@ class Bomber {
         std::vector<IEntity *> _entities;
         std::chrono::milliseconds _delay;
         LoadMap *_visualMap;
-        Map *_map;
         int _radius;
         bool _isBlast;
     protected:

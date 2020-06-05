@@ -36,7 +36,7 @@ void GameCore::reset()
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)
 {
-	_bomber = new Bomber(_map, _core->getSmgr());
+	_bomber = new Bomber(_map);
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
