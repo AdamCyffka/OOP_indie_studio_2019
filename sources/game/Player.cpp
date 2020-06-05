@@ -8,9 +8,12 @@
 #include "Player.hpp"
 #include "GameCore.hpp"
 
-Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, GameCore *gameCore, Bomber *bomb) : _isAlive(false), _entityNumber(entityNumber), _map(map), _gameCore(gameCore),
-	_score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
+: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr),
+_gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
+_firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
+	_bombStack = new BombStack(_driver, _smgr);
 }
 
 void Player::kill()
@@ -50,6 +53,7 @@ void Player::run(Key_mouvement input)
 
 void Player::putBomb()
 {
+	_bombStack->explodeBomb(_map, _character->getPosition());
 }
 
 void Player::setFirePower(int firePower)
@@ -135,6 +139,11 @@ int Player::getWinNumber()
 Character *Player::getCharacter()
 {
 	return _character;
+}
+
+BombStack *Player::getBombStack()
+{
+	return _bombStack;
 }
 
 void Player::moveTo(side direction)

@@ -11,13 +11,15 @@
 #include "Map.hpp"
 #include "IEntity.hpp"
 #include "hitbox.hpp"
-#include "Bomb.hpp"
+#include "Bomber.hpp"
 
 class GameCore;
 
 class Player : public IEntity {
     public:
-        Player(Character *, const Key_mouvement &, int, Map *, GameCore *, Bomber *);
+        Player(Character *character, const Key_mouvement &input, int entityNumber,
+		Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,
+		GameCore *gameCore, Bomber *bomb);
 
 		void kill() final;
 	 	void run(Key_mouvement) final;
@@ -41,6 +43,7 @@ class Player : public IEntity {
 		void setWinNumber(int) final;
 		int getWinNumber() final;
 
+		BombStack *getBombStack() final;
 		Character *getCharacter() final;
 		void setInput(Key_mouvement) final;
 		Key_mouvement getInput() final;
@@ -56,8 +59,11 @@ class Player : public IEntity {
 		int _score;
 		GameCore *_gameCore;
 		Character *_character;
+		BombStack * _bombStack;
 		Map *_map;
 		Bomber *_bomb;
+		irr::video::IVideoDriver *_driver;
+		irr::scene::ISceneManager *_smgr;
 
 		Key_mouvement _input;
 		Key_mouvement _isDoing;

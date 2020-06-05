@@ -11,6 +11,7 @@
 #include <irrlicht.h>
 #include "Character.hpp"
 #include "Input.hpp"
+#include "BombStack.hpp"
 
 namespace EntityType {
 	enum EntityType {
@@ -48,6 +49,7 @@ class IEntity {
         virtual int getScore() = 0;
         virtual void setWinNumber(int) = 0;
         virtual int getWinNumber() = 0;
+        virtual BombStack *getBombStack() = 0;
         virtual Character *getCharacter() = 0;
         virtual void moveTo(side) = 0;
         virtual void setIsAlive(bool) = 0;

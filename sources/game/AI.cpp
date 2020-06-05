@@ -9,10 +9,15 @@
 
 #include "Ai.hpp"
 #include "hitbox.hpp"
-#include "Bomb.hpp"
+#include "Bomber.hpp"
+#include "Core.hpp"
 
-AI::AI(Character *character, int entityNumber, Map *map, std::vector<IEntity *> entities, Bomber *bomb) : _isAlive(false), _entityNumber(entityNumber), _map(map), _score(0), _entities(entities), _bomb(bomb), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, Bomber *bomber)
+: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
+_bomber(bomber), _winNumber(0), _character(character), _firePower(1), _bombAmount(1),
+_speed(3), _wallPass(false), _bombPass(false)
 {
+	_bombStack = new BombStack(_driver, _smgr);
 }
 
 void AI::kill()
@@ -26,7 +31,8 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
-	_bomb->putBomb(this);
+	_bombStack->explodeBomb(_map, _character->getPosition());
+	_bomber->putBomb(this);
 }
 
 void AI::setFirePower(int firePower)
@@ -112,6 +118,11 @@ int AI::getWinNumber()
 Character *AI::getCharacter()
 {
 	return _character;
+}
+
+BombStack *AI::getBombStack()
+{
+	return _bombStack;
 }
 
 bool AI::isSafe()

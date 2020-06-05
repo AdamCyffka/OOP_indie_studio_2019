@@ -5,25 +5,10 @@
 ** Bomb management
 */
 
-#include "LoadingException.hpp"
-#include "Bomb.hpp"
+#include "Bomber.hpp"
 
-Bomber::Bomber(Map *map, irr::scene::ISceneManager *smgr): _smgr(smgr), _radius(2), _delay(TIMER), _map(map), _isBlast(false)
+Bomber::Bomber(Map *map): _radius(2), _delay(TIMER), _map(map), _isBlast(false)
 {
-
-    for (int i = 0; i < 4; i++) {
-        irr::scene::IAnimatedMesh *bombMesh = _smgr->getMesh("resources/models/bomb/bomb.obj");
-        if (!bombMesh)
-		    throw LoadingException("could not load mesh : bomb.obj");
-        irr::scene::ISceneNode *bomb = _smgr->addAnimatedMeshSceneNode(bombMesh);
-        if (!bomb)
-		    throw LoadingException("could not add scene mesh node : bomb");
-        bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-        bomb->setPosition({0, 50, 0});
-        bomb->setScale({1, 1, 1});
-        bomb->setVisible(false);
-        _bombs.push_back({bomb, bombAvailability::free});
-    }
 }
 
 Bomber::~Bomber()
@@ -80,56 +65,30 @@ bool Bomber::canPutBomb(IEntity *it)
     }
 }
 
-bool Bomber::hasEnoughBombToPut()
+bool Bomber::hasEnoughBombToPut(IEntity *it)
 {
-    for (auto it : getEntities()) {
-        std::cout << "BombAmount in Inventory "<< it->getBombAmount() << std::endl;
-		if (it->getBombAmount() > 0) {
-            return (true);
-        } else {
-            return (false);
-        }
-	}
-    return (true);
+    if (it->getBombStack()->bombsAvailable() > 0)
+        return true;
 }
 
 void Bomber::putBomb(IEntity *it)
 {
     std::cout << "bomb function" << std::endl;
-    if (canPutBomb(it) == true && hasEnoughBombToPut() == true) {
+    if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         std::cout << "in function" << std::endl;
         epicenter(it);
-        for (auto bomb: _bombs) {
-            if (bomb.second == bombAvailability::free) {
-                bomb.first->setPosition(it->getCharacter()->getPosition());
-                bomb.first->setVisible(true);
-                bomb.second = bombAvailability::planted;
-                removeBombFromInventory();
-            }
-        }
-        setIsBlast(true);
+        removeBombFromInventory(it);
         if (getIsBlast() == true) {
             {
                 std::cout << "blasting\n" << std::endl;
-                for (auto bomb: _bombs) {
-                    if (bomb.second == bombAvailability::planted) {
-                        bomb.second = bombAvailability::blasting;
-                    }
-                }
                 blastNorth(it);
                 blastSouth(it);
                 blastEast(it);
                 blastWest(it);
             }
             clearMapAfterBlast(it);
-            for (auto bomb: _bombs) {
-                //if (bomb.second == bombAvailability::blasting) {
-                //    bomb.first->setVisible(false);
-                //    bomb.second = bombAvailability::free;
-                //}
-                setIsBlast(false);
-                giveNewBombInInventory();
-            }
+            setIsBlast(false);
+            giveNewBombInInventory();
         }
     }
 }
@@ -184,11 +143,9 @@ void Bomber::clearMapAfterBlast(IEntity *it)
     _map->getBombMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] = bombState::clear;
 }
 
-void Bomber::removeBombFromInventory()
+void Bomber::removeBombFromInventory(IEntity *it)
 {
-    for (auto it : getEntities()) {
-		it->setBombAmount(it->getBombAmount() - 1);
-	}
+	it->setBombAmount(it->getBombAmount() - 1);
 }
 
 void Bomber::giveNewBombInInventory()
@@ -205,4 +162,9 @@ bool Bomber::isKilledByBomb()
         it->getCharacter()->setVisibility(false);
 	}
     return (true);
+}
+
+void Bomber::animateBomb()
+{
+
 }
