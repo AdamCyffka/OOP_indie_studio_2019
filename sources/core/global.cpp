@@ -23,7 +23,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {143, 281}, // DYING
             {282, 353}, // DEAD
             {354, 604}, // VICTORY
-            2 // SCALE SIZE
+            2.0f // SCALE SIZE
         }
     },
     {
@@ -40,7 +40,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {141, 279}, // DYING
             {280, 356}, // DEAD
             {357, 613}, // VICTORY
-            25 // SCALE SIZE
+            25.0f // SCALE SIZE
         }
     },
     {
@@ -57,7 +57,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {143, 281}, // DYING
             {282, 376}, // DEAD
             {377, 427}, // VICTORY
-            15 // SCALE SIZE
+            15.0f // SCALE SIZE
         }
     },
     {
@@ -74,7 +74,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {147, 285}, // DYING
             {286, 380}, // DEAD
             {381, 479}, // VICTORY
-            15 // SCALE SIZE
+            15.0f // SCALE SIZE
         }
     },
     {
@@ -91,7 +91,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {143, 281}, // DYING
             {282, 368}, // DEAD
             {369, 423}, // VICTORY
-            20 // SCALE SIZE
+            20.0f // SCALE SIZE
         }
     },
     {
@@ -108,7 +108,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {155, 293}, // DYING
             {294, 376}, // DEAD
             {377, 923}, // VICTORY
-            2.5 // SCALE SIZE
+            2.5f // SCALE SIZE
         }
     },
     {
@@ -125,7 +125,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {155, 293}, // DYING
             {294, 376}, // DEAD
             {377, 923}, // VICTORY
-            2.5 // SCALE SIZE
+            2.5f // SCALE SIZE
         }
     },
     {
@@ -142,7 +142,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {155, 293}, // DYING
             {294, 376}, // DEAD
             {377, 923}, // VICTORY
-            2.5 // SCALE SIZE
+            2.5f // SCALE SIZE
         }
     },
     {
@@ -159,7 +159,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {155, 293}, // DYING
             {294, 376}, // DEAD
             {377, 923}, // VICTORY
-            2.5 // SCALE SIZE
+            2.5f // SCALE SIZE
         }
     },
     {
@@ -176,7 +176,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {155, 292}, // DYING
             {293, 373}, // DEAD
             {374, 733}, // VICTORY
-            0.13 // SCALE SIZE
+            0.13f // SCALE SIZE
         }
     },
     {
@@ -196,7 +196,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {143, 281}, // DYING
             {282, 364}, // DEAD
             {365, 460}, // VICTORY
-            0.2 // SCALE SIZE
+            0.2f // SCALE SIZE
         }
     },
     {
@@ -216,7 +216,7 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
             {143, 281}, // DYING
             {282, 364}, // DEAD
             {365, 460}, // VICTORY
-            0.2 // SCALE SIZE
+            0.2f // SCALE SIZE
         }
     }
 };

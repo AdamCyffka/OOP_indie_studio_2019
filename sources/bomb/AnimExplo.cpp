@@ -30,7 +30,7 @@ AnimExplo::AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager
 	fire->addAffector(paf);
 	paf->drop();
 	fire->setPosition(irr::core::vector3df(pos));
-	fire->setScale(irr::core::vector3df(1.6, 1.6, 1.6));
+	fire->setScale(irr::core::vector3df(1.6f, 1.6f, 1.6f));
 	fire->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	fire->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	fire->setMaterialTexture(0, fireTexture);

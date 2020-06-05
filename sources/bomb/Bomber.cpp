@@ -69,6 +69,7 @@ bool Bomber::hasEnoughBombToPut(IEntity *it)
 {
     if (it->getBombStack()->bombsAvailable() > 0)
         return true;
+    return false;
 }
 
 void Bomber::putBomb(IEntity *it)
