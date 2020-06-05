@@ -90,7 +90,6 @@ bool Bomber::hasEnoughBombToPut()
             return (false);
         }
 	}
-    return (true);
 }
 
 void Bomber::putBomb(IEntity *it)
@@ -107,7 +106,6 @@ void Bomber::putBomb(IEntity *it)
                 removeBombFromInventory();
             }
         }
-        setIsBlast(true);
         if (getIsBlast() == true) {
             {
                 std::cout << "blasting\n" << std::endl;
