@@ -105,6 +105,7 @@ class Core {
 		Input *getInput();
         CameraTravelManager *getCameraTravelManager();
         irr::scene::ISceneManager *getSmgr();
+        irr::video::IVideoDriver *getDriver();
 
         void setLState(layerMenuState state);
         void setLGState(layerGameState state);

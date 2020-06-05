@@ -207,7 +207,12 @@ CameraTravelManager *Core::getCameraTravelManager()
 
 irr::scene::ISceneManager *Core::getSmgr()
 {
-	return (_smgr);
+	return _smgr;
+}
+
+irr::video::IVideoDriver *Core::getDriver()
+{
+	return _driver;
 }
 
 
