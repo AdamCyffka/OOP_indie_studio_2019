@@ -145,6 +145,11 @@ Select *Core::getSelect()
 	return _select;
 }
 
+Controls *Core::getControls()
+{
+	return _controls;
+}
+
 Score *Core::getScore()
 {
 	return _score;

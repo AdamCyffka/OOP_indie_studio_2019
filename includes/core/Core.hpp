@@ -95,6 +95,7 @@ class Core {
         layerGameState getLGState();
 		gameState getGState();
         Select *getSelect();
+        Controls *getControls();
         Score *getScore();
 		GameCore *getGameCore();
         Game *getGame();
