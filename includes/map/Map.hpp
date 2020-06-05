@@ -32,20 +32,9 @@ enum bombState {
 	block
 };
 
-enum playerState {
-	none,
-	playerOne,
-	playerTwo,
-	playerThree,
-	playerFour,
-	obstacle
-};
-
 using blockStateCheck = EnumCheck<blockState, blockState::empty, blockState::breakable, blockState::unbreakable>;
 
 using bombStateCheck = EnumCheck<bombState, bombState::clear, bombState::bomb, bombState::block>;
-
-using playerStateCheck = EnumCheck<playerState, playerState::none, playerState::playerOne, playerState::playerTwo, playerState::playerThree, playerState::playerFour, playerState::obstacle>;
 
 class Map {
 	public:
@@ -54,7 +43,6 @@ class Map {
 
 		std::map<int, std::map<int, blockState>> &getMap();
 		std::map<int, std::map<int, bombState>> &getBombMap();
-		std::map<int, std::map<irr::f32, irr::f32>> &getPlayerMap();
 		void printMap();
 		void generateMap();
 

@@ -7,8 +7,19 @@
 
 #include "Bomb.hpp"
 
-Bomber::Bomber(Map *map): _radius(2), _delay(TIMER), _map(map), _isBlast(false)
+Bomber::Bomber(Map *map, irr::scene::ISceneManager *smgr): _smgr(smgr), _radius(2), _delay(TIMER), _map(map), _isBlast(false)
 {
+    for (int i = 0; i < 4; i++) {
+        irr::scene::IAnimatedMeshSceneNode *bomb;
+        bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/bomb/model.obj"));
+        if (bomb) {
+            bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            bomb->setPosition({0, 0, 0});
+            bomb->setScale({7, 7, 7});
+            bomb->setVisible(false);
+            _bombs.push_back({bomb, bombAvailability::free});
+        }
+    }
 }
 
 Bomber::~Bomber()
@@ -68,7 +79,7 @@ bool Bomber::canPutBomb(IEntity *it)
 bool Bomber::hasEnoughBombToPut()
 {
     for (auto it : getEntities()) {
-        std::cout << "BombAmount: " << it->getBombAmount() << std::endl;
+        std::cout << "BombAmount in Inventory "<< it->getBombAmount() << "\n" << std::endl;
 		if (it->getBombAmount() > 0) {
             return (true);
         } else {
@@ -78,12 +89,19 @@ bool Bomber::hasEnoughBombToPut()
     return (true);
 }
 
-void Bomber::putBomb(std::vector<IEntity *> entities, IEntity *it)
+void Bomber::putBomb(IEntity *it)
 {
     std::cout << "bomb function" << std::endl;
-    if (canPutBomb(it) && hasEnoughBombToPut()) {
+    if (canPutBomb(it) == true && hasEnoughBombToPut() == true) {
         std::cout << "in function" << std::endl;
         epicenter(it);
+        for (auto bomb: _bombs) {
+            if (bomb.second == bombAvailability::free) {
+                bomb.first->setPosition(it->getCharacter()->getPosition());
+                bomb.first->setVisible(true);
+                bomb.second = bombAvailability::planted;
+            }
+        }
         removeBombFromInventory();
         setIsBlast(true);
         if (getIsBlast() == true) {
@@ -95,6 +113,9 @@ void Bomber::putBomb(std::vector<IEntity *> entities, IEntity *it)
                 blastWest(it);
             }
             clearMapAfterBlast(it);
+            //for (auto bomb: _bombs) {
+            //    bomb.first->setVisible(false);
+            //}
             setIsBlast(false);
             giveNewBombInInventory();
         }

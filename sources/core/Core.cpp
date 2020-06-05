@@ -205,6 +205,12 @@ CameraTravelManager *Core::getCameraTravelManager()
 	return _cameraTravelManager;
 }
 
+irr::scene::ISceneManager *Core::getSmgr()
+{
+	return (_smgr);
+}
+
+
 void Core::setLState(Core::layerMenuState state)
 {
 	_lState = state;

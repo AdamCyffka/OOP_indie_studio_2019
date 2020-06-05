@@ -133,14 +133,14 @@ void Input::player_two_keyboard(Input *receiver, const SEvent& event)
 
 void Input::player_three_keyboard(Input *receiver, const SEvent& event)
 {
-	if (receiver->isKeyDown(irr::KEY_KEY_Y) && (event.KeyInput.PressedDown == false)) {
+	if (receiver->isKeyDown(irr::KEY_KEY_Y)) {
         _playerInput[3] = Up;
     } else if (receiver->isKeyDown(irr::KEY_KEY_H)) {
         _playerInput[3] = Down;
     } else if (receiver->isKeyDown(irr::KEY_KEY_J)) {
-        _playerInput[3] = Left;
-    } else if (receiver->isKeyDown(irr::KEY_KEY_G)) {
         _playerInput[3] = Right;
+    } else if (receiver->isKeyDown(irr::KEY_KEY_G)) {
+        _playerInput[3] = Left;
 	} else if (receiver->isKeyDown(irr::KEY_KEY_B)) {
 		_playerInput[3] = Bomb;
     } else {
@@ -260,7 +260,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player[3] == Keyboard) {
-		player_three_keyboard(receiver, event);
+		player_four_keyboard(receiver, event);
 	} else if (_player[3] == Controller) {
 		playerJoystick(receiver, controller, player);
 		controller++;
@@ -280,7 +280,7 @@ Input::Input()
 	_playerInput[3] = Ia;
 	_playerInput[4] = Ia;
 	_keyIsPressed = false;
-	_player[0] = Controller; //tempo
+	_player[0] = Keyboard; //tempo
 	_player[1] = No_device; 
 	_player[2] = No_device;
 	_player[3] = No_device;

@@ -28,39 +28,32 @@ void Map::generateMap()
 {
 	std::map<int, blockState> line;
 	std::map<int, bombState> bombLine;
-	std::map<int, playerState> playerLine;
 
 	addHeaderLine();
 	for (int i = 1; i < MAP_HEIGHT + 1; ++i) {
 		line[0] = unbreakable;
 		bombLine[0] = block;
-		playerLine[0] = obstacle;
 		for (int j = 1; j < MAP_WIDTH + 1; ++j) {
 			int res = generateBlock(); //Start comment here to empty the map
 			if (res == 0) {
 				line[j] = empty;
 				bombLine[j] = clear;
-				playerLine[j] = none;
 			} else if (res == 1) {
-				line[j] = breakable;
+				line[j] = empty;
 				bombLine[j] = block;
-				playerLine[j] = obstacle;
 			} else if (res == 2) {
 				line[j] = unbreakable;
 				bombLine[j] = block;
-				playerLine[j] = obstacle;
 			} else {
 				throw MapException("Unexpected value found : generateBlock()");
 			} //End comment here to empty the map
 		}
 		line[MAP_WIDTH + 1] = unbreakable;
 		bombLine[MAP_WIDTH + 1] = block;
-		playerLine[MAP_WIDTH + 1] = obstacle;
 		_map[i] = line;
 		_bombMap[i] = bombLine;
 		line.clear();
 		bombLine.clear();
-		playerLine.clear();
 	}
 	addFooterLine();
 	addPlayersSpawns();
@@ -82,12 +75,10 @@ void Map::addHeaderLine()
 {
 	std::map<int, blockState> line;
 	std::map<int, bombState> bombLine;
-	std::map<int, playerState> playerLine;
 
 	for (int j = 0; j < MAP_WIDTH + 2; ++j) {
 		line[j] = unbreakable;
 		bombLine[j] = block;
-		playerLine[j] = obstacle;
 	}
 	_map[0] = line;
 	_bombMap[0] = bombLine;
@@ -98,12 +89,10 @@ void Map::addFooterLine()
 {
 	std::map<int, blockState> line;
 	std::map<int, bombState> bombLine;
-	std::map<int, playerState> playerLine;
 
 	for (int j = 0; j < MAP_WIDTH + 2; ++j) {
 		line[j] = unbreakable;
 		bombLine[j] = block;
-		playerLine[j] = obstacle;
 	}
 	_map[MAP_HEIGHT + 1] = line;
 	_bombMap[MAP_HEIGHT + 1] = bombLine;
