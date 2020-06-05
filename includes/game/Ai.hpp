@@ -11,12 +11,15 @@
 #include "IEntity.hpp"
 #include "Map.hpp"
 #include "hitbox.hpp"
-#include "Bomb.hpp"
+#include "Bomber.hpp"
 
+class Core;
 class AI : public IEntity
 {
 public:
-	AI(Character *, int, Map *, std::vector<IEntity *> entities, Bomber *bomb);
+	AI(Character *character, int entityNumber, Map *map,
+	irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,
+	std::vector<IEntity *> entities, Bomber *bomber);
 
 	void kill() final;
 	void run(Key_mouvement) final;
@@ -39,6 +42,7 @@ public:
 	int getScore() final;
 	void setWinNumber(int) final;
 	int getWinNumber() final;
+	BombStack *getBombStack() final;
 	Character *getCharacter() final;
 	void moveTo(side) final;
 	void setIsAlive(bool) final;
@@ -58,12 +62,15 @@ private:
 	int _entityNumber;
 	int _score;
 	int _winNumber;
+	irr::video::IVideoDriver *_driver;
+	irr::scene::ISceneManager *_smgr;
 	Character *_character;
 	Map *_map;
 	std::vector<IEntity *> _entities;
 	Key_mouvement _wantedMovement;
 	core::vector3df _wantedPosition;
-	Bomber *_bomb;
+	Bomber *_bomber;
+	BombStack *_bombStack;
 
 	int _firePower;
 	int _bombAmount;

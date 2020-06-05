@@ -36,15 +36,15 @@ void GameCore::reset()
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes)
 {
-	_bomb = new Bomber(_map, _core->getSmgr());
+	_bomber = new Bomber(_map, _core->getSmgr());
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
-			entity = new AI(characters.at(i - 1), i, _map, _entities, _bomb);
+			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, _bomber);
 			entity->setInput(Key_mouvement::Ia);
 		}
 		else {
-			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, this, _bomb);
+			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber);
 			entity->setInput(Key_mouvement::None);
 		}
 		_entities.push_back(entity);
@@ -53,7 +53,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (auto it : _entities) {
 		it->setIsAlive(true);
 	}
-	_bomb->setEntities(_entities);
+	_bomber->setEntities(_entities);
 	_isInit = true;
 }
 
@@ -130,7 +130,12 @@ bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
 	return _map->getMap()[pos.first][pos.second] == breakable && !powerUp;
 }
 
-Bomber *GameCore::getBomb()
+Bomber *GameCore::getBomber()
 {
-	return _bomb;
+	return _bomber;
+}
+
+Core *GameCore::getCore()
+{
+	return _core;
 }

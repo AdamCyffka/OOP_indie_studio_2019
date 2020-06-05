@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2020
 ** OOP_indie_studio_2019
 ** File description:
-** Bomb management
+** Bomber management
 */
 
-#ifndef __BOMB_HPP__
-# define __BOMB_HPP__
+#ifndef __BOMBER_HPP__
+# define __BOMBER_HPP__
 
 #include <irrlicht.h>
 
@@ -42,7 +42,7 @@ class Bomber {
 
          //Error handling
         bool canPutBomb(IEntity *);
-        bool hasEnoughBombToPut();
+        bool hasEnoughBombToPut(IEntity *it);
 
         //Pose bomb and blast
         void putBomb(IEntity *);
@@ -52,6 +52,7 @@ class Bomber {
         void blastEast(IEntity *);
         void blastWest(IEntity *);
         void clearMapAfterBlast(IEntity *);
+        void animateBomb();
 
         //Remove and give bomb
         void removeBombFromInventory();
@@ -60,21 +61,15 @@ class Bomber {
         //Dead handling
         bool isKilledByBomb();
     private:
-        enum bombAvailability {
-            free,
-            planted,
-            blasting
-        };
         Map *_map;
         std::vector<IEntity *> _entities;
         int _radius;
         std::chrono::milliseconds _delay;
         bool _isBlast;
         irr::scene::ISceneManager *_smgr;
-        std::vector<std::pair<irr::scene::ISceneNode *, bombAvailability>> _bombs;
     protected:
 };
 
 void waiter();
 
-#endif /* !__BOMB_HPP__ */
+#endif /* !__BOMBER_HPP__ */

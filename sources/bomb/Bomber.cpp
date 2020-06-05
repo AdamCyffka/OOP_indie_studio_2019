@@ -5,21 +5,10 @@
 ** Bomb management
 */
 
-#include "Bomb.hpp"
+#include "Bomber.hpp"
 
 Bomber::Bomber(Map *map, irr::scene::ISceneManager *smgr): _smgr(smgr), _radius(2), _delay(TIMER), _map(map), _isBlast(false)
 {
-    for (int i = 0; i < 4; i++) {
-        irr::scene::IAnimatedMeshSceneNode *bomb;
-        bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/bomb/model.obj"));
-        if (bomb) {
-            bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            bomb->setPosition({0, 0, 0});
-            bomb->setScale({7, 7, 7});
-            bomb->setVisible(false);
-            _bombs.push_back({bomb, bombAvailability::free});
-        }
-    }
 }
 
 Bomber::~Bomber()
@@ -76,32 +65,18 @@ bool Bomber::canPutBomb(IEntity *it)
     }
 }
 
-bool Bomber::hasEnoughBombToPut()
+bool Bomber::hasEnoughBombToPut(IEntity *it)
 {
-    for (auto it : getEntities()) {
-        std::cout << "BombAmount in Inventory "<< it->getBombAmount() << "\n" << std::endl;
-		if (it->getBombAmount() > 0) {
-            return (true);
-        } else {
-            return (false);
-        }
-	}
-    return (true);
+    if (it->getBombStack()->bombsAvailable() > 0)
+        return true;
 }
 
 void Bomber::putBomb(IEntity *it)
 {
     std::cout << "bomb function" << std::endl;
-    if (canPutBomb(it) == true && hasEnoughBombToPut() == true) {
+    if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         std::cout << "in function" << std::endl;
         epicenter(it);
-        for (auto bomb: _bombs) {
-            if (bomb.second == bombAvailability::free) {
-                bomb.first->setPosition(it->getCharacter()->getPosition());
-                bomb.first->setVisible(true);
-                bomb.second = bombAvailability::planted;
-            }
-        }
         removeBombFromInventory();
         setIsBlast(true);
         if (getIsBlast() == true) {
@@ -189,4 +164,9 @@ bool Bomber::isKilledByBomb()
         it->getCharacter()->setVisibility(false);
 	}
     return (true);
+}
+
+void Bomber::animateBomb()
+{
+
 }

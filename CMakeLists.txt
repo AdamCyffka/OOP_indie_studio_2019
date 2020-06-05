@@ -49,7 +49,8 @@ add_executable(bomberman
         sources/powerUps/SpeedDown.cpp
         sources/powerUps/SpeedUp.cpp
         sources/powerUps/WallPass.cpp
-        sources/bomb/Bomb.cpp
+        sources/bomb/BombStack.cpp
+        sources/bomb/Bomber.cpp
         sources/bomb/AnimExplo.cpp
         sources/saveAndLoad/saveAndLoad.cpp
         )
