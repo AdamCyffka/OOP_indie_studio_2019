@@ -123,25 +123,25 @@ void Controls::loadButtons()
     _images["controller4"]->setImage(_textures["controller"]);
     _images["controller4"]->setRelativePosition(irr::core::position2d<irr::s32>(1400, 750));
 
-    _buttons["keyboard1"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_X_1, L"");
-	if (_buttons.find("keyboard1") == _buttons.end() || !_buttons["keyboard1"])
-		throw LoadingException("could not add button : keyboard1");
-    _buttons["keyboard1"]->setImage(_textures["x"]);
-    _buttons["keyboard1"]->setRelativePosition(irr::core::position2d<irr::s32>(290, 763));
+    _buttons["x1"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_1, L"");
+	if (_buttons.find("x1") == _buttons.end() || !_buttons["x1"])
+		throw LoadingException("could not add button : x1");
+    _buttons["x1"]->setImage(_textures["x"]);
+    _buttons["x1"]->setRelativePosition(irr::core::position2d<irr::s32>(290, 763));
 
-    _buttons["x2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_X_2, L"");
+    _buttons["x2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_2, L"");
 	if (_buttons.find("x2") == _buttons.end() || !_buttons["x2"])
 		throw LoadingException("could not add button : x2");
     _buttons["x2"]->setImage(_textures["x"]);
     _buttons["x2"]->setRelativePosition(irr::core::position2d<irr::s32>(690, 763));
 
-    _buttons["x3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_X_3, L"");
+    _buttons["x3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_3, L"");
 	if (_buttons.find("x3") == _buttons.end() || !_buttons["x3"])
 		throw LoadingException("could not add button : x3");
     _buttons["x3"]->setImage(_textures["x"]);
     _buttons["x3"]->setRelativePosition(irr::core::position2d<irr::s32>(1090, 763));
 
-    _buttons["x4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_X_4, L"");
+    _buttons["x4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_4, L"");
 	if (_buttons.find("x4") == _buttons.end() || !_buttons["x4"])
 		throw LoadingException("could not add button : x4");
     _buttons["x4"]->setImage(_textures["x"]);
