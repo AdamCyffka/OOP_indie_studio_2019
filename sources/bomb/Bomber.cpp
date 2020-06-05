@@ -7,7 +7,7 @@
 
 #include "Bomber.hpp"
 
-Bomber::Bomber(Map *map, irr::scene::ISceneManager *smgr): _smgr(smgr), _radius(2), _delay(TIMER), _map(map), _isBlast(false)
+Bomber::Bomber(Map *map): _radius(2), _delay(TIMER), _map(map), _isBlast(false)
 {
 }
 
@@ -77,20 +77,16 @@ void Bomber::putBomb(IEntity *it)
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         std::cout << "in function" << std::endl;
         epicenter(it);
-        removeBombFromInventory();
-        setIsBlast(true);
+        removeBombFromInventory(it);
         if (getIsBlast() == true) {
             {
-                std::cout << "blast" << std::endl;
+                std::cout << "blasting\n" << std::endl;
                 blastNorth(it);
                 blastSouth(it);
                 blastEast(it);
                 blastWest(it);
             }
             clearMapAfterBlast(it);
-            //for (auto bomb: _bombs) {
-            //    bomb.first->setVisible(false);
-            //}
             setIsBlast(false);
             giveNewBombInInventory();
         }
@@ -99,7 +95,7 @@ void Bomber::putBomb(IEntity *it)
 
 void Bomber::epicenter(IEntity *it)
 {
-    _map->getBombMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] == bombState::bomb;
+    _map->getBombMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] = bombState::bomb;
 }
 
 void Bomber::blastNorth(IEntity *it)
@@ -107,7 +103,8 @@ void Bomber::blastNorth(IEntity *it)
     for (int i = 0; i != _radius; i++) {
         if (_map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] == blockState::empty)
-            _map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] == blockState::empty;
+            _map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] = blockState::empty;
+            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y]->setVisible(false);
     }
 }
 
@@ -116,7 +113,8 @@ void Bomber::blastSouth(IEntity *it)
     for (int i = 0; i != _radius; i++) {
         if (_map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::empty)
-            _map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::empty;
+            _map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] = blockState::empty;
+            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y]->setVisible(false);
     }
 }
 
@@ -125,7 +123,8 @@ void Bomber::blastEast(IEntity *it)
     for (int i = 0; i != _radius; i++) {
         if (_map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] == blockState::empty)
-            _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] == blockState::empty;
+            _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] = blockState::empty;
+            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i]->setVisible(false);
     }
 }
 
@@ -134,20 +133,19 @@ void Bomber::blastWest(IEntity *it)
     for (int i = 0; i != _radius; i++) {
         if (_map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] == blockState::empty)
-            _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] == blockState::empty;
+            _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] = blockState::empty;
+            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i]->setVisible(false);
     }
 }
 
 void Bomber::clearMapAfterBlast(IEntity *it)
 {
-    _map->getBombMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] == bombState::clear;
+    _map->getBombMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y] = bombState::clear;
 }
 
-void Bomber::removeBombFromInventory()
+void Bomber::removeBombFromInventory(IEntity *it)
 {
-    for (auto it : getEntities()) {
-		it->setBombAmount(it->getBombAmount() - 1);
-	}
+	it->setBombAmount(it->getBombAmount() - 1);
 }
 
 void Bomber::giveNewBombInInventory()

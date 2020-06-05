@@ -11,6 +11,7 @@
 #include <irrlicht.h>
 
 #include "Map.hpp"
+#include "LoadMap.hpp"
 #include "hitbox.hpp"
 #include "AnimExplo.hpp"
 #include "IEntity.hpp"
@@ -24,7 +25,7 @@
 
 class Bomber {
     public:
-        Bomber(Map *, irr::scene::ISceneManager *);
+        Bomber(Map *);
         ~Bomber();
         void run();
 
@@ -55,7 +56,7 @@ class Bomber {
         void animateBomb();
 
         //Remove and give bomb
-        void removeBombFromInventory();
+        void removeBombFromInventory(IEntity *it);
         void giveNewBombInInventory();
 
         //Dead handling
@@ -63,10 +64,11 @@ class Bomber {
     private:
         Map *_map;
         std::vector<IEntity *> _entities;
-        int _radius;
         std::chrono::milliseconds _delay;
+        LoadMap *_visualMap;
+        Map *_map;
+        int _radius;
         bool _isBlast;
-        irr::scene::ISceneManager *_smgr;
     protected:
 };
 
