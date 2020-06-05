@@ -26,7 +26,7 @@ float overLap(float x, float z, float xBlock, float zBlock)
 
 bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
 {
-	return overLap(x, z, xBlock, zBlock) >= 10.0;
+	return overLap(x, z, xBlock, zBlock) >= 5.0;
 }
 
 Point squareWherePlayerIs(IEntity *entity, Map *map)
@@ -51,7 +51,7 @@ Point squareWherePlayerIs(IEntity *entity, Map *map)
 		}
 	}
 	//print de x et z et le pourcentage du perso dans le bloc pour le débug
-	std::cout << point.x << " " << point.y << " " << overlap << std::endl;
+	//std::cout << point.x << " " << point.y << " " << overlap << std::endl;
 	return point;
 }
 
@@ -94,6 +94,7 @@ bool getNextPosIsValid(const irr::core::vector3df &characterPosition, Map *map, 
 bool canMove(IEntity *entity, Map *map, side direction)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
+	Point point = {squareWherePlayerIs(entity, map).x, squareWherePlayerIs(entity, map).y};
 
 	switch (direction)
 	{
@@ -110,7 +111,8 @@ bool canMove(IEntity *entity, Map *map, side direction)
 		characterPosition.Z += 1.0f;
 		break;
 	}
-
+	//std::cout << entity->getCharacter()->getModelInfos().name << std::endl;
+	//std::cout << squareWherePlayerIs(entity, map).x << " " << squareWherePlayerIs(entity, map).y << std::endl;
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
 	{
 		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
@@ -129,7 +131,10 @@ bool canMove(IEntity *entity, Map *map, side direction)
 			{
 				if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !entity->getWallPass()))
 				{
-					return false;
+					if ((direction == side::south || direction == side::north) && j == point.y)
+						return false;
+					if ((direction == side::east || direction == side::west) && i == point.x)
+						return false;
 				}
 			}
 			/*if ((xBlock == characterPosition.X || zBlock == characterPosition.Z)							// Si le bloc est sur un des axes du character
@@ -152,5 +157,6 @@ bool canMove(IEntity *entity, Map *map, side direction)
 			}*/
 		}
 	}
+	//std::cout << "You can move"  << std::endl;
 	return true;
 }

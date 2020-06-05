@@ -218,7 +218,7 @@ void AI::checkMovement()
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
-	this->moveTo(side::west);
+	//this->moveTo(side::west);
 	this->checkMovement();
 
 	if (getEntityNumber() == 3)
