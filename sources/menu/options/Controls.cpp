@@ -148,7 +148,7 @@ void Controls::loadButtons()
     _buttons["x4"]->setRelativePosition(irr::core::position2d<irr::s32>(1490, 763));
 }
 
-void Controls::changeRole(int role)
+void Controls::changeOption(int role)
 {
     if (_nbRole[role][0] == 0) {
         _nbRole[role][0] = 1;
@@ -169,6 +169,19 @@ void Controls::run()
     _images["controller3"]->setImage(_textures[_selectRole[0][1][_nbRole[2][1]]]);
     _images["keyboard4"]->setImage(_textures[_selectRole[0][0][_nbRole[3][0]]]);
     _images["controller4"]->setImage(_textures[_selectRole[0][1][_nbRole[3][1]]]);
+}
+
+const std::vector<EntityType::ControlType> &Controls::getEntityType()
+{
+	_controlType.clear();
+
+	for (auto it : _nbRole) {
+		if (*it.begin() == 1)
+			_controlType.push_back(EntityType::ControlType::Keyboard);
+		else
+			_controlType.push_back(EntityType::ControlType::Controller);
+	}
+	return _controlType;
 }
 
 std::vector<Character *> Controls::getPreviews()

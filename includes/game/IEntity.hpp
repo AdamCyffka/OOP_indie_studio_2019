@@ -17,6 +17,12 @@ namespace EntityType {
 		AI,
 		player
 	};
+
+    enum ControlType {
+		Keyboard = 1,
+		Controller = 2,
+        NoDevice = 3,
+	};
 }
 
 class IEntity {

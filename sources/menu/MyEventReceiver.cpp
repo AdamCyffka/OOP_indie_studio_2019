@@ -105,7 +105,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
                         _core.setGState(Core::game);
-                        _core.getGameCore()->init(_core.getSelect()->getPreviews(), _core.getSelect()->getEntityTypes());
+                        _core.getGameCore()->init(_core.getSelect()->getPreviews(), _core.getSelect()->getEntityTypes(), _core.getControls()->getEntityType());
                         return true;
                     case IMenu::GUI_ID_SAVE_SLOT_1:
                         saveGame(1, _core, _cameraTravelManager);
@@ -159,6 +159,18 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getGameCore()->reset();
                         _core.setGState(Core::menu);
                         _core.setLState(Core::menuMain);
+                        return true;
+                    case IMenu::GUI_ID_CONTROLS_SWITCH_1:
+                        _core.getControls()->changeOption(0);
+                        return true;
+                    case IMenu::GUI_ID_CONTROLS_SWITCH_2:
+                        _core.getControls()->changeOption(1);
+                        return true;
+                    case IMenu::GUI_ID_CONTROLS_SWITCH_3:
+                        _core.getControls()->changeOption(2);
+                        return true;
+                    case IMenu::GUI_ID_CONTROLS_SWITCH_4:
+                        _core.getControls()->changeOption(3);
                         return true;
                 }
             default:

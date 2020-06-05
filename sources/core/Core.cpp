@@ -220,6 +220,10 @@ irr::video::IVideoDriver *Core::getDriver()
 	return _driver;
 }
 
+irr::IrrlichtDevice *Core::getWindow()
+{
+	return _window;
+}
 
 void Core::setLState(Core::layerMenuState state)
 {
@@ -335,7 +339,7 @@ void Core::splashCase()
 void Core::gameCase()
 {
 	if (!_gameCore->isInit()) {
-		_gameCore->init(_select->getPreviews(), _select->getEntityTypes());
+		_gameCore->init(_select->getPreviews(), _select->getEntityTypes(), _controls->getEntityType());
 	}
 	_gameCore->run();
 	hideGameLayers();
