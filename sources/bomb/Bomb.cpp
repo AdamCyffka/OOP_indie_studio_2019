@@ -5,20 +5,24 @@
 ** Bomb management
 */
 
+#include "LoadingException.hpp"
 #include "Bomb.hpp"
 
 Bomber::Bomber(Map *map, irr::scene::ISceneManager *smgr): _smgr(smgr), _radius(2), _delay(TIMER), _map(map), _isBlast(false)
 {
+
     for (int i = 0; i < 4; i++) {
-        irr::scene::IAnimatedMeshSceneNode *bomb;
-        bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/bomb/model.obj"));
-        if (bomb) {
-            bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            bomb->setPosition({0, 0, 0});
-            bomb->setScale({7, 7, 7});
-            bomb->setVisible(false);
-            _bombs.push_back({bomb, bombAvailability::free});
-        }
+        irr::scene::IAnimatedMesh *bombMesh = _smgr->getMesh("resources/models/bomb/bomb.obj");
+        if (!bombMesh)
+		    throw LoadingException("could not load mesh : bomb.obj");
+        irr::scene::ISceneNode *bomb = _smgr->addAnimatedMeshSceneNode(bombMesh);
+        if (!bomb)
+		    throw LoadingException("could not add scene mesh node : bomb");
+        bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+        bomb->setPosition({0, 50, 0});
+        bomb->setScale({1, 1, 1});
+        bomb->setVisible(false);
+        _bombs.push_back({bomb, bombAvailability::free});
     }
 }
 
