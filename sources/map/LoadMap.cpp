@@ -157,12 +157,12 @@ void LoadMap::run()
 	// skybox
 	_driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
 	skybox = _smgr->addSkyBoxSceneNode(
-		_driver->getTexture("resources/images/terrain/interstellar_up.tga"),
-		_driver->getTexture("resources/images/terrain/interstellar_dn.tga"),
-		_driver->getTexture("resources/images/terrain/interstellar_rt.tga"), 
-		_driver->getTexture("resources/images/terrain/interstellar_lf.tga"),
-		_driver->getTexture("resources/images/terrain/interstellar_ft.tga"),
-		_driver->getTexture("resources/images/terrain/interstellar_bk.tga"));
+		_driver->getTexture("resources/images/terrain/bluecloud_up.jpg"),
+		_driver->getTexture("resources/images/terrain/bluecloud_dn.jpg"),
+		_driver->getTexture("resources/images/terrain/bluecloud_rt.jpg"), 
+		_driver->getTexture("resources/images/terrain/bluecloud_lf.jpg"),
+		_driver->getTexture("resources/images/terrain/bluecloud_ft.jpg"),
+		_driver->getTexture("resources/images/terrain/bluecloud_bk.jpg"));
 	_driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, true);
 
 	// light core

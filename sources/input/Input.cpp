@@ -281,7 +281,7 @@ Input::Input()
 	_playerInput[4] = Ia;
 	_keyIsPressed = false;
 	_player[0] = Controller; //tempo
-	_player[1] = Controller; 
+	_player[1] = No_device; 
 	_player[2] = No_device;
 	_player[3] = No_device;
 }

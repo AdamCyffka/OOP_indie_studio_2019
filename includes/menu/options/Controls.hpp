@@ -21,6 +21,8 @@ class Controls : public IMenu {
 
         void loadButtons();
         void loadTextures();
+        void changeRole(int role);
+        void run();
 
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
@@ -35,6 +37,14 @@ class Controls : public IMenu {
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
+
+        std::vector<std::vector<std::vector<std::string>>> _selectRole = {{{"keyboard", "keyboard_grey"}, {"controller", "controller_grey"}}};
+        std::vector<std::vector<int>> _nbRole {
+            {0, 1},
+            {1, 0},
+            {1, 0},
+            {1, 0}
+        };
 };
 
 #endif /* !CONTROLS_HPP_ */

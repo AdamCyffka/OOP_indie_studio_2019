@@ -265,6 +265,7 @@ void Core::videosCase()
 
 void Core::controlsCase()
 {
+	_controls->run();
 	hideMenuLayers();
 	showMenuLayer(_controls);
 }
