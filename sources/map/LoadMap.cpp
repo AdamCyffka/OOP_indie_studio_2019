@@ -180,6 +180,8 @@ void LoadMap::run()
 	ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	irr::video::ITexture *fireBall = _driver->getTexture("resources/images/fx/fireball.bmp");
+	if (!fireBall)
+		throw LoadingException("could not load resource : resources/images/fx/fireball.bmp");
 	ps->setMaterialTexture(0, fireBall);
 	ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	core = _smgr->createFlyCircleAnimator(core::vector3df(0, 0, 0), 70.0f,
