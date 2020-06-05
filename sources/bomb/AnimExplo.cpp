@@ -8,17 +8,13 @@
 #include <stdexcept>
 #include "AnimExplo.hpp"
 
-AnimExplo::AnimExplo(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
+AnimExplo::AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
-	_driver = driver;
-    _env = env;
-    _smgr = smgr;
-
-	irr::video::ITexture *fireTexture = _driver->getTexture("resources/images/fx/fire.bmp");
+	irr::video::ITexture *fireTexture = driver->getTexture("resources/images/fx/fire.bmp");
 	if (!fireTexture)
 		throw std::runtime_error("could not load texture : resources/images/fx/fire.bmp");
-	irr::scene::ISceneNodeAnimator *anim = _smgr->createDeleteAnimator(3000);
-	irr::scene::IParticleSystemSceneNode *fire = _smgr->addParticleSystemSceneNode(false);
+	irr::scene::ISceneNodeAnimator *anim = smgr->createDeleteAnimator(3000);
+	irr::scene::IParticleSystemSceneNode *fire = smgr->addParticleSystemSceneNode(false);
 	irr::scene::IParticleEmitter *em = fire->createBoxEmitter(
 		irr::core::aabbox3d<irr::f32>(-6, 0, -7, 7, 1, 7),
 		irr::core::vector3df(0.0f, 0.01f, 0.0f),
@@ -34,7 +30,7 @@ AnimExplo::AnimExplo(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *d
 	fire->addAffector(paf);
 	paf->drop();
 	fire->setPosition(irr::core::vector3df(pos));
-	fire->setScale(irr::core::vector3df(2, 2, 2));
+	fire->setScale(irr::core::vector3df(1.6, 1.6, 1.6));
 	fire->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	fire->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	fire->setMaterialTexture(0, fireTexture);

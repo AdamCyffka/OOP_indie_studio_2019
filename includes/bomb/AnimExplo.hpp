@@ -12,12 +12,8 @@
 
 class AnimExplo {
     public:
-        AnimExplo(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~AnimExplo() = default;
-    protected:
-        irr::gui::IGUIEnvironment *_env;
-        irr::video::IVideoDriver *_driver;
-        irr::scene::ISceneManager *_smgr;
 };
 
 #endif /* !ANIMEXPLO_HPP_ */
