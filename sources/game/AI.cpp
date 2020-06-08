@@ -32,8 +32,8 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
-	_bombStack->explodeBomb(_map, this);
 	_bomber->putBomb(this);
+	_bombStack->explodeBomb(_map, this);
 }
 
 void AI::setFirePower(int firePower)

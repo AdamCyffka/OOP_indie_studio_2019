@@ -62,11 +62,11 @@ void BombStack::explodeBomb(Map *map, IEntity *entity)
     int column = bombPosition.y;
 
     auto characterPosition = entity->getCharacter()->getPosition();
-    std::cout << "entity position: (ligne,colonne) " << line << " " << column << std::endl;
-    std::cout << "character position: (X,Y) " << characterPosition.X << " " << characterPosition.Y << " " << characterPosition.Z << std::endl;
-    std::cout << "character conversion position: (X,Y) " << MAP_DEFAULT_X + (-10.0f * line) << " " << MAP_DEFAULT_Y << " " << MAP_DEFAULT_Z + (-10.0f * column) << std::endl;
-    std::cout << "ma map contient " << map2D.size() << " lignes" << std::endl;
-    std::cout << "ma map contient " << map2D[line].size() <<  " colonnes" << std::endl;
+    //std::cout << "entity position: (ligne,colonne) " << line << " " << column << std::endl;
+    //std::cout << "character position: (X,Y) " << characterPosition.X << " " << characterPosition.Y << " " << characterPosition.Z << std::endl;
+    //std::cout << "character conversion position: (X,Y) " << MAP_DEFAULT_X + (-10.0f * line) << " " << MAP_DEFAULT_Y << " " << MAP_DEFAULT_Z + (-10.0f * column) << std::endl;
+    //std::cout << "ma map contient " << map2D.size() << " lignes" << std::endl;
+    //std::cout << "ma map contient " << map2D[line].size() <<  " colonnes" << std::endl;
 
     for (int y = line - 1; y >= line - firePower; y--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {

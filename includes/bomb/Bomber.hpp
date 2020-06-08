@@ -60,7 +60,7 @@ class Bomber {
         void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
-        bool isKilledByBomb();
+        bool isKilledByBomb(IEntity *it);
     private:
         Map *_map;
         LoadMap *_loadMap;
