@@ -39,7 +39,7 @@ void Map::generateMap()
 				line[j] = empty;
 				bombLine[j] = clear;
 			} else if (res == 1) {
-				line[j] = breakable;
+				line[j] = empty;
 				bombLine[j] = block;
 			} else if (res == 2) {
 				line[j] = unbreakable;

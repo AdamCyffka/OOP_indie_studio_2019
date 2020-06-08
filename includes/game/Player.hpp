@@ -66,7 +66,7 @@ class Player : public IEntity {
 		irr::scene::ISceneManager *_smgr;
 
 		Key_mouvement _input;
-		Key_mouvement _isDoing;
+		Key_mouvement _savedInput;
 		int _firePower;
 		int _bombAmount;
 		int _speed;

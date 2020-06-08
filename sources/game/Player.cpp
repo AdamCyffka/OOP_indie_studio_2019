@@ -9,9 +9,8 @@
 #include "GameCore.hpp"
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
-: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr),
-_gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
-_firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
+	_firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
 }
@@ -23,30 +22,32 @@ void Player::kill()
 
 void Player::run(Key_mouvement input)
 {
-	//	std::cout << _map->getPlayerPosition(_entityNumber).first << " " << _map->getPlayerPosition(_entityNumber).second << std::endl;
 	if (isAlive()) {
-		switch (input) {
-		case Right:
-			moveTo(east);
-			break;
-		case Left:
-			moveTo(west);
-			break;
-		case Up:
-			moveTo(north);
-			break;
-		case Down:
-			moveTo(south);
-			break;
-		case Bomb:
-			putBomb();
-			break;
-		case Ia:
-			break;
-		case None:
-			if (_character->getState() != Character::idle)
-				_character->setState(Character::idle);
-			break;
+		if (input != _savedInput) {
+			switch (input) {
+			case Right:
+				moveTo(east);
+				break;
+			case Left:
+				moveTo(west);
+				break;
+			case Up:
+				moveTo(north);
+				break;
+			case Down:
+				moveTo(south);
+				break;
+			case Bomb:
+				putBomb();
+				break;
+			case Ia:
+				break;
+			case None:
+				_character->removeAnimators();
+				//interrupt moveTo
+				break;
+			}
+			_savedInput = input;
 		}
 	}
 }
@@ -148,51 +149,38 @@ BombStack *Player::getBombStack()
 
 void Player::moveTo(side direction)
 {
-	//+x = haut
-	//-x = bas
-	//+z = gauche
-	//-z = droite
-//		std::cout << canMove(this, _map, north) << std::endl;
 	irr::core::vector3df pos = _character->getPosition();
 	switch (direction) {
 	case north:
 		if (canMove(this, _map, north)) {
-			if (_character->getOrientation() != west)
-				_character->setOrientation(west);
-			if (_character->getState() != Character::running)
-				_character->setState(Character::running);
-			pos.X += 1.0f;
-			_character->setPosition(pos);
+			pos.X += 10.0f;
+//			if (!_character->moveTo(pos)) {
+//				_savedInput = None;
+//			}
 		}
 		break;
 	case south:
 		if (canMove(this, _map, south)) {
-			if (_character->getOrientation() != east)
-				_character->setOrientation(east);
-			if (_character->getState() != Character::running)
-				_character->setState(Character::running);
-			pos.X -= 1.0f;
-			_character->setPosition(pos);
+			pos.X -= 10.0f;
+//			if (!_character->getAnimators()) {
+//				_savedInput = None;
+//			}
 		}
 		break;
 	case east:
 		if (canMove(this, _map, east)) {
-			if (_character->getOrientation() != north)
-				_character->setOrientation(north);
-			if (_character->getState() != Character::running)
-				_character->setState(Character::running);
-			pos.Z -= 1.0f;
-			_character->setPosition(pos);
+			pos.Z -= 10.0f;
+//			if (!_character->moveTo(pos)) {
+//				_savedInput = None;
+//			}
 		}
 		break;
 	case west:
 		if (canMove(this, _map, west)) {
-			if (_character->getOrientation() != south)
-				_character->setOrientation(south);
-			if (_character->getState() != Character::running)
-				_character->setState(Character::running);
-			pos.Z += 1.0f;
-			_character->setPosition(pos);
+			pos.Z += 10.0f;
+//			if (!_character->moveTo(pos)) {
+//				_savedInput = None;
+//			}
 		}
 		break;
 	}
