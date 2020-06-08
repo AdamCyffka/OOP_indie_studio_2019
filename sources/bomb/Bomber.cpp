@@ -45,6 +45,11 @@ std::vector<IEntity *> Bomber::getEntities() const
     return (this->_entities);
 }
 
+LoadMap *Bomber::getMap()
+{
+    return (this->_visualMap);
+}
+
 void Bomber::setIsBlast(bool isBlast)
 {
     this->_isBlast = isBlast;
@@ -79,9 +84,10 @@ void Bomber::putBomb(IEntity *it)
         std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
+        //setIsBlast(true); // bomb explose immediatement
         if (getIsBlast() == true) {
             {
-                std::cout << "blasting\n" << std::endl;
+                std::cout << "blasting" << std::endl;
                 blastNorth(it);
                 blastSouth(it);
                 blastEast(it);
@@ -89,7 +95,7 @@ void Bomber::putBomb(IEntity *it)
             }
             clearMapAfterBlast(it);
             setIsBlast(false);
-            giveNewBombInInventory();
+            giveNewBombInInventory(it);
         }
     }
 }
@@ -105,7 +111,7 @@ void Bomber::blastNorth(IEntity *it)
         if (_map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] == blockState::empty)
             _map->getMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y] = blockState::empty;
-            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y]->setVisible(false);
+            //getMap()->getVisualMap()[squareWherePlayerIs(it, _map).x + i][squareWherePlayerIs(it, _map).y]->setVisible(false);
     }
 }
 
@@ -115,7 +121,7 @@ void Bomber::blastSouth(IEntity *it)
         if (_map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::empty)
             _map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] = blockState::empty;
-            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y]->setVisible(false);
+            //getMap()->getVisualMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y]->setVisible(false);
     }
 }
 
@@ -125,7 +131,7 @@ void Bomber::blastEast(IEntity *it)
         if (_map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] == blockState::empty)
             _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i] = blockState::empty;
-            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i]->setVisible(false);
+            //getMap()->getVisualMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y + i]->setVisible(false);
     }
 }
 
@@ -135,7 +141,7 @@ void Bomber::blastWest(IEntity *it)
         if (_map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] == blockState::breakable ||
         _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] == blockState::empty)
             _map->getMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i] = blockState::empty;
-            //_visualMap->getVisualMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i]->setVisible(false);
+            //getMap()->getVisualMap()[squareWherePlayerIs(it, _map).x][squareWherePlayerIs(it, _map).y - i]->setVisible(false);
     }
 }
 
@@ -149,11 +155,9 @@ void Bomber::removeBombFromInventory(IEntity *it)
 	it->setBombAmount(it->getBombAmount() - 1);
 }
 
-void Bomber::giveNewBombInInventory()
+void Bomber::giveNewBombInInventory(IEntity *it)
 {
-    for (auto it : getEntities()) {
-		it->setBombAmount(it->getBombAmount() + 1);
-	}
+    it->setBombAmount(it->getBombAmount() + 1);
 }
 
 bool Bomber::isKilledByBomb()
