@@ -111,7 +111,7 @@ void Bomber::blastNorth(IEntity *it)
 void Bomber::blastSouth(IEntity *it)
 {
     for (int i = 0; i != _radius; i++) {
-        if (_map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y - i] == blockState::unbreakable)
+        if (_map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::unbreakable)
             break;
         else if (_map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] == blockState::breakable)
             _map->getMap()[squareWherePlayerIs(it, _map).x - i][squareWherePlayerIs(it, _map).y] = blockState::empty;
