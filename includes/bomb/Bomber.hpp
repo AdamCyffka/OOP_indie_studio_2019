@@ -36,6 +36,8 @@ class Bomber {
         //Recover entities
         void setEntities(std::vector<IEntity *> entities);
         std::vector<IEntity *> getEntities() const;
+        //Recover visualMap
+        LoadMap *getMap();
 
         //Blast
         void setIsBlast(bool isBlast);
@@ -57,15 +59,15 @@ class Bomber {
 
         //Remove and give bomb
         void removeBombFromInventory(IEntity *it);
-        void giveNewBombInInventory();
+        void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
         bool isKilledByBomb();
     private:
         Map *_map;
+        LoadMap *_visualMap;
         std::vector<IEntity *> _entities;
         std::chrono::milliseconds _delay;
-        LoadMap *_visualMap;
         int _radius;
         bool _isBlast;
     protected:

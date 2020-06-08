@@ -13,11 +13,12 @@
 #include "Core.hpp"
 
 AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, Bomber *bomber)
-: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
-_bomber(bomber), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _wantedMovement(Key_mouvement::None),
-_speed(3), _wallPass(false), _bombPass(false)
+	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
+	  _bomber(bomber), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _wantedMovement(Key_mouvement::None),
+	  _speed(3), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
+	std::srand(std::time(nullptr));
 }
 
 void AI::kill()
@@ -178,13 +179,11 @@ IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 	{
 		if (it->getEntityNumber() != this->getEntityNumber())
 		{
-			if ((it->getCharacter()->getPosition().X == _character->getPosition().X)
-			&& canMoveToTargetX(it))
+			if ((it->getCharacter()->getPosition().X == _character->getPosition().X) && canMoveToTargetX(it))
 			{
 				return it;
 			}
-			if ((it->getCharacter()->getPosition().Z == _character->getPosition().Z)
-			&& canMoveToTargetZ(it))
+			if ((it->getCharacter()->getPosition().Z == _character->getPosition().Z) && canMoveToTargetZ(it))
 			{
 				return it;
 			}
@@ -197,9 +196,8 @@ void AI::actionWithTarget(IEntity *target)
 {
 	if (_character->getState() != Character::state::idle)
 		return;
-	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z
-	&& target->getCharacter()->getPosition().X == _character->getPosition().X)
-	{ 
+	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z && target->getCharacter()->getPosition().X == _character->getPosition().X)
+	{
 		return;
 	}
 	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z)
@@ -209,7 +207,9 @@ void AI::actionWithTarget(IEntity *target)
 			speedMult = -1;
 		_wantedPosition = core::vector3df(_character->getPosition().X + (1 * speedMult), _character->getPosition().Y, _character->getPosition().Z);
 		_character->moveTo(_wantedPosition, 800 - (_speed * 100));
-	} else {
+	}
+	else
+	{
 		int speedMult = 1;
 		if (_character->getPosition().Z > target->getCharacter()->getPosition().Z)
 			speedMult = -1;
@@ -220,20 +220,110 @@ void AI::actionWithTarget(IEntity *target)
 
 void AI::checkMovement()
 {
-	if (_character->getState() != Character::state::idle
-	&& _character->getPosition() == _wantedPosition)
+
+	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
 	{
+		bool northB = canAiMove(this, _map, north);
+		bool southB = canAiMove(this, _map, south);
+		bool eastB = canAiMove(this, _map, east);
+		bool westB = canAiMove(this, _map, west);
 		_character->setState(Character::state::idle);
+		switch (_wantedMovement)
+		{
+		case Down:
+			if (std::rand() % 2)
+			{
+				if (eastB && westB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Left;
+					else
+						_wantedMovement = Right;
+				}
+				else if (!eastB && westB)
+				{
+					_wantedMovement = Left;
+				}
+				else if (eastB && !westB)
+				{
+					_wantedMovement = Right;
+				}
+			}
+			break;
+		case Up:
+			if (std::rand() % 2)
+			{
+				if (eastB && westB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Left;
+					else
+						_wantedMovement = Right;
+				}
+				else if (!eastB && westB)
+				{
+					_wantedMovement = Left;
+				}
+				else if (eastB && !westB)
+				{
+					_wantedMovement = Right;
+				}
+			}
+			break;
+		case Left:
+			if (std::rand() % 2)
+			{
+				if (southB && northB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Up;
+					else
+						_wantedMovement = Down;
+				}
+				else if (!southB && northB)
+				{
+					_wantedMovement = Up;
+				}
+				else if (southB && !northB)
+				{
+					_wantedMovement = Down;
+				}
+			}
+			break;
+		case Right:
+			if (std::rand() % 2)
+			{
+				if (southB && northB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Up;
+					else
+						_wantedMovement = Down;
+				}
+				else if (!southB && northB)
+				{
+					_wantedMovement = Up;
+				}
+				else if (southB && !northB)
+				{
+					_wantedMovement = Down;
+				}
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	this->putBomb();
-	//this->moveTo(side::west);
+	this->moveTo(side::west);
 	this->checkMovement();
+	return;
 
-	if (getEntityNumber() == 3)
+	/*if (getEntityNumber() == 3)
 	{
 		// J'appelle la fonction ici seulement pour lakitu
 		//squareWherePlayerIs(this, _map);
@@ -254,12 +344,146 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 		{
 			return;
 		}
-	}
-	/*if (_wantedMovement == Key_mouvement::None)
-	{
-		std::srand(std::time(nullptr));
-    	int random_variable = std::rand()/((RAND_MAX + 1u)/6);;
 	}*/
+	if (_wantedMovement == Key_mouvement::None)
+	{
+		bool northB = canAiMove(this, _map, north);
+		bool southB = canAiMove(this, _map, south);
+		bool eastB = canAiMove(this, _map, east);
+		bool westB = canAiMove(this, _map, west);
+
+		Key_mouvement nextMove = None;
+		if (southB && northB && eastB && westB)
+			nextMove = Key_mouvement(std::rand() % 4 + 1);
+
+		if (southB && !northB && !eastB && !westB)
+			_wantedMovement = Down;
+		if (!southB && northB && !eastB && !westB)
+			_wantedMovement = Up;
+		if (!southB && !northB && eastB && !westB)
+			_wantedMovement = Right;
+		if (!southB && !northB && !eastB && westB)
+			_wantedMovement = Left;
+		if (!southB && !northB && eastB && westB)
+			nextMove = Key_mouvement(std::rand() % 2 + 1);
+		if (southB && northB && !eastB && !westB)
+			nextMove = Key_mouvement(std::rand() % 4 + 3);
+
+		if (!southB && northB && eastB && westB)
+		{
+			nextMove = Key_mouvement(std::rand() % 3 + 1);
+		}
+		if (southB && !northB && eastB && westB)
+		{
+			if (std::rand() % 3 == 0)
+				nextMove = Down;
+			else if (std::rand() % 3 == 0)
+				nextMove = Right;
+			else
+				nextMove = Left;
+		}
+		if (southB && northB && !eastB && westB)
+		{
+			if (std::rand() % 3 == 0)
+				nextMove = Down;
+			else if (std::rand() % 3 == 0)
+				nextMove = Up;
+			else
+				nextMove = Left;
+		}
+		if (southB && northB && eastB && !westB)
+		{
+			if (std::rand() % 3 == 0)
+				nextMove = Down;
+			else if (std::rand() % 3 == 0)
+				nextMove = Right;
+			else
+				nextMove = Up;
+		}
+
+		if (southB && !northB && !eastB && westB)
+		{
+			if (std::rand() % 2)
+				nextMove = Key_mouvement::Down;
+			else
+				nextMove = Key_mouvement::Left;
+		}
+		if (!southB && northB && !eastB && westB)
+		{
+			if (std::rand() % 2)
+				nextMove = Key_mouvement::Up;
+			else
+				nextMove = Key_mouvement::Left;
+		}
+		if (!southB && northB && eastB && !westB)
+		{
+			if (std::rand() % 2)
+				nextMove = Key_mouvement::Up;
+			else
+				nextMove = Key_mouvement::Right;
+		}
+		if (southB && !northB && eastB && !westB)
+		{
+			if (std::rand() % 2)
+				nextMove = Key_mouvement::Down;
+			else
+				nextMove = Key_mouvement::Right;
+		}
+
+		if (nextMove == Key_mouvement::Down && southB)
+			_wantedMovement = nextMove;
+		if (nextMove == Key_mouvement::Up && northB)
+			_wantedMovement = nextMove;
+		if (nextMove == Key_mouvement::Left && westB)
+			_wantedMovement = nextMove;
+		if (nextMove == Key_mouvement::Right && eastB)
+			_wantedMovement = nextMove;
+	}
+
+	if (_character->getState() == Character::state::idle)
+	{
+		switch (_wantedMovement)
+		{
+		case Down:
+			if (!canAiMove(this, _map, south))
+			{
+				_wantedMovement = None;
+				break;
+			}
+			_wantedPosition = core::vector3df(_character->getPosition().X - 10, _character->getPosition().Y, _character->getPosition().Z);
+			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
+			break;
+		case Up:
+			if (!canAiMove(this, _map, north))
+			{
+				_wantedMovement = None;
+				break;
+			}
+			_wantedPosition = core::vector3df(_character->getPosition().X + 10, _character->getPosition().Y, _character->getPosition().Z);
+			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
+			break;
+		case Left:
+			if (!canAiMove(this, _map, west))
+			{
+				_wantedMovement = None;
+				break;
+			}
+			_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + 10);
+			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
+			break;
+		case Right:
+			if (!canAiMove(this, _map, east))
+			{
+				_wantedMovement = None;
+				break;
+			}
+			_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z - 10);
+			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void AI::moveTo(side side)

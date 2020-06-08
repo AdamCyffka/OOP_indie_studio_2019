@@ -36,17 +36,35 @@ Point squareWherePlayerIs(IEntity *entity, Map *map)
 	Point point = {0, 0};
 	float overlap = 0.0;
 
+	if (std::fmod((characterPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f
+	&& std::fmod((characterPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f) {
+		return Point{int((characterPosition.X - MAP_DEFAULT_X) / -10), int((characterPosition.Z - MAP_DEFAULT_Z) / -10)};
+	}
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
 	{
 		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
 		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
-			if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock) > overlap)
+			float tmp = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock);
+			if (tmp > overlap)
 			{
 				//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
-				overlap = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock);
+				overlap = tmp;
 				point = {int(i), int(j)};
+				tmp = overLap(characterPosition.X, characterPosition.Z, xBlock - 10.0f, zBlock);
+				if (tmp > overlap)
+				{
+					overlap = tmp;
+					point = {int(i + 1), int(j)};
+				}
+				tmp = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock - 10.0f);
+				if (tmp > overlap)
+				{
+					overlap = tmp;
+					point = {int(i), int(j + 1)};
+				}
+				return point;
 			}
 		}
 	}
@@ -86,6 +104,36 @@ bool getNextPosIsValid(const irr::core::vector3df &characterPosition, Map *map, 
 			if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !wallPass))
 				return false;
 		}
+		break;
+	}
+	return true;
+}
+
+bool canAiMove(IEntity *entity, Map *map, side direction)
+{
+	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
+	Point point = squareWherePlayerIs(entity, map);
+
+	switch (direction)
+	{
+	case north:
+		if (map->getMap()[point.x - 1][point.y] == unbreakable || (map->getMap()[point.x - 1][point.y] == breakable && !entity->getWallPass()))
+			return false;
+		break;
+	case south:
+		if (map->getMap()[point.x + 1][point.y] == unbreakable || (map->getMap()[point.x + 1][point.y] == breakable && !entity->getWallPass()))
+			return false;
+		break;
+	case east:
+		if (map->getMap()[point.x][point.y + 1] == unbreakable || (map->getMap()[point.x][point.y + 1] == breakable && !entity->getWallPass()))
+			return false;
+		break;
+	case west:
+		if (map->getMap()[point.x][point.y - 1] == unbreakable || (map->getMap()[point.x][point.y - 1] == breakable && !entity->getWallPass()))
+			return false;
+		break;
+	default:
+		return false;
 		break;
 	}
 	return true;
