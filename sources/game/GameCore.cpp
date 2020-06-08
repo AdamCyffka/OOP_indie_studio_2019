@@ -16,6 +16,7 @@ GameCore::GameCore(Core *core)
 	_isInit = false;
 	_isPaused = false;
 	_map = _core->getMap();
+	_bomber = new Bomber(_map);
 	_spawnAreas[1] = irr::core::vector3df{-450.0f, 308.0f, 780.0f};
 	_spawnAreas[2] = irr::core::vector3df{-450.0f, 308.0f, 620.0f};
 	_spawnAreas[3] = irr::core::vector3df{-550.0f, 308.0f, 780.0f};
@@ -36,7 +37,6 @@ void GameCore::reset()
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)
 {
-	_bomber = new Bomber(_map);
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {

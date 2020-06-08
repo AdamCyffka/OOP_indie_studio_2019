@@ -33,10 +33,10 @@ out/
 cmake-build-debug
 .idea/
 cmake/Modules/FindIrrklang.cmake
-build/x64
-build/*.sln
-build/*.vcxproj
-build/*.filters
+x64
+*.sln
+*.vcxproj
+*.filters
 
 # blender
 resources/models/planets/observatory/*.dae
