@@ -19,7 +19,7 @@ class BombStack {
         ~BombStack();
 
         void addBomb();
-        int getBombAmount() const;
+        std::size_t getBombAmount() const;
         int bombsAvailable(); // return the number of available bombs
         void explodeBomb(Map *map, irr::core::vector3df bombPosition);
 

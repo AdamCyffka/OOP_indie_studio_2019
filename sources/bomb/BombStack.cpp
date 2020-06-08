@@ -36,7 +36,7 @@ void BombStack::addBomb()
 }
 
 
-int BombStack::getBombAmount() const
+std::size_t BombStack::getBombAmount() const
 {
     return _stack.size();
 }
