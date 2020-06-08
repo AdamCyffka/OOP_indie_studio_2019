@@ -14,7 +14,7 @@
 
 AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, Bomber *bomber)
 : _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
-_bomber(bomber), _winNumber(0), _character(character), _firePower(1), _bombAmount(1),
+_bomber(bomber), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _wantedMovement(Key_mouvement::None)
 _speed(3), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
@@ -229,7 +229,8 @@ void AI::checkMovement()
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
-	this->moveTo(side::west);
+	this->putBomb();
+	//this->moveTo(side::west);
 	this->checkMovement();
 
 	if (getEntityNumber() == 3)
@@ -254,6 +255,10 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 			return;
 		}
 	}
+	/*if (_wantedMovement == Key_mouvement::None)
+	{
+
+	}*/
 }
 
 void AI::moveTo(side side)
