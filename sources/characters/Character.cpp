@@ -166,8 +166,14 @@ void Character::removeAnimators()
     _meshNode->removeAnimators();
 }
 
-bool Character::moveTo(core::vector3df position, u32 travelTime)
+const irr::scene::ISceneNodeAnimatorList &Character::getAnimators()
 {
+    _meshNode->getAnimators();
+}
+
+void Character::moveTo(core::vector3df position, u32 travelTime)
+{
+    removeAnimators();
     core::vector3df currentPosition = getPosition();
     scene::ISceneNodeAnimator *animation = _sManager->createFlyStraightAnimator(currentPosition, position, (travelTime != 0) ? travelTime : _travelTime, false);
 
@@ -185,7 +191,6 @@ bool Character::moveTo(core::vector3df position, u32 travelTime)
     } else {
         throw CharacterException("Cannot create a fly straight animator from the scene manager");
     }
-    return true;
 }
 
 
