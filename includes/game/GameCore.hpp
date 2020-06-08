@@ -9,11 +9,24 @@
 #define GAMECORE_HPP_
 
 #include <map>
+#include <memory>
 #include "IEntity.hpp"
 #include "Input.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
 #include "Bomber.hpp"
+
+#include "IPowerUps.hpp"
+#include "BombDown.hpp"
+#include "BombFull.hpp"
+#include "BombPass.hpp"
+#include "BombUp.hpp"
+#include "FireDown.hpp"
+#include "FireFull.hpp"
+#include "FireUp.hpp"
+#include "SpeedDown.hpp"
+#include "SpeedUp.hpp"
+#include "WallPass.hpp"
 
 class MyEventReceiver;
 class Core;
@@ -36,6 +49,8 @@ class GameCore {
 		Core *getCore();
     protected:
     private:
+	 	std::vector<std::unique_ptr<IPowerUps>> _powerUps;
+		void addBonus(irr::core::vector3df &pos);
 		void spawnPlayers();
     	bool gameOver();
 		std::map<int, irr::core::vector3df> _spawnAreas;

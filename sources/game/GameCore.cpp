@@ -88,6 +88,33 @@ void GameCore::run()
 	}
 }
 
+#include <cstdlib>
+void GameCore::addBonus(irr::core::vector3df &pos)
+{
+    u32 random = std::rand() % 100;
+
+    if (random <= 10)
+        _powerUps.push_back(std::make_unique<BombDown>(_core->getSmgr(), pos));
+    else if (random > 10 && random <= 20)
+        _powerUps.push_back(std::make_unique<BombFull>(_core->getSmgr(), pos));
+    else if (random > 20 && random <= 30)
+        _powerUps.push_back(std::make_unique<BombPass>(_core->getSmgr(), pos));
+    else if (random > 30 && random <= 40)
+        _powerUps.push_back(std::make_unique<BombUp>(_core->getSmgr(), pos));
+    else if (random > 40 && random <= 50)
+        _powerUps.push_back(std::make_unique<FireDown>(_core->getSmgr(), pos));
+    else if (random > 50 && random <= 60)
+        _powerUps.push_back(std::make_unique<FireFull>(_core->getSmgr(), pos));
+    else if (random > 60 && random <= 70)
+        _powerUps.push_back(std::make_unique<FireUp>(_core->getSmgr(), pos));
+	else if (random > 70 && random <= 80)
+        _powerUps.push_back(std::make_unique<SpeedDown>(_core->getSmgr(), pos));
+	else if (random > 80 && random <= 90)
+        _powerUps.push_back(std::make_unique<SpeedUp>(_core->getSmgr(), pos));
+	else if (random > 90 && random <= 100)
+        _powerUps.push_back(std::make_unique<WallPass>(_core->getSmgr(), pos));
+}
+
 void GameCore::spawnPlayers()
 {
 	int count = 1;
