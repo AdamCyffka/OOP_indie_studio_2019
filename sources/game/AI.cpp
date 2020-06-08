@@ -38,7 +38,7 @@ void AI::putBomb()
 
 void AI::setFirePower(int firePower)
 {
-	_firePower = firePower;
+	_firePower += firePower;
 }
 
 int AI::getFirePower()
@@ -48,7 +48,7 @@ int AI::getFirePower()
 
 void AI::setBombAmount(int bombAmount)
 {
-	_bombAmount = bombAmount;
+	_bombAmount += bombAmount;
 }
 
 int AI::getBombAmount()
@@ -58,7 +58,7 @@ int AI::getBombAmount()
 
 void AI::setSpeed(int speed)
 {
-	_speed = speed;
+	_speed += speed;
 }
 
 int AI::getSpeed()

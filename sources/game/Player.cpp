@@ -63,7 +63,7 @@ void Player::putBomb()
 
 void Player::setFirePower(int firePower)
 {
-	_firePower = firePower;
+	_firePower += firePower;
 }
 
 int Player::getFirePower()
@@ -73,7 +73,7 @@ int Player::getFirePower()
 
 void Player::setBombAmount(int bombAmount)
 {
-	_bombAmount = bombAmount;
+	_bombAmount += bombAmount;
 }
 
 int Player::getBombAmount()
@@ -83,7 +83,7 @@ int Player::getBombAmount()
 
 void Player::setSpeed(int speed)
 {
-	_speed = speed;
+	_speed += speed;
 }
 
 int Player::getSpeed()
