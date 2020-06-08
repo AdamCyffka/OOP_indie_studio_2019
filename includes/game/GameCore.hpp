@@ -59,6 +59,7 @@ class GameCore {
 		bool _isInit;
 		Core *_core;
 		Map *_map;
+		LoadMap *_loadMap;
 		MyEventReceiver *_receiver;
 		Bomber *_bomber;
 };
