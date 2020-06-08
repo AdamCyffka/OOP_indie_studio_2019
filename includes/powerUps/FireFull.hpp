@@ -12,15 +12,13 @@
 
 class FireFull : public IPowerUps {
     public:
-        explicit FireFull(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        explicit FireFull(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~FireFull() = default;
 
         void spawn();
 		void die();
 		void update();
     private:
-        irr::gui::IGUIEnvironment *_env;
-        irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 };
 

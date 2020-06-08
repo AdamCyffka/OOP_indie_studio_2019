@@ -47,6 +47,18 @@ void Controls::loadTextures()
     _textures["x"] = _driver->getTexture("resources/images/buttons/switch.png");
 	if (_textures.find("x") == _textures.end() || !_textures["x"])
 		throw LoadingException("could not load texture : resources/images/buttons/switch.png");
+    _textures["p1"] = _driver->getTexture("resources/images/buttons/p1.png");
+	if (_textures.find("p1") == _textures.end() || !_textures["p1"])
+		throw LoadingException("could not load texture : resources/images/buttons/p1.png");
+    _textures["p2"] = _driver->getTexture("resources/images/buttons/p2_2.png");
+	if (_textures.find("p2") == _textures.end() || !_textures["p2"])
+		throw LoadingException("could not load texture : resources/images/buttons/p2_2.png");
+    _textures["p3"] = _driver->getTexture("resources/images/buttons/p3.png");
+	if (_textures.find("p3") == _textures.end() || !_textures["p3"])
+		throw LoadingException("could not load texture : resources/images/buttons/p3.png");
+    _textures["p4"] = _driver->getTexture("resources/images/buttons/p4.png");
+	if (_textures.find("p4") == _textures.end() || !_textures["p4"])
+		throw LoadingException("could not load texture : resources/images/buttons/p4.png");
 }
 
 void Controls::loadButtons()
@@ -79,73 +91,97 @@ void Controls::loadButtons()
 	if (_images.find("keyboard1") == _images.end() || !_images["keyboard1"])
 		throw LoadingException("could not add image : keyboard1");
     _images["keyboard1"]->setImage(_textures["keyboard"]);
-    _images["keyboard1"]->setRelativePosition(irr::core::position2d<irr::s32>(368, 750));
+    _images["keyboard1"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 350));
 
     _images["keyboard2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("keyboard2") == _images.end() || !_images["keyboard2"])
 		throw LoadingException("could not add image : keyboard2");
     _images["keyboard2"]->setImage(_textures["keyboard"]);
-    _images["keyboard2"]->setRelativePosition(irr::core::position2d<irr::s32>(768, 750));
+    _images["keyboard2"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 450));
 
     _images["keyboard3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("keyboard3") == _images.end() || !_images["keyboard3"])
 		throw LoadingException("could not add image : keyboard3");
     _images["keyboard3"]->setImage(_textures["keyboard"]);
-    _images["keyboard3"]->setRelativePosition(irr::core::position2d<irr::s32>(1168, 750));
+    _images["keyboard3"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 550));
 
     _images["keyboard4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("keyboard4") == _images.end() || !_images["keyboard4"])
 		throw LoadingException("could not add image : keyboard4");
     _images["keyboard4"]->setImage(_textures["keyboard"]);
-    _images["keyboard4"]->setRelativePosition(irr::core::position2d<irr::s32>(1568, 750));
+    _images["keyboard4"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 650));
 
     _images["controller1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("controller1") == _images.end() || !_images["controller1"])
 		throw LoadingException("could not add image : controller1");
     _images["controller1"]->setImage(_textures["controller"]);
-    _images["controller1"]->setRelativePosition(irr::core::position2d<irr::s32>(200, 750));
+    _images["controller1"]->setRelativePosition(irr::core::position2d<irr::s32>(1320, 350));
 
     _images["controller2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("controller2") == _images.end() || !_images["controller2"])
 		throw LoadingException("could not add image : controller2");
     _images["controller2"]->setImage(_textures["controller"]);
-    _images["controller2"]->setRelativePosition(irr::core::position2d<irr::s32>(600, 750));
+    _images["controller2"]->setRelativePosition(irr::core::position2d<irr::s32>(1320, 450));
 
     _images["controller3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("controller3") == _images.end() || !_images["controller3"])
 		throw LoadingException("could not add image : controller3");
     _images["controller3"]->setImage(_textures["controller"]);
-    _images["controller3"]->setRelativePosition(irr::core::position2d<irr::s32>(1000, 750));
+    _images["controller3"]->setRelativePosition(irr::core::position2d<irr::s32>(1320, 550));
 
     _images["controller4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
 	if (_images.find("controller4") == _images.end() || !_images["controller4"])
 		throw LoadingException("could not add image : controller4");
     _images["controller4"]->setImage(_textures["controller"]);
-    _images["controller4"]->setRelativePosition(irr::core::position2d<irr::s32>(1400, 750));
+    _images["controller4"]->setRelativePosition(irr::core::position2d<irr::s32>(1320, 650));
 
     _buttons["x1"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_1, L"");
 	if (_buttons.find("x1") == _buttons.end() || !_buttons["x1"])
 		throw LoadingException("could not add button : x1");
     _buttons["x1"]->setImage(_textures["x"]);
-    _buttons["x1"]->setRelativePosition(irr::core::position2d<irr::s32>(290, 763));
+    _buttons["x1"]->setRelativePosition(irr::core::position2d<irr::s32>(1392, 360));
 
     _buttons["x2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_2, L"");
 	if (_buttons.find("x2") == _buttons.end() || !_buttons["x2"])
 		throw LoadingException("could not add button : x2");
     _buttons["x2"]->setImage(_textures["x"]);
-    _buttons["x2"]->setRelativePosition(irr::core::position2d<irr::s32>(690, 763));
+    _buttons["x2"]->setRelativePosition(irr::core::position2d<irr::s32>(1392, 460));
 
     _buttons["x3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_3, L"");
 	if (_buttons.find("x3") == _buttons.end() || !_buttons["x3"])
 		throw LoadingException("could not add button : x3");
     _buttons["x3"]->setImage(_textures["x"]);
-    _buttons["x3"]->setRelativePosition(irr::core::position2d<irr::s32>(1090, 763));
+    _buttons["x3"]->setRelativePosition(irr::core::position2d<irr::s32>(1392, 560));
 
     _buttons["x4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 30, 30), nullptr, GUI_ID_CONTROLS_SWITCH_4, L"");
 	if (_buttons.find("x4") == _buttons.end() || !_buttons["x4"])
 		throw LoadingException("could not add button : x4");
     _buttons["x4"]->setImage(_textures["x"]);
-    _buttons["x4"]->setRelativePosition(irr::core::position2d<irr::s32>(1490, 763));
+    _buttons["x4"]->setRelativePosition(irr::core::position2d<irr::s32>(1392, 660));
+
+    _images["p1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 67, 67));
+	if (_images.find("p1") == _images.end() || !_images["p1"])
+		throw LoadingException("could not add image : p1");
+    _images["p1"]->setImage(_textures["p1"]);
+    _images["p1"]->setRelativePosition(irr::core::position2d<irr::s32>(1220, 340));
+
+    _images["p2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 67, 67));
+	if (_images.find("p2") == _images.end() || !_images["p2"])
+		throw LoadingException("could not add image : p2");
+    _images["p2"]->setImage(_textures["p2"]);
+    _images["p2"]->setRelativePosition(irr::core::position2d<irr::s32>(1220, 440));
+
+    _images["p3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 67, 67));
+	if (_images.find("p3") == _images.end() || !_images["p3"])
+		throw LoadingException("could not add image : p3");
+    _images["p3"]->setImage(_textures["p3"]);
+    _images["p3"]->setRelativePosition(irr::core::position2d<irr::s32>(1220, 540));
+
+    _images["p4"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 67, 67));
+	if (_images.find("p4") == _images.end() || !_images["p4"])
+		throw LoadingException("could not add image : p4");
+    _images["p4"]->setImage(_textures["p4"]);
+    _images["p4"]->setRelativePosition(irr::core::position2d<irr::s32>(1220, 640));
 }
 
 void Controls::changeOption(int role)

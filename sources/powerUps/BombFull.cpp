@@ -7,10 +7,8 @@
 
 #include "BombFull.hpp"
 
-BombFull::BombFull(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
+BombFull::BombFull(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
-	_driver = driver;
-	_env = env;
 	_smgr = smgr;
 
     irr::scene::ISceneNode *bomb;
@@ -31,8 +29,6 @@ void BombFull::spawn()
 
 void BombFull::die()
 {
-	// _map.getMap().removeEntity(this);
-	// delete this;
 }
 
 void BombFull::update()

@@ -12,15 +12,13 @@
 
 class BombPass : public IPowerUps {
     public:
-        explicit BombPass(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        explicit BombPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~BombPass() = default;
 
         void spawn();
 		void die();
 		void update();
     private:
-        irr::gui::IGUIEnvironment *_env;
-        irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 };
 

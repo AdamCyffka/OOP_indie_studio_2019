@@ -186,10 +186,6 @@ void Input::reset()
 bool Input::inputEvent(const SEvent& event)
 {
 	reset();
-	std::cout << "-------------------------" << std::endl;
-	for (auto i : _player)
-		std::cout << i.first << " " << i.second << std::endl;
-	std::cout << "-------------------------" << std::endl;
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
 		JoystickStatePone = event.JoystickEvent;
     }
