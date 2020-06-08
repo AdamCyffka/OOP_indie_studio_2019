@@ -13,7 +13,7 @@ AnimExplo::AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager
 	irr::video::ITexture *fireTexture = driver->getTexture("resources/images/fx/fire.bmp");
 	if (!fireTexture)
 		throw std::runtime_error("could not load texture : resources/images/fx/fire.bmp");
-	irr::scene::ISceneNodeAnimator *anim = smgr->createDeleteAnimator(3000);
+	irr::scene::ISceneNodeAnimator *anim = smgr->createDeleteAnimator(2000);
 	irr::scene::IParticleSystemSceneNode *fire = smgr->addParticleSystemSceneNode(false);
 	irr::scene::IParticleEmitter *em = fire->createBoxEmitter(
 		irr::core::aabbox3d<irr::f32>(-6, 0, -7, 7, 1, 7),
@@ -23,14 +23,14 @@ AnimExplo::AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager
 		irr::video::SColor(0, 255, 255, 255),
 		600, 1200, 0,
 		irr::core::dimension2df(0.0f, 0.0f),
-		irr::core::dimension2df(30.0f, 30.0f));
+		irr::core::dimension2df(10.0f, 10.0f));
 	fire->setEmitter(em);
 	em->drop();
 	irr::scene::IParticleAffector *paf = fire->createFadeOutParticleAffector();
 	fire->addAffector(paf);
 	paf->drop();
 	fire->setPosition(irr::core::vector3df(pos));
-	fire->setScale(irr::core::vector3df(1.6f, 1.6f, 1.6f));
+	fire->setScale(irr::core::vector3df(0.001f, 0.001f, 0.001f));
 	fire->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	fire->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
 	fire->setMaterialTexture(0, fireTexture);

@@ -31,7 +31,7 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
-	_bombStack->explodeBomb(_map, _character->getPosition());
+	_bombStack->explodeBomb(_map, this);
 	_bomber->putBomb(this);
 }
 
