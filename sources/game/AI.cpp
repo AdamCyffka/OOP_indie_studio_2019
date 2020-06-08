@@ -257,7 +257,8 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 	}
 	/*if (_wantedMovement == Key_mouvement::None)
 	{
-
+		std::srand(std::time(nullptr));
+    	int random_variable = std::rand()/((RAND_MAX + 1u)/6);;
 	}*/
 }
 
