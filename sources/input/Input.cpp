@@ -81,13 +81,13 @@ void Input::playerJoystick(Input *receiver, int controller, int player)
 		if(fabs(moveVertical) < DEAD_ZONE)
 			moveVertical = 0.f;
 		
-		if (moveVertical == 1.0) {
+		if (moveVertical > 0.90) {
 			_playerInput[player] = Up;
-		} else if (moveVertical == -1.0) {
+		} else if (moveVertical < -0.90) {
 			_playerInput[player] = Down;
-		} else if (moveHorizontal == 1.0) {
+		} else if (moveHorizontal > 0.90) {
 			_playerInput[player] = Right;
-		} else if (moveHorizontal == -1.0) {
+		} else if (moveHorizontal < -0.90) {
 			_playerInput[player] = Left;
 		} else if (joystickData.IsButtonPressed(0)) {
 			_playerInput[player] = Bomb;
