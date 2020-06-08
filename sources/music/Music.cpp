@@ -243,7 +243,7 @@ void Music::disableSoundEffect(const std::string &filename, musicNs::effect effe
 			throw MusicException("music object doesn't exist");
 	}
 	if (!fx)
-		return; // TODO THROW
+		throw MusicException("sound effect could not get created");
 	switch (effect) {
 	case musicNs::chorus:
 		fx->disableChorusSoundEffect();
