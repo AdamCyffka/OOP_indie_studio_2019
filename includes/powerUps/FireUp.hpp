@@ -12,15 +12,13 @@
 
 class FireUp : public IPowerUps {
     public:
-        explicit FireUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        explicit FireUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
         ~FireUp() = default;
 
         void spawn();
 		void die();
 		void update();
     private:
-        irr::gui::IGUIEnvironment *_env;
-        irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 };
 

@@ -484,7 +484,7 @@ void Core::init()
 		if (_loadmap)
 			_loadmap->run();
 		_splash->getBar()->setVisible(false);
-		_lState = menuIntro;
+		_lState = menuControls;
 		_cameraTravelManager->doTravel(CameraTravelManager::travel::intro);
 		_music->add2D("resources/music/intro.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
 	}

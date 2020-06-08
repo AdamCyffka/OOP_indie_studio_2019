@@ -7,10 +7,8 @@
 
 #include "SpeedUp.hpp"
 
-SpeedUp::SpeedUp(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
+SpeedUp::SpeedUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
-    _driver = driver;
-    _env = env;
     _smgr = smgr;
 
     irr::scene::ISceneNode *speed;
@@ -31,8 +29,6 @@ void SpeedUp::spawn()
 
 void SpeedUp::die()
 {
-    // _map.getMap().removeEntity(this);
-    // delete this;
 }
 
 void SpeedUp::update()
