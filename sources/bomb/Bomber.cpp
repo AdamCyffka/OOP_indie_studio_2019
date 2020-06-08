@@ -7,7 +7,7 @@
 
 #include "Bomber.hpp"
 
-Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
+Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(3), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
 {
 }
 
