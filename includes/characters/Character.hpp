@@ -51,10 +51,11 @@ class Character {
         f32 getAnimationSpeed() const;
         u32 getTravelTime() const;
         modelInfos_t getModelInfos() const;
+        const irr::scene::ISceneNodeAnimatorList &getAnimators();
 
         //methods
         void removeAnimators();
-        bool moveTo(core::vector3df position, u32 travelTime = 0);
+        void moveTo(core::vector3df position, u32 travelTime = 0);
         void changeModel(modelInfos_t model);
     protected:
     private:
