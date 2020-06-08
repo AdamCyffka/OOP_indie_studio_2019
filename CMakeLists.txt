@@ -53,6 +53,7 @@ add_executable(bomberman
         sources/bomb/Bomber.cpp
         sources/bomb/AnimExplo.cpp
         sources/saveAndLoad/saveAndLoad.cpp
+        sources/splash/loadCore.cpp
         )
 
 include_directories(includes
@@ -69,6 +70,7 @@ include_directories(includes
         includes/powerUps/
         includes/game/
         includes/saveAndLoad/
+        includes/splash/
         )
 
 set_target_properties(bomberman PROPERTIES

@@ -34,19 +34,19 @@ void Map::generateMap()
 		line[0] = unbreakable;
 		bombLine[0] = block;
 		for (int j = 1; j < MAP_WIDTH + 1; ++j) {
-			int res = generateBlock(); //Start comment here to empty the map
+			int res = generateBlock();
 			if (res == 0) {
 				line[j] = empty;
 				bombLine[j] = clear;
 			} else if (res == 1) {
-				line[j] = empty;
+				line[j] = empty; //replace for obstacle
 				bombLine[j] = block;
 			} else if (res == 2) {
 				line[j] = unbreakable;
 				bombLine[j] = block;
 			} else {
 				throw MapException("Unexpected value found : generateBlock()");
-			} //End comment here to empty the map
+			}
 		}
 		line[MAP_WIDTH + 1] = unbreakable;
 		bombLine[MAP_WIDTH + 1] = block;
