@@ -23,6 +23,10 @@ void Player::kill()
 void Player::run(Key_mouvement input)
 {
 	if (isAlive()) {
+		for (auto it : _character->getAnimators()) {
+			if (it->hasFinished())
+				_savedInput = Ia;
+		}
 		if (input != _savedInput) {
 			switch (input) {
 			case Right:
@@ -44,7 +48,7 @@ void Player::run(Key_mouvement input)
 				break;
 			case None:
 				_character->removeAnimators();
-				//interrupt moveTo
+				_character->setState(Character::idle);
 				break;
 			}
 			_savedInput = input;
@@ -154,33 +158,25 @@ void Player::moveTo(side direction)
 	case north:
 		if (canMove(this, _map, north)) {
 			pos.X += 10.0f;
-//			if (!_character->moveTo(pos)) {
-//				_savedInput = None;
-//			}
+			_character->moveTo(pos);
 		}
 		break;
 	case south:
 		if (canMove(this, _map, south)) {
 			pos.X -= 10.0f;
-//			if (!_character->getAnimators()) {
-//				_savedInput = None;
-//			}
+			_character->moveTo(pos);
 		}
 		break;
 	case east:
 		if (canMove(this, _map, east)) {
 			pos.Z -= 10.0f;
-//			if (!_character->moveTo(pos)) {
-//				_savedInput = None;
-//			}
+			_character->moveTo(pos);
 		}
 		break;
 	case west:
 		if (canMove(this, _map, west)) {
 			pos.Z += 10.0f;
-//			if (!_character->moveTo(pos)) {
-//				_savedInput = None;
-//			}
+			_character->moveTo(pos);
 		}
 		break;
 	}

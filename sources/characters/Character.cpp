@@ -168,7 +168,7 @@ void Character::removeAnimators()
 
 const irr::scene::ISceneNodeAnimatorList &Character::getAnimators()
 {
-    _meshNode->getAnimators();
+    return _meshNode->getAnimators();
 }
 
 void Character::moveTo(core::vector3df position, u32 travelTime)
