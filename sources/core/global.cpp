@@ -7,6 +7,12 @@
 
 #include "global.hpp"
 
+irr::video::ITexture *fireTexture;
+void setGlobalVariables(irr::video::IVideoDriver *driver)
+{
+    fireTexture = driver->getTexture("resources/images/fx/fire.bmp");
+}
+
 const std::map<std::string, modelInfos_t> g_modelInfos = {
     {
         "waluigi", // INDEX
