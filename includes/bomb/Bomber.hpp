@@ -20,11 +20,8 @@
 #include <ctime>
 #include <vector>
 
-<<<<<<< HEAD
 #include <boost/thread.hpp>
 
-=======
->>>>>>> 90a38164d7e376735c161d716651605ec4818fe9
 #define TIMER (3)
 
 class Bomber {
@@ -74,7 +71,5 @@ class Bomber {
         bool _isBlast;
     protected:
 };
-
-void waiter();
 
 #endif /* !__BOMBER_HPP__ */
