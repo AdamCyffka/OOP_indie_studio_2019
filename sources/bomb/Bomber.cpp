@@ -15,7 +15,7 @@ Bomber::~Bomber()
 {
 }
 
-void Bomber::run(const boost::system::error_code& /*e*/)
+void Bomber::run()
 {
     setIsBlast(true);
 }
@@ -75,9 +75,10 @@ void Bomber::putBomb(IEntity *it)
         {
             //boost::asio::io_service io;
             //boost::asio::deadline_timer timer(io, boost::posix_time::seconds(_delay));
-            //timer.async_wait(&run);
+            //timer.async_wait(&Bomber::run);
             //io.run();
         }
+        setIsBlast(true); // casse block sans timer
         if (getIsBlast() == true) {
             {
                 std::cout << "blasting" << std::endl;

@@ -29,7 +29,7 @@ class Bomber {
     public:
         Bomber(Map *, LoadMap *);
         ~Bomber();
-        void run(const boost::system::error_code&);
+        void run();
 
         //Radius
         void setRadius(int radius);
