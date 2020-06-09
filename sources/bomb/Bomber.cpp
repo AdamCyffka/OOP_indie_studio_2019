@@ -15,10 +15,11 @@ Bomber::~Bomber()
 {
 }
 
-void Bomber::run()
+void Bomber::run(IEntity *it)
 {
     boost::this_thread::sleep_for(boost::chrono::seconds(3));
     setIsBlast(true);
+    //_bombStack->explodeBomb(_map, it);
     boost::this_thread::yield();
 }
 
@@ -67,15 +68,16 @@ bool Bomber::hasEnoughBombToPut(IEntity *it)
     return false;
 }
 
-void Bomber::putBomb(IEntity *it)
+void Bomber::putBomb(IEntity *it, BombStack *_bombStack)
 {
     std::cout << "bomb function" << std::endl;
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
-        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this));
+        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
         if (getIsBlast() == true) {
+            setIsBlast(false);
             {
                 std::cout << "blasting" << std::endl;
                 blastNorth(it);
@@ -85,7 +87,6 @@ void Bomber::putBomb(IEntity *it)
             }
             clearMapAfterBlast(it);
             _map->printMap();
-            setIsBlast(false);
             giveNewBombInInventory(it);
         }
     }

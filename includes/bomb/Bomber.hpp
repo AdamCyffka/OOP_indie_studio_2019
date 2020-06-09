@@ -28,7 +28,7 @@ class Bomber {
     public:
         Bomber(Map *, LoadMap *);
         ~Bomber();
-        void run();
+        void run(IEntity *it);
 
         //Radius
         void setRadius(int radius);
@@ -47,7 +47,7 @@ class Bomber {
         bool hasEnoughBombToPut(IEntity *it);
 
         //Pose bomb and blast
-        void putBomb(IEntity *);
+        void putBomb(IEntity *, BombStack *);
         void epicenter(IEntity *);
         void blastNorth(IEntity *);
         void blastSouth(IEntity *);
@@ -65,6 +65,7 @@ class Bomber {
     private:
         Map *_map;
         LoadMap *_loadMap;
+        BombStack *_bombStack;
         std::vector<IEntity *> _entities;
         int _delay;
         int _radius;
