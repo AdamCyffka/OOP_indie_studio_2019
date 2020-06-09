@@ -155,29 +155,32 @@ BombStack *Player::getBombStack()
 void Player::moveTo(side direction)
 {
 	irr::core::vector3df pos = _character->getPosition();
+	float distanceTravel = 10.0f;
+	float speedTime = 1000 / _speed;
+
 	switch (direction) {
 	case north:
 		if (canMove(this, _map, north)) {
-			pos.X += 10.0f;
-			_character->moveTo(pos, 1000 / _speed);
+			pos.X += distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	case south:
 		if (canMove(this, _map, south)) {
-			pos.X -= 10.0f;
-			_character->moveTo(pos, 1000 / _speed);
+			pos.X -= distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	case east:
 		if (canMove(this, _map, east)) {
-			pos.Z -= 10.0f;
-			_character->moveTo(pos, 1000 / _speed);
+			pos.Z -= distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	case west:
 		if (canMove(this, _map, west)) {
-			pos.Z += 10.0f;
-			_character->moveTo(pos, 1000 / _speed);
+			pos.Z += distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	}

@@ -261,120 +261,6 @@ void AI::actionWithTarget(IEntity *target)
 	}
 }
 
-void AI::checkMovement()
-{
-
-	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
-	{
-		bool northB = canAiMove(this, _map, north);
-		bool southB = canAiMove(this, _map, south);
-		bool eastB = canAiMove(this, _map, east);
-		bool westB = canAiMove(this, _map, west);
-		_character->setState(Character::state::idle);
-		switch (_wantedMovement)
-		{
-		case Down:
-			if (std::rand() % 2)
-			{
-				if (eastB && westB)
-				{
-					if (std::rand() % 2)
-						_wantedMovement = Left;
-					else
-						_wantedMovement = Right;
-				}
-				else if (!eastB && westB)
-				{
-					_wantedMovement = Left;
-				}
-				else if (eastB && !westB)
-				{
-					_wantedMovement = Right;
-				} else {
-					Point point = squareWherePlayerIs(this, _map);
-					if (_map->getMap()[point.x][point.y - 1] == breakable || _map->getMap()[point.x][point.y + 1] == breakable)
-						this->putBomb();
-				}
-			}
-			break;
-		case Up:
-			if (std::rand() % 2)
-			{
-				if (eastB && westB)
-				{
-					if (std::rand() % 2)
-						_wantedMovement = Left;
-					else
-						_wantedMovement = Right;
-				}
-				else if (!eastB && westB)
-				{
-					_wantedMovement = Left;
-				}
-				else if (eastB && !westB)
-				{
-					_wantedMovement = Right;
-				} else {
-					Point point = squareWherePlayerIs(this, _map);
-					if (_map->getMap()[point.x][point.y - 1] == breakable || _map->getMap()[point.x][point.y + 1] == breakable)
-						this->putBomb();
-				}
-			}
-			break;
-		case Left:
-			if (std::rand() % 2)
-			{
-				if (southB && northB)
-				{
-					if (std::rand() % 2)
-						_wantedMovement = Up;
-					else
-						_wantedMovement = Down;
-				}
-				else if (!southB && northB)
-				{
-					_wantedMovement = Up;
-				}
-				else if (southB && !northB)
-				{
-					_wantedMovement = Down;
-				} else {
-					Point point = squareWherePlayerIs(this, _map);
-					if (_map->getMap()[point.x - 1][point.y] == breakable || _map->getMap()[point.x + 1][point.y] == breakable)
-						this->putBomb();
-				}
-			}
-			break;
-		case Right:
-			if (std::rand() % 2)
-			{
-				if (southB && northB)
-				{
-					if (std::rand() % 2)
-						_wantedMovement = Up;
-					else
-						_wantedMovement = Down;
-				}
-				else if (!southB && northB)
-				{
-					_wantedMovement = Up;
-				}
-				else if (southB && !northB)
-				{
-					_wantedMovement = Down;
-				} else {
-					Point point = squareWherePlayerIs(this, _map);
-					if (_map->getMap()[point.x - 1][point.y] == breakable || _map->getMap()[point.x + 1][point.y] == breakable)
-						this->putBomb();
-				}
-			}
-			break;
-		default:
-			break;
-		}
-	}
-}
-
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	//this->putBomb();
@@ -382,178 +268,14 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 	this->checkMovement();
 	this->canHitPlayers(entities);
 
-	/*if (getEntityNumber() == 3)
-	{
-		// J'appelle la fonction ici seulement pour lakitu
-		//squareWherePlayerIs(this, _map);
-		if (this->isSafe())
-		{
-			IEntity *target = canMoveToTarget(entities);
-			if (target != nullptr)
-			{
-				actionWithTarget(target);
-				return;
-			}
-			else
-			{
-				return;
-			}
-		}
-		else
-		{
-			return;
-		}
-	}*/
 	if (_wantedMovement == Key_mouvement::None)
 	{
-		bool northB = canAiMove(this, _map, north);
-		bool southB = canAiMove(this, _map, south);
-		bool eastB = canAiMove(this, _map, east);
-		bool westB = canAiMove(this, _map, west);
-
-		Key_mouvement nextMove = None;
-		if (southB && northB && eastB && westB)
-			nextMove = Key_mouvement(std::rand() % 4 + 1);
-
-		if (southB && !northB && !eastB && !westB)
-		{
-			_wantedMovement = Down;
-			this->putBomb();
-		}
-		if (!southB && northB && !eastB && !westB)
-		{
-			_wantedMovement = Up;
-			this->putBomb();
-		}
-		if (!southB && !northB && eastB && !westB)
-		{
-			_wantedMovement = Right;
-			this->putBomb();
-		}
-		if (!southB && !northB && !eastB && westB)
-		{
-			_wantedMovement = Left;
-			this->putBomb();
-		}
-		if (!southB && !northB && eastB && westB)
-			nextMove = Key_mouvement(std::rand() % 2 + 1);
-		if (southB && northB && !eastB && !westB)
-			nextMove = Key_mouvement(std::rand() % 4 + 3);
-
-		if (!southB && northB && eastB && westB)
-		{
-			nextMove = Key_mouvement(std::rand() % 3 + 1);
-		}
-		if (southB && !northB && eastB && westB)
-		{
-			if (std::rand() % 3 == 0)
-				nextMove = Down;
-			else if (std::rand() % 3 == 0)
-				nextMove = Right;
-			else
-				nextMove = Left;
-		}
-		if (southB && northB && !eastB && westB)
-		{
-			if (std::rand() % 3 == 0)
-				nextMove = Down;
-			else if (std::rand() % 3 == 0)
-				nextMove = Up;
-			else
-				nextMove = Left;
-		}
-		if (southB && northB && eastB && !westB)
-		{
-			if (std::rand() % 3 == 0)
-				nextMove = Down;
-			else if (std::rand() % 3 == 0)
-				nextMove = Right;
-			else
-				nextMove = Up;
-		}
-
-		if (southB && !northB && !eastB && westB)
-		{
-			if (std::rand() % 2)
-				nextMove = Key_mouvement::Down;
-			else
-				nextMove = Key_mouvement::Left;
-		}
-		if (!southB && northB && !eastB && westB)
-		{
-			if (std::rand() % 2)
-				nextMove = Key_mouvement::Up;
-			else
-				nextMove = Key_mouvement::Left;
-		}
-		if (!southB && northB && eastB && !westB)
-		{
-			if (std::rand() % 2)
-				nextMove = Key_mouvement::Up;
-			else
-				nextMove = Key_mouvement::Right;
-		}
-		if (southB && !northB && eastB && !westB)
-		{
-			if (std::rand() % 2)
-				nextMove = Key_mouvement::Down;
-			else
-				nextMove = Key_mouvement::Right;
-		}
-
-		if (nextMove == Key_mouvement::Down && southB)
-			_wantedMovement = nextMove;
-		if (nextMove == Key_mouvement::Up && northB)
-			_wantedMovement = nextMove;
-		if (nextMove == Key_mouvement::Left && westB)
-			_wantedMovement = nextMove;
-		if (nextMove == Key_mouvement::Right && eastB)
-			_wantedMovement = nextMove;
+		setWantedPositionRandom();
 	}
 
 	if (_character->getState() == Character::state::idle)
 	{
-		switch (_wantedMovement)
-		{
-		case Down:
-			if (!canAiMove(this, _map, south))
-			{
-				_wantedMovement = None;
-				break;
-			}
-			_wantedPosition = core::vector3df(_character->getPosition().X - 10, _character->getPosition().Y, _character->getPosition().Z);
-			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
-			break;
-		case Up:
-			if (!canAiMove(this, _map, north))
-			{
-				_wantedMovement = None;
-				break;
-			}
-			_wantedPosition = core::vector3df(_character->getPosition().X + 10, _character->getPosition().Y, _character->getPosition().Z);
-			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
-			break;
-		case Left:
-			if (!canAiMove(this, _map, west))
-			{
-				_wantedMovement = None;
-				break;
-			}
-			_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + 10);
-			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
-			break;
-		case Right:
-			if (!canAiMove(this, _map, east))
-			{
-				_wantedMovement = None;
-				break;
-			}
-			_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z - 10);
-			_character->moveTo(_wantedPosition, 300 - (_speed * 10));
-			break;
-		default:
-			break;
-		}
+		movePlayerWithWantedMovement();
 	}
 }
 
@@ -615,4 +337,282 @@ Key_mouvement AI::getInput()
 
 void AI::setInput(Key_mouvement input)
 {
+}
+
+//Longs functions for AI:
+
+void AI::checkMovement()
+{
+
+	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
+	{
+		bool northB = canAiMove(this, _map, north);
+		bool southB = canAiMove(this, _map, south);
+		bool eastB = canAiMove(this, _map, east);
+		bool westB = canAiMove(this, _map, west);
+		switch (_wantedMovement)
+		{
+		case Down:
+			if (std::rand() % 2)
+			{
+				if (eastB && westB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Left;
+					else
+						_wantedMovement = Right;
+				}
+				else if (!eastB && westB)
+				{
+					_wantedMovement = Left;
+				}
+				else if (eastB && !westB)
+				{
+					_wantedMovement = Right;
+				}
+				else
+				{
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x][point.y - 1] == breakable || _map->getMap()[point.x][point.y + 1] == breakable)
+						this->putBomb();
+				}
+			}
+			break;
+		case Up:
+			if (std::rand() % 2)
+			{
+				if (eastB && westB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Left;
+					else
+						_wantedMovement = Right;
+				}
+				else if (!eastB && westB)
+				{
+					_wantedMovement = Left;
+				}
+				else if (eastB && !westB)
+				{
+					_wantedMovement = Right;
+				}
+				else
+				{
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x][point.y - 1] == breakable || _map->getMap()[point.x][point.y + 1] == breakable)
+						this->putBomb();
+				}
+			}
+			break;
+		case Left:
+			if (std::rand() % 2)
+			{
+				if (southB && northB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Up;
+					else
+						_wantedMovement = Down;
+				}
+				else if (!southB && northB)
+				{
+					_wantedMovement = Up;
+				}
+				else if (southB && !northB)
+				{
+					_wantedMovement = Down;
+				}
+				else
+				{
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x - 1][point.y] == breakable || _map->getMap()[point.x + 1][point.y] == breakable)
+						this->putBomb();
+				}
+			}
+			break;
+		case Right:
+			if (std::rand() % 2)
+			{
+				if (southB && northB)
+				{
+					if (std::rand() % 2)
+						_wantedMovement = Up;
+					else
+						_wantedMovement = Down;
+				}
+				else if (!southB && northB)
+				{
+					_wantedMovement = Up;
+				}
+				else if (southB && !northB)
+				{
+					_wantedMovement = Down;
+				}
+				else
+				{
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x - 1][point.y] == breakable || _map->getMap()[point.x + 1][point.y] == breakable)
+						this->putBomb();
+				}
+			}
+			break;
+		default:
+			break;
+		}
+		_character->setState(Character::state::idle);
+	}
+}
+
+void AI::setWantedPositionRandom()
+{
+	bool northB = canAiMove(this, _map, north);
+	bool southB = canAiMove(this, _map, south);
+	bool eastB = canAiMove(this, _map, east);
+	bool westB = canAiMove(this, _map, west);
+
+	Key_mouvement nextMove = None;
+	if (southB && northB && eastB && westB)
+		nextMove = Key_mouvement(std::rand() % 4 + 1);
+
+	if (southB && !northB && !eastB && !westB)
+	{
+		_wantedMovement = Down;
+		this->putBomb();
+	}
+	if (!southB && northB && !eastB && !westB)
+	{
+		_wantedMovement = Up;
+		this->putBomb();
+	}
+	if (!southB && !northB && eastB && !westB)
+	{
+		_wantedMovement = Right;
+		this->putBomb();
+	}
+	if (!southB && !northB && !eastB && westB)
+	{
+		_wantedMovement = Left;
+		this->putBomb();
+	}
+	if (!southB && !northB && eastB && westB)
+		nextMove = Key_mouvement(std::rand() % 2 + 1);
+	if (southB && northB && !eastB && !westB)
+		nextMove = Key_mouvement(std::rand() % 4 + 3);
+
+	if (!southB && northB && eastB && westB)
+	{
+		nextMove = Key_mouvement(std::rand() % 3 + 1);
+	}
+	if (southB && !northB && eastB && westB)
+	{
+		if (std::rand() % 3 == 0)
+			nextMove = Down;
+		else if (std::rand() % 3 == 0)
+			nextMove = Right;
+		else
+			nextMove = Left;
+	}
+	if (southB && northB && !eastB && westB)
+	{
+		if (std::rand() % 3 == 0)
+			nextMove = Down;
+		else if (std::rand() % 3 == 0)
+			nextMove = Up;
+		else
+			nextMove = Left;
+	}
+	if (southB && northB && eastB && !westB)
+	{
+		if (std::rand() % 3 == 0)
+			nextMove = Down;
+		else if (std::rand() % 3 == 0)
+			nextMove = Right;
+		else
+			nextMove = Up;
+	}
+
+	if (southB && !northB && !eastB && westB)
+	{
+		if (std::rand() % 2)
+			nextMove = Key_mouvement::Down;
+		else
+			nextMove = Key_mouvement::Left;
+	}
+	if (!southB && northB && !eastB && westB)
+	{
+		if (std::rand() % 2)
+			nextMove = Key_mouvement::Up;
+		else
+			nextMove = Key_mouvement::Left;
+	}
+	if (!southB && northB && eastB && !westB)
+	{
+		if (std::rand() % 2)
+			nextMove = Key_mouvement::Up;
+		else
+			nextMove = Key_mouvement::Right;
+	}
+	if (southB && !northB && eastB && !westB)
+	{
+		if (std::rand() % 2)
+			nextMove = Key_mouvement::Down;
+		else
+			nextMove = Key_mouvement::Right;
+	}
+
+	if (nextMove == Key_mouvement::Down && southB)
+		_wantedMovement = nextMove;
+	if (nextMove == Key_mouvement::Up && northB)
+		_wantedMovement = nextMove;
+	if (nextMove == Key_mouvement::Left && westB)
+		_wantedMovement = nextMove;
+	if (nextMove == Key_mouvement::Right && eastB)
+		_wantedMovement = nextMove;
+}
+
+void AI::movePlayerWithWantedMovement()
+{
+	int maxTimeTravel = 400;
+
+	switch (_wantedMovement)
+	{
+	case Down:
+		if (!canAiMove(this, _map, south))
+		{
+			_wantedMovement = None;
+			break;
+		}
+		_wantedPosition = core::vector3df(_character->getPosition().X - 10, _character->getPosition().Y, _character->getPosition().Z);
+		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		break;
+	case Up:
+		if (!canAiMove(this, _map, north))
+		{
+			_wantedMovement = None;
+			break;
+		}
+		_wantedPosition = core::vector3df(_character->getPosition().X + 10, _character->getPosition().Y, _character->getPosition().Z);
+		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		break;
+	case Left:
+		if (!canAiMove(this, _map, west))
+		{
+			_wantedMovement = None;
+			break;
+		}
+		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + 10);
+		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		break;
+	case Right:
+		if (!canAiMove(this, _map, east))
+		{
+			_wantedMovement = None;
+			break;
+		}
+		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z - 10);
+		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		break;
+	default:
+		break;
+	}
 }

@@ -89,7 +89,6 @@ void GameCore::run()
 	}
 }
 
-#include <cstdlib>
 void GameCore::addBonus(irr::core::vector3df &pos)
 {
     u32 random = std::rand() % 100;
@@ -111,7 +110,7 @@ void GameCore::addBonus(irr::core::vector3df &pos)
 	else if (random > 70 && random <= 80)
         _powerUps.push_back(std::make_unique<SpeedDown>(_core->getSmgr(), pos));
 	else if (random > 80 && random <= 90)
-        _powerUps.push_back(std::make_unique<SpeedUp>(_core->getSmgr(), pos));
+        _powerUps.push_back(std::make_unique<SpeedUp>(_core->getSmgr(), pos));	
 	else if (random > 90 && random <= 100)
         _powerUps.push_back(std::make_unique<WallPass>(_core->getSmgr(), pos));
 }
