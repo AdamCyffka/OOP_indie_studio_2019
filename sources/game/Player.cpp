@@ -73,7 +73,7 @@ int Player::getFirePower()
 
 void Player::setBombAmount(int bombAmount)
 {
-	_bombAmount += bombAmount;
+	_bombAmount = bombAmount;
 }
 
 int Player::getBombAmount()

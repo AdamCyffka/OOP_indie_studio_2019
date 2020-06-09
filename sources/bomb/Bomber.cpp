@@ -72,7 +72,7 @@ bool Bomber::canPutBomb(IEntity *it)
 
 bool Bomber::hasEnoughBombToPut(IEntity *it)
 {
-    if (it->getBombStack()->bombsAvailable() > 0 && it->getBombAmount() > 0)
+    if (it->getBombAmount() > 0 && it->getBombStack()->bombsAvailable() > 0)
         return (true);
     return (false);
 }

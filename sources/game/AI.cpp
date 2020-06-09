@@ -89,7 +89,7 @@ void AI::putBomb()
 	|| tmpBombMap[point.x + 2][point.y] == bomb ||
 	tmpBombMap[point.x][point.y + 2] == bomb || tmpBombMap[point.x - 2][point.y] == bomb || tmpBombMap[point.x][point.y - 2] == bomb)
 		return;
-	std::cout << "put a bomb" << std::endl;
+	std::cout << "IA put a bomb" << std::endl;
 	_bomber->putBomb(this);
 }
 
@@ -105,7 +105,7 @@ int AI::getFirePower()
 
 void AI::setBombAmount(int bombAmount)
 {
-	_bombAmount += bombAmount;
+	_bombAmount = bombAmount;
 }
 
 int AI::getBombAmount()
