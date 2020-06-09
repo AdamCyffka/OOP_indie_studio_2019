@@ -9,16 +9,18 @@
 #include "Core.hpp"
 #include "GameCore.hpp"
 
-void clearThreads() {
-	std::cout << "genial" << std::endl;
+void exitMessage() {
+	std::cout << std::endl << "----- SUPER MARIO BOMBERMAN ------" << std::endl;
+	std::cout << "The program has been closed successfully" << std::endl;
+	std::cout << "----------------------------------" << std::endl;
 }
 
 int main(int ac, char **av)
 {
-	atexit(clearThreads);
+	atexit(exitMessage);
 #ifdef __linux__
 	if (!getenv("DISPLAY")) {
-		std::cerr << "error : some environment variable are missing." << std::endl;
+		std::cerr << "Error : some environment variable are missing." << std::endl;
 		return (84);
     }
 #endif
