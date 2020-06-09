@@ -34,8 +34,8 @@ Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
 	Point point = {0, 0};
 	float overlap = 0.0;
 
-	if (std::fmod((bombPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f
-	&& std::fmod((bombPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f) {
+	if (std::fmod((bombPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f && std::fmod((bombPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f)
+	{
 		return Point{int((bombPosition.X - MAP_DEFAULT_X) / -10), int((bombPosition.Z - MAP_DEFAULT_Z) / -10)};
 	}
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
@@ -78,8 +78,8 @@ Point squareWherePlayerIs(IEntity *entity, Map *map)
 	Point point = {0, 0};
 	float overlap = 0.0;
 
-	if (std::fmod((characterPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f
-	&& std::fmod((characterPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f) {
+	if (std::fmod((characterPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f && std::fmod((characterPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f)
+	{
 		return Point{int((characterPosition.X - MAP_DEFAULT_X) / -10), int((characterPosition.Z - MAP_DEFAULT_Z) / -10)};
 	}
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
@@ -155,28 +155,72 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
 	Point point = squareWherePlayerIs(entity, map);
+	Point nextPoint = {point.x, point.y};
+	std::map<int, std::map<int, bombState>> tmpBombMap;
 
+	for (unsigned int i = 0; i < map->getBombMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < map->getBombMap()[i].size(); ++j)
+		{
+			tmpBombMap[i][j] = map->getBombMap()[i][j];
+		}
+	}
+	for (unsigned int i = 0; i < map->getBombMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < map->getBombMap()[i].size(); ++j)
+		{
+			if (map->getBombMap()[i][j] == bomb) {
+				tmpBombMap[i + 1][j] = bomb;
+				tmpBombMap[i][j + 1] = bomb;
+				tmpBombMap[i + 2][j] = bomb;
+				tmpBombMap[i][j + 2] = bomb;
+				tmpBombMap[i - 1][j] = bomb;
+				tmpBombMap[i][j - 1] = bomb;
+				tmpBombMap[i - 2][j] = bomb;
+				tmpBombMap[i][j - 2] = bomb;
+			}
+		}
+	}
 	switch (direction)
 	{
 	case north:
-		if (map->getMap()[point.x - 1][point.y] == unbreakable || (map->getMap()[point.x - 1][point.y] == breakable && !entity->getWallPass()))
-			return false;
+		nextPoint.x--;
 		break;
 	case south:
-		if (map->getMap()[point.x + 1][point.y] == unbreakable || (map->getMap()[point.x + 1][point.y] == breakable && !entity->getWallPass()))
-			return false;
+		nextPoint.x++;
 		break;
 	case east:
-		if (map->getMap()[point.x][point.y + 1] == unbreakable || (map->getMap()[point.x][point.y + 1] == breakable && !entity->getWallPass()))
-			return false;
+		nextPoint.y++;
 		break;
 	case west:
-		if (map->getMap()[point.x][point.y - 1] == unbreakable || (map->getMap()[point.x][point.y - 1] == breakable && !entity->getWallPass()))
-			return false;
+		nextPoint.y--;
 		break;
 	default:
 		return false;
 		break;
+	}
+	//&& map->getBombMap()[point.x][point.y] != bombState::bomb
+	if (map->getMap()[nextPoint.x][nextPoint.y] == unbreakable || (map->getMap()[nextPoint.x][nextPoint.y] == breakable && !entity->getWallPass()))
+		return false;
+	if (map->getBombMap()[nextPoint.x][nextPoint.y] == bomb && !entity->getBombPass())
+		return false;
+	for (unsigned int j = 0; j < map->getBombMap()[nextPoint.x].size(); ++j)
+	{
+		if (map->getBombMap()[nextPoint.x][j] == bombState::bomb && (map->getBombMap()[point.x][point.y] >= map->getBombMap()[nextPoint.x][j] - 2 ||
+		map->getBombMap()[point.x][point.y] > map->getBombMap()[nextPoint.x][j] + 2)
+		&& tmpBombMap[point.x][point.y] != bomb)
+		{
+			return false;
+		}
+	}
+	for (unsigned int i = 0; i < map->getBombMap().size(); ++i)
+	{
+		if (map->getBombMap()[i][nextPoint.y] == bombState::bomb && (map->getBombMap()[point.x][point.y] < map->getBombMap()[i][nextPoint.y] - 2 ||
+		map->getBombMap()[point.x][point.y] > map->getBombMap()[i][nextPoint.y] + 2)
+		&& tmpBombMap[point.x][point.y] != bomb)
+		{
+			return false;
+		}
 	}
 	return true;
 }

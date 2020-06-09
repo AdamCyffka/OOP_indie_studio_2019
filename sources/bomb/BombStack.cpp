@@ -38,7 +38,6 @@ void BombStack::addBomb()
     _stack.push_back({node, true});
 }
 
-
 std::size_t BombStack::getBombAmount() const
 {
     return _stack.size();

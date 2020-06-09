@@ -49,6 +49,47 @@ void AI::putBomb()
 	default:
 		break;
 	}*/
+	/* int count = 0;
+	std::cout << _bombStack->bombsAvailable() << std::endl;
+	for (auto bomb : _bombStack->getStack())
+	{
+		count += (int)bomb.second;
+	}
+	//std::cout << count << std::endl;*/
+	Point point = squareWherePlayerIs(this, _map);
+	if ((point.x == 1 && point.y == 1) || (point.x == 1 && point.y == 17) || (point.x == 11 && point.y == 1) || (point.x == 11 && point.y == 17))
+		return;
+	std::map<int, std::map<int, bombState>> tmpBombMap;
+
+	for (unsigned int i = 0; i < _map->getBombMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < _map->getBombMap()[i].size(); ++j)
+		{
+			tmpBombMap[i][j] = _map->getBombMap()[i][j];
+		}
+	}
+	for (unsigned int i = 0; i < _map->getBombMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < _map->getBombMap()[i].size(); ++j)
+		{
+			if (_map->getBombMap()[i][j] == bomb) {
+				tmpBombMap[i + 1][j] = bomb;
+				tmpBombMap[i][j + 1] = bomb;
+				tmpBombMap[i + 2][j] = bomb;
+				tmpBombMap[i][j + 2] = bomb;
+				tmpBombMap[i - 1][j] = bomb;
+				tmpBombMap[i][j - 1] = bomb;
+				tmpBombMap[i - 2][j] = bomb;
+				tmpBombMap[i][j - 2] = bomb;
+			}
+		}
+	}
+	if (tmpBombMap[point.x][point.y] == bomb || tmpBombMap[point.x + 1][point.y] == bomb ||
+	tmpBombMap[point.x][point.y + 1] == bomb || tmpBombMap[point.x - 1][point.y] == bomb || tmpBombMap[point.x][point.y - 1] == bomb
+	|| tmpBombMap[point.x + 2][point.y] == bomb ||
+	tmpBombMap[point.x][point.y + 2] == bomb || tmpBombMap[point.x - 2][point.y] == bomb || tmpBombMap[point.x][point.y - 2] == bomb)
+		return;
+	std::cout << "put a bomb" << std::endl;
 	_bomber->putBomb(this);
 }
 
@@ -191,10 +232,8 @@ bool AI::canMoveToTargetZ(IEntity *it)
 
 void AI::canHitPlayers(std::vector<IEntity *> entities)
 {
-	if (_character->getState() != Character::state::idle)
-		return;
 	Point point = squareWherePlayerIs(this, _map);
-	int hitDistance = 2;
+	int hitDistance = 3;
 
 	for (auto it : entities)
 	{
@@ -203,13 +242,16 @@ void AI::canHitPlayers(std::vector<IEntity *> entities)
 			Point pointTarget = squareWherePlayerIs(it, _map);
 			if (point.x == pointTarget.x)
 			{
-				if (point.y == pointTarget.y || (point.y < pointTarget.y && point.y + hitDistance >= pointTarget.y) || (point.y > pointTarget.y && point.y - hitDistance <= pointTarget.y))
+				if (point.y == pointTarget.y || (point.y < pointTarget.y && point.y + hitDistance >= pointTarget.y) || (point.y > pointTarget.y && point.y - hitDistance <= pointTarget.y)) {
 					this->putBomb();
+				}
 			}
 			else if (point.y == pointTarget.y)
 			{
 				if (point.x == pointTarget.x || (point.x < pointTarget.x && point.x + hitDistance >= pointTarget.x) || (point.x > pointTarget.x && point.x - hitDistance <= pointTarget.x))
+				{
 					this->putBomb();
+				}
 			}
 		}
 	}
@@ -342,7 +384,6 @@ void AI::setInput(Key_mouvement input)
 
 void AI::checkMovement()
 {
-
 	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
 	{
 		bool northB = canAiMove(this, _map, north);
