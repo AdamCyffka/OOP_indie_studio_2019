@@ -19,7 +19,7 @@ void loadSplashBar(Core *core)
 void loadMusic(Core *core)
 {
 	if (!core->getMusicEngine())
-	core->setMusicEngine(new Music());
+		core->setMusicEngine(new Music());
 	core->getSplash()->getBar()->setProgress(7);
 }
 
@@ -102,13 +102,15 @@ void loadSave(Core *core)
 
 void loadInput(Core *core)
 {
-
+	if (!core->getInput())
+		core->setInput(new Input());
+	core->getSplash()->getBar()->setProgress(90);
 }
 
 void loadLoad(Core *core)
 {
-	if (!core->getInput())
-		core->setInput(new Input());
+	if (!core->getLoad())
+		core->setLoad(new Load(core->getEnv(), core->getDriver(), core->getSmgr()));
 	core->getSplash()->getBar()->setProgress(90);
 }
 

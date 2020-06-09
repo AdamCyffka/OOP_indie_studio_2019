@@ -78,7 +78,24 @@ void Bomber::putBomb(IEntity *it)
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         epicenter(it);
         removeBombFromInventory(it);
+<<<<<<< HEAD
         boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
+=======
+//        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
+        if (getIsBlast() == true) {
+            setIsBlast(false);
+            {
+                std::cout << "blasting" << std::endl;
+                blastNorth(it);
+                blastSouth(it);
+                blastEast(it);
+                blastWest(it);
+            }
+            clearMapAfterBlast(it);
+            _map->printMap();
+            giveNewBombInInventory(it);
+        }
+>>>>>>> d57001d7a4d0579d93921692659a3bae935980ac
     }
 }
 

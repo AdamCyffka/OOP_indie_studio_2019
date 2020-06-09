@@ -13,6 +13,7 @@
 #include "Help.hpp"
 #include "Credits.hpp"
 #include "Save.hpp"
+#include "Load.hpp"
 #include "Pause.hpp"
 
 void loadSplashBar(Core *core);
