@@ -84,7 +84,8 @@ void Bomber::putBomb(IEntity *it)
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         epicenter(it, bombPosition3d);
         removeBombFromInventory(it);
-        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
+        boost::thread thr = boost::thread(boost::bind(&Bomber::run, this, it));
+        thr.detach();
     }
 }
 
