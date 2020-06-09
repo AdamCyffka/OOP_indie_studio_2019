@@ -17,12 +17,14 @@ Bomber::~Bomber()
 
 void Bomber::run(IEntity *it)
 {
+    irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
+    it->getBombStack()->putBomb(bombPosition3d);
     boost::this_thread::sleep_for(boost::chrono::seconds(3));
     blastNorth(it);
     blastSouth(it);
     blastEast(it);
     blastWest(it);
-    it->getBombStack()->explodeBomb(_map, it);
+    it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
     clearMapAfterBlast(it);
     giveNewBombInInventory(it);
     boost::this_thread::yield();

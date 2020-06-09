@@ -53,7 +53,19 @@ int BombStack::bombsAvailable()
     return count;
 }
 
-void BombStack::explodeBomb(Map *map, IEntity *entity)
+void BombStack::putBomb(irr::core::vector3df bombPosition3d)
+{
+    for (auto bomb : _stack) {
+        if (bomb.second == true) {
+            bomb.first->setPosition(bombPosition3d);
+            bomb.first->setVisible(true);
+            bomb.second = false;
+            break;
+        }
+    }
+}
+
+void BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d)
 {
     int firePower = 2;
     Point bombPosition = squareWherePlayerIs(entity, map);
@@ -98,6 +110,13 @@ void BombStack::explodeBomb(Map *map, IEntity *entity)
                 break;
             else if (map2D[line][x] == blockState::empty && x != column)
                 AnimExplo(_driver, _smgr, {MAP_DEFAULT_X + (-10.0f * line), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * x)});
+        }
+    }
+    for (auto bomb : _stack) {
+        if (bomb.first->getPosition() == bombPosition3d) {
+            bomb.first->setVisible(false);
+            bomb.second = true;
+            break;
         }
     }
 }
