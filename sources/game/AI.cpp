@@ -49,7 +49,7 @@ void AI::putBomb()
 	default:
 		break;
 	}*/
-	_bomber->putBomb(this, _bombStack);
+	_bomber->putBomb(this);
 }
 
 void AI::setFirePower(int firePower)
