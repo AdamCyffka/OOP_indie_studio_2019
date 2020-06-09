@@ -10,7 +10,7 @@
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
-	_firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+	_firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
 }
@@ -58,12 +58,13 @@ void Player::run(Key_mouvement input)
 
 void Player::putBomb()
 {
-	_bombStack->explodeBomb(_map, _character->getPosition());
+	_bomb->putBomb(this);
+	_bombStack->explodeBomb(_map, this);
 }
 
 void Player::setFirePower(int firePower)
 {
-	_firePower = firePower;
+	_firePower += firePower;
 }
 
 int Player::getFirePower()
@@ -73,7 +74,7 @@ int Player::getFirePower()
 
 void Player::setBombAmount(int bombAmount)
 {
-	_bombAmount = bombAmount;
+	_bombAmount += bombAmount;
 }
 
 int Player::getBombAmount()
@@ -83,7 +84,7 @@ int Player::getBombAmount()
 
 void Player::setSpeed(int speed)
 {
-	_speed = speed;
+	_speed += speed;
 }
 
 int Player::getSpeed()
@@ -154,29 +155,32 @@ BombStack *Player::getBombStack()
 void Player::moveTo(side direction)
 {
 	irr::core::vector3df pos = _character->getPosition();
+	float distanceTravel = 10.0f;
+	float speedTime = 1000 / _speed;
+
 	switch (direction) {
 	case north:
 		if (canMove(this, _map, north)) {
-			pos.X += 10.0f;
-			_character->moveTo(pos);
+			pos.X += distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	case south:
 		if (canMove(this, _map, south)) {
-			pos.X -= 10.0f;
-			_character->moveTo(pos);
+			pos.X -= distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	case east:
 		if (canMove(this, _map, east)) {
-			pos.Z -= 10.0f;
-			_character->moveTo(pos);
+			pos.Z -= distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	case west:
 		if (canMove(this, _map, west)) {
-			pos.Z += 10.0f;
-			_character->moveTo(pos);
+			pos.Z += distanceTravel;
+			_character->moveTo(pos, speedTime);
 		}
 		break;
 	}

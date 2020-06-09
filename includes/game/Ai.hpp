@@ -51,11 +51,14 @@ public:
 	void setInput(Key_mouvement input) final;
 
 	bool isSafe();
+	void canHitPlayers(std::vector<IEntity *> entities);
 	IEntity *canMoveToTarget(std::vector<IEntity *> entities);
 	bool canMoveToTargetX(IEntity *it);
 	bool canMoveToTargetZ(IEntity *it);
 	void actionWithTarget(IEntity *target);
 	void checkMovement();
+	void movePlayerWithWantedMovement();
+	void setWantedPositionRandom();
 
 private:
 	bool _isAlive;

@@ -21,11 +21,11 @@
 #include <ctime>
 #include <vector>
 
-#define TIMER (3000)
+#define TIMER (3)
 
 class Bomber {
     public:
-        Bomber(Map *);
+        Bomber(Map *, LoadMap *);
         ~Bomber();
         void run();
 
@@ -36,8 +36,6 @@ class Bomber {
         //Recover entities
         void setEntities(std::vector<IEntity *> entities);
         std::vector<IEntity *> getEntities() const;
-        //Recover visualMap
-        LoadMap *getMap();
 
         //Blast
         void setIsBlast(bool isBlast);
@@ -62,12 +60,12 @@ class Bomber {
         void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
-        bool isKilledByBomb();
+        bool isKilledByBomb(IEntity *it);
     private:
         Map *_map;
-        LoadMap *_visualMap;
+        LoadMap *_loadMap;
         std::vector<IEntity *> _entities;
-        std::chrono::milliseconds _delay;
+        std::chrono::seconds _delay;
         int _radius;
         bool _isBlast;
     protected:

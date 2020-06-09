@@ -16,7 +16,8 @@ GameCore::GameCore(Core *core)
 	_isInit = false;
 	_isPaused = false;
 	_map = _core->getMap();
-	_bomber = new Bomber(_map);
+	_loadMap = _core->getLoadMap();
+	_bomber = new Bomber(_map, _loadMap);
 	_spawnAreas[1] = irr::core::vector3df{-450.0f, 308.0f, 780.0f};
 	_spawnAreas[2] = irr::core::vector3df{-450.0f, 308.0f, 620.0f};
 	_spawnAreas[3] = irr::core::vector3df{-550.0f, 308.0f, 780.0f};

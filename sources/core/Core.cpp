@@ -21,6 +21,7 @@
 #include "Intro.hpp"
 #include "Save.hpp"
 #include "Load.hpp"
+#include "loadCore.hpp"
 
 Core::Core()
 {
@@ -140,32 +141,127 @@ bool Core::getFullscreen() const
     return _fullscreen;
 }
 
-Select *Core::getSelect()
+void Core::setVideos(Videos *videos)
+{
+	_videos = videos;
+}
+
+Videos *Core::getVideos() const
+{
+	return _videos;
+}
+
+Save *Core::getSave() const
+{
+	return _save;
+}
+
+void Core::setSave(Save *save)
+{
+	_save = save;
+}
+
+Load *Core::getLoad() const
+{
+	return _load;
+}
+
+void Core::setLoad(Load *load)
+{
+	_load = load;
+}
+
+Help *Core::getHelp() const
+{
+	return _help;
+}
+
+void Core::setHelp(Help *help)
+{
+	_help = help;
+}
+
+void Core::setMenu(Menu *menu)
+{
+	_menu = menu;
+}
+
+Menu *Core::getMenu() const
+{
+	return _menu;
+}
+
+Sounds *Core::getSounds() const
+{
+	return _sounds;
+}
+
+void Core::setSounds(Sounds *sounds)
+{
+	_sounds = sounds;
+}
+
+void Core::setSelect(Select *select)
+{
+	_select = select;
+}
+
+Select *Core::getSelect() const
 {
 	return _select;
 }
 
-Controls *Core::getControls()
+void Core::setControls(Controls *controls)
+{
+	_controls = controls;
+}
+
+Controls *Core::getControls() const
 {
 	return _controls;
 }
 
-Score *Core::getScore()
+Credits *Core::getCredits() const
+{
+	return _credits;
+}
+
+void Core::setCredits(Credits *credits)
+{
+	_credits = credits;
+}
+
+void Core::setScore(Score *score)
+{
+	_score = score;
+}
+
+Score *Core::getScore() const
 {
 	return _score;
 }
 
-GameCore *Core::getGameCore()
+void Core::setGameCore(GameCore *gamecore)
+{
+	_gameCore = gamecore;
+}
+
+GameCore *Core::getGameCore() const
 {
 	return _gameCore;
 }
 
-Game *Core::getGame()
+void Core::setGame(Game *game)
+{
+	_game = game;
+}
+
+Game *Core::getGame() const
 {
 	return _game;
 }
 
-Map *Core::getMap()
+Map *Core::getMap() const
 {
 	return _loadmap->getMap();
 }
@@ -185,9 +281,24 @@ Core::gameState Core::getGState()
 	return _gState;
 }
 
-Music *Core::getMusicEngine()
+void Core::setMusicEngine(Music *music)
+{
+	_music = music;
+}
+
+Music *Core::getMusicEngine() const
 {
 	return _music;
+}
+
+Splash *Core::getSplash() const
+{
+	return _splash;
+}
+
+void Core::setIntro(Intro *intro)
+{
+	_intro = intro;
 }
 
 Intro *Core::getIntro()
@@ -195,19 +306,64 @@ Intro *Core::getIntro()
 	return _intro;
 }
 
+void Core::setInput(Input *input)
+{
+	_inputs = input;
+}
+
 Input *Core::getInput()
 {
 	return _inputs;
 }
 
-LoadMap *Core::getLoadMap()
+Pause *Core::getPause() const
+{
+	return _pause;
+}
+
+void Core::setPause(Pause *pause)
+{
+	_pause = pause;
+}
+
+void Core::setLoadMap(LoadMap *loadMap)
+{
+	_loadmap = loadMap;
+}
+
+LoadMap *Core::getLoadMap() const
 {
 	return _loadmap;
+}
+
+GameControls *Core::getGameControls() const
+{
+	return _gameControls;
+}
+
+void Core::setGameControls(GameControls *gameControls)
+{
+	_gameControls = gameControls;
+}
+
+GameSounds *Core::getGameSounds() const
+{
+	return _gameSounds;
+}
+
+void Core::setGameSounds(GameSounds *gameSounds)
+{
+	_gameSounds = gameSounds;
 }
 
 CameraTravelManager *Core::getCameraTravelManager()
 {
 	return _cameraTravelManager;
+}
+
+irr::gui::IGUIEnvironment *Core::getEnv()
+{
+	return _env;
 }
 
 irr::scene::ISceneManager *Core::getSmgr()
@@ -352,132 +508,12 @@ void Core::pauseCase()
 	showGameLayer(_pause);
 }
 
+void(*f[20])(Core *) = {loadSplashBar, loadMusic, loadMap, loadIntro, loadMenu, loadSounds, loadVideos, loadControls, loadSelect, loadScore, loadHelp, loadCredits, loadSave, loadLoad, loadInput, loadGameCore, loadPause, loadGameClass, loadGameSounds, loadGameControls};
+
 void Core::init()
 {
-	if (_initStep == 0)
-	{
-		_splash->setBar(new ProgressBar(_env, _driver, irr::core::rect<irr::s32>(300, 800, 1620, 830)));
-		_splash->getBar()->setPosition(irr::core::rect<irr::s32>(30, 700, 600, 600));
-		_splash->getBar()->addBorder(2);
-		_splash->getBar()->setProgress(5);
-	}
-	else if (_initStep == 1)
-	{
-		if (!_music)
-			_music = new Music();
-//		_music->getEngine()->setSoundVolume(0.0f); __MUSIC__
-		_splash->getBar()->setProgress(7);
-	}
-	else if (_initStep == 2)
-	{
-		if (!_loadmap)
-			_loadmap = new LoadMap(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(10);
-	}
-	else if (_initStep == 3)
-	{
-		if (!_intro)
-			_intro = new Intro(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(20);
-	}
-	else if (_initStep == 4)
-	{
-		if (!_menu)
-			_menu = new Menu(_env, _driver, _smgr, _width, _height);
-		_splash->getBar()->setProgress(30);
-	}
-	else if (_initStep == 5)
-	{
-		if (!_sounds)
-			_sounds = new Sounds(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(40);
-	}
-	else if (_initStep == 6)
-	{
-		if (!_videos)
-			_videos = new Videos(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(40);
-	}
-	else if (_initStep == 7)
-	{
-		if (!_controls)
-			_controls = new Controls(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(40);
-	}
-	else if (_initStep == 8)
-	{
-		if (!_select)
-			_select = new Select(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(50);
-	}
-	else if (_initStep == 9)
-	{
-		if (!_score && _select)
-			_score = new Score(_env, _driver, _smgr, _select->getPreviews());
-		_splash->getBar()->setProgress(50);
-	}
-	else if (_initStep == 10)
-	{
-		if (!_help)
-			_help = new Help(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(60);
-	}
-	else if (_initStep == 11)
-	{
-		if (!_credits)
-			_credits = new Credits(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(70);
-	}
-	else if (_initStep == 12)
-	{
-		if (!_save)
-			_save = new Save(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(80);
-	}
-	else if (_initStep == 13)
-	{
-		if (!_inputs)
-			_inputs = new Input();
-		_splash->getBar()->setProgress(90);
-	}
-	else if (_initStep == 14)
-	{
-		if (!_load)
-			_load = new Load(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(95);
-	}
-	else if (_initStep == 15)
-	{
-		if (!_select)
-			throw CoreException("Select hasn't been initialized, cannot get characters previews");
-		if (!_gameCore)
-			_gameCore = new GameCore(this);
-		_splash->getBar()->setProgress(97);
-	}
-	else if (_initStep == 16)
-	{
-		if (!_pause)
-			_pause = new Pause(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(100);
-	}
-	else if (_initStep == 17)
-	{
-		if (!_game && _select)
-			_game = new Game(_env, _driver, _smgr, _select->getPreviews());
-		_splash->getBar()->setProgress(100);
-	}
-	else if (_initStep == 18)
-	{
-		if (!_gameSounds)
-			_gameSounds = new GameSounds(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(100);
-	}
-	else if (_initStep == 19)
-	{
-		if (!_gameControls)
-			_gameControls = new GameControls(_env, _driver, _smgr);
-		_splash->getBar()->setProgress(100);
-	}
+	if (_initStep < 20)
+		f[_initStep](this);
 	else
 	{
 		_isInitialized = true;
@@ -596,6 +632,16 @@ void Core::drawMenuLayer()
 			loadCase();
 			break;
 	}
+}
+
+int Core::getWidth()
+{
+	return _width;
+}
+
+int Core::getHeight()
+{
+	return _width;
 }
 
 void Core::hideGameLayers()

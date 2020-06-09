@@ -143,7 +143,7 @@ bool canMove(IEntity *entity, Map *map, side direction)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
 	Point point = {squareWherePlayerIs(entity, map).x, squareWherePlayerIs(entity, map).y};
-	float hitBoxValue = 2.5f;
+	float hitBoxValue = 7.0f;
 	switch (direction)
 	{
 	case north:
