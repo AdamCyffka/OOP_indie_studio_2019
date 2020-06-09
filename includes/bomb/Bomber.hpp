@@ -20,8 +20,6 @@
 #include <ctime>
 #include <vector>
 
-#include <boost/thread.hpp>
-
 #define TIMER (3)
 
 class Bomber {
