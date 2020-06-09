@@ -17,10 +17,10 @@ Bomber::~Bomber()
 
 void Bomber::run(IEntity *it)
 {
-    boost::this_thread::sleep_for(boost::chrono::seconds(3));
+//    boost::this_thread::sleep_for(boost::chrono::seconds(3));
     setIsBlast(true);
-    //_bombStack->explodeBomb(_map, it);
-    boost::this_thread::yield();
+    _bombStack->explodeBomb(_map, it);
+//    boost::this_thread::yield();
 }
 
 void Bomber::setRadius(int radius)
@@ -75,7 +75,7 @@ void Bomber::putBomb(IEntity *it, BombStack *_bombStack)
         std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
-        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
+//        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
         if (getIsBlast() == true) {
             setIsBlast(false);
             {
