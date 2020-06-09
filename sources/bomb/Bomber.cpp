@@ -83,22 +83,6 @@ void Bomber::putBomb(IEntity *it)
         epicenter(it);
         removeBombFromInventory(it);
         boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
-<<<<<<< HEAD
-        if (getIsBlast() == true) {
-            setIsBlast(false);
-            {
-                std::cout << "blasting" << std::endl;
-                blastNorth(it);
-                blastSouth(it);
-                blastEast(it);
-                blastWest(it);
-            }
-            clearMapAfterBlast(it);
-            _map->printMap();
-            giveNewBombInInventory(it);
-        }
-=======
->>>>>>> b3c7a50943a69271036655890a3889e27b65c1eb
     }
 }
 
