@@ -9,7 +9,7 @@
 #include <boost/thread.hpp>
 #include <boost/chrono.hpp>
 
-Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(3), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
+Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
 {
 }
 
@@ -19,9 +19,16 @@ Bomber::~Bomber()
 
 void Bomber::run(IEntity *it)
 {
+    irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
+    it->getBombStack()->putBomb(_map, bombPosition3d);
     boost::this_thread::sleep_for(boost::chrono::seconds(3));
-    setIsBlast(true);
-    _bombStack->explodeBomb(_map, it);
+    blastNorth(it);
+    blastSouth(it);
+    blastEast(it);
+    blastWest(it);
+    it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
+    clearMapAfterBlast(it);
+    giveNewBombInInventory(it);
     boost::this_thread::yield();
 }
 
@@ -70,14 +77,13 @@ bool Bomber::hasEnoughBombToPut(IEntity *it)
     return false;
 }
 
-void Bomber::putBomb(IEntity *it, BombStack *_bombStack)
+void Bomber::putBomb(IEntity *it)
 {
-    std::cout << "bomb function" << std::endl;
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
-        std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
         boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
+<<<<<<< HEAD
         if (getIsBlast() == true) {
             setIsBlast(false);
             {
@@ -91,6 +97,8 @@ void Bomber::putBomb(IEntity *it, BombStack *_bombStack)
             _map->printMap();
             giveNewBombInInventory(it);
         }
+=======
+>>>>>>> b3c7a50943a69271036655890a3889e27b65c1eb
     }
 }
 

@@ -58,7 +58,7 @@ void Player::run(Key_mouvement input)
 
 void Player::putBomb()
 {
-	_bomb->putBomb(this, _bombStack);
+	_bomb->putBomb(this);
 }
 
 void Player::setFirePower(int firePower)

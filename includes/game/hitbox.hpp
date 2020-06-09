@@ -25,6 +25,7 @@ bool canMove(IEntity *characterPosition, Map *map, side direction);
 bool canAiMove(IEntity *entity, Map *map, side direction);
 
 Point squareWherePlayerIs(IEntity *entity, Map *map);
+Point squareWhereBombIs(irr::core::vector3df, Map *map);
 int isInside(float x, float z, float xBlock, float zBlock, float degree);
 
 #endif
