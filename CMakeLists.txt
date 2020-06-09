@@ -108,6 +108,3 @@ include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(bomberman ${Boost_LIBRARIES})
 endif (Boost_FOUND)
 #########################################
-
-######## Components integration #########
-#########################################
