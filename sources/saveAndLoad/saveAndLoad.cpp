@@ -91,13 +91,13 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     //SAVE POSITIONS OF THE PLAYER
     pt::ptree positions_node;
     pt::ptree position_node;
-    core::vector3df position = character->getPosition();
+    Point point = squareWherePlayerIs(entity, core.getMap());
 
-    position_node.put("", position.X);
+    //core::vector3df position = character->getPosition();
+
+    position_node.put("", point.x);
     positions_node.push_back(std::make_pair("", position_node));
-    position_node.put("", position.Y);
-    positions_node.push_back(std::make_pair("", position_node));
-    position_node.put("", position.Z);
+    position_node.put("", point.y);
     positions_node.push_back(std::make_pair("", position_node));
 
     character_node.add_child("position", positions_node);
@@ -114,7 +114,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     savePlayer(2, core, &root);
     savePlayer(3, core, &root);
     saveMap(core, &root);
-    saveBombMap(core, &root);
+    //saveBombMap(core, &root);
 
     //Write save in save file
     pt::write_json("save" + std::to_string(slot) + ".json", root);
@@ -226,25 +226,27 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 
     character->setSize(root->get<f32>(path + "size", 0));
     character->setVisibility(root->get<bool>(path + "visibility", 0));
-    character->setAnimationSpeed(root->get<f32>(path + "animationSpeed", 0));
-    character->setTravelTime(root->get<u32>(path + "travelTime", 0));
+    //character->setAnimationSpeed(root->get<f32>(path + "animationSpeed", 0));
+    //character->setTravelTime(root->get<u32>(path + "travelTime", 0));
 
     side orientation = (side)root->get<int>(path + "orientation", 0);
     if (!sideCheck::is_value(orientation))
         throw saveAndLoadException("Invalid Enum value");
     character->setOrientation(orientation);
 
-    Character::state state = (Character::state)root->get<int>(path + "state", 0);
-    if (!Character::stateCheck::is_value(state))
-        throw saveAndLoadException("Invalid Enum value");
-    character->setState(state);
+    //Character::state state = (Character::state)root->get<int>(path + "state", 0);
+    /*if (!Character::stateCheck::is_value(state))
+        throw saveAndLoadException("Invalid Enum value");*/
+    //character->setState(state);
 
     std::vector<int> positions;
     for (pt::ptree::value_type &line : root->get_child(path + "position"))
         positions.push_back(std::stoi(line.second.data()));
-    if (positions.size() != 3)
+    if (positions.size() != 2)
         throw saveAndLoadException("Invalid player's position");
-    character->setPosition(core::vector3df(f32(positions[0]), f32(positions[1]), f32(positions[2])));
+    if (positions[0] <= 0 || positions[1] <= 0 || positions[0] > 11 || positions[1] > 17)
+        throw saveAndLoadException("Invalid player's position");
+    character->setPosition(core::vector3df(f32(MAP_DEFAULT_X + (-10.0f * positions[0])), f32(MAP_DEFAULT_Y), f32(MAP_DEFAULT_Z + (-10.0f * positions[1]))));
     //ADDING ELEMNTS TO LOAD HERE FOR CHARACTER
 }
 
@@ -315,7 +317,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         loadPlayer(2, core, &root);
         loadPlayer(3, core, &root);
         loadMap(core, &root);
-        loadBombMap(core, &root);
+        //loadBombMap(core, &root);
     }
     catch (std::exception const &msg)
     {
