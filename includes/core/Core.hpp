@@ -25,6 +25,7 @@
 #include "Controls.hpp"
 #include "GameControls.hpp"
 #include "GameSounds.hpp"
+#include "global.hpp"
 
 class Load;
 class Save;

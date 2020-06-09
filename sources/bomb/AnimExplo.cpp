@@ -6,11 +6,11 @@
 */
 
 #include <stdexcept>
+#include "global.hpp"
 #include "AnimExplo.hpp"
 
 AnimExplo::AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
-	irr::video::ITexture *fireTexture = driver->getTexture("resources/images/fx/fire.bmp");
 	if (!fireTexture)
 		throw std::runtime_error("could not load texture : resources/images/fx/fire.bmp");
 	irr::scene::ISceneNodeAnimator *anim = smgr->createDeleteAnimator(2000);

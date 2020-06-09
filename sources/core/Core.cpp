@@ -69,6 +69,8 @@ Core::Core()
 	_game = nullptr;
 	_gameSounds = nullptr;
 	_gameControls = nullptr;
+
+	setGlobalVariables(_driver);
 }
 
 void Core::start()
