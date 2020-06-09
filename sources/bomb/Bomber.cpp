@@ -9,7 +9,7 @@
 #include <boost/thread.hpp>
 #include <boost/chrono.hpp>
 
-Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
+Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(1), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
 {
 }
 
