@@ -18,7 +18,7 @@ Bomber::~Bomber()
 void Bomber::run(IEntity *it)
 {
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
-    it->getBombStack()->putBomb(bombPosition3d);
+    it->getBombStack()->putBomb(_map, bombPosition3d);
     boost::this_thread::sleep_for(boost::chrono::seconds(3));
     blastNorth(it);
     blastSouth(it);

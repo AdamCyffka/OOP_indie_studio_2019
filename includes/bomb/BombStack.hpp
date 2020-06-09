@@ -22,7 +22,7 @@ class BombStack {
         void addBomb();
         std::size_t getBombAmount() const;
         int bombsAvailable(); // return the number of available bombs
-        void putBomb(irr::core::vector3df bombPosition3d);
+        void putBomb(Map *map, irr::core::vector3df bombPosition3d);
         void explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d);
 
     protected:

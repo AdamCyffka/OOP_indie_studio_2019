@@ -53,11 +53,12 @@ int BombStack::bombsAvailable()
     return count;
 }
 
-void BombStack::putBomb(irr::core::vector3df bombPosition3d)
+void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 {
     for (auto bomb : _stack) {
         if (bomb.second == true) {
-            bomb.first->setPosition(bombPosition3d);
+            Point bombPosition2d = squareWhereBombIs(bombPosition3d, map);
+            bomb.first->setPosition({MAP_DEFAULT_X + (-10.0f * bombPosition2d.x), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * bombPosition2d.y)});
             bomb.first->setVisible(true);
             bomb.second = false;
             break;
@@ -68,7 +69,7 @@ void BombStack::putBomb(irr::core::vector3df bombPosition3d)
 void BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d)
 {
     int firePower = 2;
-    Point bombPosition = squareWherePlayerIs(entity, map);
+    Point bombPosition = squareWhereBombIs(bombPosition3d, map);
     std::map<int, std::map<int, blockState>> &map2D = map->getMap();
     int line = bombPosition.x;
     int column = bombPosition.y;
@@ -113,7 +114,8 @@ void BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bomb
         }
     }
     for (auto bomb : _stack) {
-        if (bomb.first->getPosition() == bombPosition3d) {
+        irr::core::vector3df centeredBombPosition3d = {MAP_DEFAULT_X + (-10.0f * bombPosition.x), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * bombPosition.y)};
+        if (bomb.first->getPosition() == centeredBombPosition3d) {
             bomb.first->setVisible(false);
             bomb.second = true;
             break;
