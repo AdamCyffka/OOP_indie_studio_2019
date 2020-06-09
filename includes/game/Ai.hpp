@@ -57,6 +57,8 @@ public:
 	bool canMoveToTargetZ(IEntity *it);
 	void actionWithTarget(IEntity *target);
 	void checkMovement();
+	void movePlayerWithWantedMovement();
+	void setWantedPositionRandom();
 
 private:
 	bool _isAlive;
