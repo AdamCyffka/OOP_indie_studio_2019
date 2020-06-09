@@ -6,6 +6,8 @@
 */
 
 #include "Bomber.hpp"
+#include <boost/thread.hpp>
+#include <boost/chrono.hpp>
 
 Bomber::Bomber(Map *map, LoadMap *loadMap): _radius(3), _delay(TIMER), _map(map), _loadMap(loadMap), _isBlast(false)
 {
@@ -17,10 +19,10 @@ Bomber::~Bomber()
 
 void Bomber::run(IEntity *it)
 {
-//    boost::this_thread::sleep_for(boost::chrono::seconds(3));
+    boost::this_thread::sleep_for(boost::chrono::seconds(3));
     setIsBlast(true);
     _bombStack->explodeBomb(_map, it);
-//    boost::this_thread::yield();
+    boost::this_thread::yield();
 }
 
 void Bomber::setRadius(int radius)
@@ -75,7 +77,7 @@ void Bomber::putBomb(IEntity *it, BombStack *_bombStack)
         std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
-//        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
+        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this, it));
         if (getIsBlast() == true) {
             setIsBlast(false);
             {
