@@ -49,8 +49,7 @@ void AI::putBomb()
 	default:
 		break;
 	}*/
-	_bomber->putBomb(this);
-	_bombStack->explodeBomb(_map, this);
+	_bomber->putBomb(this, _bombStack);
 }
 
 void AI::setFirePower(int firePower)
