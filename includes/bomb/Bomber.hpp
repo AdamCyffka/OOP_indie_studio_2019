@@ -47,7 +47,7 @@ class Bomber {
         bool hasEnoughBombToPut(IEntity *it);
 
         //Pose bomb and blast
-        void putBomb(IEntity *, BombStack *);
+        void putBomb(IEntity *);
         void epicenter(IEntity *);
         void blastNorth(IEntity *);
         void blastSouth(IEntity *);
