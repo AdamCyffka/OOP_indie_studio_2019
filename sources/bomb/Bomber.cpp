@@ -17,7 +17,9 @@ Bomber::~Bomber()
 
 void Bomber::run()
 {
+    boost::this_thread::sleep_for(boost::chrono::seconds(3));
     setIsBlast(true);
+    boost::this_thread::yield();
 }
 
 void Bomber::setRadius(int radius)
@@ -72,13 +74,7 @@ void Bomber::putBomb(IEntity *it)
         std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
-        {
-            //boost::asio::io_service io;
-            //boost::asio::deadline_timer timer(io, boost::posix_time::seconds(_delay));
-            //timer.async_wait(&Bomber::run);
-            //io.run();
-        }
-        setIsBlast(true); // casse block sans timer
+        boost::thread *thr = new boost::thread(boost::bind(&Bomber::run, this));
         if (getIsBlast() == true) {
             {
                 std::cout << "blasting" << std::endl;
