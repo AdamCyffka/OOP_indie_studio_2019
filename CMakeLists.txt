@@ -75,6 +75,8 @@ include_directories(includes
 
 set_target_properties(bomberman PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXECUTABLE_OUTPUT_PATH}
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH}
         )
 
 ######### Irrlicht integration #########
@@ -105,4 +107,7 @@ if (Boost_FOUND)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(bomberman ${Boost_LIBRARIES})
 endif (Boost_FOUND)
+#########################################
+
+######## Components integration #########
 #########################################
