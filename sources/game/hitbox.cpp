@@ -29,6 +29,48 @@ bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
 	return overLap(x, z, xBlock, zBlock) >= 5.0;
 }
 
+Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
+{
+	Point point = {0, 0};
+	float overlap = 0.0;
+
+	if (std::fmod((bombPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f
+	&& std::fmod((bombPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f) {
+		return Point{int((bombPosition.X - MAP_DEFAULT_X) / -10), int((bombPosition.Z - MAP_DEFAULT_Z) / -10)};
+	}
+	for (unsigned int i = 0; i < map->getMap().size(); ++i)
+	{
+		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
+		{
+			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
+			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
+			float tmp = overLap(bombPosition.X, bombPosition.Z, xBlock, zBlock);
+			if (tmp > overlap)
+			{
+				//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
+				overlap = tmp;
+				point = {int(i), int(j)};
+				tmp = overLap(bombPosition.X, bombPosition.Z, xBlock - 10.0f, zBlock);
+				if (tmp > overlap)
+				{
+					overlap = tmp;
+					point = {int(i + 1), int(j)};
+				}
+				tmp = overLap(bombPosition.X, bombPosition.Z, xBlock, zBlock - 10.0f);
+				if (tmp > overlap)
+				{
+					overlap = tmp;
+					point = {int(i), int(j + 1)};
+				}
+				return point;
+			}
+		}
+	}
+	//print de x et z et le pourcentage du perso dans le bloc pour le débug
+	//std::cout << point.x << " " << point.y << " " << overlap << std::endl;
+	return point;
+}
+
 Point squareWherePlayerIs(IEntity *entity, Map *map)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
