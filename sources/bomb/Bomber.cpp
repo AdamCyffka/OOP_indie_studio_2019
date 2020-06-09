@@ -73,10 +73,7 @@ void Bomber::putBomb(IEntity *it)
         epicenter(it);
         removeBombFromInventory(it);
         {
-            //boost::asio::io_service io;
-            //boost::asio::deadline_timer timer(io, boost::posix_time::seconds(_delay));
-            //timer.async_wait(&Bomber::run);
-            //io.run();
+			//
         }
         setIsBlast(true); // casse block sans timer
         if (getIsBlast() == true) {

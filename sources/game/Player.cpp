@@ -155,8 +155,8 @@ BombStack *Player::getBombStack()
 void Player::moveTo(side direction)
 {
 	irr::core::vector3df pos = _character->getPosition();
-	float distanceTravel = 10.0f;
-	float speedTime = 1000 / _speed;
+	irr::u32 distanceTravel = 10.0f;
+	irr::u32 speedTime = 1000.0f / _speed;
 
 	switch (direction) {
 	case north:

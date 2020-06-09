@@ -20,9 +20,6 @@
 #include <ctime>
 #include <vector>
 
-#include <boost/asio.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-
 #define TIMER (3)
 
 class Bomber {
