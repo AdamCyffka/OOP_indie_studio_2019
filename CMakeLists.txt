@@ -75,8 +75,6 @@ include_directories(includes
 
 set_target_properties(bomberman PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}
-        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXECUTABLE_OUTPUT_PATH}
-        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH}
         )
 
 ######### Irrlicht integration #########
@@ -94,6 +92,11 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 include_directories(${Irrklang_DIR}/include)
 target_link_libraries(bomberman ${CMAKE_THREAD_LIBS_INIT})
+if (MSVC)
+    target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/irrKlang.lib)
+ELSE (MSVC)
+    target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/libIrrKlang.so)
+ENDIF(MSVC)
 #########################################
 
 ######## Boost integration ############
@@ -102,12 +105,4 @@ if (Boost_FOUND)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(bomberman ${Boost_LIBRARIES})
 endif (Boost_FOUND)
-#########################################
-
-######## Components integration #########
-if (MSVC)
-    target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/irrKlang.lib)
-ELSE (MSVC)
-    target_link_libraries(bomberman ${CMAKE_MODULE_PATH}/irrKlang/libIrrKlang.so)
-ENDIF(MSVC)
 #########################################
