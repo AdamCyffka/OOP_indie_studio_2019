@@ -17,7 +17,6 @@ Bomber::~Bomber()
 
 void Bomber::run()
 {
-    std::cout << "timer 3s" << std::endl;
     setIsBlast(true);
 }
 
@@ -73,8 +72,13 @@ void Bomber::putBomb(IEntity *it)
         std::cout << "in function" << std::endl;
         epicenter(it);
         removeBombFromInventory(it);
-        //setIsBlast(true); // bomb explose immediatement
-        this->run();
+        {
+            //boost::asio::io_service io;
+            //boost::asio::deadline_timer timer(io, boost::posix_time::seconds(_delay));
+            //timer.async_wait(&Bomber::run);
+            //io.run();
+        }
+        setIsBlast(true); // casse block sans timer
         if (getIsBlast() == true) {
             {
                 std::cout << "blasting" << std::endl;

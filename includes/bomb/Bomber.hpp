@@ -16,10 +16,12 @@
 #include "AnimExplo.hpp"
 #include "IEntity.hpp"
 
-#include <utility>
 #include <chrono>
 #include <ctime>
 #include <vector>
+
+#include <boost/asio.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #define TIMER (3)
 
@@ -65,7 +67,7 @@ class Bomber {
         Map *_map;
         LoadMap *_loadMap;
         std::vector<IEntity *> _entities;
-        std::chrono::seconds _delay;
+        int _delay;
         int _radius;
         bool _isBlast;
     protected:
