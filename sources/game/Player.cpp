@@ -10,7 +10,7 @@
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
-	_firePower(1), _bombAmount(1), _speed(3), _wallPass(false), _bombPass(false)
+	_firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
 }
@@ -58,7 +58,8 @@ void Player::run(Key_mouvement input)
 
 void Player::putBomb()
 {
-	_bombStack->explodeBomb(_map, _character->getPosition());
+	_bomb->putBomb(this);
+	_bombStack->explodeBomb(_map, this);
 }
 
 void Player::setFirePower(int firePower)
@@ -158,25 +159,25 @@ void Player::moveTo(side direction)
 	case north:
 		if (canMove(this, _map, north)) {
 			pos.X += 10.0f;
-			_character->moveTo(pos);
+			_character->moveTo(pos, 1000 / _speed);
 		}
 		break;
 	case south:
 		if (canMove(this, _map, south)) {
 			pos.X -= 10.0f;
-			_character->moveTo(pos);
+			_character->moveTo(pos, 1000 / _speed);
 		}
 		break;
 	case east:
 		if (canMove(this, _map, east)) {
 			pos.Z -= 10.0f;
-			_character->moveTo(pos);
+			_character->moveTo(pos, 1000 / _speed);
 		}
 		break;
 	case west:
 		if (canMove(this, _map, west)) {
 			pos.Z += 10.0f;
-			_character->moveTo(pos);
+			_character->moveTo(pos, 1000 / _speed);
 		}
 		break;
 	}

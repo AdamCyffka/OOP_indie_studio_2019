@@ -13,6 +13,7 @@
 #include <utility>
 #include "Map.hpp"
 
+class IEntity;
 class BombStack {
     public:
         BombStack(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
@@ -21,7 +22,7 @@ class BombStack {
         void addBomb();
         std::size_t getBombAmount() const;
         int bombsAvailable(); // return the number of available bombs
-        void explodeBomb(Map *map, irr::core::vector3df bombPosition);
+        void explodeBomb(Map *map, IEntity *entity);
 
     protected:
     private:

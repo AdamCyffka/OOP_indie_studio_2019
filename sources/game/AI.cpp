@@ -32,8 +32,25 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
-	_bombStack->explodeBomb(_map, _character->getPosition());
+	/*switch (_wantedMovement)
+	{
+	case Down:
+		_wantedMovement = Up;
+		break;
+	case Up:
+		_wantedMovement = Down;
+		break;
+	case Left:
+		_wantedMovement = Right;
+		break;
+	case Right:
+		_wantedMovement = Left;
+		break;
+	default:
+		break;
+	}*/
 	_bomber->putBomb(this);
+	_bombStack->explodeBomb(_map, this);
 }
 
 void AI::setFirePower(int firePower)
@@ -173,6 +190,32 @@ bool AI::canMoveToTargetZ(IEntity *it)
 	return true;
 }
 
+void AI::canHitPlayers(std::vector<IEntity *> entities)
+{
+	if (_character->getState() != Character::state::idle)
+		return;
+	Point point = squareWherePlayerIs(this, _map);
+	int hitDistance = 2;
+
+	for (auto it : entities)
+	{
+		if (it->getEntityNumber() != this->getEntityNumber())
+		{
+			Point pointTarget = squareWherePlayerIs(it, _map);
+			if (point.x == pointTarget.x)
+			{
+				if (point.y == pointTarget.y || (point.y < pointTarget.y && point.y + hitDistance >= pointTarget.y) || (point.y > pointTarget.y && point.y - hitDistance <= pointTarget.y))
+					this->putBomb();
+			}
+			else if (point.y == pointTarget.y)
+			{
+				if (point.x == pointTarget.x || (point.x < pointTarget.x && point.x + hitDistance >= pointTarget.x) || (point.x > pointTarget.x && point.x - hitDistance <= pointTarget.x))
+					this->putBomb();
+			}
+		}
+	}
+}
+
 IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 {
 	for (auto it : entities)
@@ -247,6 +290,10 @@ void AI::checkMovement()
 				else if (eastB && !westB)
 				{
 					_wantedMovement = Right;
+				} else {
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x][point.y - 1] == breakable || _map->getMap()[point.x][point.y + 1] == breakable)
+						this->putBomb();
 				}
 			}
 			break;
@@ -267,6 +314,10 @@ void AI::checkMovement()
 				else if (eastB && !westB)
 				{
 					_wantedMovement = Right;
+				} else {
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x][point.y - 1] == breakable || _map->getMap()[point.x][point.y + 1] == breakable)
+						this->putBomb();
 				}
 			}
 			break;
@@ -287,6 +338,10 @@ void AI::checkMovement()
 				else if (southB && !northB)
 				{
 					_wantedMovement = Down;
+				} else {
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x - 1][point.y] == breakable || _map->getMap()[point.x + 1][point.y] == breakable)
+						this->putBomb();
 				}
 			}
 			break;
@@ -307,6 +362,10 @@ void AI::checkMovement()
 				else if (southB && !northB)
 				{
 					_wantedMovement = Down;
+				} else {
+					Point point = squareWherePlayerIs(this, _map);
+					if (_map->getMap()[point.x - 1][point.y] == breakable || _map->getMap()[point.x + 1][point.y] == breakable)
+						this->putBomb();
 				}
 			}
 			break;
@@ -318,10 +377,10 @@ void AI::checkMovement()
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
-	this->putBomb();
-	this->moveTo(side::west);
+	//this->putBomb();
+	//this->moveTo(side::west);
 	this->checkMovement();
-	return;
+	this->canHitPlayers(entities);
 
 	/*if (getEntityNumber() == 3)
 	{
@@ -357,13 +416,25 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 			nextMove = Key_mouvement(std::rand() % 4 + 1);
 
 		if (southB && !northB && !eastB && !westB)
+		{
 			_wantedMovement = Down;
+			this->putBomb();
+		}
 		if (!southB && northB && !eastB && !westB)
+		{
 			_wantedMovement = Up;
+			this->putBomb();
+		}
 		if (!southB && !northB && eastB && !westB)
+		{
 			_wantedMovement = Right;
+			this->putBomb();
+		}
 		if (!southB && !northB && !eastB && westB)
+		{
 			_wantedMovement = Left;
+			this->putBomb();
+		}
 		if (!southB && !northB && eastB && westB)
 			nextMove = Key_mouvement(std::rand() % 2 + 1);
 		if (southB && northB && !eastB && !westB)
