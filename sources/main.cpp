@@ -9,8 +9,13 @@
 #include "Core.hpp"
 #include "GameCore.hpp"
 
+void clearThreads() {
+	std::cout << "genial" << std::endl;
+}
+
 int main(int ac, char **av)
 {
+	atexit(clearThreads);
 #ifdef __linux__
 	if (!getenv("DISPLAY")) {
 		std::cerr << "error : some environment variable are missing." << std::endl;
