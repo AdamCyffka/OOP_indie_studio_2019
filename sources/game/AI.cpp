@@ -173,6 +173,31 @@ bool AI::canMoveToTargetZ(IEntity *it)
 	return true;
 }
 
+void AI::canHitPlayers(std::vector<IEntity *> entities)
+{
+	if (_character->getState() != Character::state::idle)
+		return;
+	Point point = squareWherePlayerIs(this, _map);
+	int hitDistance = 2;
+
+	for (auto it : entities)
+	{
+		if (it->getEntityNumber() != this->getEntityNumber())
+		{
+			Point pointTarget = squareWherePlayerIs(it, _map);
+			if (point.x == pointTarget.x) {
+				if (point.y == pointTarget.y || (point.y < pointTarget.y && point.y + hitDistance >= pointTarget.y)
+				|| (point.y > pointTarget.y && point.y - hitDistance <= pointTarget.y))
+					this->putBomb();
+			} else if (point.y == pointTarget.y) {
+				if (point.x == pointTarget.x || (point.x < pointTarget.x && point.x + hitDistance >= pointTarget.x)
+				|| (point.x > pointTarget.x && point.x - hitDistance <= pointTarget.x))
+					this->putBomb();
+			}
+		}
+	}
+}
+
 IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 {
 	for (auto it : entities)
@@ -318,10 +343,9 @@ void AI::checkMovement()
 
 void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
-	this->putBomb();
-	this->moveTo(side::west);
+	//this->putBomb();
+	//this->moveTo(side::west);
 	this->checkMovement();
-	return;
 
 	/*if (getEntityNumber() == 3)
 	{
@@ -345,6 +369,7 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 			return;
 		}
 	}*/
+	canHitPlayers(entities);
 	if (_wantedMovement == Key_mouvement::None)
 	{
 		bool northB = canAiMove(this, _map, north);
@@ -356,14 +381,22 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 		if (southB && northB && eastB && westB)
 			nextMove = Key_mouvement(std::rand() % 4 + 1);
 
-		if (southB && !northB && !eastB && !westB)
+		if (southB && !northB && !eastB && !westB) {
 			_wantedMovement = Down;
-		if (!southB && northB && !eastB && !westB)
+			this->putBomb();
+		}
+		if (!southB && northB && !eastB && !westB) {
 			_wantedMovement = Up;
-		if (!southB && !northB && eastB && !westB)
+			this->putBomb();
+		}
+		if (!southB && !northB && eastB && !westB) {
 			_wantedMovement = Right;
-		if (!southB && !northB && !eastB && westB)
+			this->putBomb();
+		}
+		if (!southB && !northB && !eastB && westB) {
 			_wantedMovement = Left;
+			this->putBomb();
+		}
 		if (!southB && !northB && eastB && westB)
 			nextMove = Key_mouvement(std::rand() % 2 + 1);
 		if (southB && northB && !eastB && !westB)
