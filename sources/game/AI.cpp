@@ -65,7 +65,6 @@ void AI::putBomb()
 	|| tmpBombMap[point.x + 2][point.y] == bomb ||
 	tmpBombMap[point.x][point.y + 2] == bomb || tmpBombMap[point.x - 2][point.y] == bomb || tmpBombMap[point.x][point.y - 2] == bomb)
 		return;
-	std::cout << "IA put a bomb" << std::endl;
 	_bomber->putBomb(this);
 }
 
@@ -280,6 +279,11 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	//this->putBomb();
 	//this->moveTo(side::west);
+	if (!isAlive())
+	{
+		return;
+	}
+	return;
 	this->checkMovement();
 	this->canHitPlayers(entities);
 
@@ -298,7 +302,7 @@ void AI::moveTo(side side)
 {
 	if (getEntityNumber() == 2)
 	{
-		canMove(this, _map, side);
+		canMove(this, _map, side, false);
 		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-460.0f, 308.0f, 620.0f))
 		{
 			_character->moveTo(core::vector3df(-460.0f, 308.0f, 620.0f), 5000);

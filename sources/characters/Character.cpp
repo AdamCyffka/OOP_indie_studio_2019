@@ -179,7 +179,8 @@ void Character::moveTo(core::vector3df position, u32 travelTime)
 
     if (animation) {
         if (_meshNode) {
-            setState(Character::state::running);
+            if (_state != Character::state::running)
+                setState(Character::state::running);
             setOrientation(getOrientationFromPath(currentPosition, position));
             _meshNode->addAnimator(animation);
 

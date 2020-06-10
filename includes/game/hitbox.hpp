@@ -21,7 +21,7 @@ struct Point {
     int x, y; 
 }; 
 
-bool canMove(IEntity *characterPosition, Map *map, side direction);
+bool canMove(IEntity *entity, Map *map, side direction, bool checkState);
 bool canAiMove(IEntity *entity, Map *map, side direction);
 
 Point squareWherePlayerIs(IEntity *entity, Map *map);
