@@ -6,6 +6,7 @@
 */
 
 #include "hitbox.hpp"
+#include "IEntity.hpp"
 
 int isInside(float x, float z, float xBlock, float zBlock, float degree)
 {

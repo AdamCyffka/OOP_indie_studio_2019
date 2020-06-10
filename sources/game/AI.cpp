@@ -7,6 +7,7 @@
 
 #pragma warning(disable : 4244)
 
+#include <chrono>
 #include "Ai.hpp"
 #include "hitbox.hpp"
 #include "Bomber.hpp"
@@ -18,7 +19,7 @@ AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDrive
 	  _speed(3), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
-	std::srand(std::time(nullptr));
+	std::srand(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()));
 }
 
 void AI::kill()
@@ -65,7 +66,6 @@ void AI::putBomb()
 	|| tmpBombMap[point.x + 2][point.y] == bomb ||
 	tmpBombMap[point.x][point.y + 2] == bomb || tmpBombMap[point.x - 2][point.y] == bomb || tmpBombMap[point.x][point.y - 2] == bomb)
 		return;
-	std::cout << "IA put a bomb" << std::endl;
 	_bomber->putBomb(this);
 }
 
@@ -280,6 +280,8 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	//this->putBomb();
 	//this->moveTo(side::west);
+	if (!isAlive())
+		return;
 	this->checkMovement();
 	this->canHitPlayers(entities);
 
