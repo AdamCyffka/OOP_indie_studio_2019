@@ -59,7 +59,7 @@ class Bomber {
         void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
-        bool isKilledByBomb(IEntity *it, std::vector<Point> deadZone);
+        IEntity *isKilledByBomb(std::vector<Point> deadZone);
     private:
         Map *_map;
         LoadMap *_loadMap;

@@ -30,9 +30,10 @@ void Bomber::run(IEntity *it)
     std::vector<Point> deadZone = it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
     clearMapAfterBlast(it, bombPosition3d);
     giveNewBombInInventory(it);
-    if (isKilledByBomb(it, deadZone)) {
-        it->setIsAlive(false);
-        if (Character *character = it->getCharacter()) {
+    IEntity *entity = isKilledByBomb(deadZone);
+    if (entity != nullptr) {
+        entity->setIsAlive(false);
+        if (Character *character = entity->getCharacter()) {
             character->setState(Character::state::dying);
             boost::this_thread::sleep_for(boost::chrono::milliseconds(2500));
             character->setVisibility(false);
@@ -198,13 +199,15 @@ void Bomber::giveNewBombInInventory(IEntity *it)
     it->setBombAmount(it->getBombAmount() + 1);
 }
 
-bool Bomber::isKilledByBomb(IEntity *it, std::vector<Point> deadZone)
+IEntity *Bomber::isKilledByBomb(std::vector<Point> deadZone)
 {
-    Point characterPosition = squareWherePlayerIs(it, _map);
-    for (Point zone : deadZone)
-        if (characterPosition.x == zone.x && characterPosition.y == zone.y)
-            return true;
-    return false;
+    for (auto entity : _entities) {
+        Point characterPosition = squareWherePlayerIs(entity, _map);
+        for (Point zone : deadZone)
+            if (characterPosition.x == zone.x && characterPosition.y == zone.y)
+                return entity;
+    }
+    return nullptr;
 }
 
 int Bomber::getRemainingEntities()

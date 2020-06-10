@@ -540,7 +540,7 @@ void AI::setWantedPositionRandom()
 
 void AI::movePlayerWithWantedMovement()
 {
-	int maxTimeTravel = 400;
+	irr::u32 speedTime = 1000 / _speed;
 
 	switch (_wantedMovement)
 	{
@@ -551,7 +551,7 @@ void AI::movePlayerWithWantedMovement()
 			break;
 		}
 		_wantedPosition = core::vector3df(_character->getPosition().X - 10, _character->getPosition().Y, _character->getPosition().Z);
-		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		_character->moveTo(_wantedPosition, speedTime);
 		break;
 	case Up:
 		if (!canAiMove(this, _map, north))
@@ -560,7 +560,7 @@ void AI::movePlayerWithWantedMovement()
 			break;
 		}
 		_wantedPosition = core::vector3df(_character->getPosition().X + 10, _character->getPosition().Y, _character->getPosition().Z);
-		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		_character->moveTo(_wantedPosition, speedTime);
 		break;
 	case Left:
 		if (!canAiMove(this, _map, west))
@@ -569,7 +569,7 @@ void AI::movePlayerWithWantedMovement()
 			break;
 		}
 		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + 10);
-		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		_character->moveTo(_wantedPosition, speedTime);
 		break;
 	case Right:
 		if (!canAiMove(this, _map, east))
@@ -578,7 +578,7 @@ void AI::movePlayerWithWantedMovement()
 			break;
 		}
 		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z - 10);
-		_character->moveTo(_wantedPosition, maxTimeTravel - (_speed * 10));
+		_character->moveTo(_wantedPosition, speedTime);
 		break;
 	default:
 		break;
