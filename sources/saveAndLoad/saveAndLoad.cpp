@@ -160,6 +160,7 @@ void loadMap(Core &core, pt::ptree *root)
 void loadBombMap(Core &core, pt::ptree *root)
 {
     std::vector<std::string> map;
+    std::map<int, std::map<int, blockState>> &_mapCheck = core.getMap()->getMap();
     std::map<int, std::map<int, bombState>> &_map = core.getMap()->getBombMap();
 
     for (pt::ptree::value_type &line : root->get_child("bombMap"))
@@ -177,6 +178,10 @@ void loadBombMap(Core &core, pt::ptree *root)
             bombState block = bombState(map[i - 1][j - 1] - '0');
             if (!bombStateCheck::is_value(block))
                 throw saveAndLoadException("Invalid Enum value");
+            if (block == clear and _mapCheck[i][j] != empty)
+                throw saveAndLoadException("BombMap and Map don't correspond");
+            if (block == bombState::block and _mapCheck[i][j] == empty)
+                throw saveAndLoadException("BombMap and Map don't correspond");
             _map[i][j] = block;
         }
     }
@@ -205,6 +210,8 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entity->setSpeed(root->get<int>(path + "speed", 0));
     entity->setBombAmount(root->get<int>(path + "bombAmount", 0));
     entity->setFirePower(root->get<int>(path + "firePower", 0));
+    if (root->get<int>(path + "winNumber", 0) > 2)
+        throw saveAndLoadException("Invalid winNumber");
     entity->setWinNumber(root->get<int>(path + "winNumber", 0));
     //ADDING ELEMNTS TO LOAD HERE FOR PLAYER
 }
