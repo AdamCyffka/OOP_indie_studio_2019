@@ -256,6 +256,8 @@ bool canMove(IEntity *entity, Map *map, side direction, bool checkState)
 
 			if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock) > 0.0f)
 			{
+				if (map->getBombMap()[i][j] == bomb && !entity->getBombPass())
+					return false;
 				if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !entity->getWallPass()))
 				{
 					return false;
