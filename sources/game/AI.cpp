@@ -300,7 +300,7 @@ void AI::moveTo(side side)
 {
 	if (getEntityNumber() == 2)
 	{
-		canMove(this, _map, side);
+		canMove(this, _map, side, false);
 		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-460.0f, 308.0f, 620.0f))
 		{
 			_character->moveTo(core::vector3df(-460.0f, 308.0f, 620.0f), 5000);

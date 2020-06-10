@@ -9,8 +9,8 @@
 #include "GameCore.hpp"
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
-	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
-	_firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false)
+	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _savedInput(None),
+	  _firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false), _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
 	_bombStack = new BombStack(_driver, _smgr);
 }
@@ -22,13 +22,18 @@ void Player::kill()
 
 void Player::run(Key_mouvement input)
 {
-	if (isAlive()) {
-		for (auto it : _character->getAnimators()) {
+	if (isAlive())
+	{
+		for (auto it : _character->getAnimators())
+		{
 			if (it->hasFinished())
 				_savedInput = Ia;
 		}
-		if (input != _savedInput) {
-			switch (input) {
+		checkMovement(input);
+		if (input != _savedInput)
+		{
+			switch (input)
+			{
 			case Right:
 				moveTo(east);
 				break;
@@ -47,8 +52,8 @@ void Player::run(Key_mouvement input)
 			case Ia:
 				break;
 			case None:
-				_character->removeAnimators();
-				_character->setState(Character::idle);
+				//_character->removeAnimators();
+				//_character->setState(Character::idle);
 				break;
 			}
 			_savedInput = input;
@@ -151,35 +156,109 @@ BombStack *Player::getBombStack()
 	return _bombStack;
 }
 
+void Player::checkMovement(Key_mouvement input)
+{
+	irr::core::vector3df pos = _character->getPosition();
+	irr::u32 distanceTravel = 10.0f;
+	irr::u32 speedTime = 1000.0f / _speed;
+
+	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
+	{
+		switch (input)
+		{
+		case Right:
+			if (!canMove(this, _map, east, false))
+			{
+				_character->setState(Character::state::idle);
+			}
+			else
+			{
+				pos.Z -= distanceTravel;
+				_character->moveTo(pos, speedTime);
+				_wantedPosition = pos;
+			}
+			break;
+		case Left:
+			if (!canMove(this, _map, west, false))
+			{
+				_character->setState(Character::state::idle);
+			}
+			else
+			{
+				pos.Z += distanceTravel;
+				_character->moveTo(pos, speedTime);
+				_wantedPosition = pos;
+			}
+			break;
+		case Up:
+			if (!canMove(this, _map, north, false))
+			{
+				_character->setState(Character::state::idle);
+			}
+			else
+			{
+				pos.X += distanceTravel;
+				_character->moveTo(pos, speedTime);
+				_wantedPosition = pos;
+			}
+			break;
+		case Down:
+			if (!canMove(this, _map, south, false))
+			{
+				_character->setState(Character::state::idle);
+			}
+			else
+			{
+				pos.X -= distanceTravel;
+				_character->moveTo(pos, speedTime);
+				_wantedPosition = pos;
+			}
+			break;
+		default:
+			_character->setState(Character::state::idle);
+			break;
+		}
+	}
+}
+
 void Player::moveTo(side direction)
 {
 	irr::core::vector3df pos = _character->getPosition();
 	irr::u32 distanceTravel = 10;
 	irr::u32 speedTime = 1000 / _speed;
 
-	switch (direction) {
+	switch (direction)
+	{
 	case north:
-		if (canMove(this, _map, north)) {
+		if (canMove(this, _map, north, true))
+		{
 			pos.X += distanceTravel;
 			_character->moveTo(pos, speedTime);
+			_wantedPosition = pos;
 		}
 		break;
 	case south:
-		if (canMove(this, _map, south)) {
+		if (canMove(this, _map, south, true))
+		{
 			pos.X -= distanceTravel;
 			_character->moveTo(pos, speedTime);
+			_wantedPosition = pos;
 		}
 		break;
 	case east:
-		if (canMove(this, _map, east)) {
+		if (canMove(this, _map, east, true))
+		{
 			pos.Z -= distanceTravel;
 			_character->moveTo(pos, speedTime);
+			_wantedPosition = pos;
 		}
 		break;
 	case west:
-		if (canMove(this, _map, west)) {
+		if (canMove(this, _map, west, true))
+		{
 			pos.Z += distanceTravel;
 			_character->moveTo(pos, speedTime);
+			_wantedPosition = pos;
 		}
 		break;
 	}

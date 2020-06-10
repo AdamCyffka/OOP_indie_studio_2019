@@ -28,9 +28,10 @@ void GameCore::reset()
 {
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
-		delete it;
 	}
 	_map->generateMap();
+	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
+	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
 	_entities.clear();
 	_isPaused = false;
 	_isInit = false;
