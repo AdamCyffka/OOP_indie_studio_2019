@@ -156,7 +156,7 @@ void GameCore::SelectPowerUp(IEntity *entity, int id)
 	}
 }
 
-void GameCore::addBonus(irr::core::vector3df &pos)
+void GameCore::addPowerUps(irr::core::vector3df &pos)
 {
     u32 random = std::rand() % 100;
 
@@ -213,10 +213,8 @@ bool GameCore::gameOver()
 int GameCore::getRemainingEntities()
 {
 	int count = 0;
-    std::cout << std::endl;
 	for (auto it : _entities) {
 		if (it->isAlive()) {
-			std::cout << it->getCharacter()->getModelInfos().name << " est en vie" << std::endl;
 			count++;
 		}
 	}

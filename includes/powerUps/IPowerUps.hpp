@@ -10,6 +10,8 @@
 
 #include <irrlicht.h>
 #include <iostream>
+#include "global.hpp"
+#include "PowerUpsException.hpp"
 
 namespace PowerUps {
 	enum PowerUpsType {

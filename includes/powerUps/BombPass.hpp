@@ -21,7 +21,7 @@ class BombPass : public IPowerUps {
         PowerUps::PowerUpsType getType();
         irr::core::vector3df getPosition();
     private:
-        irr::scene::ISceneNode *_bomb;
+        irr::scene::IMeshSceneNode *_bomb;
         irr::core::vector3df _pos;
         PowerUps::PowerUpsType _type;
         irr::scene::ISceneManager *_smgr;

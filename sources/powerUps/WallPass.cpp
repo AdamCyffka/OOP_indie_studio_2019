@@ -12,14 +12,18 @@ WallPass::WallPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	_smgr = smgr;
 	_type = PowerUps::PowerUpsType::WallPass;
 
-	irr::scene::ISceneNodeAnimator *anim;
-    _bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/wallPass/wallPass.obj"));
+	if (!wallPass)
+        throw PowerUpsException("can't load model \"resources/models/powers/speeds/wallPass.obj\"");
+    _bomb = _smgr->addMeshSceneNode(wallPass);
+    if (!_bomb)
+        throw PowerUpsException("can't add mesh \"resources/models/powers/speeds/wallPass.obj\" to a node");
 	_bomb->setPosition(pos);
-	_bomb->setRotation({-50, 0, 0});
-	_bomb->setScale({4, 4, 4});
+	_bomb->setScale({5, 5, 5});
 	if (_bomb)
 		_bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	anim = _smgr->createRotationAnimator({0, 1, 0});
+	irr::scene::ISceneNodeAnimator *anim = _smgr->createRotationAnimator({0, 1, 0});
+	if (!anim)
+		throw PowerUpsException("can't load anim : wallPass");
 	_bomb->addAnimator(anim);
 	anim->drop();
 }
