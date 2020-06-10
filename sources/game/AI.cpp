@@ -283,7 +283,6 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 	{
 		return;
 	}
-	return;
 	this->checkMovement();
 	this->canHitPlayers(entities);
 
