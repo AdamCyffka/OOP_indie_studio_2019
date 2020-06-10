@@ -36,6 +36,7 @@ void GameCore::reset()
 	_map->generateMap();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
+	_powerUps.clear();
 	_entities.clear();
 	_isPaused = false;
 	_isInit = false;
@@ -213,10 +214,8 @@ bool GameCore::gameOver()
 int GameCore::getRemainingEntities()
 {
 	int count = 0;
-    std::cout << std::endl;
 	for (auto it : _entities) {
 		if (it->isAlive()) {
-			std::cout << it->getCharacter()->getModelInfos().name << " est en vie" << std::endl;
 			count++;
 		}
 	}

@@ -10,7 +10,7 @@
 #include "GameCore.hpp"
 #include "Bomber.hpp"
 
-Bomber::Bomber(Map *map, LoadMap *loadMap, GameCore *gameCore): _radius(3), _delay(TIMER), _map(map), _loadMap(loadMap), _gameCore(gameCore), _isBlast(false)
+Bomber::Bomber(Map *map, LoadMap *loadMap, GameCore *gameCore): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _gameCore(gameCore), _isBlast(false)
 {
 }
 
@@ -118,6 +118,7 @@ void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d)
 			_loadMap->getVisualMap()[xVisual + i][yVisual]->setVisible(false);
             irr::core::vector3df pos = {MAP_DEFAULT_X + (-10.0f * (xVisual + i)), MAP_DEFAULT_Y + 2, MAP_DEFAULT_Z + (yVisual * -10.0f)};
             _gameCore->addBonus(pos);
+            std::cout << "powerup added" << std::endl;
 			break;
 		} else if (_map->getMap()[xVisual + i][yVisual] == unbreakable)
 			break;
@@ -213,10 +214,8 @@ IEntity *Bomber::isKilledByBomb(std::vector<Point> deadZone)
 int Bomber::getRemainingEntities()
 {
 	int count = 0;
-    std::cout << std::endl;
 	for (auto it : _entities) {
 		if (it->isAlive()) {
-			std::cout << it->getCharacter()->getModelInfos().name << " est en vie" << std::endl;
 			count++;
 		}
 	}
