@@ -13,6 +13,7 @@ Player::Player(Character *character, const Key_mouvement &input, int entityNumbe
 	  _firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false), _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
 	_bombStack = new BombStack(_driver, _smgr);
+	_character->setState(Character::state::idle);
 }
 
 void Player::kill()
@@ -159,8 +160,8 @@ BombStack *Player::getBombStack()
 void Player::checkMovement(Key_mouvement input)
 {
 	irr::core::vector3df pos = _character->getPosition();
-	irr::u32 distanceTravel = 10.0f;
-	irr::u32 speedTime = 1000.0f / _speed;
+	irr::u32 distanceTravel = 10;
+	irr::u32 speedTime = 1000 / _speed;
 
 	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
 	{
