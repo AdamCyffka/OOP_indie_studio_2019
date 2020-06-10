@@ -9,10 +9,9 @@
 #define HITBOX_HPP
 
 #include "Map.hpp"
-#include "irrlicht.h"
 #include "side.hpp"
-#include "IEntity.hpp"
 
+class IEntity;
 #define MAP_DEFAULT_X -440.0f
 #define MAP_DEFAULT_Y 308.0f
 #define MAP_DEFAULT_Z 790.0f

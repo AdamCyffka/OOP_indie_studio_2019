@@ -9,16 +9,14 @@
 # define __BOMBER_HPP__
 
 #include <irrlicht.h>
+#include <vector>
 
 #include "Map.hpp"
 #include "LoadMap.hpp"
-#include "hitbox.hpp"
 #include "AnimExplo.hpp"
 #include "IEntity.hpp"
+#include "hitbox.hpp"
 
-#include <chrono>
-#include <ctime>
-#include <vector>
 
 #define TIMER (3)
 
@@ -59,7 +57,7 @@ class Bomber {
         void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
-        bool isKilledByBomb(IEntity *it);
+        bool isKilledByBomb(IEntity *it, std::vector<Point> deadZone);
     private:
         Map *_map;
         LoadMap *_loadMap;

@@ -224,8 +224,8 @@ void Player::checkMovement(Key_mouvement input)
 void Player::moveTo(side direction)
 {
 	irr::core::vector3df pos = _character->getPosition();
-	irr::u32 distanceTravel = 10.0f;
-	irr::u32 speedTime = 1000.0f / _speed;
+	irr::u32 distanceTravel = 10;
+	irr::u32 speedTime = 1000 / _speed;
 
 	switch (direction)
 	{
