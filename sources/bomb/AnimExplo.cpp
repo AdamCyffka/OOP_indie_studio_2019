@@ -13,7 +13,7 @@ AnimExplo::AnimExplo(irr::video::IVideoDriver *driver, irr::scene::ISceneManager
 {
 	if (!fireTexture)
 		throw std::runtime_error("could not load texture : resources/images/fx/fire.bmp");
-	irr::scene::ISceneNodeAnimator *anim = smgr->createDeleteAnimator(2000);
+	irr::scene::ISceneNodeAnimator *anim = smgr->createDeleteAnimator(200);
 	irr::scene::IParticleSystemSceneNode *fire = smgr->addParticleSystemSceneNode(false);
 	irr::scene::IParticleEmitter *em = fire->createBoxEmitter(
 		irr::core::aabbox3d<irr::f32>(-6, 0, -7, 7, 1, 7),

@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include "hitbox.hpp"
+#include "IEntity.hpp"
 
 int isInside(float x, float z, float xBlock, float zBlock, float degree)
 {
@@ -146,8 +147,6 @@ Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
 			}
 		}
 	}
-	//print de x et z et le pourcentage du perso dans le bloc pour le débug
-	//std::cout << point.x << " " << point.y << " " << overlap << std::endl;
 	return point;
 }
 
@@ -284,6 +283,14 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 		return false;
 	if (map->getBombMap()[nextPoint.x][nextPoint.y] == bomb && !entity->getBombPass())
 		return false;
+	if (tmpBombMap[nextPoint.x][nextPoint.y] == bomb) {
+		if (tmpBombMap[point.x][point.y] == clear
+		|| tmpBombMap[point.x + 1][point.y] == clear
+		|| tmpBombMap[point.x][point.y + 1] == clear
+		|| tmpBombMap[point.x][point.y - 1] == clear
+		|| tmpBombMap[point.x - 1][point.y] == clear)
+			return false;
+	}
 	for (unsigned int j = 0; j < map->getBombMap()[nextPoint.x].size(); ++j)
 	{
 		if (map->getBombMap()[nextPoint.x][j] == bombState::bomb && (map->getBombMap()[point.x][point.y] >= map->getBombMap()[nextPoint.x][j] - 2 ||
@@ -305,12 +312,14 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 	return true;
 }
 
-bool canMove(IEntity *entity, Map *map, side direction)
+bool canMove(IEntity *entity, Map *map, side direction, bool checkState)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
 	Point point = {squareWherePlayerIs(entity, map).x, squareWherePlayerIs(entity, map).y};
-	float hitBoxValue = 7.0f;
+	float hitBoxValue = 10.0f;
 
+	if (checkState && entity->getCharacter()->getState() != Character::state::idle)
+		return false;
 	switch (direction)
 	{
 	case north:
@@ -326,19 +335,22 @@ bool canMove(IEntity *entity, Map *map, side direction)
 		characterPosition.Z += hitBoxValue;
 		break;
 	}
+	//std::cout << "Position: " << squareWherePlayerIs(entity, map).x << " " << squareWherePlayerIs(entity, map).y << std::endl;
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
 	{
 		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
 		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
-			//x + (-10 * i) = position X inGame [1][1] = -450
-			//z + (-10 * j) = position Z inGame [1][1] = 780
 
-			if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock))
+			if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock) > 0.0f)
 			{
+				if (map->getBombMap()[i][j] == bomb && !entity->getBombPass())
+					return false;
 				if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !entity->getWallPass()))
 				{
+					return false;
+					//std::cout << i << " " << j << std::endl;
 					if (i == 0 || j == 0)
 						return false;
 					if (direction == side::south || direction == side::north)
@@ -363,24 +375,6 @@ bool canMove(IEntity *entity, Map *map, side direction)
 					}
 				}
 			}
-			/*if ((xBlock == characterPosition.X || zBlock == characterPosition.Z)							// Si le bloc est sur un des axes du character
-				|| ((isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))				//check le côté haut gauche
-					|| isInside(characterPosition.X - 10, characterPosition.Z - 10, xBlock, zBlock, 10.0))) //check le côté bas droit
-			{
-				if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !entity->getWallPass()))
-				{
-					return false;
-				}
-				/*
-				if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock))
-				{	//Check Hitbox for bombs
-					//					std::cout << "Hitbox touch" << std::endl;
-				}
-				if (!getNextPosIsValid(characterPosition, map, i, j, direction, entity->getWallPass(), xBlock, zBlock)) //check that next block is walkable
-					return false;
-				//				std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is inside: " << i << " " << j << std::endl;
-				
-			}*/
 		}
 	}
 	return true;

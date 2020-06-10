@@ -5,10 +5,10 @@
 ** Bomb management
 */
 
-#include "GameCore.hpp"
-#include "Bomber.hpp"
 #include <boost/thread.hpp>
 #include <boost/chrono.hpp>
+#include "GameCore.hpp"
+#include "Bomber.hpp"
 
 Bomber::Bomber(Map *map, LoadMap *loadMap, GameCore *gameCore): _radius(3), _delay(TIMER), _map(map), _loadMap(loadMap), _gameCore(gameCore), _isBlast(false)
 {
@@ -27,9 +27,18 @@ void Bomber::run(IEntity *it)
     blastSouth(it, bombPosition3d);
     blastEast(it, bombPosition3d);
     blastWest(it, bombPosition3d);
-    it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
+    std::vector<Point> deadZone = it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
     clearMapAfterBlast(it, bombPosition3d);
     giveNewBombInInventory(it);
+    if (isKilledByBomb(it, deadZone)) {
+        it->setIsAlive(false);
+        if (Character *character = it->getCharacter()) {
+            character->setState(Character::state::dying);
+            boost::this_thread::sleep_for(boost::chrono::seconds(3));
+            character->setVisibility(false);
+            character->setState(Character::state::idle);
+        }
+    }
     boost::this_thread::yield();
 }
 
@@ -191,12 +200,13 @@ void Bomber::giveNewBombInInventory(IEntity *it)
     it->setBombAmount(it->getBombAmount() + 1);
 }
 
-bool Bomber::isKilledByBomb(IEntity *it)
+bool Bomber::isKilledByBomb(IEntity *it, std::vector<Point> deadZone)
 {
-    it->setIsAlive(false);
-    it->getCharacter()->setVisibility(false);
-    it->getCharacter()->dead;
-    return (true);
+    Point characterPosition = squareWherePlayerIs(it, _map);
+    for (Point zone : deadZone)
+        if (characterPosition.x == zone.x && characterPosition.y == zone.y)
+            return true;
+    return false;
 }
 
 void Bomber::animateBomb()

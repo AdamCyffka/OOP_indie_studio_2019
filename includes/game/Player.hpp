@@ -47,6 +47,7 @@ class Player : public IEntity {
 		Character *getCharacter() final;
 		void setInput(Key_mouvement) final;
 		Key_mouvement getInput() final;
+		void checkMovement(Key_mouvement input);
 
 		void moveTo(side) final;
 		void setIsAlive(bool) final;
@@ -64,6 +65,7 @@ class Player : public IEntity {
 		Bomber *_bomb;
 		irr::video::IVideoDriver *_driver;
 		irr::scene::ISceneManager *_smgr;
+		core::vector3df _wantedPosition;
 
 		Key_mouvement _input;
 		Key_mouvement _savedInput;

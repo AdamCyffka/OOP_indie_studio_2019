@@ -5,8 +5,6 @@
 ** save
 */
 
-#pragma warning( disable : 4244 ) 
-
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/filesystem.hpp>
@@ -49,7 +47,10 @@ void saveBombMap(Core &core, pt::ptree *root)
         std::string lineInString = "";
         for (int j = 1; j < MAP_WIDTH + 1; ++j)
         {
-            lineInString += std::to_string(bombMap[i][j]);
+            if (bombMap[i][j] != bomb)
+                lineInString += std::to_string(bombMap[i][j]);
+            else
+                lineInString += "0";
         }
         line_node.put("", lineInString);
         map_node.push_back(std::make_pair("", line_node));
@@ -114,7 +115,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     savePlayer(2, core, &root);
     savePlayer(3, core, &root);
     saveMap(core, &root);
-    //saveBombMap(core, &root);
+    saveBombMap(core, &root);
 
     //Write save in save file
     pt::write_json("save" + std::to_string(slot) + ".json", root);
@@ -317,7 +318,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         loadPlayer(2, core, &root);
         loadPlayer(3, core, &root);
         loadMap(core, &root);
-        //loadBombMap(core, &root);
+        loadBombMap(core, &root);
     }
     catch (std::exception const &msg)
     {

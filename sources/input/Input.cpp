@@ -27,22 +27,22 @@ bool Input::isKeyPressed() const
 
 const SEvent::SJoystickEvent &Input::getJoystickStatePone(void) const
 {
-    return JoystickStatePone;
+    return _joystickStatePone;
 }
 
 const SEvent::SJoystickEvent &Input::getJoystickStatePtwo(void) const
 {
-    return JoystickStatePtwo;
+    return _joystickStatePtwo;
 }
 
 const SEvent::SJoystickEvent &Input::getJoystickStatePthree(void) const
 {
-    return JoystickStatePthree;
+    return _joystickStatePthree;
 }
 
 const SEvent::SJoystickEvent &Input::getJoystickStatePfour(void) const
 {
-    return JoystickStatePfour;
+    return _joystickStatePfour;
 }
 
 const SEvent::SJoystickEvent Input::changeController(Input *receiver, int controller)
@@ -97,7 +97,7 @@ void Input::playerJoystick(Input *receiver, int controller, int player)
 	}
 }
 
-void Input::player_one_keyboard(Input *receiver, const SEvent& event)
+void Input::playerOneKeyboard(Input *receiver, const SEvent& event)
 {
 	if (receiver->isKeyDown(irr::KEY_KEY_Z)) {
 	    _playerInput[1] = Up;
@@ -114,7 +114,7 @@ void Input::player_one_keyboard(Input *receiver, const SEvent& event)
 	}
 }
 
-void Input::player_two_keyboard(Input *receiver, const SEvent& event)
+void Input::playerTwoKeyboard(Input *receiver, const SEvent& event)
 {
 	if (receiver->isKeyDown(irr::KEY_UP)) {
         _playerInput[2] = Up;
@@ -131,7 +131,7 @@ void Input::player_two_keyboard(Input *receiver, const SEvent& event)
 	}
 }
 
-void Input::player_three_keyboard(Input *receiver, const SEvent& event)
+void Input::playerThreeKeyboard(Input *receiver, const SEvent& event)
 {
 	if (receiver->isKeyDown(irr::KEY_KEY_Y)) {
         _playerInput[3] = Up;
@@ -148,7 +148,7 @@ void Input::player_three_keyboard(Input *receiver, const SEvent& event)
 	}
 }
 
-void Input::player_four_keyboard(Input *receiver, const SEvent& event)
+void Input::playerFourKeyboard(Input *receiver, const SEvent& event)
 {
 	
 	if (receiver->isKeyDown(irr::KEY_KEY_O)) {
@@ -166,11 +166,6 @@ void Input::player_four_keyboard(Input *receiver, const SEvent& event)
 	}	
 }
 
-basic_key Input::keyBoard (Input *receiver) // fonction tempo
-{
-	if (receiver->isKeyDown(irr::KEY_F12))
-		exit(84);
-}
 void Input::reset()
 {
 	if (_playerInput[1] != Ia)
@@ -187,16 +182,16 @@ bool Input::inputEvent(const SEvent& event)
 {
 	reset();
     if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 0) {
-		JoystickStatePone = event.JoystickEvent;
+		_joystickStatePone = event.JoystickEvent;
     }
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 1) {
-		JoystickStatePtwo = event.JoystickEvent;
+		_joystickStatePtwo = event.JoystickEvent;
     }
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 2) {
-		JoystickStatePthree = event.JoystickEvent;
+		_joystickStatePthree = event.JoystickEvent;
     }
 	if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT && event.JoystickEvent.Joystick == 3) {
-		JoystickStatePfour = event.JoystickEvent;
+		_joystickStatePfour = event.JoystickEvent;
     }
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
@@ -212,7 +207,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	int player = 1;
 
 	if (_player[0] == Keyboard) {
-		player_one_keyboard(receiver, event);
+		playerOneKeyboard(receiver, event);
 	} else if (_player[0] == Controller) {
 		playerJoystick(receiver, controller, player);
 		controller++;
@@ -222,7 +217,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player[1] == Keyboard) {
-		player_two_keyboard(receiver, event);
+		playerTwoKeyboard(receiver, event);
 	} else if (_player[1] == Controller) {
 		playerJoystick(receiver, controller, player);
 		controller++;
@@ -232,7 +227,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player[2] == Keyboard) {
-		player_three_keyboard(receiver, event);
+		playerThreeKeyboard(receiver, event);
 	} else if (_player[2] == Controller) {
 		playerJoystick(receiver, controller, player);
 		controller++;
@@ -242,7 +237,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player[3] == Keyboard) {
-		player_four_keyboard(receiver, event);
+		playerFourKeyboard(receiver, event);
 	} else if (_player[3] == Controller) {
 		playerJoystick(receiver, controller, player);
 		controller++;

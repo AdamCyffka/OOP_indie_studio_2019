@@ -9,11 +9,11 @@
 #define HITBOX_HPP
 
 #include "Map.hpp"
-#include "irrlicht.h"
 #include "side.hpp"
 #include "IEntity.hpp"
 #include "IPowerUps.hpp"
 
+class IEntity;
 #define MAP_DEFAULT_X -440.0f
 #define MAP_DEFAULT_Y 308.0f
 #define MAP_DEFAULT_Z 790.0f
@@ -22,7 +22,7 @@ struct Point {
     int x, y;
 }; 
 
-bool canMove(IEntity *characterPosition, Map *map, side direction);
+bool canMove(IEntity *entity, Map *map, side direction, bool checkState);
 bool canAiMove(IEntity *entity, Map *map, side direction);
 
 int isPowerUpsTaken(std::vector<IPowerUps *> objects, Map *map, IEntity *entity);

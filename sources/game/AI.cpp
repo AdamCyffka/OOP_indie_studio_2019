@@ -5,8 +5,7 @@
 ** AI
 */
 
-#pragma warning(disable : 4244)
-
+#include <chrono>
 #include "Ai.hpp"
 #include "hitbox.hpp"
 #include "Bomber.hpp"
@@ -18,7 +17,8 @@ AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDrive
 	  _speed(3), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
-	std::srand(std::time(nullptr));
+	std::srand(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()));
+	_character->setState(Character::state::idle);
 }
 
 void AI::kill()
@@ -65,8 +65,7 @@ void AI::putBomb()
 	|| tmpBombMap[point.x + 2][point.y] == bomb ||
 	tmpBombMap[point.x][point.y + 2] == bomb || tmpBombMap[point.x - 2][point.y] == bomb || tmpBombMap[point.x][point.y - 2] == bomb)
 		return;
-	//std::cout << "IA put a bomb" << std::endl;
-	// _bomber->putBomb(this);
+	_bomber->putBomb(this);
 }
 
 void AI::setFirePower(int firePower)
@@ -164,46 +163,6 @@ bool AI::isSafe()
 	return 1;
 }
 
-bool AI::canMoveToTargetX(IEntity *it)
-{
-	int x = (_character->getPosition().X - MAP_DEFAULT_X) / -10;
-	int z = std::min(it->getCharacter()->getPosition().Z, _character->getPosition().Z);
-	int zMax = std::max(it->getCharacter()->getPosition().Z, _character->getPosition().Z);
-	for (z; z < zMax - 10; z++)
-	{
-		for (int j = 0; j < MAP_WIDTH; j++)
-		{
-			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
-			if (isInside(_character->getPosition().X, z, x, zBlock, 10))
-			{
-				if (_map->getMap()[x][j] == unbreakable || (_map->getMap()[x][j] == breakable && !_wallPass))
-					return false;
-			}
-		}
-	}
-	return true;
-}
-
-bool AI::canMoveToTargetZ(IEntity *it)
-{
-	int z = (_character->getPosition().Z - MAP_DEFAULT_Z) / -10;
-	int x = std::min(it->getCharacter()->getPosition().X, _character->getPosition().X);
-	int xMax = std::max(it->getCharacter()->getPosition().X, _character->getPosition().X);
-	for (x; x < xMax - 10; x++)
-	{
-		for (int i = 0; i < MAP_HEIGHT; i++)
-		{
-			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
-			if (isInside(_character->getPosition().X, z, xBlock, z, 10))
-			{
-				if (_map->getMap()[i][z] == unbreakable || (_map->getMap()[i][z] == breakable && !_wallPass))
-					return false;
-			}
-		}
-	}
-	return true;
-}
-
 void AI::canHitPlayers(std::vector<IEntity *> entities)
 {
 	Point point = squareWherePlayerIs(this, _map);
@@ -237,14 +196,7 @@ IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
 	{
 		if (it->getEntityNumber() != this->getEntityNumber())
 		{
-			if ((it->getCharacter()->getPosition().X == _character->getPosition().X) && canMoveToTargetX(it))
-			{
-				return it;
-			}
-			if ((it->getCharacter()->getPosition().Z == _character->getPosition().Z) && canMoveToTargetZ(it))
-			{
-				return it;
-			}
+			return it;
 		}
 	}
 	return nullptr;
@@ -280,6 +232,8 @@ void AI::run(Key_mouvement input, std::vector<IEntity *> entities)
 {
 	//this->putBomb();
 	//this->moveTo(side::west);
+	if (!isAlive())
+		return;
 	this->checkMovement();
 	this->canHitPlayers(entities);
 
@@ -298,7 +252,7 @@ void AI::moveTo(side side)
 {
 	if (getEntityNumber() == 2)
 	{
-		canMove(this, _map, side);
+		canMove(this, _map, side, false);
 		if (_character->getState() == Character::state::idle && _character->getPosition() != core::vector3df(-460.0f, 308.0f, 620.0f))
 		{
 			_character->moveTo(core::vector3df(-460.0f, 308.0f, 620.0f), 5000);
