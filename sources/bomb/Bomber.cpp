@@ -117,8 +117,7 @@ void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d)
 			_map->getBombMap()[xVisual + i][yVisual] = bombState::clear;
 			_loadMap->getVisualMap()[xVisual + i][yVisual]->setVisible(false);
             irr::core::vector3df pos = {MAP_DEFAULT_X + (-10.0f * (xVisual + i)), MAP_DEFAULT_Y + 2, MAP_DEFAULT_Z + (yVisual * -10.0f)};
-            _gameCore->addBonus(pos);
-            std::cout << "powerup added" << std::endl;
+            _gameCore->addPowerUps(pos);
 			break;
 		} else if (_map->getMap()[xVisual + i][yVisual] == unbreakable)
 			break;
@@ -138,7 +137,7 @@ void Bomber::blastNorth(IEntity *it, irr::core::vector3df bombPosition3d)
 			_map->getBombMap()[xVisual - i][yVisual] = bombState::clear;
 			_loadMap->getVisualMap()[xVisual - i][yVisual]->setVisible(false);
             irr::core::vector3df pos = {MAP_DEFAULT_X + (-10.0f * (xVisual - i)), MAP_DEFAULT_Y + 2, MAP_DEFAULT_Z + (yVisual * -10.0f)};
-            _gameCore->addBonus(pos);
+            _gameCore->addPowerUps(pos);
 			break;
 		} else if (_map->getMap()[xVisual - i][yVisual] == unbreakable)
 			break;
@@ -158,7 +157,7 @@ void Bomber::blastEast(IEntity *it, irr::core::vector3df bombPosition3d)
 			_map->getBombMap()[xVisual][yVisual + i] = bombState::clear;
 			_loadMap->getVisualMap()[xVisual][yVisual + i]->setVisible(false);
             irr::core::vector3df pos = {MAP_DEFAULT_X + (-10.0f * xVisual), MAP_DEFAULT_Y + 2, MAP_DEFAULT_Z + (-10.0f * (yVisual + i))};
-            _gameCore->addBonus(pos);
+            _gameCore->addPowerUps(pos);
 			break;
 		} else if (_map->getMap()[xVisual][yVisual + i] == unbreakable)
 			break;
@@ -178,7 +177,7 @@ void Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d)
 			_map->getBombMap()[xVisual][yVisual - i] = bombState::clear;
 			_loadMap->getVisualMap()[xVisual][yVisual - i]->setVisible(false);
             irr::core::vector3df pos = {MAP_DEFAULT_X + (-10.0f * xVisual), MAP_DEFAULT_Y + 2, MAP_DEFAULT_Z + (-10.0f * (yVisual - i))};
-            _gameCore->addBonus(pos);
+            _gameCore->addPowerUps(pos);
 			break;
 		} else if (_map->getMap()[xVisual][yVisual - i] == unbreakable)
 			break;

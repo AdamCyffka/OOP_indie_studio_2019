@@ -13,13 +13,18 @@ BombDown::BombDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	_pos = pos;
 	_type = PowerUps::PowerUpsType::BombDown;
 
-	irr::scene::ISceneNodeAnimator *anim;
-    _bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/bombs/bombDown.obj"));
-	_bomb->setPosition(pos); // y = 310
+	if (!bombDown)
+        throw PowerUpsException("can't load model \"resources/models/powers/speeds/bombDown.obj\"");
+    _bomb = _smgr->addMeshSceneNode(bombDown);
+    if (!_bomb)
+        throw PowerUpsException("can't add mesh \"resources/models/powers/speeds/bombDown.obj\" to a node");
+	_bomb->setPosition(pos);
 	_bomb->setScale({5, 5, 5});
 	if (_bomb)
 		_bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	anim = _smgr->createRotationAnimator({0, 1, 0});
+	irr::scene::ISceneNodeAnimator *anim = _smgr->createRotationAnimator({0, 1, 0});
+	if (!anim)
+		throw PowerUpsException("can't load anim : bombDown");
 	_bomb->addAnimator(anim);
 	anim->drop();
 }

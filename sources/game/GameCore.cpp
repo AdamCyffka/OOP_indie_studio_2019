@@ -157,7 +157,7 @@ void GameCore::SelectPowerUp(IEntity *entity, int id)
 	}
 }
 
-void GameCore::addBonus(irr::core::vector3df &pos)
+void GameCore::addPowerUps(irr::core::vector3df &pos)
 {
     u32 random = std::rand() % 100;
 

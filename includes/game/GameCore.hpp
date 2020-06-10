@@ -50,7 +50,7 @@ class GameCore {
 		Core *getCore();
 		PowerUps::PowerUpsType getType();
 		void SelectPowerUp(IEntity *entity, int id);
-		void addBonus(irr::core::vector3df &pos);
+		void addPowerUps(irr::core::vector3df &pos);
 		std::vector<std::pair<int, int>> getRanking();
     protected:
     private:

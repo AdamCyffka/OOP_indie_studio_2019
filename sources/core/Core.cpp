@@ -70,7 +70,7 @@ Core::Core()
 	_gameSounds = nullptr;
 	_gameControls = nullptr;
 
-	setGlobalVariables(_driver);
+	setGlobalVariables(_driver, _smgr);
 }
 
 void Core::start()
