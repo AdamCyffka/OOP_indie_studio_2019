@@ -67,8 +67,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 			entity->setInput(Key_mouvement::Ia);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::NoDevice)
 				_core->getInput()->setDevice(i, No_device);
-		}
-		else {
+		} else {
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber);
 			entity->setInput(Key_mouvement::None);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::Keyboard)
@@ -90,20 +89,18 @@ void GameCore::run()
 {
 	if (_isPaused || _isWaiting)
 		return;
-	if (gameOver())
-	{
+	if (gameOver()) {
 		_core->getMusicEngine()->stop("resources/music/game.mp3", false);
 		_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
 		_core->setGState(Core::menu);
 		_core->setLState(Core::menuScore);
 		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
 		_core->getScore()->updateRanking(getRanking());
-        _core->getScore()->spawnEntities();
+		_core->getScore()->spawnEntities();
 		reset();
 		return;
 	}
 	if (getRemainingEntities() == 1) {
-		std::cout << "IL EN RESTE QU'UN" << std::endl;
 		for (auto it : _entities)
 			if (it->isAlive())
 				it->setWinNumber(it->getWinNumber() + 1);
@@ -114,7 +111,7 @@ void GameCore::run()
 	auto inputs = _core->getInput()->getPlayerInputs();
 	for (int i = 1; i <= 4; ++i) {
 		if (_entities.at(i - 1)->getInput() == Key_mouvement::Ia) {
-			static_cast<AI*>(_entities.at(i - 1))->run(inputs.at(i), _entities);
+			static_cast<AI *>(_entities.at(i - 1))->run(inputs.at(i), _entities);
 		} else
 			_entities.at(i - 1)->run(inputs.at(i));
 		SelectPowerUp(_entities.at(i - 1), isPowerUpsTaken(_powerUps, _map, _entities.at(i - 1)));
@@ -124,71 +121,73 @@ void GameCore::run()
 void GameCore::SelectPowerUp(IEntity *entity, int id)
 {
 	switch (id) {
-		case 1:
-			entity->setBombAmount(-1);
-			break;
-		case 2:
-			entity->setBombAmount(5);
-			break;
-		case 3:
-			entity->setBombPass(true);
-			break;
-		case 4:
-			entity->setBombAmount(1);
-			break;
-		case 5:
-			entity->setFirePower(-1);
-			break;
-		case 6:
-			entity->setFirePower(4);
-			break;
-		case 7:
-			entity->setFirePower(1);
-			break;
-		case 8:
-			entity->setSpeed(-1);
-			break;
-		case 9:
-			entity->setSpeed(1);
-			break;
-		case 10:
-			entity->setWallPass(true);
-			break;
-		case 0:
-			break;
+	case 1:
+		entity->setBombAmount(-1);
+		break;
+	case 2:
+		entity->setBombAmount(5);
+		break;
+	case 3:
+		entity->setBombPass(true);
+		break;
+	case 4:
+		entity->setBombAmount(1);
+		break;
+	case 5:
+		entity->setFirePower(-1);
+		break;
+	case 6:
+		entity->setFirePower(4);
+		break;
+	case 7:
+		entity->setFirePower(1);
+		break;
+	case 8:
+		entity->setSpeed(-1);
+		break;
+	case 9:
+		entity->setSpeed(1);
+		break;
+	case 10:
+		entity->setWallPass(true);
+		break;
+	case 0:
+		break;
 	}
 }
 
 void GameCore::addPowerUps(irr::core::vector3df &pos)
 {
-    u32 random = std::rand() % 100;
+	std::random_device seeder;
+	std::mt19937 rng(seeder());
+	std::uniform_int_distribution<int> randHundred(0, 100);
+	int random = randHundred(rng);
 
-//	_powerUps.push_back(new BombDown(_core->getSmgr(), pos));
 	if (random > 25)
 		return;
-    else if (random >= 0 && random < 2)
-        _powerUps.push_back(new BombDown(_core->getSmgr(), pos)); //segfault(ou pas)
-    else if (random >= 2 && random <= 8)
-        _powerUps.push_back(new BombUp(_core->getSmgr(), pos)); //fonctionne
-    else if (random > 8 && random <= 10)
-        _powerUps.push_back(new FireDown(_core->getSmgr(), pos)); //fonctionne
-    else if (random > 10 && random <= 16)
-        _powerUps.push_back(new FireUp(_core->getSmgr(), pos)); //segfault (ou pas ?)
-	else if (random > 16 && random <= 18)
-        _powerUps.push_back(new SpeedDown(_core->getSmgr(), pos)); //fonctionne
-	else if (random > 18 && random <= 24)
-        _powerUps.push_back(new SpeedUp(_core->getSmgr(), pos)); //fonctionne
-    else
-	{
+	else if (random >= 0 && random < 2) {
+		_powerUps.push_back(new BombDown(_core->getSmgr(), pos));
+	} else if (random >= 2 && random <= 8) {
+		_powerUps.push_back(new BombUp(_core->getSmgr(), pos));
+	} else if (random > 8 && random <= 10) {
+		_powerUps.push_back(new FireDown(_core->getSmgr(), pos));
+	} else if (random > 10 && random <= 16) {
+		_powerUps.push_back(new FireUp(_core->getSmgr(), pos));
+	} else if (random > 16 && random <= 18) {
+		_powerUps.push_back(new SpeedDown(_core->getSmgr(), pos));
+	} else if (random > 18 && random <= 24) {
+		_powerUps.push_back(new SpeedUp(_core->getSmgr(), pos));
+	} else {
 		random = std::rand() % 100;
-		if (random >= 0 && random < 25)
-		    _powerUps.push_back(new BombFull(_core->getSmgr(), pos)); //fonctionne
-		else if (random >= 25 && random < 50)
-	        _powerUps.push_back(new FireFull(_core->getSmgr(), pos)); //fonctionne
-		else if (random >= 50 && random < 75)
-	        _powerUps.push_back(new BombPass(_core->getSmgr(), pos)); //segfault (ou pas)
-		else
-	        _powerUps.push_back(new WallPass(_core->getSmgr(), pos));
+		if (random >= 0 && random < 25) {
+			_powerUps.push_back(new BombFull(_core->getSmgr(), pos));
+		} else if (random >= 25 && random < 50) {
+			_powerUps.push_back(new FireFull(_core->getSmgr(), pos));
+		} else if (random >= 50 && random < 75) {
+			_powerUps.push_back(new BombPass(_core->getSmgr(), pos));
+		} else {
+			_powerUps.push_back(new WallPass(_core->getSmgr(), pos));
+		}
 	}
 }
 
@@ -208,7 +207,7 @@ void GameCore::spawnPlayers()
 bool GameCore::gameOver()
 {
 	for (auto it : _entities) {
-		if (it->getWinNumber() >= 3)
+		if (it->getWinNumber() >= 1)
 			return (true);
 	}
 	return false;

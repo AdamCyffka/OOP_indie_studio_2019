@@ -47,6 +47,7 @@ void BombUp::spawn()
 void BombUp::die()
 {
 	_node->setVisible(false);
+	delete this;
 }
 
 void BombUp::update()

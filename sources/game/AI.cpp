@@ -17,7 +17,7 @@ AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDrive
 	  _speed(3), _wallPass(false), _bombPass(false)
 {
 	_bombStack = new BombStack(_driver, _smgr);
-	std::srand(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()));
+	std::srand((unsigned int)(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 	_character->setState(Character::state::idle);
 }
 

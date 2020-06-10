@@ -13,7 +13,6 @@
 class BombPass : public IPowerUps {
     public:
         explicit BombPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
-        ~BombPass() = default;
 
         void spawn();
 		void die();

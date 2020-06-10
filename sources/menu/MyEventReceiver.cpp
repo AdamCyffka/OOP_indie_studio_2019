@@ -50,8 +50,11 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                     case IMenu::GUI_ID_OPTION_RETURN:
                         if (_core.getLState() == Core::layerMenuState::menuSelect)
                             _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToMenu);
-                        else if (_core.getLState() == Core::layerMenuState::menuScore)
-                            _cameraTravelManager->doTravel(CameraTravelManager::travel::scoreToMenu);
+                        else if (_core.getLState() == Core::layerMenuState::menuScore) {
+							_cameraTravelManager->doTravel(CameraTravelManager::travel::scoreToMenu);
+							_core.getMusicEngine()->add2D("resources/music/menu.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
+							_core.getMusicEngine()->stop("resources/music/end.mp3", false);
+						}
                         _core.setLState(Core::menuMain);
                         return true;
                     case IMenu::GUI_ID_SOUNDS_BUTTON:

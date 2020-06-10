@@ -13,7 +13,6 @@
 class BombDown : public IPowerUps {
     public:
         explicit BombDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
-        ~BombDown() = default;
 
         void spawn();
 		void die();

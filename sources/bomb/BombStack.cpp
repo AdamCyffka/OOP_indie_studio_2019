@@ -55,7 +55,7 @@ void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 {
     for (auto bomb : _stack) {
         if (bomb.second == true) {
-            Point bombPosition2d = squareWhereBombIs(bombPosition3d, map);
+            Point bombPosition2d = squareWhereObjectIs(bombPosition3d, map);
             bomb.first->setPosition({MAP_DEFAULT_X + (-10.0f * bombPosition2d.x), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * bombPosition2d.y)});
             bomb.first->setVisible(true);
             bomb.second = false;
@@ -67,7 +67,7 @@ void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d)
 {
     int firePower = entity->getFirePower();
-    Point bombPosition = squareWhereBombIs(bombPosition3d, map);
+    Point bombPosition = squareWhereObjectIs(bombPosition3d, map);
     std::map<int, std::map<int, blockState>> &map2D = map->getMap();
     int line = bombPosition.x;
     int column = bombPosition.y;
@@ -76,7 +76,7 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     deadZone.push_back(Point(bombPosition));
     for (int y = line - 1; y >= line - firePower; y--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {
-            if (map2D[y][column] == blockState::unbreakable)
+            if (map2D[y][column] != blockState::empty)
                 break;
             else if (map2D[y][column] == blockState::empty && y != line) {
                 AnimExplo(_driver, _smgr, {MAP_DEFAULT_X + (-10.0f * y), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * column)});
@@ -86,7 +86,7 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     }
     for (int y = line + 1; y <= line + firePower; y++) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {
-            if (map2D[y][column] == blockState::unbreakable)
+            if (map2D[y][column] != blockState::empty)
                 break;
             else if (map2D[y][column] == blockState::empty && y != line) {
                 AnimExplo(_driver, _smgr, {MAP_DEFAULT_X + (-10.0f * y), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * column)});
@@ -96,7 +96,7 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     }
     for (int x = column - 1; x >= column - firePower; x--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(x) != map2D[line].end()) {
-            if (map2D[line][x] == blockState::unbreakable)
+            if (map2D[line][x] != blockState::empty)
                 break;
             else if (map2D[line][x] == blockState::empty && x != column) {
                 AnimExplo(_driver, _smgr, {MAP_DEFAULT_X + (-10.0f * line), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * x)});
@@ -106,7 +106,7 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     }
     for (int x = column + 1; x <= column + firePower; x++) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(x) != map2D[line].end()) {
-            if (map2D[line][x] == blockState::unbreakable)
+            if (map2D[line][x] != blockState::empty)
                 break;
             else if (map2D[line][x] == blockState::empty && x != column) {
                 AnimExplo(_driver, _smgr, {MAP_DEFAULT_X + (-10.0f * line), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * x)});

@@ -25,10 +25,9 @@ struct Point {
 bool canMove(IEntity *entity, Map *map, side direction, bool checkState);
 bool canAiMove(IEntity *entity, Map *map, side direction);
 
-int isPowerUpsTaken(std::vector<IPowerUps *> objects, Map *map, IEntity *entity);
+int isPowerUpsTaken(std::vector<IPowerUps *> &objects, Map *map, IEntity *entity);
 
 Point squareWherePlayerIs(IEntity *entity, Map *map);
-Point squareWhereBombIs(irr::core::vector3df, Map *map);
-int isInside(float x, float z, float xBlock, float zBlock, float degree);
+Point squareWhereObjectIs(irr::core::vector3df, Map *map);
 
 #endif

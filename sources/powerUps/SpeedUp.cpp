@@ -47,6 +47,7 @@ void SpeedUp::spawn()
 void SpeedUp::die()
 {
 	_node->setVisible(false);
+	delete this;
 }
 
 void SpeedUp::update()

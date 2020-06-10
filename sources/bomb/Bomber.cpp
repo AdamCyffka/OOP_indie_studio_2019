@@ -101,13 +101,13 @@ void Bomber::putBomb(IEntity *it)
 
 void Bomber::epicenter(IEntity *it, irr::core::vector3df bombPosition3d)
 {
-    _map->getBombMap()[squareWhereBombIs(bombPosition3d, _map).x][squareWhereBombIs(bombPosition3d, _map).y] = bombState::bomb;
+    _map->getBombMap()[squareWhereObjectIs(bombPosition3d, _map).x][squareWhereObjectIs(bombPosition3d, _map).y] = bombState::bomb;
 }
 
 void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d)
 {
-    auto xVisual = squareWhereBombIs(bombPosition3d, _map).x;
-    auto yVisual = squareWhereBombIs(bombPosition3d, _map).y;
+    auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
+    auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
 
 	for (int i = 1; i != _radius; i++)
 	{
@@ -126,8 +126,8 @@ void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d)
 
 void Bomber::blastNorth(IEntity *it, irr::core::vector3df bombPosition3d)
 {
-    auto xVisual = squareWhereBombIs(bombPosition3d, _map).x;
-    auto yVisual = squareWhereBombIs(bombPosition3d, _map).y;
+    auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
+    auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
 
 	for (int i = 1; i != _radius; i++)
 	{
@@ -146,8 +146,8 @@ void Bomber::blastNorth(IEntity *it, irr::core::vector3df bombPosition3d)
 
 void Bomber::blastEast(IEntity *it, irr::core::vector3df bombPosition3d)
 {
-    auto xVisual = squareWhereBombIs(bombPosition3d, _map).x;
-    auto yVisual = squareWhereBombIs(bombPosition3d, _map).y;
+    auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
+    auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
 
 	for (int i = 1; i != _radius; i++)
 	{
@@ -166,8 +166,8 @@ void Bomber::blastEast(IEntity *it, irr::core::vector3df bombPosition3d)
 
 void Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d)
 {
-    auto xVisual = squareWhereBombIs(bombPosition3d, _map).x;
-    auto yVisual = squareWhereBombIs(bombPosition3d, _map).y;
+    auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
+    auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
 
 	for (int i = 1; i != _radius; i++)
 	{
@@ -186,7 +186,7 @@ void Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d)
 
 void Bomber::clearMapAfterBlast(IEntity *it, irr::core::vector3df bombPosition3d)
 {
-    _map->getBombMap()[squareWhereBombIs(bombPosition3d, _map).x][squareWhereBombIs(bombPosition3d, _map).y] = bombState::clear;
+    _map->getBombMap()[squareWhereObjectIs(bombPosition3d, _map).x][squareWhereObjectIs(bombPosition3d, _map).y] = bombState::clear;
 }
 
 void Bomber::removeBombFromInventory(IEntity *it)

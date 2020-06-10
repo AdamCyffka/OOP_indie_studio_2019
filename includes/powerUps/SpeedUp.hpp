@@ -13,7 +13,6 @@
 class SpeedUp : public IPowerUps {
     public:
         explicit SpeedUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
-        ~SpeedUp() = default;
 
         void spawn();
 		void die();

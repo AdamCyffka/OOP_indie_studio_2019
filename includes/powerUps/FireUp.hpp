@@ -13,7 +13,6 @@
 class FireUp : public IPowerUps {
     public:
         explicit FireUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
-        ~FireUp() = default;
 
         void spawn();
 		void die();

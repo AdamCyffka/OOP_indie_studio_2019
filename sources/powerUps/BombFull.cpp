@@ -47,6 +47,8 @@ void BombFull::spawn()
 void BombFull::die()
 {
 	_node->setVisible(false);
+	delete this;
+
 }
 
 void BombFull::update()

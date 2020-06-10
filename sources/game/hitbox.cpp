@@ -9,15 +9,6 @@
 #include "hitbox.hpp"
 #include "IEntity.hpp"
 
-int isInside(float x, float z, float xBlock, float zBlock, float degree)
-{
-	if (x < xBlock && x > xBlock)
-		return 1;
-	if (z < zBlock && z > zBlock)
-		return 1;
-	return 0;
-}
-
 float overLap(float x, float z, float xBlock, float zBlock)
 {
 	float x_overLap = std::min(x - 10.0f, xBlock - 10.0f) - std::max(x, xBlock);
@@ -26,100 +17,85 @@ float overLap(float x, float z, float xBlock, float zBlock)
 	return (200 - (x_overLap * z_overLap));
 }
 
-bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
+int getPowerUpType(IPowerUps *powerUp, std::vector<IPowerUps *> &objects)
 {
-	return overLap(x, z, xBlock, zBlock) >= 5.0;
-}
+	int res = 0;
 
-int getPowerUpType(IPowerUps *powerUp)
-{
 	switch (powerUp->getType()) {
 		case IPowerUps::BombDown:
 			powerUp->die();
-			return 1;
+			res = 1;
+			break;
 		case IPowerUps::BombFull:
 			powerUp->die();
-			return 2;
+			res = 2;
+			break;
 		case IPowerUps::BombPass:
 			powerUp->die();
-			return 3;
+			res = 3;
+			break;
 		case IPowerUps::BombUp:
 			powerUp->die();
-			return 4;
+			res = 4;
+			break;
 		case IPowerUps::FireDown:
 			powerUp->die();
-			return 5;
+			res = 5;
+			break;
 		case IPowerUps::FireFull:
 			powerUp->die();
-			return 6;
+			res = 6;
+			break;
 		case IPowerUps::FireUp:
 			powerUp->die();
-			return 7;
+			res = 7;
+			break;
 		case IPowerUps::SpeedDown:
 			powerUp->die();
-			return 8;
+			res = 8;
+			break;
 		case IPowerUps::SpeedUp:
 			powerUp->die();
-			return 9;
+			res = 9;
+			break;
 		case IPowerUps::WallPass:
 			powerUp->die();
-			return 10;
+			res = 10;
+			break;
 	}
-	return 0;
+	auto index = std::find(objects.begin(), objects.end(), powerUp);
+	if (index != objects.end()) {
+		objects.erase(index);
+	}
+	return res;
 }
 
-int isPowerUpsTaken(std::vector<IPowerUps *> objects, Map *map, IEntity *entity)
+int isPowerUpsTaken(std::vector<IPowerUps *> &objects, Map *map, IEntity *entity)
 {
 	Point playerPos = squareWherePlayerIs(entity, map);
-	float overlap = 0.0;
-	Point point = {0, 0};
+	Point objPos;
 
-	for (auto it : objects) {
-		irr::core::vector3df pos = it->getPosition();
-		for (unsigned int i = 0; i < map->getMap().size(); ++i) {
-			for (unsigned int j = 0; j < map->getMap()[i].size(); ++j) {
-				float xBlock = MAP_DEFAULT_X + (-10.0f * i);
-				float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
-				float tmp = overLap(pos.X, pos.Z, xBlock, zBlock);
-				if (tmp > overlap)
-				{
-					overlap = tmp;
-					point = {int(i), int(j)};
-					tmp = overLap(pos.X, pos.Z, xBlock - 10.0f, zBlock);
-					if (tmp > overlap)
-					{
-						overlap = tmp;
-						point = {int(i + 1), int(j)};
-					}
-					tmp = overLap(pos.X, pos.Z, xBlock, zBlock - 10.0f);
-					if (tmp > overlap)
-					{
-						overlap = tmp;
-						point = {int(i), int(j + 1)};
-					}
-					if (point.x == playerPos.x && point.y == playerPos.y) {
-						auto index = std::find(objects.begin(), objects.end(), it);
-						std::cout << point.x << " " << point.y << std::endl << playerPos.x << " " << playerPos.y << std::endl;
-						std::cout << "---------------------" << std::endl;
-						if (index != objects.end())
-							objects.erase(index);
-						return (getPowerUpType(it));
-					}
-				}
+	for (auto it : objects)
+	{
+		objPos = squareWhereObjectIs(it->getPosition(), map);
+		if (objPos.x == playerPos.x && objPos.y == playerPos.y) {
+			auto index = std::find(objects.begin(), objects.end(), it);
+			if (index != objects.end()) {
+				return (getPowerUpType(it, objects));
 			}
 		}
 	}
 	return 0;
 }
 
-Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
+Point squareWhereObjectIs(irr::core::vector3df objectPosition, Map *map)
 {
 	Point point = {0, 0};
 	float overlap = 0.0;
 
-	if (std::fmod((bombPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f && std::fmod((bombPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f)
+	if (std::fmod((objectPosition.X - MAP_DEFAULT_X) / -10.0f, 1.0) == 0.0f && std::fmod((objectPosition.Z - MAP_DEFAULT_Z) / -10.0f, 1.0) == 0.0f)
 	{
-		return Point{int((bombPosition.X - MAP_DEFAULT_X) / -10), int((bombPosition.Z - MAP_DEFAULT_Z) / -10)};
+		return Point{int((objectPosition.X - MAP_DEFAULT_X) / -10), int((objectPosition.Z - MAP_DEFAULT_Z) / -10)};
 	}
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
 	{
@@ -127,19 +103,18 @@ Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
 		{
 			float xBlock = MAP_DEFAULT_X + (-10.0f * i);
 			float zBlock = MAP_DEFAULT_Z + (-10.0f * j);
-			float tmp = overLap(bombPosition.X, bombPosition.Z, xBlock, zBlock);
+			float tmp = overLap(objectPosition.X, objectPosition.Z, xBlock, zBlock);
 			if (tmp > overlap)
 			{
-				//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
 				overlap = tmp;
 				point = {int(i), int(j)};
-				tmp = overLap(bombPosition.X, bombPosition.Z, xBlock - 10.0f, zBlock);
+				tmp = overLap(objectPosition.X, objectPosition.Z, xBlock - 10.0f, zBlock);
 				if (tmp > overlap)
 				{
 					overlap = tmp;
 					point = {int(i + 1), int(j)};
 				}
-				tmp = overLap(bombPosition.X, bombPosition.Z, xBlock, zBlock - 10.0f);
+				tmp = overLap(objectPosition.X, objectPosition.Z, xBlock, zBlock - 10.0f);
 				if (tmp > overlap)
 				{
 					overlap = tmp;
@@ -155,7 +130,6 @@ Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
 Point squareWherePlayerIs(IEntity *entity, Map *map)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
-	//std::cout << characterPosition.X << " " << characterPosition.Y << " " << characterPosition.Z << std::endl;
 	Point point = {0, 0};
 	float overlap = 0.0;
 
@@ -172,7 +146,6 @@ Point squareWherePlayerIs(IEntity *entity, Map *map)
 			float tmp = overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock);
 			if (tmp > overlap)
 			{
-				//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
 				overlap = tmp;
 				point = {int(i), int(j)};
 				tmp = overLap(characterPosition.X, characterPosition.Z, xBlock - 10.0f, zBlock);
@@ -191,50 +164,11 @@ Point squareWherePlayerIs(IEntity *entity, Map *map)
 			}
 		}
 	}
-	//print de x et z et le pourcentage du perso dans le bloc pour le débug
-	//std::cout << point.x << " " << point.y << " " << overlap << std::endl;
 	return point;
-}
-
-bool getNextPosIsValid(const irr::core::vector3df &characterPosition, Map *map, unsigned int i, unsigned int j, side direction, bool wallPass, float xBlock, float zBlock)
-{
-	switch (direction)
-	{
-	case north:
-		if (isInside(characterPosition.X + 1.0f, characterPosition.Z, xBlock, zBlock, 1.0))
-		{
-			if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !wallPass))
-				return false;
-		}
-		break;
-	case south:
-		if (isInside(characterPosition.X - 1.0f, characterPosition.Z, xBlock, zBlock, 1.0))
-		{
-			if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !wallPass))
-				return false;
-		}
-		break;
-	case east:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))
-		{
-			if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !wallPass))
-				return false;
-		}
-		break;
-	case west:
-		if (isInside(characterPosition.X, characterPosition.Z, xBlock, zBlock, 10.0))
-		{
-			if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !wallPass))
-				return false;
-		}
-		break;
-	}
-	return true;
 }
 
 bool canAiMove(IEntity *entity, Map *map, side direction)
 {
-	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
 	Point point = squareWherePlayerIs(entity, map);
 	Point nextPoint = {point.x, point.y};
 	std::map<int, std::map<int, bombState>> tmpBombMap;
@@ -278,9 +212,7 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 		break;
 	default:
 		return false;
-		break;
 	}
-	//&& map->getBombMap()[point.x][point.y] != bombState::bomb
 	if (map->getMap()[nextPoint.x][nextPoint.y] == unbreakable || (map->getMap()[nextPoint.x][nextPoint.y] == breakable && !entity->getWallPass()))
 		return false;
 	if (map->getBombMap()[nextPoint.x][nextPoint.y] == bomb && !entity->getBombPass())
@@ -317,7 +249,6 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 bool canMove(IEntity *entity, Map *map, side direction, bool checkState)
 {
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
-	Point point = {squareWherePlayerIs(entity, map).x, squareWherePlayerIs(entity, map).y};
 	float hitBoxValue = 10.0f;
 
 	if (checkState && entity->getCharacter()->getState() != Character::state::idle)
@@ -337,7 +268,6 @@ bool canMove(IEntity *entity, Map *map, side direction, bool checkState)
 		characterPosition.Z += hitBoxValue;
 		break;
 	}
-	//std::cout << "Position: " << squareWherePlayerIs(entity, map).x << " " << squareWherePlayerIs(entity, map).y << std::endl;
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
 	{
 		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
@@ -350,32 +280,7 @@ bool canMove(IEntity *entity, Map *map, side direction, bool checkState)
 				if (map->getBombMap()[i][j] == bomb && !entity->getBombPass())
 					return false;
 				if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !entity->getWallPass()))
-				{
 					return false;
-					//std::cout << i << " " << j << std::endl;
-					if (i == 0 || j == 0)
-						return false;
-					if (direction == side::south || direction == side::north)
-					{
-						if (j == point.y)
-							return false;
-						/*if (j == point.y + 1 && overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock + 10 > 5.0))
-							return false;
-						if (j == point.y - 1 && overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock - 10 > 5.0))
-							return false;*/
-						//if (overLap(characterPosition.X, characterPosition.Z, xBlock, zBlock + 10 > 5.0)
-						//return false;
-					}
-					if (direction == side::east || direction == side::west)
-					{
-						if (i == point.x)
-							return false;
-						/*if (i == point.x + 1 && overLap(characterPosition.X, characterPosition.Z, xBlock - 10, zBlock > 5.0))
-							return false;
-						if (i == point.x - 1 && overLap(characterPosition.X, characterPosition.Z, xBlock + 10, zBlock > 5.0))
-							return false;*/
-					}
-				}
 			}
 		}
 	}

@@ -13,7 +13,6 @@
 class BombFull : public IPowerUps {
     public:
         explicit BombFull(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
-        ~BombFull() = default;
 
         void spawn();
 		void die();

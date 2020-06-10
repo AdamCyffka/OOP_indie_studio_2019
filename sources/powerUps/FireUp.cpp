@@ -47,6 +47,7 @@ void FireUp::spawn()
 void FireUp::die()
 {
 	_node->setVisible(false);
+	delete this;
 }
 
 void FireUp::update()
