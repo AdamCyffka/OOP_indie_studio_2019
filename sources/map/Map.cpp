@@ -66,7 +66,7 @@ int Map::generateBlock()
 	std::mt19937 rng(seeder());
 	std::uniform_int_distribution<int> randHundred(0, 100);
 	int x = randHundred(rng);
-	if (x <= 2)
+	if (x <= 7)
 		return 0;
 	return 1;
 }
