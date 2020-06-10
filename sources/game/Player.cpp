@@ -9,8 +9,8 @@
 #include "GameCore.hpp"
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
-	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input),
-	  _firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false)
+	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _savedInput(None),
+	  _firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false), _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
 	_bombStack = new BombStack(_driver, _smgr);
 }
