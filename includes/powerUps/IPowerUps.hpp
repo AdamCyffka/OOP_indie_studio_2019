@@ -10,6 +10,21 @@
 
 #include <irrlicht.h>
 
+namespace PowerUps {
+	enum PowerUpsType {
+		BombDown,
+		BombUp,
+		BombFull,
+		BombPass,
+		FireDown,
+		FireFull,
+		FireUp,
+		SpeedDown,
+		SpeedUp,
+		WallPass
+	};
+}
+
 class IPowerUps {
     public:
 		virtual ~IPowerUps() = default;
@@ -17,6 +32,8 @@ class IPowerUps {
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
+		virtual PowerUps::PowerUpsType getType() = 0;
+		virtual irr::core::vector3df getPosition() = 0;
 };
 
 #endif /* !IPOWERUPS_HPP_ */

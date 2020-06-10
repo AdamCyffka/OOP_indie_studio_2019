@@ -47,10 +47,12 @@ class GameCore {
 		bool nextBlockHasBlock(std::pair<int, int>, bool);
 		Bomber *getBomber();
 		Core *getCore();
+		PowerUps::PowerUpsType getType();
+		void SelectPowerUp(IEntity *entity, int id);
+		void addBonus(irr::core::vector3df &pos);
     protected:
     private:
-	 	std::vector<std::unique_ptr<IPowerUps>> _powerUps;
-		void addBonus(irr::core::vector3df &pos);
+	 	std::vector<IPowerUps *> _powerUps;
 		void spawnPlayers();
     	bool gameOver();
 		std::map<int, irr::core::vector3df> _spawnAreas;

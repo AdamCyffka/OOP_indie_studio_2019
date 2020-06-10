@@ -18,7 +18,12 @@ class FireFull : public IPowerUps {
         void spawn();
 		void die();
 		void update();
+        PowerUps::PowerUpsType getType();
+        irr::core::vector3df getPosition();
     private:
+        irr::scene::ISceneNode *_bomb;
+        irr::core::vector3df _pos;
+        PowerUps::PowerUpsType _type;
         irr::scene::ISceneManager *_smgr;
 };
 

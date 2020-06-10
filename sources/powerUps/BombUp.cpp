@@ -10,17 +10,28 @@
 BombUp::BombUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
 	_smgr = smgr;
+	_pos = pos;
+	_type = PowerUps::PowerUpsType::BombUp;
 
-    irr::scene::ISceneNode *bomb;
 	irr::scene::ISceneNodeAnimator *anim;
-    bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/bombs/bombUp.obj"));
-	bomb->setPosition(pos);
-	bomb->setScale({5, 5, 5});
-	if (bomb)
-		bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    _bomb = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("resources/models/powers/bombs/bombUp.obj"));
+	_bomb->setPosition(pos);
+	_bomb->setScale({5, 5, 5});
+	if (_bomb)
+		_bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	anim = _smgr->createRotationAnimator({0, 1, 0});
-	bomb->addAnimator(anim);
+	_bomb->addAnimator(anim);
 	anim->drop();
+}
+
+irr::core::vector3df BombUp::getPosition()
+{
+	return _pos;
+}
+
+PowerUps::PowerUpsType BombUp::getType()
+{
+	return _type;
 }
 
 void BombUp::spawn()
@@ -29,6 +40,7 @@ void BombUp::spawn()
 
 void BombUp::die()
 {
+	_bomb->setVisible(false);
 }
 
 void BombUp::update()

@@ -7,6 +7,7 @@
 
 #include "GameCore.hpp"
 #include "Core.hpp"
+#include "hitbox.hpp"
 #include "MyEventReceiver.hpp"
 #include "GameCoreException.hpp"
 
@@ -17,7 +18,7 @@ GameCore::GameCore(Core *core)
 	_isPaused = false;
 	_map = _core->getMap();
 	_loadMap = _core->getLoadMap();
-	_bomber = new Bomber(_map, _loadMap);
+	_bomber = new Bomber(_map, _loadMap, this);
 	_spawnAreas[1] = irr::core::vector3df{-450.0f, 308.0f, 780.0f};
 	_spawnAreas[2] = irr::core::vector3df{-450.0f, 308.0f, 620.0f};
 	_spawnAreas[3] = irr::core::vector3df{-550.0f, 308.0f, 780.0f};
@@ -86,6 +87,45 @@ void GameCore::run()
 			static_cast<AI*>(_entities.at(i - 1))->run(inputs.at(i), _entities);
 		} else
 			_entities.at(i - 1)->run(inputs.at(i));
+		SelectPowerUp(_entities.at(i - 1), isPowerUpsTaken(_powerUps, _map, _entities.at(i - 1)));
+	}
+}
+
+void GameCore::SelectPowerUp(IEntity *entity, int id)
+{
+	switch (id) {
+		case 1:
+			entity->setBombAmount(-1);
+			break;
+		case 2:
+			entity->setBombAmount(5);
+			break;
+		case 3:
+			entity->setBombPass(true);
+			break;
+		case 4:
+			entity->setBombAmount(1);
+			break;
+		case 5:
+			entity->setFirePower(-1);
+			break;
+		case 6:
+			entity->setFirePower(4);
+			break;
+		case 7:
+			entity->setFirePower(1);
+			break;
+		case 8:
+			entity->setSpeed(-1);
+			break;
+		case 9:
+			entity->setSpeed(1);
+			break;
+		case 10:
+			entity->setWallPass(true);
+			break;
+		case 0:
+			break;
 	}
 }
 
@@ -93,26 +133,32 @@ void GameCore::addBonus(irr::core::vector3df &pos)
 {
     u32 random = std::rand() % 100;
 
-    if (random <= 10)
-        _powerUps.push_back(std::make_unique<BombDown>(_core->getSmgr(), pos));
-    else if (random > 10 && random <= 20)
-        _powerUps.push_back(std::make_unique<BombFull>(_core->getSmgr(), pos));
-    else if (random > 20 && random <= 30)
-        _powerUps.push_back(std::make_unique<BombPass>(_core->getSmgr(), pos));
-    else if (random > 30 && random <= 40)
-        _powerUps.push_back(std::make_unique<BombUp>(_core->getSmgr(), pos));
-    else if (random > 40 && random <= 50)
-        _powerUps.push_back(std::make_unique<FireDown>(_core->getSmgr(), pos));
-    else if (random > 50 && random <= 60)
-        _powerUps.push_back(std::make_unique<FireFull>(_core->getSmgr(), pos));
-    else if (random > 60 && random <= 70)
-        _powerUps.push_back(std::make_unique<FireUp>(_core->getSmgr(), pos));
-	else if (random > 70 && random <= 80)
-        _powerUps.push_back(std::make_unique<SpeedDown>(_core->getSmgr(), pos));
-	else if (random > 80 && random <= 90)
-        _powerUps.push_back(std::make_unique<SpeedUp>(_core->getSmgr(), pos));	
-	else if (random > 90 && random <= 100)
-        _powerUps.push_back(std::make_unique<WallPass>(_core->getSmgr(), pos));
+	if (random > 25)
+		return;
+    else if (random >= 0 && random < 2)
+        _powerUps.push_back(new BombDown(_core->getSmgr(), pos));
+    else if (random >= 2 && random <= 8)
+        _powerUps.push_back(new BombUp(_core->getSmgr(), pos));
+    else if (random > 8 && random <= 10)
+        _powerUps.push_back(new FireDown(_core->getSmgr(), pos));
+    else if (random > 10 && random <= 16)
+        _powerUps.push_back(new FireUp(_core->getSmgr(), pos));
+	else if (random > 16 && random <= 18)
+        _powerUps.push_back(new SpeedDown(_core->getSmgr(), pos));
+	else if (random > 18 && random <= 24)
+        _powerUps.push_back(new SpeedUp(_core->getSmgr(), pos));	
+    else
+	{
+		random = std::rand() % 100;
+		if (random >= 0 && random < 25)
+		    _powerUps.push_back(new BombFull(_core->getSmgr(), pos));
+		else if (random >= 25 && random < 50)
+	        _powerUps.push_back(new FireFull(_core->getSmgr(), pos));
+		else if (random >= 50 && random < 75)
+	        _powerUps.push_back(new BombPass(_core->getSmgr(), pos));
+		else 
+	        _powerUps.push_back(new WallPass(_core->getSmgr(), pos));
+	}
 }
 
 void GameCore::spawnPlayers()

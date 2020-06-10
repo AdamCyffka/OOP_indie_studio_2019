@@ -22,9 +22,11 @@
 
 #define TIMER (3)
 
+class GameCore;
+
 class Bomber {
     public:
-        Bomber(Map *, LoadMap *);
+        Bomber(Map *, LoadMap *, GameCore *);
         ~Bomber();
         void run(IEntity *it);
 
@@ -64,6 +66,7 @@ class Bomber {
         Map *_map;
         LoadMap *_loadMap;
         BombStack *_bombStack;
+        GameCore *_gameCore;
         std::vector<IEntity *> _entities;
         int _delay;
         int _radius;
