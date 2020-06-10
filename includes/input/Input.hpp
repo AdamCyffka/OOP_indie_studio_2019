@@ -58,11 +58,11 @@ class Input
 	    bool inputEvent(const SEvent& event);
         bool isKeyDown(irr::EKEY_CODE keyCode);
        
-        void player_one_keyboard(Input *receiver, const SEvent& event);
+        void playerOneKeyboard(Input *receiver, const SEvent& event);
         void playerJoystick(Input *receiver, int controller, int player);
-        void player_two_keyboard(Input *receiver, const SEvent& event);
-        void player_three_keyboard(Input *receiver, const SEvent& event);
-        void player_four_keyboard(Input *receiver, const SEvent& event);
+        void playerTwoKeyboard(Input *receiver, const SEvent& event);
+        void playerThreeKeyboard(Input *receiver, const SEvent& event);
+        void playerFourKeyboard(Input *receiver, const SEvent& event);
         void detectInput(Input *receiver, const SEvent& event);
 
         basic_key keyBoard(Input *receiver);
@@ -79,10 +79,11 @@ class Input
         std::map<int, device> _player;
 
         core::array<SJoystickInfo> joystickInfo;
-        SEvent::SJoystickEvent JoystickStatePone;
-        SEvent::SJoystickEvent JoystickStatePtwo;
-        SEvent::SJoystickEvent JoystickStatePthree;
-        SEvent::SJoystickEvent JoystickStatePfour;
+        SEvent::SJoystickEvent _joystickStatePone;
+        SEvent::SJoystickEvent _joystickStatePtwo;
+        SEvent::SJoystickEvent _joystickStatePthree;
+        SEvent::SJoystickEvent _joystickStatePfour;
+        int _nbr_controller;
 };
 
 
