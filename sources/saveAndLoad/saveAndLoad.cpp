@@ -205,6 +205,8 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entity->setSpeed(root->get<int>(path + "speed", 0));
     entity->setBombAmount(root->get<int>(path + "bombAmount", 0));
     entity->setFirePower(root->get<int>(path + "firePower", 0));
+    if (root->get<int>(path + "winNumber", 0) > 2)
+        throw saveAndLoadException("Invalid winNumber");
     entity->setWinNumber(root->get<int>(path + "winNumber", 0));
     //ADDING ELEMNTS TO LOAD HERE FOR PLAYER
 }
