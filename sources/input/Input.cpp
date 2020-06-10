@@ -166,13 +166,6 @@ void Input::playerFourKeyboard(Input *receiver, const SEvent& event)
 	}	
 }
 
-basic_key Input::keyBoard (Input *receiver) // fonction tempo
-{
-	if (receiver->isKeyDown(irr::KEY_F12))
-		exit(84);
-	
-	return (exit_game);
-}
 void Input::reset()
 {
 	if (_playerInput[1] != Ia)
