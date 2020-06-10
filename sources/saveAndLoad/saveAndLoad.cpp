@@ -160,6 +160,7 @@ void loadMap(Core &core, pt::ptree *root)
 void loadBombMap(Core &core, pt::ptree *root)
 {
     std::vector<std::string> map;
+    std::map<int, std::map<int, blockState>> &_mapCheck = core.getMap()->getMap();
     std::map<int, std::map<int, bombState>> &_map = core.getMap()->getBombMap();
 
     for (pt::ptree::value_type &line : root->get_child("bombMap"))
@@ -177,6 +178,10 @@ void loadBombMap(Core &core, pt::ptree *root)
             bombState block = bombState(map[i - 1][j - 1] - '0');
             if (!bombStateCheck::is_value(block))
                 throw saveAndLoadException("Invalid Enum value");
+            if (block == clear and _mapCheck[i][j] != empty)
+                throw saveAndLoadException("BombMap and Map don't correspond");
+            if (block == bombState::block and _mapCheck[i][j] == empty)
+                throw saveAndLoadException("BombMap and Map don't correspond");
             _map[i][j] = block;
         }
     }
