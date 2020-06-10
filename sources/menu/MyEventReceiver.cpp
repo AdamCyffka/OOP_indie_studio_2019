@@ -104,6 +104,7 @@ bool MyEventReceiver::clicks(const irr::SEvent &event)
                         _core.getMusicEngine()->stop("resources/music/menu.mp3", false);
                         _core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
                         _cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
+                        _core.getGameCore()->reset();
                         _core.setGState(Core::game);
                         _core.getGameCore()->init(_core.getSelect()->getPreviews(), _core.getSelect()->getEntityTypes(), _core.getControls()->getEntityType());
                         return true;

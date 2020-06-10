@@ -66,8 +66,6 @@ Point squareWhereBombIs(irr::core::vector3df bombPosition, Map *map)
 			}
 		}
 	}
-	//print de x et z et le pourcentage du perso dans le bloc pour le débug
-	//std::cout << point.x << " " << point.y << " " << overlap << std::endl;
 	return point;
 }
 
