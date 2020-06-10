@@ -66,7 +66,7 @@ void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 
 std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d)
 {
-    int firePower = 2;
+    int firePower = entity->getFirePower();
     Point bombPosition = squareWhereBombIs(bombPosition3d, map);
     std::map<int, std::map<int, blockState>> &map2D = map->getMap();
     int line = bombPosition.x;

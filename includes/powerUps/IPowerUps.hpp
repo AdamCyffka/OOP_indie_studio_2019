@@ -9,6 +9,7 @@
 #define IPOWERUPS_HPP_
 
 #include <irrlicht.h>
+#include <iostream>
 
 namespace PowerUps {
 	enum PowerUpsType {

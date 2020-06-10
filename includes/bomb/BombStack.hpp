@@ -11,10 +11,10 @@
 #include <irrlicht.h>
 #include <vector>
 #include <utility>
-#include "Map.hpp"
 #include "hitbox.hpp"
 
 class IEntity;
+
 class BombStack {
     public:
         BombStack(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);

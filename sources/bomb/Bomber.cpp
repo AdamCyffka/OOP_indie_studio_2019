@@ -22,7 +22,7 @@ void Bomber::run(IEntity *it)
 {
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
     it->getBombStack()->putBomb(_map, bombPosition3d);
-    boost::this_thread::sleep_for(boost::chrono::seconds(3));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(1500));
     blastNorth(it, bombPosition3d);
     blastSouth(it, bombPosition3d);
     blastEast(it, bombPosition3d);
@@ -34,9 +34,8 @@ void Bomber::run(IEntity *it)
         it->setIsAlive(false);
         if (Character *character = it->getCharacter()) {
             character->setState(Character::state::dying);
-            boost::this_thread::sleep_for(boost::chrono::seconds(3));
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(2500));
             character->setVisibility(false);
-            character->setState(Character::state::idle);
         }
     }
     boost::this_thread::yield();
@@ -117,7 +116,6 @@ void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d)
 			_map->getBombMap()[xVisual + i][yVisual] = bombState::clear;
 			_loadMap->getVisualMap()[xVisual + i][yVisual]->setVisible(false);
             irr::core::vector3df pos = {MAP_DEFAULT_X + (-10.0f * (xVisual + i)), MAP_DEFAULT_Y + 2, MAP_DEFAULT_Z + (yVisual * -10.0f)};
-            std::cout << xVisual + i << " " << yVisual << std::endl;
             _gameCore->addBonus(pos);
 			break;
 		} else if (_map->getMap()[xVisual + i][yVisual] == unbreakable)
@@ -209,6 +207,15 @@ bool Bomber::isKilledByBomb(IEntity *it, std::vector<Point> deadZone)
     return false;
 }
 
-void Bomber::animateBomb()
+int Bomber::getRemainingEntities()
 {
+	int count = 0;
+    std::cout << std::endl;
+	for (auto it : _entities) {
+		if (it->isAlive()) {
+			std::cout << it->getCharacter()->getModelInfos().name << " est en vie" << std::endl;
+			count++;
+		}
+	}
+	return count;
 }

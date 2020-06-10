@@ -5,6 +5,8 @@
 ** Player
 */
 
+#include <boost/thread.hpp>
+#include <boost/chrono.hpp>
 #include "GameCore.hpp"
 #include "Core.hpp"
 #include "hitbox.hpp"
@@ -16,6 +18,7 @@ GameCore::GameCore(Core *core)
 	_core = core;
 	_isInit = false;
 	_isPaused = false;
+	_isWaiting = false;
 	_map = _core->getMap();
 	_loadMap = _core->getLoadMap();
 	_bomber = new Bomber(_map, _loadMap, this);
@@ -36,6 +39,21 @@ void GameCore::reset()
 	_entities.clear();
 	_isPaused = false;
 	_isInit = false;
+}
+
+void GameCore::nextRound()
+{
+	_isWaiting = true;
+	for (auto it : _entities) {
+		it->getCharacter()->removeAnimators();
+	}
+	spawnPlayers();
+	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	spawnPlayers();
+	_map->generateMap();
+	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
+	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
+	_isWaiting = false;
 }
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)
@@ -61,15 +79,14 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 		_entities.push_back(entity);
 	}
 	spawnPlayers();
-	for (auto it : _entities) {
-		it->setIsAlive(true);
-	}
 	_bomber->setEntities(_entities);
 	_isInit = true;
 }
 
 void GameCore::run()
 {
+	if (_isPaused || _isWaiting)
+		return;
 	if (gameOver())
 	{
 		_core->getMusicEngine()->stop("resources/music/game.mp3", false);
@@ -77,11 +94,20 @@ void GameCore::run()
 		_core->setGState(Core::menu);
 		_core->setLState(Core::menuScore);
 		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
-		_core->getScore()->spawnEntities();
+		_core->getScore()->updateRanking(getRanking());
+        _core->getScore()->spawnEntities();
+		reset();
 		return;
 	}
-	if (_isPaused)
+	if (getRemainingEntities() == 1) {
+		std::cout << "IL EN RESTE QU'UN" << std::endl;
+		for (auto it : _entities)
+			if (it->isAlive())
+				it->setWinNumber(it->getWinNumber() + 1);
+		if (!gameOver())
+			boost::thread thr = boost::thread(boost::bind(&GameCore::nextRound, this));
 		return;
+	}
 	auto inputs = _core->getInput()->getPlayerInputs();
 	for (int i = 1; i <= 4; ++i) {
 		if (_entities.at(i - 1)->getInput() == Key_mouvement::Ia) {
@@ -169,6 +195,8 @@ void GameCore::spawnPlayers()
 	for (auto it : _entities) {
 		it->getCharacter()->setPosition(_spawnAreas[count]);
 		it->getCharacter()->setVisibility(true);
+		it->getCharacter()->setState(Character::state::idle);
+		it->setIsAlive(true);
 		++count;
 	}
 }
@@ -180,6 +208,41 @@ bool GameCore::gameOver()
 			return (true);
 	}
 	return false;
+}
+
+int GameCore::getRemainingEntities()
+{
+	int count = 0;
+    std::cout << std::endl;
+	for (auto it : _entities) {
+		if (it->isAlive()) {
+			std::cout << it->getCharacter()->getModelInfos().name << " est en vie" << std::endl;
+			count++;
+		}
+	}
+	return count;
+}
+
+std::vector<std::pair<int, int>> GameCore::getRanking()
+{
+	std::vector<std::pair<int, int>> ranking;
+	for (auto entity : _entities) {
+		if (entity->getWinNumber() == 3)
+			ranking.push_back({entity->getEntityNumber() - 1, 3});
+	}
+	for (auto entity : _entities) {
+		if (entity->getWinNumber() == 2)
+			ranking.push_back({entity->getEntityNumber() - 1, 2});
+	}
+	for (auto entity : _entities) {
+		if (entity->getWinNumber() == 1)
+			ranking.push_back({entity->getEntityNumber() - 1, 1});
+	}
+	for (auto entity : _entities) {
+		if (entity->getWinNumber() == 0)
+			ranking.push_back({entity->getEntityNumber() - 1, 0});
+	}
+	return ranking;
 }
 
 std::vector<IEntity *> GameCore::getEntities() const
