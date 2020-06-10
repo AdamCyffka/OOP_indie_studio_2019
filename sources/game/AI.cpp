@@ -32,30 +32,6 @@ void AI::run(Key_mouvement input)
 
 void AI::putBomb()
 {
-	/*switch (_wantedMovement)
-	{
-	case Down:
-		_wantedMovement = Up;
-		break;
-	case Up:
-		_wantedMovement = Down;
-		break;
-	case Left:
-		_wantedMovement = Right;
-		break;
-	case Right:
-		_wantedMovement = Left;
-		break;
-	default:
-		break;
-	}*/
-	/* int count = 0;
-	std::cout << _bombStack->bombsAvailable() << std::endl;
-	for (auto bomb : _bombStack->getStack())
-	{
-		count += (int)bomb.second;
-	}
-	//std::cout << count << std::endl;*/
 	Point point = squareWherePlayerIs(this, _map);
 	if ((point.x == 1 && point.y == 1) || (point.x == 1 && point.y == 17) || (point.x == 11 && point.y == 1) || (point.x == 11 && point.y == 17))
 		return;
@@ -205,7 +181,6 @@ bool AI::canMoveToTargetX(IEntity *it)
 			}
 		}
 	}
-	//std::cout << "x: " << x << std::endl;
 	return true;
 }
 
@@ -226,7 +201,6 @@ bool AI::canMoveToTargetZ(IEntity *it)
 			}
 		}
 	}
-	//std::cout << "z: " << x << std::endl;
 	return true;
 }
 

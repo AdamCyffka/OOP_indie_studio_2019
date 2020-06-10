@@ -230,6 +230,7 @@ bool canMove(IEntity *entity, Map *map, side direction)
 	irr::core::vector3df characterPosition = entity->getCharacter()->getPosition();
 	Point point = {squareWherePlayerIs(entity, map).x, squareWherePlayerIs(entity, map).y};
 	float hitBoxValue = 7.0f;
+
 	switch (direction)
 	{
 	case north:
@@ -245,7 +246,6 @@ bool canMove(IEntity *entity, Map *map, side direction)
 		characterPosition.Z += hitBoxValue;
 		break;
 	}
-	//std::cout << "Position: " << squareWherePlayerIs(entity, map).x << " " << squareWherePlayerIs(entity, map).y << std::endl;
 	for (unsigned int i = 0; i < map->getMap().size(); ++i)
 	{
 		for (unsigned int j = 0; j < map->getMap()[i].size(); ++j)
@@ -255,16 +255,10 @@ bool canMove(IEntity *entity, Map *map, side direction)
 			//x + (-10 * i) = position X inGame [1][1] = -450
 			//z + (-10 * j) = position Z inGame [1][1] = 780
 
-			//Pour les collisions je pars du principe que le x et Z sont en haut à gauche de l'élèment
-			if (characterPosition.X == xBlock && characterPosition.Z == zBlock) // si == alors c'est good le character n'est aps dans le bloc
-			{
-				//std::cout << "The character with the position " << characterPosition.X << " " << characterPosition.Z << " is in position " << i << " " << j << std::endl;
-			}
 			if (characterHitBoxTouchBlock(characterPosition.X, characterPosition.Z, xBlock, zBlock))
 			{
 				if (map->getMap()[i][j] == unbreakable || (map->getMap()[i][j] == breakable && !entity->getWallPass()))
 				{
-					//std::cout << i << " " << j << std::endl;
 					if (i == 0 || j == 0)
 						return false;
 					if (direction == side::south || direction == side::north)
@@ -309,6 +303,5 @@ bool canMove(IEntity *entity, Map *map, side direction)
 			}*/
 		}
 	}
-	//std::cout << "You can move"  << std::endl;
 	return true;
 }
