@@ -5,8 +5,6 @@
 ** AI
 */
 
-#pragma warning(disable : 4244)
-
 #include <chrono>
 #include "Ai.hpp"
 #include "hitbox.hpp"
