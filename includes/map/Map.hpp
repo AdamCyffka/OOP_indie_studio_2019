@@ -34,7 +34,7 @@ enum bombState {
 
 using blockStateCheck = EnumCheck<blockState, blockState::empty, blockState::breakable, blockState::unbreakable>;
 
-using bombStateCheck = EnumCheck<bombState, bombState::clear, bombState::bomb, bombState::block>;
+using bombStateCheck = EnumCheck<bombState, bombState::clear, bombState::block>;
 
 class Map {
 	public:

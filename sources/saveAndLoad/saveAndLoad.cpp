@@ -47,7 +47,10 @@ void saveBombMap(Core &core, pt::ptree *root)
         std::string lineInString = "";
         for (int j = 1; j < MAP_WIDTH + 1; ++j)
         {
-            lineInString += std::to_string(bombMap[i][j]);
+            if (bombMap[i][j] != bomb)
+                lineInString += std::to_string(bombMap[i][j]);
+            else
+                lineInString += "0";
         }
         line_node.put("", lineInString);
         map_node.push_back(std::make_pair("", line_node));

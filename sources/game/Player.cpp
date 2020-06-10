@@ -13,6 +13,7 @@ Player::Player(Character *character, const Key_mouvement &input, int entityNumbe
 	  _firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false), _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
 	_bombStack = new BombStack(_driver, _smgr);
+	_character->setState(Character::state::idle);
 }
 
 void Player::kill()

@@ -203,6 +203,14 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 		return false;
 	if (map->getBombMap()[nextPoint.x][nextPoint.y] == bomb && !entity->getBombPass())
 		return false;
+	if (tmpBombMap[nextPoint.x][nextPoint.y] == bomb) {
+		if (tmpBombMap[point.x][point.y] == clear
+		|| tmpBombMap[point.x + 1][point.y] == clear
+		|| tmpBombMap[point.x][point.y + 1] == clear
+		|| tmpBombMap[point.x][point.y - 1] == clear
+		|| tmpBombMap[point.x - 1][point.y] == clear)
+			return false;
+	}
 	for (unsigned int j = 0; j < map->getBombMap()[nextPoint.x].size(); ++j)
 	{
 		if (map->getBombMap()[nextPoint.x][j] == bombState::bomb && (map->getBombMap()[point.x][point.y] >= map->getBombMap()[nextPoint.x][j] - 2 ||
