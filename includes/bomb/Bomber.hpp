@@ -50,7 +50,7 @@ class Bomber {
         void blastEast(IEntity *, irr::core::vector3df);
         void blastWest(IEntity *, irr::core::vector3df);
         void clearMapAfterBlast(IEntity *, irr::core::vector3df);
-        void animateBomb();
+        int getRemainingEntities();
 
         //Remove and give bomb
         void removeBombFromInventory(IEntity *it);
