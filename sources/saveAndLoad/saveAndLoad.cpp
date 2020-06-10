@@ -178,9 +178,9 @@ void loadBombMap(Core &core, pt::ptree *root)
             bombState block = bombState(map[i - 1][j - 1] - '0');
             if (!bombStateCheck::is_value(block))
                 throw saveAndLoadException("Invalid Enum value");
-            if (block == clear and _mapCheck[i][j] != empty)
+            if (block == clear && _mapCheck[i][j] != empty)
                 throw saveAndLoadException("BombMap and Map don't correspond");
-            if (block == bombState::block and _mapCheck[i][j] == empty)
+            if (block == bombState::block && _mapCheck[i][j] == empty)
                 throw saveAndLoadException("BombMap and Map don't correspond");
             _map[i][j] = block;
         }
