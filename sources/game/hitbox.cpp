@@ -34,34 +34,34 @@ bool characterHitBoxTouchBlock(float x, float z, float xBlock, float zBlock)
 int getPowerUpType(IPowerUps *powerUp)
 {
 	switch (powerUp->getType()) {
-		case PowerUps::BombDown:
+		case IPowerUps::BombDown:
 			powerUp->die();
 			return 1;
-		case PowerUps::BombFull:
+		case IPowerUps::BombFull:
 			powerUp->die();
 			return 2;
-		case PowerUps::BombPass:
+		case IPowerUps::BombPass:
 			powerUp->die();
 			return 3;
-		case PowerUps::BombUp:
+		case IPowerUps::BombUp:
 			powerUp->die();
 			return 4;
-		case PowerUps::FireDown:
+		case IPowerUps::FireDown:
 			powerUp->die();
 			return 5;
-		case PowerUps::FireFull:
+		case IPowerUps::FireFull:
 			powerUp->die();
 			return 6;
-		case PowerUps::FireUp:
+		case IPowerUps::FireUp:
 			powerUp->die();
 			return 7;
-		case PowerUps::SpeedDown:
+		case IPowerUps::SpeedDown:
 			powerUp->die();
 			return 8;
-		case PowerUps::SpeedUp:
+		case IPowerUps::SpeedUp:
 			powerUp->die();
 			return 9;
-		case PowerUps::WallPass:
+		case IPowerUps::WallPass:
 			powerUp->die();
 			return 10;
 	}
@@ -83,7 +83,6 @@ int isPowerUpsTaken(std::vector<IPowerUps *> objects, Map *map, IEntity *entity)
 				float tmp = overLap(pos.X, pos.Z, xBlock, zBlock);
 				if (tmp > overlap)
 				{
-					//Je check si l'overLap du bloc et plus grand que celui que j'avais si c'est le cas je remplace les coordonnées
 					overlap = tmp;
 					point = {int(i), int(j)};
 					tmp = overLap(pos.X, pos.Z, xBlock - 10.0f, zBlock);
@@ -100,7 +99,10 @@ int isPowerUpsTaken(std::vector<IPowerUps *> objects, Map *map, IEntity *entity)
 					}
 					if (point.x == playerPos.x && point.y == playerPos.y) {
 						auto index = std::find(objects.begin(), objects.end(), it);
-						objects.erase(index);
+						std::cout << point.x << " " << point.y << std::endl << playerPos.x << " " << playerPos.y << std::endl;
+						std::cout << "---------------------" << std::endl;
+						if (index != objects.end())
+							objects.erase(index);
 						return (getPowerUpType(it));
 					}
 				}

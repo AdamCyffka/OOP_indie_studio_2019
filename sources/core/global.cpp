@@ -6,31 +6,23 @@
 */
 
 #include "global.hpp"
+#include "IPowerUps.hpp"
 
 irr::video::ITexture *fireTexture;
-irr::scene::IMesh *bombDown;
-irr::scene::IMesh *bombFull;
-irr::scene::IMesh *bombPass;
-irr::scene::IMesh *bombUp;
-irr::scene::IMesh *fireDown;
-irr::scene::IMesh *fireFull;
-irr::scene::IMesh *fireUp;
-irr::scene::IMesh *speedDown;
-irr::scene::IMesh *speedUp;
-irr::scene::IMesh *wallPass;
+std::map<IPowerUps::PowerUpsType, irr::scene::IMesh *> g_meshes;
 void setGlobalVariables(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
     fireTexture = driver->getTexture("resources/images/fx/fire.bmp");
-    bombDown = smgr->getMesh("resources/models/powers/bombs/bombDown.obj");
-    bombFull = smgr->getMesh("resources/models/powers/bombs/bombFull.obj");
-    bombPass = smgr->getMesh("resources/models/powers/bombs/bombPass.obj");
-    bombUp = smgr->getMesh("resources/models/powers/bombs/bombUp.obj");
-    fireDown = smgr->getMesh("resources/models/powers/fires/fireDown.obj");
-    fireFull = smgr->getMesh("resources/models/powers/fires/fireFull.obj");
-    fireUp = smgr->getMesh("resources/models/powers/fires/fireUp.obj");
-    speedDown = smgr->getMesh("resources/models/powers/speeds/speedDown.obj");
-    speedUp = smgr->getMesh("resources/models/powers/speeds/speedUp.obj");
-    wallPass = smgr->getMesh("resources/models/powers/wallPass/wallPass.obj");
+	g_meshes[IPowerUps::PowerUpsType::BombDown] = smgr->getMesh("resources/models/powers/bombs/bombDown.obj");
+	g_meshes[IPowerUps::PowerUpsType::BombFull] = smgr->getMesh("resources/models/powers/bombs/bombFull.obj");
+	g_meshes[IPowerUps::PowerUpsType::BombPass] = smgr->getMesh("resources/models/powers/bombs/bombPass.obj");
+	g_meshes[IPowerUps::PowerUpsType::BombUp] = smgr->getMesh("resources/models/powers/bombs/bombUp.obj");
+	g_meshes[IPowerUps::PowerUpsType::FireDown] = smgr->getMesh("resources/models/powers/fires/fireDown.obj");
+	g_meshes[IPowerUps::PowerUpsType::FireFull] = smgr->getMesh("resources/models/powers/fires/fireFull.obj");
+    g_meshes[IPowerUps::PowerUpsType::FireUp] = smgr->getMesh("resources/models/powers/fires/fireUp.obj");
+	g_meshes[IPowerUps::PowerUpsType::SpeedDown] = smgr->getMesh("resources/models/powers/speeds/speedDown.obj");
+	g_meshes[IPowerUps::PowerUpsType::SpeedUp] = smgr->getMesh("resources/models/powers/speeds/speedUp.obj");
+	g_meshes[IPowerUps::PowerUpsType::WallPass] = smgr->getMesh("resources/models/powers/wallPass/wallPass.obj");
 }
 
 const std::map<std::string, modelInfos_t> g_modelInfos = {

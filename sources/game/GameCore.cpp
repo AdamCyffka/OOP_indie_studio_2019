@@ -52,6 +52,7 @@ void GameCore::nextRound()
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	spawnPlayers();
 	_map->generateMap();
+	_powerUps.clear();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
 	_isWaiting = false;
@@ -81,6 +82,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	}
 	spawnPlayers();
 	_bomber->setEntities(_entities);
+	boost::thread thr = boost::thread(boost::bind(&GameCore::nextRound, this));
 	_isInit = true;
 }
 
@@ -161,30 +163,31 @@ void GameCore::addPowerUps(irr::core::vector3df &pos)
 {
     u32 random = std::rand() % 100;
 
+//	_powerUps.push_back(new BombDown(_core->getSmgr(), pos));
 	if (random > 25)
 		return;
     else if (random >= 0 && random < 2)
-        _powerUps.push_back(new BombDown(_core->getSmgr(), pos));
+        _powerUps.push_back(new BombDown(_core->getSmgr(), pos)); //segfault(ou pas)
     else if (random >= 2 && random <= 8)
-        _powerUps.push_back(new BombUp(_core->getSmgr(), pos));
+        _powerUps.push_back(new BombUp(_core->getSmgr(), pos)); //fonctionne
     else if (random > 8 && random <= 10)
-        _powerUps.push_back(new FireDown(_core->getSmgr(), pos));
+        _powerUps.push_back(new FireDown(_core->getSmgr(), pos)); //fonctionne
     else if (random > 10 && random <= 16)
-        _powerUps.push_back(new FireUp(_core->getSmgr(), pos));
+        _powerUps.push_back(new FireUp(_core->getSmgr(), pos)); //segfault (ou pas ?)
 	else if (random > 16 && random <= 18)
-        _powerUps.push_back(new SpeedDown(_core->getSmgr(), pos));
+        _powerUps.push_back(new SpeedDown(_core->getSmgr(), pos)); //fonctionne
 	else if (random > 18 && random <= 24)
-        _powerUps.push_back(new SpeedUp(_core->getSmgr(), pos));	
+        _powerUps.push_back(new SpeedUp(_core->getSmgr(), pos)); //fonctionne
     else
 	{
 		random = std::rand() % 100;
 		if (random >= 0 && random < 25)
-		    _powerUps.push_back(new BombFull(_core->getSmgr(), pos));
+		    _powerUps.push_back(new BombFull(_core->getSmgr(), pos)); //fonctionne
 		else if (random >= 25 && random < 50)
-	        _powerUps.push_back(new FireFull(_core->getSmgr(), pos));
+	        _powerUps.push_back(new FireFull(_core->getSmgr(), pos)); //fonctionne
 		else if (random >= 50 && random < 75)
-	        _powerUps.push_back(new BombPass(_core->getSmgr(), pos));
-		else 
+	        _powerUps.push_back(new BombPass(_core->getSmgr(), pos)); //segfault (ou pas)
+		else
 	        _powerUps.push_back(new WallPass(_core->getSmgr(), pos));
 	}
 }

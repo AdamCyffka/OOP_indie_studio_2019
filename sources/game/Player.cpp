@@ -69,6 +69,10 @@ void Player::putBomb()
 
 void Player::setFirePower(int firePower)
 {
+	if (_firePower >= 5 && firePower > 0)
+		return;
+	if (_firePower <= 1 && firePower < 0)
+		return;
 	_firePower += firePower;
 }
 
@@ -79,6 +83,10 @@ int Player::getFirePower()
 
 void Player::setBombAmount(int bombAmount)
 {
+	if (_bombAmount >= 4 && bombAmount > 0)
+		return;
+	if (_bombAmount <= 1 && bombAmount < 0)
+		return;
 	_bombAmount = bombAmount;
 }
 
@@ -89,6 +97,10 @@ int Player::getBombAmount()
 
 void Player::setSpeed(int speed)
 {
+	if (_speed >= 5 && speed > 0)
+		return;
+	if (_speed <= 1 && speed < 0)
+		return;
 	_speed += speed;
 }
 
@@ -99,7 +111,8 @@ int Player::getSpeed()
 
 void Player::setWallPass(bool wallPass)
 {
-	_wallPass = wallPass;
+	if (wallPass != _wallPass)
+		_wallPass = wallPass;
 }
 
 bool Player::getWallPass()
@@ -109,7 +122,8 @@ bool Player::getWallPass()
 
 void Player::setBombPass(bool bombPass)
 {
-	_bombPass = bombPass;
+	if (bombPass != _bombPass)
+		_bombPass = bombPass;
 }
 
 bool Player::getBombPass()

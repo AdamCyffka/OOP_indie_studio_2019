@@ -6,26 +6,27 @@
 */
 
 #include "SpeedDown.hpp"
+#include "global.hpp"
 
 SpeedDown::SpeedDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
 	_smgr = smgr;
 	_pos = pos;
-	_type = PowerUps::PowerUpsType::SpeedDown;
+	_type = IPowerUps::PowerUpsType::SpeedDown;
 
-	if (!speedDown)
+	if (!g_meshes[IPowerUps::PowerUpsType::SpeedDown])
         throw PowerUpsException("can't load model \"resources/models/powers/speeds/speedDown.obj\"");
-    _bomb = _smgr->addMeshSceneNode(speedDown);
-    if (!_bomb)
+	_node = _smgr->addMeshSceneNode(g_meshes[IPowerUps::PowerUpsType::SpeedDown]);
+    if (!_node)
         throw PowerUpsException("can't add mesh \"resources/models/powers/speeds/speedDown.obj\" to a node");
-	_bomb->setPosition(pos);
-	_bomb->setScale({5, 5, 5});
-	if (_bomb)
-		_bomb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	_node->setPosition(pos);
+	_node->setScale({5, 5, 5});
+	if (_node)
+		_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	irr::scene::ISceneNodeAnimator *anim = _smgr->createRotationAnimator({0, 1, 0});
 	if (!anim)
 		throw PowerUpsException("can't load anim : speedDown");
-	_bomb->addAnimator(anim);
+	_node->addAnimator(anim);
 	anim->drop();
 }
 
@@ -34,7 +35,7 @@ irr::core::vector3df SpeedDown::getPosition()
 	return _pos;
 }
 
-PowerUps::PowerUpsType SpeedDown::getType()
+IPowerUps::PowerUpsType SpeedDown::getType()
 {
 	return _type;
 }
@@ -45,7 +46,7 @@ void SpeedDown::spawn()
 
 void SpeedDown::die()
 {
-	_bomb->setVisible(false);
+	_node->setVisible(false);
 }
 
 void SpeedDown::update()
