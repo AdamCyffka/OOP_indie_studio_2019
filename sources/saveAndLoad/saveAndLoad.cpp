@@ -112,7 +112,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     savePlayer(2, core, &root);
     savePlayer(3, core, &root);
     saveMap(core, &root);
-    //saveBombMap(core, &root);
+    saveBombMap(core, &root);
 
     //Write save in save file
     pt::write_json("save" + std::to_string(slot) + ".json", root);
@@ -315,7 +315,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         loadPlayer(2, core, &root);
         loadPlayer(3, core, &root);
         loadMap(core, &root);
-        //loadBombMap(core, &root);
+        loadBombMap(core, &root);
     }
     catch (std::exception const &msg)
     {
