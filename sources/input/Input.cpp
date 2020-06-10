@@ -170,6 +170,8 @@ basic_key Input::keyBoard (Input *receiver) // fonction tempo
 {
 	if (receiver->isKeyDown(irr::KEY_F12))
 		exit(84);
+	
+	return (exit_game);
 }
 void Input::reset()
 {
