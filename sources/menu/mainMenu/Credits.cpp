@@ -35,11 +35,12 @@ void Credits::loadButtons()
 		throw LoadingException("could not add button : back");
     _buttons["back"]->setImage(_textures["back"]);
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
+
     _images["credits"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1333, 272));
 	if (_images.find("credits") == _images.end() || !_images["credits"])
 		throw LoadingException("could not add image : credits");
     _images["credits"]->setImage(_textures["credits"]);
-    _images["credits"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
+    _images["credits"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 300));
 }
 
 std::vector<Character *> Credits::getPreviews()
