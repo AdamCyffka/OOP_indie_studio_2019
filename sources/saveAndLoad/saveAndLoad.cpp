@@ -198,21 +198,23 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     Key_mouvement input = (Key_mouvement)root->get<int>(path + "input");
     if (!Key_mouvementCheck::is_value(input))
         throw saveAndLoadException("Invalid Enum value");
-    if (input == Key_mouvement::Ia)
-        entity = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore()->getBomber());
+    /*if (input == Key_mouvement::Ia)
+        entities[playerNB] = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore()->getBomber());
     else
-        entity = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber());
-    entity->setIsAlive(root->get<bool>(path + "isAlive", 0));
-    entity->setBombPass(root->get<bool>(path + "bombPass", 0));
-    entity->setWallPass(root->get<bool>(path + "wallPass", 0));
-    entity->setScore(root->get<int>(path + "score", 0));
-    entity->setEntityNumber(root->get<int>(path + "entityNumber", 0));
-    entity->setSpeed(root->get<int>(path + "speed", 0));
-    entity->setBombAmount(root->get<int>(path + "bombAmount", 0));
-    entity->setFirePower(root->get<int>(path + "firePower", 0));
+        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber());*/
+    entities[playerNB]->setIsAlive(root->get<bool>(path + "isAlive", 0));
+    entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
+    entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));
+    entities[playerNB]->setScore(root->get<int>(path + "score", 0));
+    entities[playerNB]->setEntityNumber(root->get<int>(path + "entityNumber", 0));
+    entities[playerNB]->setSpeed(root->get<int>(path + "speed", 0));
+    entities[playerNB]->setBombAmount(root->get<int>(path + "bombAmount", 0));
+    entities[playerNB]->setFirePower(root->get<int>(path + "firePower", 0));
+    entities[playerNB]->setWallPass((root->get<bool>(path + "wallPass", 0)));
+    std::cout << entities[playerNB]->getWallPass() << std::endl;
     if (root->get<int>(path + "winNumber", 0) > 2)
         throw saveAndLoadException("Invalid winNumber");
-    entity->setWinNumber(root->get<int>(path + "winNumber", 0));
+    entities[playerNB]->setWinNumber(root->get<int>(path + "winNumber", 0));
     //ADDING ELEMNTS TO LOAD HERE FOR PLAYER
 }
 
