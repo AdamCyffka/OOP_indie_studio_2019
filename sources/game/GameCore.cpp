@@ -44,6 +44,7 @@ void GameCore::reset()
 
 void GameCore::firstRound()
 {
+	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	_powerUps.clear();
@@ -254,7 +255,7 @@ std::vector<std::pair<int, int>> GameCore::getRanking()
 	return ranking;
 }
 
-std::vector<IEntity *> GameCore::getEntities() const
+std::vector<IEntity *> &GameCore::getEntities()
 {
 	return _entities;
 }

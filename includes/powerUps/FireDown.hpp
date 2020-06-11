@@ -13,6 +13,7 @@
 class FireDown : public IPowerUps {
     public:
         explicit FireDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        ~FireDown();
 
         void spawn();
 		void die();

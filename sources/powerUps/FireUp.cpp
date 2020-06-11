@@ -30,6 +30,11 @@ FireUp::FireUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 	anim->drop();
 }
 
+FireUp::~FireUp()
+{
+	_node->remove();
+}
+
 irr::core::vector3df FireUp::getPosition()
 {
 	return _pos;

@@ -30,6 +30,11 @@ BombDown::BombDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	anim->drop();
 }
 
+BombDown::~BombDown()
+{
+	_node->remove();
+}
+
 irr::core::vector3df BombDown::getPosition()
 {
 	return _pos;
