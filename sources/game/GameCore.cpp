@@ -253,7 +253,7 @@ std::vector<std::pair<int, int>> GameCore::getRanking()
 	return ranking;
 }
 
-std::vector<IEntity *> GameCore::getEntities() const
+std::vector<IEntity *> &GameCore::getEntities()
 {
 	return _entities;
 }

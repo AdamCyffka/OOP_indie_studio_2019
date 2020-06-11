@@ -60,7 +60,7 @@ void saveBombMap(Core &core, pt::ptree *root)
 
 void savePlayer(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
+    std::vector<IEntity *> &entities = core.getGameCore()->getEntities();
     IEntity *entity = entities[playerNB];
     pt::ptree player;
 
@@ -189,7 +189,7 @@ void loadBombMap(Core &core, pt::ptree *root)
 
 void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
+    std::vector<IEntity *> &entities = core.getGameCore()->getEntities();
     const std::vector<Character *> &characters = core.getSelect()->getPreviews();
     IEntity *entity = entities[playerNB];
     IEntity *entitySaved = nullptr;
@@ -198,10 +198,10 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     Key_mouvement input = (Key_mouvement)root->get<int>(path + "input");
     if (!Key_mouvementCheck::is_value(input))
         throw saveAndLoadException("Invalid Enum value");
-    /*if (input == Key_mouvement::Ia)
+    if (input == Key_mouvement::Ia)
         entities[playerNB] = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore()->getBomber());
     else
-        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber());*/
+        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber());
     entities[playerNB]->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
     entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));
@@ -211,7 +211,6 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entities[playerNB]->setBombAmount(root->get<int>(path + "bombAmount", 0));
     entities[playerNB]->setFirePower(root->get<int>(path + "firePower", 0));
     entities[playerNB]->setWallPass((root->get<bool>(path + "wallPass", 0)));
-    std::cout << entities[playerNB]->getWallPass() << std::endl;
     if (root->get<int>(path + "winNumber", 0) > 2)
         throw saveAndLoadException("Invalid winNumber");
     entities[playerNB]->setWinNumber(root->get<int>(path + "winNumber", 0));
@@ -220,7 +219,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 
 void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 {
-    std::vector<IEntity *> entities = core.getGameCore()->getEntities();
+    std::vector<IEntity *> &entities = core.getGameCore()->getEntities();
     Character *character = entities[playerNB]->getCharacter();
     std::string path = "player" + std::to_string(playerNB) + ".character.";
 
