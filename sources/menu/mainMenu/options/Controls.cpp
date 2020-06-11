@@ -26,9 +26,9 @@ void Controls::loadTextures()
     _textures["sounds"] = _driver->getTexture("resources/images/buttons/sounds.png");
     if (_textures.find("sounds") == _textures.end() || !_textures["sounds"])
         throw LoadingException("could not load texture : resources/images/buttons/sounds.png");
-    _textures["videos"] = _driver->getTexture("resources/images/buttons/videos.png");
-    if (_textures.find("videos") == _textures.end() || !_textures["videos"])
-        throw LoadingException("could not load texture : resources/images/buttons/videos.png");
+	_textures["GameSettings"] = _driver->getTexture("resources/images/buttons/game_settings.png");
+	if (_textures.find("GameSettings") == _textures.end() || !_textures["GameSettings"])
+		throw LoadingException("could not load texture : resources/images/buttons/game_settings.png");
     _textures["controls"] = _driver->getTexture("resources/images/buttons/controls.png");
     if (_textures.find("controls") == _textures.end() || !_textures["controls"])
         throw LoadingException("could not load texture : resources/images/buttons/controls.png");
@@ -81,11 +81,11 @@ void Controls::loadButtons()
     _buttons["controls"]->setImage(_textures["controls"]);
     _buttons["controls"]->setRelativePosition(irr::core::position2d<irr::s32>(400, 500));
 
-    _buttons["videos"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_GAMESETTINGS_BUTTON, L"");
-    if (_buttons.find("videos") == _buttons.end() || !_buttons["videos"])
-        throw LoadingException("could not add button : videos");
-    _buttons["videos"]->setImage(_textures["videos"]);
-    _buttons["videos"]->setRelativePosition(irr::core::position2d<irr::s32>(400, 600));
+	_buttons["GameSettings"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_GAMESETTINGS_BUTTON, L"");
+	if (_buttons.find("GameSettings") == _buttons.end() || !_buttons["GameSettings"])
+		throw LoadingException("could not add button : GameSettings");
+	_buttons["GameSettings"]->setImage(_textures["GameSettings"]);
+	_buttons["GameSettings"]->setRelativePosition(irr::core::position2d<irr::s32>(400, 600));
 
     _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
     if (_buttons.find("back") == _buttons.end() || !_buttons["back"])
