@@ -25,12 +25,9 @@
 
 Core::Core()
 {
-	_fullscreen = FULLSCREEN;
-	_width = 1920;
-	_height = 1080;
 	_window = irr::createDevice(irr::video::EDT_OPENGL,
-        irr::core::dimension2d<irr::u32>(_width, _height),
-        16, getFullscreen(), false);
+        irr::core::dimension2d<irr::u32>(1920, 1080),
+        16, true, false);
 	if (!_window) {
 		std::cerr << "Couldn't open a window" << std::endl;
 		return;
@@ -71,76 +68,6 @@ Core::Core()
 	_gameControls = nullptr;
 
 	setGlobalVariables(_driver, _smgr);
-}
-
-void Core::start()
-{
-    restartDevice(_fullscreen);
-}
-
-void Core::restartDevice(bool fullscreen)
-{
-	if (_window) {
-		_window->closeDevice();
-		_window->run();
-		_window->drop();
-	}
-    _window = irr::createDevice(irr::video::EDT_OPENGL,
-        irr::core::dimension2d<irr::u32>(1920, 1080),
-        16, fullscreen, false);
-	if (!_window)
-		throw CoreException("Error : Window could not be loaded");
-	_smgr = _window->getSceneManager();
-	if (!_smgr)
-		throw CoreException("Error : Scene manager could not be loaded");
-	_env = _window->getGUIEnvironment();
-	if (!_env)
-		throw CoreException("Error : GUI environment could not be loaded");
-	_driver = _window->getVideoDriver();
-	if (!_driver)
-		throw CoreException("Error : Driver could not be loaded");
-	_camera = _smgr->addCameraSceneNodeMaya();
-	if (!_camera)
-		throw CoreException("Error : Camera could not be loaded");
-	_camera->setFarValue(42000);
-	_cameraTravelManager = new CameraTravelManager(_camera, _smgr);
-	_receiver = new MyEventReceiver(_window, *this, _cameraTravelManager);
-	_window->setEventReceiver(_receiver);
-	_lState = menuSplash;
-	_gState = menu;
-	_lGState = gameGame;
-	_isInitialized = false;
-	_initStep = 0;
-	_intro = nullptr;
-	_loadmap = nullptr;
-	_credits = nullptr;
-	_help = nullptr;
-	_splash = nullptr;
-	_menu = nullptr;
-	_sounds = nullptr;
-	_gameSettings = nullptr;
-	_controls = nullptr;
-	_save = nullptr;
-	_load = nullptr;
-    _select = nullptr;
-	_score = nullptr;
-    _music = nullptr;
-    _inputs = nullptr;
-    _gameCore = nullptr;
-	_pause = nullptr;
-	_game = nullptr;
-	_gameSounds = nullptr;
-	_gameControls = nullptr;
-}
-
-void Core::changeFullscreen()
-{
-    _fullscreen = !_fullscreen;
-}
-
-bool Core::getFullscreen() const
-{
-    return _fullscreen;
 }
 
 void Core::setGameSettings(GameSettings *gameSettings)
@@ -650,16 +577,6 @@ void Core::drawMenuLayer()
 			loadCase();
 			break;
 	}
-}
-
-int Core::getWidth()
-{
-	return _width;
-}
-
-int Core::getHeight()
-{
-	return _width;
 }
 
 void Core::hideGameLayers()
