@@ -63,7 +63,7 @@ void Sounds::loadButtons()
     _buttons["controls"]->setImage(_textures["controls"]);
     _buttons["controls"]->setRelativePosition(irr::core::position2d<irr::s32>(400, 500));
 
-    _buttons["videos"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_VIDEOS_BUTTON, L"");
+    _buttons["videos"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_GAMESETTINGS_BUTTON, L"");
     if (_buttons.find("videos") == _buttons.end() || !_buttons["videos"])
         throw LoadingException("could not add button : videos");
     _buttons["videos"]->setImage(_textures["videos"]);

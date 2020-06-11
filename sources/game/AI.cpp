@@ -11,11 +11,15 @@
 #include "Bomber.hpp"
 #include "Core.hpp"
 
-AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, Bomber *bomber)
+AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
-	  _bomber(bomber), _winNumber(0), _character(character), _firePower(1), _bombAmount(1), _wantedMovement(Key_mouvement::None),
-	  _speed(3), _wallPass(false), _bombPass(false)
+	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None)
 {
+	_firePower = gameCore->getCore()->getGameSettings()->getFirePower();
+	_bombAmount = gameCore->getCore()->getGameSettings()->getBombAmount();
+	_speed = gameCore->getCore()->getGameSettings()->getSpeed();
+	_wallPass = gameCore->getCore()->getGameSettings()->isWallPass();
+	_bombPass = gameCore->getCore()->getGameSettings()->isBombPass();
 	_bombStack = new BombStack(_driver, _smgr);
 	std::srand((unsigned int)(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 	_character->setState(Character::state::idle);
@@ -71,6 +75,10 @@ void AI::putBomb()
 void AI::setFirePower(int firePower)
 {
 	_firePower += firePower;
+	if (_firePower > 5)
+		_firePower = 5;
+	if (_firePower < 1)
+		_firePower = 1;
 }
 
 int AI::getFirePower()
@@ -80,7 +88,11 @@ int AI::getFirePower()
 
 void AI::setBombAmount(int bombAmount)
 {
-	_bombAmount = bombAmount;
+	_bombAmount += bombAmount;
+	if (_bombAmount > 4)
+		_bombAmount = 4;
+	if (_bombAmount < 1)
+		_bombAmount = 1;
 }
 
 int AI::getBombAmount()
@@ -91,6 +103,10 @@ int AI::getBombAmount()
 void AI::setSpeed(int speed)
 {
 	_speed += speed;
+	if (_speed > 5)
+		_speed = 5;
+	if (_speed < 1)
+		_speed = 1;
 }
 
 int AI::getSpeed()
