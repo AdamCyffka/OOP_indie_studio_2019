@@ -18,7 +18,7 @@ GameCore::GameCore(Core *core)
 	_core = core;
 	_isInit = false;
 	_isPaused = false;
-	_isWaiting = false;
+	_isWaiting = 0;
 	_map = _core->getMap();
 	_loadMap = _core->getLoadMap();
 	_bomber = new Bomber(_map, _loadMap, this);
@@ -38,32 +38,46 @@ void GameCore::reset()
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
 	_powerUps.clear();
 	_entities.clear();
+	_isWaiting = 0;
 	_isPaused = false;
 	_isInit = false;
 }
 
 void GameCore::firstRound()
 {
-	_isWaiting = true;
-	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	_isWaiting = 3;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 2;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 1;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 0;
 	_powerUps.clear();
-	_isWaiting = false;
+}
+
+int GameCore::isWaiting() const
+{
+	return _isWaiting;
 }
 
 void GameCore::nextRound()
 {
-	_isWaiting = true;
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
 	}
 	spawnPlayers();
-	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	_isWaiting = 3;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 2;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 1;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 0;
 	spawnPlayers();
 	_map->generateMap();
 	_powerUps.clear();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
-	_isWaiting = false;
 }
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)
@@ -107,7 +121,7 @@ void GameCore::isOver()
 
 void GameCore::run()
 {
-	if (_isPaused || _isWaiting)
+	if (_isPaused || _isWaiting != 0)
 		return;
 	if (gameOver()) {
 		isOver();

@@ -44,6 +44,7 @@ class GameCore {
 		void firstRound();
 		void nextRound();
 		void isOver();
+		int isWaiting() const;
         bool isInit() const;
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
 		bool nextBlockHasWall(std::pair<int, int>);
@@ -62,7 +63,7 @@ class GameCore {
 		std::map<int, irr::core::vector3df> _spawnAreas;
 		std::vector<IEntity *> _entities;
 		bool _isPaused;
-		bool _isWaiting;
+		int _isWaiting;
 		bool _isInit;
 		Core *_core;
 		Map *_map;

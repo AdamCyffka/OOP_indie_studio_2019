@@ -21,7 +21,8 @@ class Game : public IMenu {
 
         void loadButtons();
         void loadTextures();
-        void run(std::vector<IEntity *> entities);
+        void loadImages();
+        void run(int count, std::vector<IEntity *> entities);
         void printUpLeft();
         void printUpRight();
         void printDownLeft();
@@ -30,6 +31,7 @@ class Game : public IMenu {
         std::vector<Character *> getPreviews();
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
+        std::map<std::string, irr::gui::IGUIImage *> getTempImages();
         std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
     private:
         irr::gui::IGUIEnvironment *_env;
@@ -38,6 +40,7 @@ class Game : public IMenu {
         std::vector<Character *> _previews;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
+        std::map<std::string, irr::gui::IGUIImage *> _tempImages;
         std::map<std::string, irr::video::ITexture *> _textures;
         std::map<std::string, irr::gui::IGUIButton *> _buttons;
         std::map<std::string, irr::gui::IGUICheckBox *> _checkBox;
