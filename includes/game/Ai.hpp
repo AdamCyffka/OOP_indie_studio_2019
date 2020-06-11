@@ -19,7 +19,7 @@ class AI : public IEntity
 public:
 	AI(Character *character, int entityNumber, Map *map,
 	irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,
-	std::vector<IEntity *> entities, Bomber *bomber);
+	std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber);
 
 	void kill() final;
 	void run(Key_mouvement) final;

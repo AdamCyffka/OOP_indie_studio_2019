@@ -21,7 +21,7 @@
 #include "Music.hpp"
 #include "GameCore.hpp"
 #include "Sounds.hpp"
-#include "Videos.hpp"
+#include "GameSettings.hpp"
 #include "Controls.hpp"
 #include "GameControls.hpp"
 #include "GameSounds.hpp"
@@ -46,7 +46,7 @@ class Core {
             menuIntro,
 			menuMain,
 			menuSounds,
-            menuVideos,
+            menuGameSettings,
             menuControls,
 			menuSplash,
 			menuHelp,
@@ -80,7 +80,7 @@ class Core {
         void scoreCase();
         void soundsCase();
         void controlsCase();
-        void videosCase();
+        void gameSettingsCase();
         void helpCase();
         void creditsCase();
         void splashCase();
@@ -95,8 +95,8 @@ class Core {
         layerMenuState getLState();
         layerGameState getLGState();
 		gameState getGState();
-		Videos *getVideos() const;
-		void setVideos(Videos *videos);
+		GameSettings *getGameSettings() const;
+		void setGameSettings(GameSettings *gameSettings);
 		void setMenu(Menu *);
 		Menu *getMenu() const;
 		void setSelect(Select *);
@@ -162,7 +162,7 @@ class Core {
         Intro *_intro;
         Menu *_menu;
         Controls *_controls;
-        Videos *_videos;
+        GameSettings *_gameSettings;
         Sounds *_sounds;
 		Splash *_splash;
         LoadMap *_loadmap;

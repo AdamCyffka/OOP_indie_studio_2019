@@ -22,7 +22,7 @@ void loadMap(Core *core);
 void loadIntro(Core *core);
 void loadMenu(Core *core);
 void loadSounds(Core *core);
-void loadVideos(Core *core);
+void loadGameSettings(Core *core);
 void loadControls(Core *core);
 void loadSelect(Core *core);
 void loadScore(Core *core);

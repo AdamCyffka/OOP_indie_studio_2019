@@ -44,13 +44,16 @@ void GameCore::reset()
 
 void GameCore::firstRound()
 {
+	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	_powerUps.clear();
 	_isWaiting = false;
 }
 
 void GameCore::nextRound()
 {
+	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
@@ -70,7 +73,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
-			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, _bomber);
+			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, this, _bomber);
 			entity->setInput(Key_mouvement::Ia);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::NoDevice)
 				_core->getInput()->setDevice(i, No_device);
@@ -214,7 +217,7 @@ void GameCore::spawnPlayers()
 bool GameCore::gameOver()
 {
 	for (auto it : _entities) {
-		if (it->getWinNumber() >= 1)
+		if (it->getWinNumber() >= 3)
 			return (true);
 	}
 	return false;
@@ -253,7 +256,7 @@ std::vector<std::pair<int, int>> GameCore::getRanking()
 	return ranking;
 }
 
-std::vector<IEntity *> GameCore::getEntities() const
+std::vector<IEntity *> &GameCore::getEntities()
 {
 	return _entities;
 }

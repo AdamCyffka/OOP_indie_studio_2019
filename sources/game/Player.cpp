@@ -7,11 +7,17 @@
 
 #include "Player.hpp"
 #include "GameCore.hpp"
+#include "Core.hpp"
 
 Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _savedInput(None),
-	  _firePower(1), _bombAmount(1), _speed(5), _wallPass(false), _bombPass(false), _wantedPosition(irr::core::vector3df(0, 0, 0))
+	 _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
+	_firePower = _gameCore->getCore()->getGameSettings()->getFirePower();
+	_bombAmount = gameCore->getCore()->getGameSettings()->getBombAmount();
+	_speed = gameCore->getCore()->getGameSettings()->getSpeed();
+	_wallPass = gameCore->getCore()->getGameSettings()->isWallPass();
+	_bombPass = gameCore->getCore()->getGameSettings()->isBombPass();
 	_bombStack = new BombStack(_driver, _smgr);
 	_character->setState(Character::state::idle);
 }
@@ -69,11 +75,11 @@ void Player::putBomb()
 
 void Player::setFirePower(int firePower)
 {
-	if (_firePower >= 5 && firePower > 0)
-		return;
-	if (_firePower <= 1 && firePower < 0)
-		return;
 	_firePower += firePower;
+	if (_firePower > 5)
+		_firePower = 5;
+	if (_firePower < 1)
+		_firePower = 1;
 }
 
 int Player::getFirePower()
@@ -83,11 +89,11 @@ int Player::getFirePower()
 
 void Player::setBombAmount(int bombAmount)
 {
-	if (_bombAmount >= 4 && bombAmount > 0)
-		return;
-	if (_bombAmount <= 1 && bombAmount < 0)
-		return;
-	_bombAmount = bombAmount;
+	_bombAmount += bombAmount;
+	if (_bombAmount > 4)
+		_bombAmount = 4;
+	if (_bombAmount < 1)
+		_bombAmount = 1;
 }
 
 int Player::getBombAmount()
@@ -97,11 +103,11 @@ int Player::getBombAmount()
 
 void Player::setSpeed(int speed)
 {
-	if (_speed >= 5 && speed > 0)
-		return;
-	if (_speed <= 1 && speed < 0)
-		return;
 	_speed += speed;
+	if (_speed > 5)
+		_speed = 5;
+	if (_speed < 1)
+		_speed = 1;
 }
 
 int Player::getSpeed()
@@ -175,7 +181,7 @@ void Player::checkMovement(Key_mouvement input)
 {
 	irr::core::vector3df pos = _character->getPosition();
 	irr::u32 distanceTravel = 10;
-	irr::u32 speedTime = 1000 / _speed;
+	irr::u32 speedTime = 800 / _speed;
 
 	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
 	{
