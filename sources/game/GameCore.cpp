@@ -42,6 +42,13 @@ void GameCore::reset()
 	_isInit = false;
 }
 
+void GameCore::firstRound()
+{
+	_isWaiting = true;
+	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	_isWaiting = false;
+}
+
 void GameCore::nextRound()
 {
 	_isWaiting = true;
@@ -81,7 +88,7 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	}
 	spawnPlayers();
 	_bomber->setEntities(_entities);
-	boost::thread thr = boost::thread(boost::bind(&GameCore::nextRound, this));
+	boost::thread thr = boost::thread(boost::bind(&GameCore::firstRound, this));
 	_isInit = true;
 }
 
