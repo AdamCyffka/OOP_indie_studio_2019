@@ -85,7 +85,7 @@ void Game::printStars(std::vector<IEntity *> entities)
             throw LoadingException("could not add image : GstarTopLOne");
         _images["GstarTopLOne"]->setImage(_textures["grey_star"]);
         _images["GstarTopLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 135));
-         _images["GstarTopLOne"]->setVisible(false);
+        _images["GstarTopLOne"]->setVisible(false);
         
         _images["GstarTopLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("GstarTopLTwo") != _images.end() && !_images["GstarTopLTwo"])
@@ -120,7 +120,7 @@ void Game::printStars(std::vector<IEntity *> entities)
             throw LoadingException("could not add image : GstarTopRThree");
         _images["GstarTopRThree"]->setImage(_textures["grey_star"]);
         _images["GstarTopRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 135));
-        _images["GstarTopLThree"]->setVisible(false);
+        _images["GstarTopRThree"]->setVisible(false);
 
         _images["GstarBotLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("GstarBotLOne") != _images.end() && !_images["GstarBotLOne"])
@@ -155,14 +155,14 @@ void Game::printStars(std::vector<IEntity *> entities)
             throw LoadingException("could not add image : GstarBotRTwo");
         _images["GstarBotRTwo"]->setImage(_textures["grey_star"]);
         _images["GstarBotRTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(1840, 920));
-        _images["GstarBotLTwo"]->setVisible(false);
+        _images["GstarBotRTwo"]->setVisible(false);
 
         _images["GstarBotRThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("GstarBotRThree") != _images.end() && !_images["GstarBotRThree"])
             throw LoadingException("could not add image : GstarBotRThree");
         _images["GstarBotRThree"]->setImage(_textures["grey_star"]);
         _images["GstarBotRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 920));
-        _images["GstarBotLThree"]->setVisible(false);
+        _images["GstarBotRThree"]->setVisible(false);
     }
     if (entities[0]->getWinNumber() == 1) {
         _images["GstarTopLOne"]->setImage(_textures["star"]);
