@@ -21,6 +21,7 @@ class Game : public IMenu {
         void loadButtons();
         void loadTextures();
         void run();
+        void printStars();
         void printUpLeft();
         void printUpRight();
         void printDownLeft();
