@@ -36,6 +36,8 @@ void GameCore::reset()
 	_map->generateMap();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
+	for (auto it : _powerUps)
+		it->die();
 	_powerUps.clear();
 	_entities.clear();
 	_isPaused = false;
