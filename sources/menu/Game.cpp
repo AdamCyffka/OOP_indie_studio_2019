@@ -80,11 +80,21 @@ void Game::printStars(std::vector<IEntity *> entities)
 {
     for (auto it : entities)
     {
+    }
+
+    for (auto it : entities)
+    {
         _images["test"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
         if (_images.find("test") != _images.end() && !_images["test"])
             throw LoadingException("could not add image : test");
         _images["test"]->setImage(_textures["star"]);
         _images["test"]->setRelativePosition(irr::core::position2d<irr::s32>(500, 500));
+
+        _images["test2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("test2") != _images.end() && !_images["test2"])
+            throw LoadingException("could not add image : test");
+        _images["test2"]->setImage(_textures["star"]);
+        _images["test2"]->setRelativePosition(irr::core::position2d<irr::s32>(1000, 1000));
     }
 }
 
