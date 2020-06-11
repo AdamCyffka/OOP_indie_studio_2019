@@ -80,12 +80,55 @@ void Game::printStars(std::vector<IEntity *> entities)
 {
     for (auto it : entities)
     {
-        _images["test"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("test") != _images.end() && !_images["test"])
-            throw LoadingException("could not add image : test");
-        _images["test"]->setImage(_textures["star"]);
-        _images["test"]->setRelativePosition(irr::core::position2d<irr::s32>(500, 500));
+        _images["starTopLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starTopLOne") != _images.end() && !_images["starTopLOne"])
+            throw LoadingException("could not add image : starTopLOne");
+        _images["starTopLOne"]->setImage(_textures["star"]);
+        _images["starTopLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(10, 135));
+        
+        _images["starTopLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starTopLTwo") != _images.end() && !_images["starTopLTwo"])
+            throw LoadingException("could not add image : starTopLTwo");
+        _images["starTopLTwo"]->setImage(_textures["star"]);
+        _images["starTopLTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(55, 135));
+
+        _images["starTopROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starTopROne") != _images.end() && !_images["starTopROne"])
+            throw LoadingException("could not add image : starTopRTwo");
+        _images["starTopROne"]->setImage(_textures["star"]);
+        _images["starTopROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1800, 135));
+
+        _images["starTopROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starTopROne") != _images.end() && !_images["starTopROne"])
+            throw LoadingException("could not add image : starTopRTwo");
+        _images["starTopROne"]->setImage(_textures["star"]);
+        _images["starTopROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1850, 135));
+
+        _images["starBotLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starBotLOne") != _images.end() && !_images["starBotLOne"])
+            throw LoadingException("could not add image : starBotLOne");
+        _images["starBotLOne"]->setImage(_textures["star"]);
+        _images["starBotLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(10, 920));
+        
+        _images["starBotLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starBotLTwo") != _images.end() && !_images["starBotLTwo"])
+            throw LoadingException("could not add image : starBotLTwo");
+        _images["starBotLTwo"]->setImage(_textures["star"]);
+        _images["starBotLTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(55, 920));
+
+        _images["starBotROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starBotROne") != _images.end() && !_images["starBotROne"])
+            throw LoadingException("could not add image : starBotROne");
+        _images["starBotROne"]->setImage(_textures["star"]);
+        _images["starBotROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1800, 920));
+        
+        _images["starBotRTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+        if (_images.find("starBotRTwo") != _images.end() && !_images["starBotRTwo"])
+            throw LoadingException("could not add image : starBotRTwo");
+        _images["starBotRTwo"]->setImage(_textures["star"]);
+        _images["starBotRTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(1850, 920));
     }
+        
 }
 
 void Game::printUpLeft()
