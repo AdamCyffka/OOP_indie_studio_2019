@@ -71,7 +71,6 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     player.put("wallPass", entity->getWallPass());
     player.put("bombPass", entity->getBombPass());
     player.put("entityNumber", entity->getEntityNumber());
-    player.put("score", entity->getScore());
     player.put("winNumber", entity->getWinNumber());
     player.put("input", entity->getInput());
     //ADDING ELEMENTS FOR PLAYER HERE
@@ -203,13 +202,20 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entities[playerNB]->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
     entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));
-    entities[playerNB]->setScore(root->get<int>(path + "score", 0));
     entities[playerNB]->setEntityNumber(root->get<int>(path + "entityNumber", 0));
-    entities[playerNB]->setSpeed(root->get<int>(path + "speed", 0));
-    entities[playerNB]->setBombAmount(root->get<int>(path + "bombAmount", 0));
+    if (root->get<int>(path + "entityNumber", 0) < 0 || root->get<int>(path + "entityNumber", 0) > 3)
+        throw saveAndLoadException("Invalid entityNumber");
+    entities[playerNB]->setSpeed(root->get<int>(path + "speed", 2));
+    if (root->get<int>(path + "speed", 2) < 1 || root->get<int>(path + "speed", 2) > 5)
+        throw saveAndLoadException("Invalid speed");
+    entities[playerNB]->setBombAmount(root->get<int>(path + "bombAmount", 1));
+    if (root->get<int>(path + "bombAmount", 1) < 1 || root->get<int>(path + "bombAmount", 1) > 4)
+        throw saveAndLoadException("Invalid bombAmount");
     entities[playerNB]->setFirePower(root->get<int>(path + "firePower", 0));
+    if (root->get<int>(path + "firePower", 1) < 1 || root->get<int>(path + "firePower", 1) > 5)
+        throw saveAndLoadException("Invalid bombAmount");
     entities[playerNB]->setWallPass((root->get<bool>(path + "wallPass", 0)));
-    if (root->get<int>(path + "winNumber", 0) > 2)
+    if (root->get<int>(path + "winNumber", 0) > 2 || root->get<int>(path + "winNumber", 0) < 0)
         throw saveAndLoadException("Invalid winNumber");
     entities[playerNB]->setWinNumber(root->get<int>(path + "winNumber", 0));
     //ADDING ELEMNTS TO LOAD HERE FOR PLAYER

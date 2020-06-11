@@ -5,7 +5,12 @@
 ** Save
 */
 
+
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include "Save.hpp"
+
+namespace pt = boost::property_tree;
 
 Save::Save(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
 {
@@ -23,21 +28,56 @@ void Save::loadTextures()
     _textures["slot"] = _driver->getTexture("resources/images/buttons/slot.png");
 }
 
+const wchar_t *getSaveName(int saveSlot)
+{
+    pt::ptree root;
+
+    try
+    {
+        pt::ptree root;
+        pt::read_json("save" + std::to_string(saveSlot) + ".json", root);
+        switch (saveSlot)
+        {
+            case 1:
+                return L"save 1";
+                break;
+            case 2:
+                return L"save 2";
+                break;
+            case 3:
+                return L"save 3";
+                break;
+            case 4:
+                return L"save 4";
+                break;
+        }
+    }
+    catch (pt::json_parser::json_parser_error)
+    {
+        return L"-";
+    }
+    catch (pt::ptree_bad_path)
+    {
+        return L"-";
+    }
+    return L"-";
+}
+
 void Save::loadButtons()
 {
-    _buttons["slot1"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_1, L"save 1");
+    _buttons["slot1"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_1, getSaveName(1));
     _buttons["slot1"]->setImage(_textures["slot"]);
     _buttons["slot1"]->setRelativePosition(irr::core::position2d<irr::s32>(780, 250));
 
-    _buttons["slot2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_2, L"save 2");
+    _buttons["slot2"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_2, getSaveName(2));
     _buttons["slot2"]->setImage(_textures["slot"]);
     _buttons["slot2"]->setRelativePosition(irr::core::position2d<irr::s32>(780, 350));
 
-    _buttons["slot3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_3, L"save 3");
+    _buttons["slot3"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_3, getSaveName(3));
     _buttons["slot3"]->setImage(_textures["slot"]);
     _buttons["slot3"]->setRelativePosition(irr::core::position2d<irr::s32>(780, 450));
 
-    _buttons["slot4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_4, L"save 4");
+    _buttons["slot4"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 350, 50), nullptr, GUI_ID_SAVE_SLOT_4, getSaveName(4));
     _buttons["slot4"]->setImage(_textures["slot"]);
     _buttons["slot4"]->setRelativePosition(irr::core::position2d<irr::s32>(780, 550));
 

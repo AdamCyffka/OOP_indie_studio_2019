@@ -6,7 +6,7 @@
 */
 
 #include <chrono>
-#include "Ai.hpp"
+#include "AI.hpp"
 #include "hitbox.hpp"
 #include "Bomber.hpp"
 #include "Core.hpp"
