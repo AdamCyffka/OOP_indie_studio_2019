@@ -220,7 +220,7 @@ void GameCore::spawnPlayers()
 bool GameCore::gameOver()
 {
 	for (auto it : _entities) {
-		if (it->getWinNumber() >= 1)
+		if (it->getWinNumber() >= 3)
 			return (true);
 	}
 	return false;
