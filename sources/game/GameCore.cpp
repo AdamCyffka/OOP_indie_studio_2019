@@ -32,6 +32,7 @@ void GameCore::reset()
 {
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
+		it->setPowerUps();
 	}
 	_map->generateMap();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
@@ -48,6 +49,8 @@ void GameCore::firstRound()
 {
 	_isWaiting = true;
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	for (auto it : _powerUps)
+		it->die();
 	_powerUps.clear();
 	_isWaiting = false;
 }
@@ -57,11 +60,14 @@ void GameCore::nextRound()
 	_isWaiting = true;
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
+		it->setPowerUps();
 	}
 	spawnPlayers();
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	spawnPlayers();
 	_map->generateMap();
+	for (auto it : _powerUps)
+		it->die();
 	_powerUps.clear();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
