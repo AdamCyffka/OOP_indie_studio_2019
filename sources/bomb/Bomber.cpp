@@ -92,6 +92,7 @@ void Bomber::putBomb(IEntity *it)
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
 
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
+        setRadius(it->getFirePower() + 1);
         epicenter(it, bombPosition3d);
         removeBombFromInventory(it);
         boost::thread thr = boost::thread(boost::bind(&Bomber::run, this, it));
