@@ -35,7 +35,7 @@ class GameCore {
     public:
         GameCore(Core *core);
         ~GameCore() = default;
-		std::vector<IEntity *> getEntities() const;
+		std::vector<IEntity *> &getEntities();
 		void init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes);
         void run();
 
