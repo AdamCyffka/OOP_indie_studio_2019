@@ -35,6 +35,12 @@ void Score::updateRanking(std::vector<std::pair<int, int>> ranking)
         _images[modelName]->setImage(_textures[modelName]);
         _images[modelName]->setRelativePosition(irr::core::position2d<irr::s32>(128, 160 * (i + 1)));
 
+        _images[modelName + "_stars_bg"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 175, 50));
+        if (_images.find(modelName + "_stars_bg") != _images.end() && !_images[modelName + "_stars_bg"])
+            throw LoadingException("could not add image : " + modelName + "_stars_bg");
+        _images[modelName + "_stars_bg"]->setImage(_textures["slot"]);
+        _images[modelName + "_stars_bg"]->setRelativePosition(irr::core::position2d<irr::s32>(256 + 25, 190 + 160 * i));
+
         for (int j = 0; j < 3; j++) {
             std::string imageName = modelName + "_star" + std::to_string(j);
             _images[imageName] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 480, 480));
@@ -53,6 +59,9 @@ void Score::loadTextures()
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
 	if (_textures.find("back") == _textures.end() || !_textures["back"])
 		throw LoadingException("could not load texture : resources/images/buttons/back.png");
+    _textures["slot"] = _driver->getTexture("resources/images/buttons/blueslot.png");
+    if (_textures.find("slot") == _textures.end() || !_textures["slot"])
+		throw LoadingException("could not load texture : resources/images/buttons/blueslot.png");
     _textures["mario"] = _driver->getTexture("resources/images/characters/MK8_Icon_Mario.png");
 	if (_textures.find("mario") == _textures.end() || !_textures["mario"])
 		throw LoadingException("could not load texture : resources/images/characters/MK8_Icon_Mario.png");

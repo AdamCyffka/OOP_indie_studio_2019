@@ -30,6 +30,11 @@ BombPass::BombPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	anim->drop();
 }
 
+BombPass::~BombPass()
+{
+	_node->remove();
+}
+
 irr::core::vector3df BombPass::getPosition()
 {
 	return _pos;
