@@ -181,7 +181,7 @@ void Player::checkMovement(Key_mouvement input)
 {
 	irr::core::vector3df pos = _character->getPosition();
 	irr::u32 distanceTravel = 10;
-	irr::u32 speedTime = 1000 / _speed;
+	irr::u32 speedTime = 800 / _speed;
 
 	if (_character->getState() != Character::state::idle && _character->getPosition() == _wantedPosition)
 	{
