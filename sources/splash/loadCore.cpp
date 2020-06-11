@@ -51,10 +51,10 @@ void loadSounds(Core *core)
 	core->getSplash()->getBar()->setProgress(40);
 }
 
-void loadVideos(Core *core)
+void loadGameSettings(Core *core)
 {
-	if (!core->getVideos())
-		core->setVideos(new Videos(core->getEnv(), core->getDriver(), core->getSmgr()));
+	if (!core->getGameSettings())
+		core->setGameSettings(new GameSettings(core->getEnv(), core->getDriver(), core->getSmgr()));
 	core->getSplash()->getBar()->setProgress(40);
 }
 

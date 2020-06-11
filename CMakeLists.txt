@@ -15,7 +15,7 @@ add_executable(bomberman
         sources/menu/gameOptions/GameSounds.cpp
         sources/menu/Menu.cpp
         sources/menu/options/Controls.cpp
-        sources/menu/options/Videos.cpp
+        sources/menu/options/GameSettings.cpp
         sources/menu/options/Sounds.cpp
         sources/menu/Splash.cpp
         sources/menu/Select.cpp
