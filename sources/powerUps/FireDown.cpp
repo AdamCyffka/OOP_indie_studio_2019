@@ -30,6 +30,11 @@ FireDown::FireDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	anim->drop();
 }
 
+FireDown::~FireDown()
+{
+	_node->remove();
+}
+
 irr::core::vector3df FireDown::getPosition()
 {
 	return _pos;

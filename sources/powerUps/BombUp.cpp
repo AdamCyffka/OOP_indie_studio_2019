@@ -30,6 +30,11 @@ BombUp::BombUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 	anim->drop();
 }
 
+BombUp::~BombUp()
+{
+	_node->remove();
+}
+
 irr::core::vector3df BombUp::getPosition()
 {
 	return _pos;

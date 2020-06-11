@@ -30,6 +30,11 @@ BombFull::BombFull(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	anim->drop();
 }
 
+BombFull::~BombFull()
+{
+	_node->remove();
+}
+
 irr::core::vector3df BombFull::getPosition()
 {
 	return _pos;
@@ -48,7 +53,6 @@ void BombFull::die()
 {
 	_node->setVisible(false);
 	delete this;
-
 }
 
 void BombFull::update()

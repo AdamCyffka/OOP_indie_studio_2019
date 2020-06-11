@@ -30,6 +30,11 @@ FireFull::FireFull(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	anim->drop();
 }
 
+FireFull::~FireFull()
+{
+	_node->remove();
+}
+
 irr::core::vector3df FireFull::getPosition()
 {
 	return _pos;

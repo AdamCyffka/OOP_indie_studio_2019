@@ -13,6 +13,7 @@
 class FireFull : public IPowerUps {
     public:
         explicit FireFull(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        ~FireFull();
 
         void spawn();
 		void die();

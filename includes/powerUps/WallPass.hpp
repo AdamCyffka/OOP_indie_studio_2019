@@ -13,6 +13,7 @@
 class WallPass : public IPowerUps {
     public:
         explicit WallPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos);
+        ~WallPass();
 
         void spawn();
 		void die();
