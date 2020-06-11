@@ -23,9 +23,9 @@ void Help::loadTextures()
     _textures["back"] = _driver->getTexture("resources/images/buttons/back.png");
 	if (_textures.find("back") == _textures.end() || !_textures["back"])
 		throw LoadingException("could not load texture : resources/images/buttons/back.png");
-    _textures["help"] = _driver->getTexture("resources/images/buttons/credits_us.png");
+    _textures["help"] = _driver->getTexture("resources/images/help.png");
 	if (_textures.find("help") == _textures.end() || !_textures["help"])
-		throw LoadingException("could not load texture : resources/images/buttons/credits_us.png");
+		throw LoadingException("could not load texture : resources/images/help.png");
 }
 
 void Help::loadButtons()
@@ -35,11 +35,12 @@ void Help::loadButtons()
 		throw LoadingException("could not add button : back");
     _buttons["back"]->setImage(_textures["back"]);
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
-    _images["help"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1333, 272));
+
+    _images["help"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	if (_images.find("help") == _images.end() || !_images["help"])
 		throw LoadingException("could not add image : help");
     _images["help"]->setImage(_textures["help"]);
-    _images["help"]->setRelativePosition(irr::core::position2d<irr::s32>(300, 10));
+    _images["help"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
 }
 
 std::vector<Character *> Help::getPreviews()

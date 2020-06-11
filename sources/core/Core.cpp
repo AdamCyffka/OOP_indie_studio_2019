@@ -590,7 +590,6 @@ void Core::hideGameLayers()
 			it.second->setVisible(false);
 	}
 	if (_game) {
-		std::cout << "j'ai _game" << std::endl;
 		for (auto &it : _game->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _game->getImages())

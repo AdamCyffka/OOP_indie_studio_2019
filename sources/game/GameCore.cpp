@@ -18,7 +18,7 @@ GameCore::GameCore(Core *core)
 	_core = core;
 	_isInit = false;
 	_isPaused = false;
-	_isWaiting = 0;
+	_isWaiting = -1;
 	_map = _core->getMap();
 	_loadMap = _core->getLoadMap();
 	_bomber = new Bomber(_map, _loadMap, this);
@@ -41,7 +41,7 @@ void GameCore::reset()
 		it->die();
 	_powerUps.clear();
 	_entities.clear();
-	_isWaiting = 0;
+	_isWaiting = -1;
 	_isPaused = false;
 	_isInit = false;
 }
@@ -55,6 +55,8 @@ void GameCore::firstRound()
 	_isWaiting = 1;
 	boost::this_thread::sleep_for(boost::chrono::seconds(1));
 	_isWaiting = 0;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = -1;
 	for (auto it : _powerUps)
 		it->die();
 	_powerUps.clear();
@@ -79,6 +81,8 @@ void GameCore::nextRound()
 	_isWaiting = 1;
 	boost::this_thread::sleep_for(boost::chrono::seconds(1));
 	_isWaiting = 0;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = -1;
 	spawnPlayers();
 	_map->generateMap();
 	for (auto it : _powerUps)
@@ -129,7 +133,7 @@ void GameCore::isOver()
 
 void GameCore::run()
 {
-	if (_isPaused || _isWaiting != 0)
+	if (_isPaused || _isWaiting != -1)
 		return;
 	if (gameOver()) {
 		isOver();

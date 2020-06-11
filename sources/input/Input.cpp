@@ -124,7 +124,7 @@ void Input::playerTwoKeyboard(Input *receiver, const SEvent& event)
         _playerInput[2] = Left;
     } else if (receiver->isKeyDown(irr::KEY_RIGHT)) {
         _playerInput[2] = Right;
-	} else if (receiver->isKeyDown(irr::KEY_ACCEPT)) {
+	} else if (receiver->isKeyDown(irr::KEY_RETURN)) {
 		_playerInput[2] = Bomb;
     } else {
 		_playerInput[2] = None;

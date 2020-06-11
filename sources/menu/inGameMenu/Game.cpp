@@ -66,39 +66,49 @@ void Game::loadTextures()
     _textures["star"] = _driver->getTexture("resources/images/star.png");
     if (_textures.find("star") == _textures.end() || !_textures["star"])
         throw LoadingException("could not load texture : resources/images/star.png");
-    _textures["3"] = _driver->getTexture("resources/images/buttons/3.png");
+    _textures["3"] = _driver->getTexture("resources/images/countdown_3.png");
     if (_textures.find("3") == _textures.end() || !_textures["3"])
-        throw LoadingException("could not load texture : resources/images/buttons/3.png");
-    _textures["2"] = _driver->getTexture("resources/images/buttons/2.png");
+        throw LoadingException("could not load texture : resources/images/countdown_3.png");
+    _textures["2"] = _driver->getTexture("resources/images/countdown_2.png");
     if (_textures.find("2") == _textures.end() || !_textures["2"])
-        throw LoadingException("could not load texture : resources/images/buttons/2.png");
-    _textures["1"] = _driver->getTexture("resources/images/buttons/1.png");
+        throw LoadingException("could not load texture : resources/images/countdown_2.png");
+    _textures["1"] = _driver->getTexture("resources/images/countdown_1.png");
     if (_textures.find("1") == _textures.end() || !_textures["1"])
-        throw LoadingException("could not load texture : resources/images/buttons/1.png");
+        throw LoadingException("could not load texture : resources/images/countdown_1.png");
+    _textures["0"] = _driver->getTexture("resources/images/countdown_go.png");
+    if (_textures.find("0") == _textures.end() || !_textures["0"])
+        throw LoadingException("could not load texture : resources/images/countdown_go.png");
 }
 
 void Game::loadImages()
 {
-    _tempImages["count3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
+    _tempImages["count3"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	if (_tempImages.find("count3") != _tempImages.end() && !_tempImages["count3"])
 		throw LoadingException("could not add image : count3");
 	_tempImages["count3"]->setImage(_textures["3"]);
-	_tempImages["count3"]->setRelativePosition(irr::core::position2d<irr::s32>(900, 300));
+	_tempImages["count3"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
 	_tempImages["count3"]->setVisible(false);
 
-    _tempImages["count2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
+    _tempImages["count2"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	if (_tempImages.find("count2") != _tempImages.end() && !_tempImages["count2"])
 		throw LoadingException("could not add image : count2");
 	_tempImages["count2"]->setImage(_textures["2"]);
-	_tempImages["count2"]->setRelativePosition(irr::core::position2d<irr::s32>(900, 300));
+	_tempImages["count2"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
 	_tempImages["count2"]->setVisible(false);
 
-    _tempImages["count1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
+    _tempImages["count1"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	if (_tempImages.find("count1") != _tempImages.end() && !_tempImages["count1"])
 		throw LoadingException("could not add image : count1");
 	_tempImages["count1"]->setImage(_textures["1"]);
-	_tempImages["count1"]->setRelativePosition(irr::core::position2d<irr::s32>(900, 300));
+	_tempImages["count1"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
 	_tempImages["count1"]->setVisible(false);
+
+    _tempImages["count0"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+	if (_tempImages.find("count0") != _tempImages.end() && !_tempImages["count0"])
+		throw LoadingException("could not add image : count0");
+	_tempImages["count0"]->setImage(_textures["0"]);
+	_tempImages["count0"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 0));
+	_tempImages["count0"]->setVisible(false);
 }
 
 void Game::loadButtons()
@@ -637,7 +647,7 @@ void Game::run(int count, std::vector<IEntity *> entities)
 		}
 
         //hide 3, 2, 1 ...
-        for (int i = 3; i >= 1; i--)
+        for (int i = 3; i >= 0; i--)
             if (_tempImages.find("count" + std::to_string(i)) != _tempImages.end())
                 _tempImages["count" + std::to_string(i)]->setVisible(false);
         //show only 3, 2 or 1
