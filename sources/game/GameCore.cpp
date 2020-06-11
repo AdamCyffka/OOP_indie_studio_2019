@@ -53,6 +53,7 @@ void GameCore::firstRound()
 
 void GameCore::nextRound()
 {
+	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();

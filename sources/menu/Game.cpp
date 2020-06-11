@@ -78,10 +78,6 @@ void Game::loadButtons()
 
 void Game::printStars(std::vector<IEntity *> entities)
 {
-    /*for (int i = 0; i < 4; i++)
-    {
-        entities[i]
-    }*/
     for (auto it : entities)
     {
         _images["GstarTopLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
@@ -156,7 +152,15 @@ void Game::printStars(std::vector<IEntity *> entities)
         _images["GstarBotRThree"]->setImage(_textures["grey_star"]);
         _images["GstarBotRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 920));
     }
-        
+    if (entities[0]->getWinNumber() >= 1) {
+        _images["GstarTopLOne"]->setImage(_textures["star"]);
+    } else if (entities[0]->getWinNumber() >= 2) {
+        _images["GstarTopLOne"]->setImage(_textures["star"]);
+        _images["GstarTopLTwo"]->setImage(_textures["star"]);
+    } else {
+        _images["GstarTopLOne"]->setImage(_textures["grey_star"]);
+        _images["GstarTopLTwo"]->setImage(_textures["grey_star"]);
+    }
 }
 
 void Game::printUpLeft()
