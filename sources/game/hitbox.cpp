@@ -21,50 +21,52 @@ int getPowerUpType(IPowerUps *powerUp, std::vector<IPowerUps *> &objects)
 {
 	int res = 0;
 
-	switch (powerUp->getType()) {
-		case IPowerUps::BombDown:
-			powerUp->die();
-			res = 1;
-			break;
-		case IPowerUps::BombFull:
-			powerUp->die();
-			res = 2;
-			break;
-		case IPowerUps::BombPass:
-			powerUp->die();
-			res = 3;
-			break;
-		case IPowerUps::BombUp:
-			powerUp->die();
-			res = 4;
-			break;
-		case IPowerUps::FireDown:
-			powerUp->die();
-			res = 5;
-			break;
-		case IPowerUps::FireFull:
-			powerUp->die();
-			res = 6;
-			break;
-		case IPowerUps::FireUp:
-			powerUp->die();
-			res = 7;
-			break;
-		case IPowerUps::SpeedDown:
-			powerUp->die();
-			res = 8;
-			break;
-		case IPowerUps::SpeedUp:
-			powerUp->die();
-			res = 9;
-			break;
-		case IPowerUps::WallPass:
-			powerUp->die();
-			res = 10;
-			break;
+	switch (powerUp->getType())
+	{
+	case IPowerUps::BombDown:
+		powerUp->die();
+		res = 1;
+		break;
+	case IPowerUps::BombFull:
+		powerUp->die();
+		res = 2;
+		break;
+	case IPowerUps::BombPass:
+		powerUp->die();
+		res = 3;
+		break;
+	case IPowerUps::BombUp:
+		powerUp->die();
+		res = 4;
+		break;
+	case IPowerUps::FireDown:
+		powerUp->die();
+		res = 5;
+		break;
+	case IPowerUps::FireFull:
+		powerUp->die();
+		res = 6;
+		break;
+	case IPowerUps::FireUp:
+		powerUp->die();
+		res = 7;
+		break;
+	case IPowerUps::SpeedDown:
+		powerUp->die();
+		res = 8;
+		break;
+	case IPowerUps::SpeedUp:
+		powerUp->die();
+		res = 9;
+		break;
+	case IPowerUps::WallPass:
+		powerUp->die();
+		res = 10;
+		break;
 	}
 	auto index = std::find(objects.begin(), objects.end(), powerUp);
-	if (index != objects.end()) {
+	if (index != objects.end())
+	{
 		objects.erase(index);
 	}
 	return res;
@@ -78,9 +80,11 @@ int isPowerUpsTaken(std::vector<IPowerUps *> &objects, Map *map, IEntity *entity
 	for (auto it : objects)
 	{
 		objPos = squareWhereObjectIs(it->getPosition(), map);
-		if (objPos.x == playerPos.x && objPos.y == playerPos.y) {
+		if (objPos.x == playerPos.x && objPos.y == playerPos.y)
+		{
 			auto index = std::find(objects.begin(), objects.end(), it);
-			if (index != objects.end()) {
+			if (index != objects.end())
+			{
 				return (getPowerUpType(it, objects));
 			}
 		}
@@ -184,15 +188,15 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 	{
 		for (unsigned int j = 0; j < map->getBombMap()[i].size(); ++j)
 		{
-			if (map->getBombMap()[i][j] == bomb) {
-				tmpBombMap[i + 1][j] = bomb;
-				tmpBombMap[i][j + 1] = bomb;
-				tmpBombMap[i + 2][j] = bomb;
-				tmpBombMap[i][j + 2] = bomb;
-				tmpBombMap[i - 1][j] = bomb;
-				tmpBombMap[i][j - 1] = bomb;
-				tmpBombMap[i - 2][j] = bomb;
-				tmpBombMap[i][j - 2] = bomb;
+			if (map->getBombMap()[i][j] == bomb)
+			{
+				for (int x = 1; x <= entity->getFirePower(); x++)
+				{
+					tmpBombMap[i + x][j] = bomb;
+					tmpBombMap[i][j + x] = bomb;
+					tmpBombMap[i - x][j] = bomb;
+					tmpBombMap[i][j - x] = bomb;
+				}
 			}
 		}
 	}
@@ -217,28 +221,21 @@ bool canAiMove(IEntity *entity, Map *map, side direction)
 		return false;
 	if (map->getBombMap()[nextPoint.x][nextPoint.y] == bomb && !entity->getBombPass())
 		return false;
-	if (tmpBombMap[nextPoint.x][nextPoint.y] == bomb) {
-		if (tmpBombMap[point.x][point.y] == clear
-		|| tmpBombMap[point.x + 1][point.y] == clear
-		|| tmpBombMap[point.x][point.y + 1] == clear
-		|| tmpBombMap[point.x][point.y - 1] == clear
-		|| tmpBombMap[point.x - 1][point.y] == clear)
+	if (tmpBombMap[nextPoint.x][nextPoint.y] == bomb)
+	{
+		if (tmpBombMap[point.x][point.y] == clear || tmpBombMap[point.x + 1][point.y] == clear || tmpBombMap[point.x][point.y + 1] == clear || tmpBombMap[point.x][point.y - 1] == clear || tmpBombMap[point.x - 1][point.y] == clear)
 			return false;
 	}
 	for (unsigned int j = 0; j < map->getBombMap()[nextPoint.x].size(); ++j)
 	{
-		if (map->getBombMap()[nextPoint.x][j] == bombState::bomb && (map->getBombMap()[point.x][point.y] >= map->getBombMap()[nextPoint.x][j] - 2 ||
-		map->getBombMap()[point.x][point.y] > map->getBombMap()[nextPoint.x][j] + 2)
-		&& tmpBombMap[point.x][point.y] != bomb)
+		if (map->getBombMap()[nextPoint.x][j] == bombState::bomb && (map->getBombMap()[point.x][point.y] >= map->getBombMap()[nextPoint.x][j] - 2 || map->getBombMap()[point.x][point.y] > map->getBombMap()[nextPoint.x][j] + 2) && tmpBombMap[point.x][point.y] != bomb)
 		{
 			return false;
 		}
 	}
 	for (unsigned int i = 0; i < map->getBombMap().size(); ++i)
 	{
-		if (map->getBombMap()[i][nextPoint.y] == bombState::bomb && (map->getBombMap()[point.x][point.y] < map->getBombMap()[i][nextPoint.y] - 2 ||
-		map->getBombMap()[point.x][point.y] > map->getBombMap()[i][nextPoint.y] + 2)
-		&& tmpBombMap[point.x][point.y] != bomb)
+		if (map->getBombMap()[i][nextPoint.y] == bombState::bomb && (map->getBombMap()[point.x][point.y] < map->getBombMap()[i][nextPoint.y] - 2 || map->getBombMap()[point.x][point.y] > map->getBombMap()[i][nextPoint.y] + 2) && tmpBombMap[point.x][point.y] != bomb)
 		{
 			return false;
 		}

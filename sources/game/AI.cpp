@@ -556,7 +556,7 @@ void AI::setWantedPositionRandom()
 
 void AI::movePlayerWithWantedMovement()
 {
-	irr::u32 speedTime = 1000 / _speed;
+	irr::u32 speedTime = 800 / _speed;
 
 	switch (_wantedMovement)
 	{

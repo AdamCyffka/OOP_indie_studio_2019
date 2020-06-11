@@ -8,8 +8,6 @@
 #ifndef CORE_HPP_
 #define CORE_HPP_
 
-#define FULLSCREEN true
-
 #include <irrlicht.h>
 #include "CameraTravelManager.hpp"
 #include "Menu.hpp"
@@ -86,12 +84,7 @@ class Core {
         void splashCase();
         void saveCase();
         void loadCase();
-
-        void changeFullscreen();
-        void start();
-        void restartDevice(bool fullscreen);
-
-        bool getFullscreen() const;
+;
         layerMenuState getLState();
         layerGameState getLGState();
 		gameState getGState();
@@ -146,9 +139,6 @@ class Core {
         void setLGState(layerGameState state);
         void setGState(gameState state);
 
-		int getWidth();
-        int getHeight();
-
         void hideGameLayers();
 		void hideMenuLayers();
 
@@ -185,9 +175,6 @@ class Core {
         MyEventReceiver *_receiver;
         CameraTravelManager *_cameraTravelManager;
 
-        int _height;
-        int _width;
-        bool _fullscreen;
         bool _isInitialized;
         unsigned int _initStep;
 

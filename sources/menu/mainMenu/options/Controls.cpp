@@ -59,6 +59,12 @@ void Controls::loadTextures()
     _textures["p4"] = _driver->getTexture("resources/images/buttons/p4.png");
 	if (_textures.find("p4") == _textures.end() || !_textures["p4"])
 		throw LoadingException("could not load texture : resources/images/buttons/p4.png");
+    _textures["control_keyboard"] = _driver->getTexture("resources/images/buttons/keyboard_control.png");
+	if (_textures.find("control_keyboard") == _textures.end() || !_textures["control_keyboard"])
+		throw LoadingException("could not load texture : resources/images/buttons/keyboard_control.png");
+    _textures["control_controller"] = _driver->getTexture("resources/images/buttons/controller_control.png");
+	if (_textures.find("control_controller") == _textures.end() || !_textures["control_controller"])
+		throw LoadingException("could not load texture : resources/images/buttons/controller_control.png");
 }
 
 void Controls::loadButtons()
@@ -182,6 +188,18 @@ void Controls::loadButtons()
 		throw LoadingException("could not add image : p4");
     _images["p4"]->setImage(_textures["p4"]);
     _images["p4"]->setRelativePosition(irr::core::position2d<irr::s32>(1220, 640));
+
+    _images["control_keyboard"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 200, 401));
+	if (_images.find("control_keyboard") == _images.end() || !_images["control_keyboard"])
+		throw LoadingException("could not add image : control_keyboard");
+    _images["control_keyboard"]->setImage(_textures["control_keyboard"]);
+    _images["control_keyboard"]->setRelativePosition(irr::core::position2d<irr::s32>(1520, 320));
+
+    _images["control_controller"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 199, 82));
+	if (_images.find("control_controller") == _images.end() || !_images["control_controller"])
+		throw LoadingException("could not add image : control_controller");
+    _images["control_controller"]->setImage(_textures["control_controller"]);
+    _images["control_controller"]->setRelativePosition(irr::core::position2d<irr::s32>(1310, 230));
 }
 
 void Controls::changeOption(int role)

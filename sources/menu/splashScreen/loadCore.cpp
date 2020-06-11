@@ -40,7 +40,7 @@ void loadIntro(Core *core)
 void loadMenu(Core *core)
 {
 	if (!core->getMenu())
-		core->setMenu(new Menu(core->getEnv(), core->getDriver(), core->getSmgr(), core->getWidth(), core->getHeight()));
+		core->setMenu(new Menu(core->getEnv(), core->getDriver(), core->getSmgr()));
 	core->getSplash()->getBar()->setProgress(30);
 }
 
