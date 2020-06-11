@@ -9,6 +9,7 @@
 #include "Game.hpp"
 #include "LoadingException.hpp"
 #include "MenuException.hpp"
+#include "Core.hpp"
 
 Game::Game(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<Character *> previews)
 {
@@ -16,10 +17,8 @@ Game::Game(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr
     _env = env;
     _smgr = smgr;
     _previews = previews;
-
     loadTextures();
     loadButtons();
-    run();
 }
 
 void Game::loadTextures()
@@ -74,135 +73,89 @@ void Game::loadButtons()
     printUpRight();
     printDownLeft();
     printDownRight();
-}
+	_images["GstarTopLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarTopLOne") != _images.end() && !_images["GstarTopLOne"])
+		throw LoadingException("could not add image : GstarTopLOne");
+	_images["GstarTopLOne"]->setImage(_textures["grey_star"]);
+	_images["GstarTopLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 135));
+	_images["GstarTopLOne"]->setVisible(false);
 
-void Game::printStars(std::vector<IEntity *> entities)
-{
-    for (auto it : entities)
-    {
-        _images["GstarTopLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarTopLOne") != _images.end() && !_images["GstarTopLOne"])
-            throw LoadingException("could not add image : GstarTopLOne");
-        _images["GstarTopLOne"]->setImage(_textures["grey_star"]);
-        _images["GstarTopLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 135));
-        _images["GstarTopLOne"]->setVisible(false);
-        
-        _images["GstarTopLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarTopLTwo") != _images.end() && !_images["GstarTopLTwo"])
-            throw LoadingException("could not add image : GstarTopLTwo");
-        _images["GstarTopLTwo"]->setImage(_textures["grey_star"]);
-        _images["GstarTopLTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(50, 135));
-        _images["GstarTopLTwo"]->setVisible(false);
+	_images["GstarTopLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarTopLTwo") != _images.end() && !_images["GstarTopLTwo"])
+		throw LoadingException("could not add image : GstarTopLTwo");
+	_images["GstarTopLTwo"]->setImage(_textures["grey_star"]);
+	_images["GstarTopLTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(50, 135));
+	_images["GstarTopLTwo"]->setVisible(false);
 
-         _images["GstarTopLThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarTopLThree") != _images.end() && !_images["GstarTopLThree"])
-            throw LoadingException("could not add image : GstarTopLThree");
-        _images["GstarTopLThree"]->setImage(_textures["grey_star"]);
-        _images["GstarTopLThree"]->setRelativePosition(irr::core::position2d<irr::s32>(100, 135));
-        _images["GstarTopLThree"]->setVisible(false);
+	_images["GstarTopLThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarTopLThree") != _images.end() && !_images["GstarTopLThree"])
+		throw LoadingException("could not add image : GstarTopLThree");
+	_images["GstarTopLThree"]->setImage(_textures["grey_star"]);
+	_images["GstarTopLThree"]->setRelativePosition(irr::core::position2d<irr::s32>(100, 135));
+	_images["GstarTopLThree"]->setVisible(false);
 
-        _images["GstarTopROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarTopROne") != _images.end() && !_images["GstarTopROne"])
-            throw LoadingException("could not add image : GstarTopRTwo");
-        _images["GstarTopROne"]->setImage(_textures["grey_star"]);
-        _images["GstarTopROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1790, 135));
-        _images["GstarTopROne"]->setVisible(false);
+	_images["GstarTopROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarTopROne") != _images.end() && !_images["GstarTopROne"])
+		throw LoadingException("could not add image : GstarTopRTwo");
+	_images["GstarTopROne"]->setImage(_textures["grey_star"]);
+	_images["GstarTopROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1790, 135));
+	_images["GstarTopROne"]->setVisible(false);
 
-        _images["GstarTopRTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarTopRTwo") != _images.end() && !_images["GstarTopRTwo"])
-            throw LoadingException("could not add image : GstarTopRTwo");
-        _images["GstarTopRTwo"]->setImage(_textures["grey_star"]);
-        _images["GstarTopRTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(1840, 135));
-        _images["GstarTopRTwo"]->setVisible(false);
+	_images["GstarTopRTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarTopRTwo") != _images.end() && !_images["GstarTopRTwo"])
+		throw LoadingException("could not add image : GstarTopRTwo");
+	_images["GstarTopRTwo"]->setImage(_textures["grey_star"]);
+	_images["GstarTopRTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(1840, 135));
+	_images["GstarTopRTwo"]->setVisible(false);
 
-        _images["GstarTopRThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarTopRThree") != _images.end() && !_images["GstarTopRThree"])
-            throw LoadingException("could not add image : GstarTopRThree");
-        _images["GstarTopRThree"]->setImage(_textures["grey_star"]);
-        _images["GstarTopRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 135));
-        _images["GstarTopRThree"]->setVisible(false);
+	_images["GstarTopRThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarTopRThree") != _images.end() && !_images["GstarTopRThree"])
+		throw LoadingException("could not add image : GstarTopRThree");
+	_images["GstarTopRThree"]->setImage(_textures["grey_star"]);
+	_images["GstarTopRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 135));
+	_images["GstarTopRThree"]->setVisible(false);
 
-        _images["GstarBotLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarBotLOne") != _images.end() && !_images["GstarBotLOne"])
-            throw LoadingException("could not add image : starBotLOne");
-        _images["GstarBotLOne"]->setImage(_textures["grey_star"]);
-        _images["GstarBotLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 920));
-        _images["GstarBotLOne"]->setVisible(false);
+	_images["GstarBotLOne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarBotLOne") != _images.end() && !_images["GstarBotLOne"])
+		throw LoadingException("could not add image : starBotLOne");
+	_images["GstarBotLOne"]->setImage(_textures["grey_star"]);
+	_images["GstarBotLOne"]->setRelativePosition(irr::core::position2d<irr::s32>(0, 920));
+	_images["GstarBotLOne"]->setVisible(false);
 
-        _images["GstarBotLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarBotLTwo") != _images.end() && !_images["GstarBotLTwo"])
-            throw LoadingException("could not add image : GstarBotLTwo");
-        _images["GstarBotLTwo"]->setImage(_textures["grey_star"]);
-        _images["GstarBotLTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(50, 920));
-        _images["GstarBotLTwo"]->setVisible(false);
+	_images["GstarBotLTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarBotLTwo") != _images.end() && !_images["GstarBotLTwo"])
+		throw LoadingException("could not add image : GstarBotLTwo");
+	_images["GstarBotLTwo"]->setImage(_textures["grey_star"]);
+	_images["GstarBotLTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(50, 920));
+	_images["GstarBotLTwo"]->setVisible(false);
 
-        _images["GstarBotLThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarBotLThree") != _images.end() && !_images["GstarBotLThree"])
-            throw LoadingException("could not add image : GstarBotLTwo");
-        _images["GstarBotLThree"]->setImage(_textures["grey_star"]);
-        _images["GstarBotLThree"]->setRelativePosition(irr::core::position2d<irr::s32>(100, 920));
-        _images["GstarBotLThree"]->setVisible(false);
+	_images["GstarBotLThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarBotLThree") != _images.end() && !_images["GstarBotLThree"])
+		throw LoadingException("could not add image : GstarBotLTwo");
+	_images["GstarBotLThree"]->setImage(_textures["grey_star"]);
+	_images["GstarBotLThree"]->setRelativePosition(irr::core::position2d<irr::s32>(100, 920));
+	_images["GstarBotLThree"]->setVisible(false);
 
-        _images["GstarBotROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarBotROne") != _images.end() && !_images["GstarBotROne"])
-            throw LoadingException("could not add image : GstarBotROne");
-        _images["GstarBotROne"]->setImage(_textures["grey_star"]);
-        _images["GstarBotROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1790, 920));
-        _images["GstarBotROne"]->setVisible(false);
+	_images["GstarBotROne"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarBotROne") != _images.end() && !_images["GstarBotROne"])
+		throw LoadingException("could not add image : GstarBotROne");
+	_images["GstarBotROne"]->setImage(_textures["grey_star"]);
+	_images["GstarBotROne"]->setRelativePosition(irr::core::position2d<irr::s32>(1790, 920));
+	_images["GstarBotROne"]->setVisible(false);
 
-        _images["GstarBotRTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarBotRTwo") != _images.end() && !_images["GstarBotRTwo"])
-            throw LoadingException("could not add image : GstarBotRTwo");
-        _images["GstarBotRTwo"]->setImage(_textures["grey_star"]);
-        _images["GstarBotRTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(1840, 920));
-        _images["GstarBotRTwo"]->setVisible(false);
+	_images["GstarBotRTwo"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarBotRTwo") != _images.end() && !_images["GstarBotRTwo"])
+		throw LoadingException("could not add image : GstarBotRTwo");
+	_images["GstarBotRTwo"]->setImage(_textures["grey_star"]);
+	_images["GstarBotRTwo"]->setRelativePosition(irr::core::position2d<irr::s32>(1840, 920));
+	_images["GstarBotRTwo"]->setVisible(false);
 
-        _images["GstarBotRThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
-        if (_images.find("GstarBotRThree") != _images.end() && !_images["GstarBotRThree"])
-            throw LoadingException("could not add image : GstarBotRThree");
-        _images["GstarBotRThree"]->setImage(_textures["grey_star"]);
-        _images["GstarBotRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 920));
-        _images["GstarBotRThree"]->setVisible(false);
-    }
-    if (entities[0]->getWinNumber() == 1) {
-        _images["GstarTopLOne"]->setImage(_textures["star"]);
-    } else if (entities[0]->getWinNumber() >= 2) {
-        _images["GstarTopLOne"]->setImage(_textures["star"]);
-        _images["GstarTopLTwo"]->setImage(_textures["star"]);
-    } else {
-        _images["GstarTopLOne"]->setImage(_textures["grey_star"]);
-        _images["GstarTopLTwo"]->setImage(_textures["grey_star"]);
-    }
-
-    if (entities[1]->getWinNumber() == 1) {
-        _images["GstarTopROne"]->setImage(_textures["star"]);
-    } else if (entities[1]->getWinNumber() >= 2) {
-        _images["GstarTopROne"]->setImage(_textures["star"]);
-        _images["GstarTopRTwo"]->setImage(_textures["star"]);
-    } else {
-        _images["GstarTopROne"]->setImage(_textures["grey_star"]);
-        _images["GstarTopRTwo"]->setImage(_textures["grey_star"]);
-    }
-
-    if (entities[2]->getWinNumber() == 1) {
-        _images["GstarBotLOne"]->setImage(_textures["star"]);
-    } else if (entities[2]->getWinNumber() >= 2) {
-        _images["GstarBotLOne"]->setImage(_textures["star"]);
-        _images["GstarBotLTwo"]->setImage(_textures["star"]);
-    } else {
-        _images["GstarBotLOne"]->setImage(_textures["grey_star"]);
-        _images["GstarBotLTwo"]->setImage(_textures["grey_star"]);
-    }
-
-    if (entities[3]->getWinNumber() == 1) {
-        _images["GstarBotROne"]->setImage(_textures["star"]);
-    } else if (entities[3]->getWinNumber() >= 2) {
-        _images["GstarBotROne"]->setImage(_textures["star"]);
-        _images["GstarBotRTwo"]->setImage(_textures["star"]);
-    } else {
-        _images["GstarBotROne"]->setImage(_textures["grey_star"]);
-        _images["GstarBotRTwo"]->setImage(_textures["grey_star"]);
-    }
+	_images["GstarBotRThree"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 128, 128));
+	if (_images.find("GstarBotRThree") != _images.end() && !_images["GstarBotRThree"])
+		throw LoadingException("could not add image : GstarBotRThree");
+	_images["GstarBotRThree"]->setImage(_textures["grey_star"]);
+	_images["GstarBotRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 920));
+	_images["GstarBotRThree"]->setVisible(false);
 }
 
 void Game::printUpLeft()
@@ -605,8 +558,49 @@ void Game::printDownRight()
     }
 }
 
-void Game::run()
+void Game::run(std::vector<IEntity *> entities)
 {
+	if (!entities.empty()) {
+		if (entities[0]->getWinNumber() == 1) {
+			_images["GstarTopLOne"]->setImage(_textures["star"]);
+		} else if (entities[0]->getWinNumber() >= 2) {
+			_images["GstarTopLOne"]->setImage(_textures["star"]);
+			_images["GstarTopLTwo"]->setImage(_textures["star"]);
+		} else {
+			_images["GstarTopLOne"]->setImage(_textures["grey_star"]);
+			_images["GstarTopLTwo"]->setImage(_textures["grey_star"]);
+		}
+
+		if (entities[1]->getWinNumber() == 1) {
+			_images["GstarTopROne"]->setImage(_textures["star"]);
+		} else if (entities[1]->getWinNumber() >= 2) {
+			_images["GstarTopROne"]->setImage(_textures["star"]);
+			_images["GstarTopRTwo"]->setImage(_textures["star"]);
+		} else {
+			_images["GstarTopROne"]->setImage(_textures["grey_star"]);
+			_images["GstarTopRTwo"]->setImage(_textures["grey_star"]);
+		}
+
+		if (entities[2]->getWinNumber() == 1) {
+			_images["GstarBotLOne"]->setImage(_textures["star"]);
+		} else if (entities[2]->getWinNumber() >= 2) {
+			_images["GstarBotLOne"]->setImage(_textures["star"]);
+			_images["GstarBotLTwo"]->setImage(_textures["star"]);
+		} else {
+			_images["GstarBotLOne"]->setImage(_textures["grey_star"]);
+			_images["GstarBotLTwo"]->setImage(_textures["grey_star"]);
+		}
+
+		if (entities[3]->getWinNumber() == 1) {
+			_images["GstarBotROne"]->setImage(_textures["star"]);
+		} else if (entities[3]->getWinNumber() >= 2) {
+			_images["GstarBotROne"]->setImage(_textures["star"]);
+			_images["GstarBotRTwo"]->setImage(_textures["star"]);
+		} else {
+			_images["GstarBotROne"]->setImage(_textures["grey_star"]);
+			_images["GstarBotRTwo"]->setImage(_textures["grey_star"]);
+		}
+	}
 }
 
 std::map<std::string, irr::gui::IGUIButton *> Game::getButtons()

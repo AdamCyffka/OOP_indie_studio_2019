@@ -126,7 +126,7 @@ void loadGameCore(Core *core)
 void loadPause(Core *core)
 {
 	if (!core->getPause())
-		core->setPause(new Pause(core->getEnv(), core->getDriver(), core->getSmgr()));
+		core->setPause(new Pause(core->getEnv(), core->getDriver(), core->getSmgr(), core));
 	core->getSplash()->getBar()->setProgress(100);
 }
 

@@ -44,7 +44,6 @@ void GameCore::reset()
 
 void GameCore::firstRound()
 {
-	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	_powerUps.clear();
@@ -53,7 +52,6 @@ void GameCore::firstRound()
 
 void GameCore::nextRound()
 {
-	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
@@ -95,19 +93,24 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	_isInit = true;
 }
 
+void GameCore::isOver()
+{
+	_core->getMusicEngine()->stop("resources/music/game.mp3", false);
+	_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
+	_core->setGState(Core::menu);
+	_core->setLState(Core::menuScore);
+	_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
+	_core->getScore()->updateRanking(getRanking());
+	_core->getScore()->spawnEntities();
+	reset();
+}
+
 void GameCore::run()
 {
 	if (_isPaused || _isWaiting)
 		return;
 	if (gameOver()) {
-		_core->getMusicEngine()->stop("resources/music/game.mp3", false);
-		_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
-		_core->setGState(Core::menu);
-		_core->setLState(Core::menuScore);
-		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
-		_core->getScore()->updateRanking(getRanking());
-		_core->getScore()->spawnEntities();
-		reset();
+		isOver();
 		return;
 	}
 	if (getRemainingEntities() == 1) {
@@ -217,7 +220,7 @@ void GameCore::spawnPlayers()
 bool GameCore::gameOver()
 {
 	for (auto it : _entities) {
-		if (it->getWinNumber() >= 3)
+		if (it->getWinNumber() >= 1)
 			return (true);
 	}
 	return false;

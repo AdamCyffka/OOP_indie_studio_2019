@@ -21,8 +21,7 @@ class Game : public IMenu {
 
         void loadButtons();
         void loadTextures();
-        void run();
-        void printStars(std::vector<IEntity *> entities);
+        void run(std::vector<IEntity *> entities);
         void printUpLeft();
         void printUpRight();
         void printDownLeft();

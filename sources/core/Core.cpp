@@ -500,6 +500,7 @@ void Core::gameCase()
 		_gameCore->init(_select->getPreviews(), _select->getEntityTypes(), _controls->getEntityType());
 	}
 	_gameCore->run();
+	_game->run(_gameCore->getEntities());
 	hideGameLayers();
 	showGameLayer(_game);
 }
@@ -507,6 +508,7 @@ void Core::gameCase()
 void Core::pauseCase()
 {
 	hideGameLayers();
+	_pause->run();
 	showGameLayer(_pause);
 }
 

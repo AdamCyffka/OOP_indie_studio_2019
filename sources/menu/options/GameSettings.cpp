@@ -14,7 +14,7 @@ GameSettings::GameSettings(irr::gui::IGUIEnvironment *env, irr::video::IVideoDri
     _env = env;
     _smgr = smgr;
 
-    _firePower = 2;
+    _firePower = 1;
     _bombAmount = 1;
     _speed = 2;
     _wallPass = false;

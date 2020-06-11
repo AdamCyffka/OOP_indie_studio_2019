@@ -43,6 +43,7 @@ class GameCore {
         void reset();
 		void firstRound();
 		void nextRound();
+		void isOver();
         bool isInit() const;
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
 		bool nextBlockHasWall(std::pair<int, int>);
@@ -50,14 +51,14 @@ class GameCore {
 		Bomber *getBomber();
 		Core *getCore();
 		void SelectPowerUp(IEntity *entity, int id);
+		int getRemainingEntities();
 		void addPowerUps(irr::core::vector3df &pos);
 		std::vector<std::pair<int, int>> getRanking();
-    protected:
+		bool gameOver();
+	protected:
     private:
 	 	std::vector<IPowerUps *> _powerUps;
 		void spawnPlayers();
-    	bool gameOver();
-		int getRemainingEntities();
 		std::map<int, irr::core::vector3df> _spawnAreas;
 		std::vector<IEntity *> _entities;
 		bool _isPaused;

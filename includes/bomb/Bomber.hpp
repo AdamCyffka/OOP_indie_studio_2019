@@ -17,7 +17,6 @@
 #include "IEntity.hpp"
 #include "hitbox.hpp"
 
-
 #define TIMER (3)
 
 class GameCore;

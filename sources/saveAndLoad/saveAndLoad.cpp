@@ -341,7 +341,6 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
-    core.getGame()->printStars(core.getGameCore()->getEntities());
     core.hideGameLayers();
     return;
 

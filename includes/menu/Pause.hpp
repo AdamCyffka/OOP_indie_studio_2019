@@ -13,9 +13,11 @@
 #include "Character.hpp"
 #include "IMenu.hpp"
 
+class Core;
+
 class Pause : public IMenu {
     public:
-        explicit Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        explicit Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, Core *core);
         ~Pause() = default;
 
         void loadButtons();
@@ -29,6 +31,8 @@ class Pause : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+
+        Core *_core;
 
         std::map<std::string, irr::gui::IGUIImage *> _images;
         std::map<std::string, irr::video::ITexture *> _textures;

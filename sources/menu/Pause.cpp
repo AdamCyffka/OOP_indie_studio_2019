@@ -7,12 +7,15 @@
 
 #include "Pause.hpp"
 #include "LoadingException.hpp"
+#include "Core.hpp"
 
-Pause::Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
+Pause::Pause(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, Core *core)
 {
     _driver = driver;
     _env = env;
     _smgr = smgr;
+
+    _core = core;
 
     loadTextures();
     loadButtons();
@@ -83,6 +86,20 @@ std::map<std::string, irr::gui::IGUIButton *> Pause::getButtons()
 std::map<std::string, irr::gui::IGUIImage *> Pause::getImages()
 {
     return _images;
+}
+
+void Pause::run()
+{
+	if (_core->getGameCore()->getRemainingEntities() == 1) {
+		if (_core->getGameCore()->gameOver())
+		{
+			_core->getGameCore()->isOver();
+		} else {
+			_core->setGState(Core::game);
+			_core->setLGState(Core::gameGame);
+			_core->getGameCore()->run();
+		}
+	}
 }
 
 std::map<std::string, irr::gui::IGUICheckBox *> Pause::getCheckBox()
