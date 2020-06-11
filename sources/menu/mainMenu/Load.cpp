@@ -46,7 +46,7 @@ void Load::loadButtons()
     _buttons["slot4"]->setImage(_textures["slot"]);
     _buttons["slot4"]->setRelativePosition(irr::core::position2d<irr::s32>(780, 550));
 
-    _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN, L"");
+    _buttons["back"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 215, 47), nullptr, GUI_ID_OPTION_RETURN);
     _buttons["back"]->setImage(_textures["back"]);
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
 }
