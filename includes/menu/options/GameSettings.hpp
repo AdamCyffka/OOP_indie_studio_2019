@@ -14,10 +14,10 @@
 #include "Character.hpp"
 #include "IMenu.hpp"
 
-class Videos : public IMenu {
+class GameSettings : public IMenu {
     public:
-        explicit Videos(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
-        ~Videos() = default;
+        explicit GameSettings(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        ~GameSettings() = default;
 
         void loadButtons();
         void loadTextures();
@@ -26,8 +26,26 @@ class Videos : public IMenu {
         std::map<std::string, irr::gui::IGUIButton *> getButtons();
         std::map<std::string, irr::gui::IGUIImage *> getImages();
         std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
+
+		int getFirePower() const;
+		void setFirePower(int firePower);
+		int getBombAmount() const;
+		void setBombAmount(int bombAmount);
+		int getSpeed() const;
+		void setSpeed(int speed);
+		bool isWallPass() const;
+		void setWallPass(bool wallPass);
+		bool isBombPass() const;
+		void setBombPass(bool bombPass);
+
     private:
-        irr::gui::IGUIEnvironment *_env;
+        int _firePower;
+        int _bombAmount;
+        int _speed;
+        bool _wallPass;
+        bool _bombPass;
+
+		irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 

@@ -56,7 +56,7 @@ Core::Core()
 	_splash = nullptr;
 	_menu = nullptr;
 	_sounds = nullptr;
-	_videos = nullptr;
+	_gameSettings = nullptr;
 	_controls = nullptr;
 	_save = nullptr;
 	_load = nullptr;
@@ -118,7 +118,7 @@ void Core::restartDevice(bool fullscreen)
 	_splash = nullptr;
 	_menu = nullptr;
 	_sounds = nullptr;
-	_videos = nullptr;
+	_gameSettings = nullptr;
 	_controls = nullptr;
 	_save = nullptr;
 	_load = nullptr;
@@ -143,14 +143,14 @@ bool Core::getFullscreen() const
     return _fullscreen;
 }
 
-void Core::setVideos(Videos *videos)
+void Core::setGameSettings(GameSettings *gameSettings)
 {
-	_videos = videos;
+	_gameSettings = gameSettings;
 }
 
-Videos *Core::getVideos() const
+GameSettings *Core::getGameSettings() const
 {
-	return _videos;
+	return _gameSettings;
 }
 
 Save *Core::getSave() const
@@ -435,10 +435,10 @@ void Core::soundsCase()
 	showMenuLayer(_sounds);
 }
 
-void Core::videosCase()
+void Core::gameSettingsCase()
 {
 	hideMenuLayers();
-	showMenuLayer(_videos);
+	showMenuLayer(_gameSettings);
 }
 
 void Core::controlsCase()
@@ -510,7 +510,7 @@ void Core::pauseCase()
 	showGameLayer(_pause);
 }
 
-void(*f[20])(Core *) = {loadSplashBar, loadMusic, loadMap, loadIntro, loadMenu, loadSounds, loadVideos, loadControls, loadSelect, loadScore, loadHelp, loadCredits, loadSave, loadLoad, loadInput, loadGameCore, loadPause, loadGameClass, loadGameSounds, loadGameControls};
+void(*f[20])(Core *) = {loadSplashBar, loadMusic, loadMap, loadIntro, loadMenu, loadSounds, loadGameSettings, loadControls, loadSelect, loadScore, loadHelp, loadCredits, loadSave, loadLoad, loadInput, loadGameCore, loadPause, loadGameClass, loadGameSounds, loadGameControls};
 
 void Core::init()
 {
@@ -615,8 +615,8 @@ void Core::drawMenuLayer()
 		case menuControls:
 			controlsCase();
 			break;
-		case menuVideos:
-			videosCase();
+		case menuGameSettings:
+			gameSettingsCase();
 			break;
 		case menuCredits:
 			creditsCase();
@@ -704,13 +704,13 @@ void Core::hideMenuLayers()
 		for (auto &it : _sounds->getImages())
 			it.second->setVisible(false);
 	}
-	if (_videos)
+	if (_gameSettings)
 	{
-		for (auto &it : _videos->getButtons())
+		for (auto &it : _gameSettings->getButtons())
 			it.second->setVisible(false);
-		for (auto &it : _videos->getImages())
+		for (auto &it : _gameSettings->getImages())
 			it.second->setVisible(false);
-		for (auto &it : _videos->getCheckBox())
+		for (auto &it : _gameSettings->getCheckBox())
 			it.second->setVisible(false);
 	}
 	if (_controls)
