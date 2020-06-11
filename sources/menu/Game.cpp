@@ -164,7 +164,7 @@ void Game::printStars(std::vector<IEntity *> entities)
         _images["GstarBotRThree"]->setRelativePosition(irr::core::position2d<irr::s32>(1890, 920));
         _images["GstarBotLThree"]->setVisible(false);
     }
-    if (entities[0]->getWinNumber() >= 1) {
+    if (entities[0]->getWinNumber() == 1) {
         _images["GstarTopLOne"]->setImage(_textures["star"]);
     } else if (entities[0]->getWinNumber() >= 2) {
         _images["GstarTopLOne"]->setImage(_textures["star"]);
@@ -172,6 +172,36 @@ void Game::printStars(std::vector<IEntity *> entities)
     } else {
         _images["GstarTopLOne"]->setImage(_textures["grey_star"]);
         _images["GstarTopLTwo"]->setImage(_textures["grey_star"]);
+    }
+
+    if (entities[1]->getWinNumber() == 1) {
+        _images["GstarTopROne"]->setImage(_textures["star"]);
+    } else if (entities[1]->getWinNumber() >= 2) {
+        _images["GstarTopROne"]->setImage(_textures["star"]);
+        _images["GstarTopRTwo"]->setImage(_textures["star"]);
+    } else {
+        _images["GstarTopROne"]->setImage(_textures["grey_star"]);
+        _images["GstarTopRTwo"]->setImage(_textures["grey_star"]);
+    }
+
+    if (entities[2]->getWinNumber() == 1) {
+        _images["GstarBotLOne"]->setImage(_textures["star"]);
+    } else if (entities[2]->getWinNumber() >= 2) {
+        _images["GstarBotLOne"]->setImage(_textures["star"]);
+        _images["GstarBotLTwo"]->setImage(_textures["star"]);
+    } else {
+        _images["GstarBotLOne"]->setImage(_textures["grey_star"]);
+        _images["GstarBotLTwo"]->setImage(_textures["grey_star"]);
+    }
+
+    if (entities[3]->getWinNumber() == 1) {
+        _images["GstarBotROne"]->setImage(_textures["star"]);
+    } else if (entities[3]->getWinNumber() >= 2) {
+        _images["GstarBotROne"]->setImage(_textures["star"]);
+        _images["GstarBotRTwo"]->setImage(_textures["star"]);
+    } else {
+        _images["GstarBotROne"]->setImage(_textures["grey_star"]);
+        _images["GstarBotRTwo"]->setImage(_textures["grey_star"]);
     }
 }
 
