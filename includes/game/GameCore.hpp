@@ -13,7 +13,7 @@
 #include "IEntity.hpp"
 #include "Input.hpp"
 #include "Player.hpp"
-#include "Ai.hpp"
+#include "AI.hpp"
 #include "Bomber.hpp"
 
 #include "IPowerUps.hpp"
