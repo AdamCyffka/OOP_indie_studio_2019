@@ -427,7 +427,7 @@ void Core::gameCase()
 		_gameCore->init(_select->getPreviews(), _select->getEntityTypes(), _controls->getEntityType());
 	}
 	_gameCore->run();
-	_game->run(_gameCore->getEntities());
+	_game->run(_gameCore->isWaiting(), _gameCore->getEntities());
 	hideGameLayers();
 	showGameLayer(_game);
 }
@@ -590,10 +590,16 @@ void Core::hideGameLayers()
 			it.second->setVisible(false);
 	}
 	if (_game) {
+		std::cout << "j'ai _game" << std::endl;
 		for (auto &it : _game->getButtons())
 			it.second->setVisible(false);
 		for (auto &it : _game->getImages())
 			it.second->setVisible(false);
+		if (_lGState == layerGameState::gamePause) {
+			for (auto &it : _game->getTempImages()) {
+				it.second->setVisible(false);
+			}
+		}
 	}
 	if (_save)
 		for (auto &it : _save->getButtons())
