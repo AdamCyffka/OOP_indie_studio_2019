@@ -12,6 +12,7 @@
 #include <string>
 #include "Character.hpp"
 #include "IMenu.hpp"
+#include "IEntity.hpp"
 
 class Game : public IMenu {
     public:
@@ -21,7 +22,7 @@ class Game : public IMenu {
         void loadButtons();
         void loadTextures();
         void run();
-        void printStars();
+        void printStars(std::vector<IEntity *> entities);
         void printUpLeft();
         void printUpRight();
         void printDownLeft();

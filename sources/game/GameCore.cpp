@@ -44,6 +44,7 @@ void GameCore::reset()
 
 void GameCore::firstRound()
 {
+	_core->getGame()->printStars(_entities);
 	_isWaiting = true;
 	boost::this_thread::sleep_for(boost::chrono::seconds(3));
 	_isWaiting = false;
