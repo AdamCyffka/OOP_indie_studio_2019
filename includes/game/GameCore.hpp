@@ -41,6 +41,7 @@ class GameCore {
 
         void setPause(bool);
         void reset();
+		void firstRound();
 		void nextRound();
         bool isInit() const;
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
