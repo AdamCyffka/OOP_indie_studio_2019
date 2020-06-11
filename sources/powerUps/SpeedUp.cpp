@@ -30,6 +30,11 @@ SpeedUp::SpeedUp(irr::scene::ISceneManager *smgr, irr::core::vector3df const &po
 	anim->drop();
 }
 
+SpeedUp::~SpeedUp()
+{
+	_node->remove();
+}
+
 irr::core::vector3df SpeedUp::getPosition()
 {
 	return _pos;

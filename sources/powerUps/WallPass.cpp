@@ -29,6 +29,11 @@ WallPass::WallPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &
 	anim->drop();
 }
 
+WallPass::~WallPass()
+{
+	_node->remove();
+}
+
 irr::core::vector3df WallPass::getPosition()
 {
 	return _pos;
