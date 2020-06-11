@@ -33,7 +33,8 @@ class IEntity {
         virtual void kill() = 0;
         virtual void run(Key_mouvement) = 0;
     	virtual void putBomb() = 0;
-        virtual void setFirePower(int) = 0;
+		virtual void setPowerUps() = 0;
+		virtual void setFirePower(int) = 0;
         virtual int getFirePower() = 0;
 		virtual void setBombAmount(int) = 0;
 		virtual int getBombAmount() = 0;

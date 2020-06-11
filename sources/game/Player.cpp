@@ -13,11 +13,7 @@ Player::Player(Character *character, const Key_mouvement &input, int entityNumbe
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _savedInput(None),
 	 _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
-	_firePower = _gameCore->getCore()->getGameSettings()->getFirePower();
-	_bombAmount = gameCore->getCore()->getGameSettings()->getBombAmount();
-	_speed = gameCore->getCore()->getGameSettings()->getSpeed();
-	_wallPass = gameCore->getCore()->getGameSettings()->isWallPass();
-	_bombPass = gameCore->getCore()->getGameSettings()->isBombPass();
+	setPowerUps();
 	_bombStack = new BombStack(_driver, _smgr);
 	_character->setState(Character::state::idle);
 }
@@ -71,6 +67,15 @@ void Player::run(Key_mouvement input)
 void Player::putBomb()
 {
 	_bomb->putBomb(this);
+}
+
+void Player::setPowerUps()
+{
+	_firePower = _gameCore->getCore()->getGameSettings()->getFirePower();
+	_bombAmount = _gameCore->getCore()->getGameSettings()->getBombAmount();
+	_speed = _gameCore->getCore()->getGameSettings()->getSpeed();
+	_wallPass = _gameCore->getCore()->getGameSettings()->isWallPass();
+	_bombPass = _gameCore->getCore()->getGameSettings()->isBombPass();
 }
 
 void Player::setFirePower(int firePower)

@@ -25,6 +25,7 @@ class Player : public IEntity {
 	 	void run(Key_mouvement) final;
 	 	void putBomb() final;
 
+		void setPowerUps() final;
 		void setFirePower(int) final;
 		int getFirePower() final;
 		void setBombAmount(int) final;
