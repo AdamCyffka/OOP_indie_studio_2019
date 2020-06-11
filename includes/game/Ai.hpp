@@ -26,6 +26,7 @@ public:
 	void run(Key_mouvement input, std::vector<IEntity *> entities);
 	void putBomb() final;
 
+	void setPowerUps() final;
 	void setFirePower(int) final;
 	int getFirePower() final;
 	void setBombAmount(int) final;
@@ -74,6 +75,7 @@ private:
 	core::vector3df _wantedPosition;
 	Bomber *_bomber;
 	BombStack *_bombStack;
+	GameCore *_gameCore;
 
 	int _firePower;
 	int _bombAmount;
