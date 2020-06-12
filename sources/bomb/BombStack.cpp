@@ -87,7 +87,6 @@ void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
             bomb.first.first->setPosition({MAP_DEFAULT_X + (-10.0f * bombPosition2d.x), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * bombPosition2d.y)});
             bomb.first.first->setVisible(true);
             bomb.first.second = false;
-            if (bomb.first.second == true)
             break;
         }
     }
