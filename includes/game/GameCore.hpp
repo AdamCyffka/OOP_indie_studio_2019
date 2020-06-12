@@ -13,7 +13,7 @@
 #include "IEntity.hpp"
 #include "Input.hpp"
 #include "Player.hpp"
-#include "Ai.hpp"
+#include "AI.hpp"
 #include "Bomber.hpp"
 
 #include "IPowerUps.hpp"
@@ -43,6 +43,8 @@ class GameCore {
         void reset();
 		void firstRound();
 		void nextRound();
+		void isOver();
+		int isWaiting() const;
         bool isInit() const;
 		bool nextBlockHasBomb(std::pair<int, int>, bool);
 		bool nextBlockHasWall(std::pair<int, int>);
@@ -50,18 +52,18 @@ class GameCore {
 		Bomber *getBomber();
 		Core *getCore();
 		void SelectPowerUp(IEntity *entity, int id);
+		int getRemainingEntities();
 		void addPowerUps(irr::core::vector3df &pos);
 		std::vector<std::pair<int, int>> getRanking();
-    protected:
+		bool gameOver();
+	protected:
     private:
 	 	std::vector<IPowerUps *> _powerUps;
 		void spawnPlayers();
-    	bool gameOver();
-		int getRemainingEntities();
 		std::map<int, irr::core::vector3df> _spawnAreas;
 		std::vector<IEntity *> _entities;
 		bool _isPaused;
-		bool _isWaiting;
+		int _isWaiting;
 		bool _isInit;
 		Core *_core;
 		Map *_map;

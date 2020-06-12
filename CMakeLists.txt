@@ -11,30 +11,31 @@ add_executable(bomberman
         sources/core/Core.cpp
         sources/map/Map.cpp
         sources/map/LoadMap.cpp
-        sources/menu/gameOptions/GameControls.cpp
-        sources/menu/gameOptions/GameSounds.cpp
-        sources/menu/Menu.cpp
-        sources/menu/options/Controls.cpp
-        sources/menu/options/GameSettings.cpp
-        sources/menu/options/Sounds.cpp
-        sources/menu/Splash.cpp
-        sources/menu/Select.cpp
-        sources/menu/Intro.cpp
-        sources/menu/Credits.cpp
-        sources/menu/Score.cpp
-        sources/menu/Help.cpp
-        sources/menu/Pause.cpp
-        sources/menu/MyEventReceiver.cpp
-        sources/menu/ProgressBar.cpp
-        sources/menu/Save.cpp
-        sources/menu/Game.cpp
-        sources/menu/Load.cpp
+        sources/menu/splashScreen/Splash.cpp
+        sources/menu/splashScreen/ProgressBar.cpp
+        sources/menu/splashScreen/loadCore.cpp
+        sources/menu/mainMenu/Menu.cpp
+        sources/menu/mainMenu/options/Controls.cpp
+        sources/menu/mainMenu/options/GameSettings.cpp
+        sources/menu/mainMenu/options/Sounds.cpp
+        sources/menu/mainMenu/Select.cpp
+        sources/menu/mainMenu/Intro.cpp
+        sources/menu/mainMenu/Credits.cpp
+        sources/menu/mainMenu/Help.cpp
+        sources/menu/mainMenu/Load.cpp
+        sources/menu/inGameMenu/gameOptions/GameControls.cpp
+        sources/menu/inGameMenu/gameOptions/GameSounds.cpp
+        sources/menu/inGameMenu/Score.cpp
+        sources/menu/inGameMenu/Pause.cpp
+        sources/menu/inGameMenu/Save.cpp
+        sources/menu/inGameMenu/Game.cpp
+        sources/input/MyEventReceiver.cpp
+        sources/input/Input.cpp
         sources/characters/Character.cpp
         sources/music/Music.cpp
         sources/travel/CircleCameraTravel.cpp
         sources/travel/StraightCameraTravel.cpp
         sources/travel/CameraTravelManager.cpp
-        sources/input/Input.cpp
         sources/game/hitbox.cpp
         sources/game/Player.cpp
         sources/game/AI.cpp
@@ -53,15 +54,17 @@ add_executable(bomberman
         sources/bomb/Bomber.cpp
         sources/bomb/AnimExplo.cpp
         sources/saveAndLoad/saveAndLoad.cpp
-        sources/splash/loadCore.cpp
         )
 
 include_directories(includes
         includes/map
         includes/core/
         includes/menu/
-        includes/menu/options/
-        includes/menu/gameOptions/
+        includes/menu/splashScreen/
+        includes/menu/mainMenu/
+        includes/menu/mainMenu/options/
+        includes/menu/inGameMenu/
+        includes/menu/inGameMenu/gameOptions/
         includes/characters/
         includes/bomb/
         includes/music/
@@ -102,7 +105,7 @@ ENDIF(MSVC)
 #########################################
 
 ######## Boost integration ############
-find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
+find_package(Boost 1.69.0 COMPONENTS thread chrono filesystem REQUIRED)
 if (Boost_FOUND)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(bomberman ${Boost_LIBRARIES})

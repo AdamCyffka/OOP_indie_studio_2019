@@ -8,12 +8,14 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/filesystem.hpp>
+#include <filesystem>
 #include "saveAndLoad.hpp"
 #include "EnumCheck.hpp"
 #include "saveAndLoadException.hpp"
 #include "global.hpp"
 
 namespace pt = boost::property_tree;
+namespace fs = boost::filesystem;
 
 //SAVE GAME
 
@@ -71,7 +73,6 @@ void savePlayer(int playerNB, Core &core, pt::ptree *root)
     player.put("wallPass", entity->getWallPass());
     player.put("bombPass", entity->getBombPass());
     player.put("entityNumber", entity->getEntityNumber());
-    player.put("score", entity->getScore());
     player.put("winNumber", entity->getWinNumber());
     player.put("input", entity->getInput());
     //ADDING ELEMENTS FOR PLAYER HERE
@@ -118,14 +119,31 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     saveBombMap(core, &root);
 
     //Write save in save file
-    pt::write_json("save" + std::to_string(slot) + ".json", root);
+    try
+    {
+        pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
+    }
+    catch (pt::json_parser_error)
+    {
+        std::cerr << "Saves directory doesn't exist" << std::endl;
+        std::cout << "Try to create the directory..." << std::endl;
+        if (boost::filesystem::create_directory("saves"))
+        {
+            std::cout << "Directory created successfully..." << std::endl;
+            try
+            {
+                pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
+            }
+            catch (pt::json_parser_error)
+            {
+                std::cerr << "Impossible to create the save" << std::endl;
+            }
+        } else {
+            std::cerr << "Impossible to create the directory" << std::endl;
+        }
+        return;
+    }
     return;
-
-    //Others elements for load
-    cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
-    core.setGState(Core::game);
-	core.hideGameLayers();
-	core.getGameCore()->init(core.getSelect()->getPreviews(), core.getSelect()->getEntityTypes(), core.getControls()->getEntityType());
 }
 
 //END SAVE GAME
@@ -203,13 +221,20 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entities[playerNB]->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
     entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));
-    entities[playerNB]->setScore(root->get<int>(path + "score", 0));
     entities[playerNB]->setEntityNumber(root->get<int>(path + "entityNumber", 0));
-    entities[playerNB]->setSpeed(root->get<int>(path + "speed", 0));
-    entities[playerNB]->setBombAmount(root->get<int>(path + "bombAmount", 0));
+    if (root->get<int>(path + "entityNumber", 0) < 1 || root->get<int>(path + "entityNumber", 0) > 4)
+        throw saveAndLoadException("Invalid entityNumber");
+    entities[playerNB]->setSpeed(root->get<int>(path + "speed", 2));
+    if (root->get<int>(path + "speed", 2) < 1 || root->get<int>(path + "speed", 2) > 5)
+        throw saveAndLoadException("Invalid speed");
+    entities[playerNB]->setBombAmount(root->get<int>(path + "bombAmount", 1));
+    if (root->get<int>(path + "bombAmount", 1) < 1 || root->get<int>(path + "bombAmount", 1) > 4)
+        throw saveAndLoadException("Invalid bombAmount");
     entities[playerNB]->setFirePower(root->get<int>(path + "firePower", 0));
+    if (root->get<int>(path + "firePower", 1) < 1 || root->get<int>(path + "firePower", 1) > 5)
+        throw saveAndLoadException("Invalid bombAmount");
     entities[playerNB]->setWallPass((root->get<bool>(path + "wallPass", 0)));
-    if (root->get<int>(path + "winNumber", 0) > 2)
+    if (root->get<int>(path + "winNumber", 0) > 2 || root->get<int>(path + "winNumber", 0) < 0)
         throw saveAndLoadException("Invalid winNumber");
     entities[playerNB]->setWinNumber(root->get<int>(path + "winNumber", 0));
     //ADDING ELEMNTS TO LOAD HERE FOR PLAYER
@@ -233,6 +258,10 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 
     character->setSize(root->get<f32>(path + "size", 0));
     character->setVisibility(root->get<bool>(path + "visibility", 0));
+    if (!entities[playerNB]->isAlive())
+    {
+        character->setVisibility(false);
+    }
     //character->setAnimationSpeed(root->get<f32>(path + "animationSpeed", 0));
     //character->setTravelTime(root->get<u32>(path + "travelTime", 0));
 
@@ -285,12 +314,11 @@ void checkSkins(Core &core, pt::ptree *root)
     players.push_back(root->get<std::string>("player2.character.modelName", ""));
     players.push_back(root->get<std::string>("player3.character.modelName", ""));
 
-    for (auto player: players)
+    for (auto player : players)
     {
         if (player.compare("") == 0)
             throw saveAndLoadException("Invalid player's model");
-        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("luigi_fire") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0
-        && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
+        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("luigi_fire") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0 && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
             throw saveAndLoadException("Invalid player's model");
     }
     if (players[0].compare(players[1]) == 0 || players[0].compare(players[2]) == 0 || players[0].compare(players[3]) == 0 || players[1].compare(players[2]) == 0 || players[1].compare(players[3]) == 0 || players[2].compare(players[3]) == 0)
@@ -307,7 +335,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     pt::ptree root;
     try
     {
-        pt::read_json("save" + std::to_string(slot) + ".json", root);
+        pt::read_json("saves/save" + std::to_string(slot) + ".json", root);
     }
     catch (pt::json_parser::json_parser_error)
     {
@@ -341,7 +369,6 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
-    core.getGame()->printStars(core.getGameCore()->getEntities());
     core.hideGameLayers();
     return;
 

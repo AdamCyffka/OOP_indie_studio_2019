@@ -6,20 +6,16 @@
 */
 
 #include <chrono>
-#include "Ai.hpp"
+#include "AI.hpp"
 #include "hitbox.hpp"
 #include "Bomber.hpp"
 #include "Core.hpp"
 
 AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
-	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None)
+	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None), _gameCore(gameCore)
 {
-	_firePower = gameCore->getCore()->getGameSettings()->getFirePower();
-	_bombAmount = gameCore->getCore()->getGameSettings()->getBombAmount();
-	_speed = gameCore->getCore()->getGameSettings()->getSpeed();
-	_wallPass = gameCore->getCore()->getGameSettings()->isWallPass();
-	_bombPass = gameCore->getCore()->getGameSettings()->isBombPass();
+	setPowerUps();
 	_bombStack = new BombStack(_driver, _smgr);
 	std::srand((unsigned int)(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 	_character->setState(Character::state::idle);
@@ -70,6 +66,15 @@ void AI::putBomb()
 	tmpBombMap[point.x][point.y + 2] == bomb || tmpBombMap[point.x - 2][point.y] == bomb || tmpBombMap[point.x][point.y - 2] == bomb)
 		return;
 	_bomber->putBomb(this);
+}
+
+void AI::setPowerUps()
+{
+	_firePower = _gameCore->getCore()->getGameSettings()->getFirePower();
+	_bombAmount = _gameCore->getCore()->getGameSettings()->getBombAmount();
+	_speed = _gameCore->getCore()->getGameSettings()->getSpeed();
+	_wallPass = _gameCore->getCore()->getGameSettings()->isWallPass();
+	_bombPass = _gameCore->getCore()->getGameSettings()->isBombPass();
 }
 
 void AI::setFirePower(int firePower)
@@ -182,7 +187,7 @@ bool AI::isSafe()
 void AI::canHitPlayers(std::vector<IEntity *> entities)
 {
 	Point point = squareWherePlayerIs(this, _map);
-	int hitDistance = 3;
+	int hitDistance = _firePower + 1;
 
 	for (auto it : entities)
 	{

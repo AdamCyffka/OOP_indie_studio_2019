@@ -17,7 +17,6 @@
 #include "IEntity.hpp"
 #include "hitbox.hpp"
 
-
 #define TIMER (3)
 
 class GameCore;
@@ -59,7 +58,8 @@ class Bomber {
         void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
-        IEntity *isKilledByBomb(std::vector<Point> deadZone);
+        void killEntity(IEntity *entity);
+        std::vector<IEntity *> isKilledByBomb(std::vector<Point> deadZone);
     private:
         Map *_map;
         LoadMap *_loadMap;

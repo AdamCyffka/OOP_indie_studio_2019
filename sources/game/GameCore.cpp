@@ -18,7 +18,7 @@ GameCore::GameCore(Core *core)
 	_core = core;
 	_isInit = false;
 	_isPaused = false;
-	_isWaiting = false;
+	_isWaiting = -1;
 	_map = _core->getMap();
 	_loadMap = _core->getLoadMap();
 	_bomber = new Bomber(_map, _loadMap, this);
@@ -32,40 +32,64 @@ void GameCore::reset()
 {
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
+		it->setPowerUps();
 	}
 	_map->generateMap();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
+	for (auto it : _powerUps)
+		it->die();
 	_powerUps.clear();
 	_entities.clear();
+	_isWaiting = -1;
 	_isPaused = false;
 	_isInit = false;
 }
 
 void GameCore::firstRound()
 {
-	_core->getGame()->printStars(_entities);
-	_isWaiting = true;
-	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	_isWaiting = 3;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 2;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 1;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 0;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = -1;
+	for (auto it : _powerUps)
+		it->die();
 	_powerUps.clear();
-	_isWaiting = false;
+}
+
+int GameCore::isWaiting() const
+{
+	return _isWaiting;
 }
 
 void GameCore::nextRound()
 {
-	_core->getGame()->printStars(_entities);
-	_isWaiting = true;
 	for (auto it : _entities) {
 		it->getCharacter()->removeAnimators();
+		it->setPowerUps();
 	}
 	spawnPlayers();
-	boost::this_thread::sleep_for(boost::chrono::seconds(3));
+	_isWaiting = 3;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 2;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 1;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = 0;
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
+	_isWaiting = -1;
 	spawnPlayers();
 	_map->generateMap();
+	for (auto it : _powerUps)
+		it->die();
 	_powerUps.clear();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
-	_isWaiting = false;
 }
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)
@@ -95,22 +119,27 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	_isInit = true;
 }
 
+void GameCore::isOver()
+{
+	_core->getMusicEngine()->stop("resources/music/game.mp3", false);
+	_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
+	_core->setGState(Core::menu);
+	_core->setLState(Core::menuScore);
+	_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
+	_core->getScore()->updateRanking(getRanking());
+	_core->getScore()->spawnEntities();
+	reset();
+}
+
 void GameCore::run()
 {
-	if (_isPaused || _isWaiting)
+	if (_isPaused || _isWaiting != -1)
 		return;
 	if (gameOver()) {
-		_core->getMusicEngine()->stop("resources/music/game.mp3", false);
-		_core->getMusicEngine()->add2D("resources/music/end.mp3", false, false, true, irrklang::ESM_AUTO_DETECT, true);
-		_core->setGState(Core::menu);
-		_core->setLState(Core::menuScore);
-		_core->getCameraTravelManager()->doTravel(CameraTravelManager::travel::gameToScore);
-		_core->getScore()->updateRanking(getRanking());
-		_core->getScore()->spawnEntities();
-		reset();
+		isOver();
 		return;
 	}
-	if (getRemainingEntities() == 1) {
+	if (getRemainingEntities() <= 1) {
 		for (auto it : _entities)
 			if (it->isAlive())
 				it->setWinNumber(it->getWinNumber() + 1);

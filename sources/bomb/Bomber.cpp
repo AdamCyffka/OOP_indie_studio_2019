@@ -18,6 +18,16 @@ Bomber::~Bomber()
 {
 }
 
+void Bomber::killEntity(IEntity *entity)
+{
+    entity->setIsAlive(false);
+    if (Character *character = entity->getCharacter()) {
+        character->setState(Character::state::dying);
+        boost::this_thread::sleep_for(boost::chrono::milliseconds(2500));
+        character->setVisibility(false);
+    }
+}
+
 void Bomber::run(IEntity *it)
 {
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
@@ -30,14 +40,9 @@ void Bomber::run(IEntity *it)
     std::vector<Point> deadZone = it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
     clearMapAfterBlast(it, bombPosition3d);
     giveNewBombInInventory(it);
-    IEntity *entity = isKilledByBomb(deadZone);
-    if (entity != nullptr) {
-        entity->setIsAlive(false);
-        if (Character *character = entity->getCharacter()) {
-            character->setState(Character::state::dying);
-            boost::this_thread::sleep_for(boost::chrono::milliseconds(2500));
-            character->setVisibility(false);
-        }
+    std::vector<IEntity *> killedEntities = isKilledByBomb(deadZone);
+    for (auto entity : killedEntities) {
+        boost::thread thr = boost::thread(boost::bind(&Bomber::killEntity, this, entity));
     }
     boost::this_thread::yield();
 }
@@ -200,15 +205,16 @@ void Bomber::giveNewBombInInventory(IEntity *it)
     it->setBombAmount(it->getBombAmount() + 1);
 }
 
-IEntity *Bomber::isKilledByBomb(std::vector<Point> deadZone)
+std::vector<IEntity *> Bomber::isKilledByBomb(std::vector<Point> deadZone)
 {
+    std::vector<IEntity *> toReturn;
     for (auto entity : _entities) {
         Point characterPosition = squareWherePlayerIs(entity, _map);
         for (Point zone : deadZone)
             if (characterPosition.x == zone.x && characterPosition.y == zone.y)
-                return entity;
+                toReturn.push_back(entity);
     }
-    return nullptr;
+    return toReturn;
 }
 
 int Bomber::getRemainingEntities()

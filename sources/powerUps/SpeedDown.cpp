@@ -20,7 +20,7 @@ SpeedDown::SpeedDown(irr::scene::ISceneManager *smgr, irr::core::vector3df const
     if (!_node)
         throw PowerUpsException("can't add mesh \"resources/models/powers/speeds/speedDown.obj\" to a node");
 	_node->setPosition(pos);
-	_node->setScale({5, 5, 5});
+	_node->setScale({0.1f, 0.1f, 0.1f});
 	if (_node)
 		_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	irr::scene::ISceneNodeAnimator *anim = _smgr->createRotationAnimator({0, 1, 0});
