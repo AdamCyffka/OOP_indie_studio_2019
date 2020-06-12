@@ -34,9 +34,9 @@ void Help::loadButtons()
 	if (_buttons.find("back") == _buttons.end() || !_buttons["back"])
 		throw LoadingException("could not add button : back");
     _buttons["back"]->setImage(_textures["back"]);
-    _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
+    _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 950));
 
-    _images["help"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+    _images["help"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 1920, 900));
 	if (_images.find("help") == _images.end() || !_images["help"])
 		throw LoadingException("could not add image : help");
     _images["help"]->setImage(_textures["help"]);
