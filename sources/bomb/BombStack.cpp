@@ -81,14 +81,9 @@ std::vector<std::pair<std::pair<irr::scene::IMeshSceneNode *, bool>, bool>> &Bom
 
 void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 {
-<<<<<<< HEAD
     _core->getMusicEngine()->add2D("resources/sfx/bomb-drop.ogg", false, false, true, irrklang::ESM_AUTO_DETECT, true);
-    for (auto bomb : _stack) {
-        if (bomb.second == true) {
-=======
     for (auto &bomb : _stack) {
         if (bomb.second && bomb.first.second) {
->>>>>>> dcca95ab3488b5368d406e05a9119262e1d56981
             Point bombPosition2d = squareWhereObjectIs(bombPosition3d, map);
             bomb.first.first->setPosition({MAP_DEFAULT_X + (-10.0f * bombPosition2d.x), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * bombPosition2d.y)});
             bomb.first.first->setVisible(true);
