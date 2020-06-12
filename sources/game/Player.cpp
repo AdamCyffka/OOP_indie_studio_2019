@@ -14,7 +14,7 @@ Player::Player(Character *character, const Key_mouvement &input, int entityNumbe
 	 _wantedPosition(irr::core::vector3df(0, 0, 0))
 {
 	setPowerUps();
-	_bombStack = new BombStack(_driver, _smgr);
+	_bombStack = new BombStack(_driver, _smgr, _bombAmount);
 	_character->setState(Character::state::idle);
 }
 
@@ -97,8 +97,9 @@ void Player::setBombAmount(int bombAmount)
 	_bombAmount += bombAmount;
 	if (_bombAmount > 4)
 		_bombAmount = 4;
-	if (_bombAmount < 1)
+	else if (_bombAmount < 1)
 		_bombAmount = 1;
+	_bombStack->setBombAmount(_bombAmount);
 }
 
 int Player::getBombAmount()

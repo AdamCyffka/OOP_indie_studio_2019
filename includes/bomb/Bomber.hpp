@@ -55,11 +55,10 @@ class Bomber {
 
         //Remove and give bomb
         void removeBombFromInventory(IEntity *it);
-        void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
         void killEntity(IEntity *entity);
-        std::vector<IEntity *> isKilledByBomb(std::vector<Point> deadZone);
+        std::vector<IEntity *> isKilledByBomb(std::vector<Point> deadZone, IEntity *killer, irr::core::vector3df bombPosition3d);
     private:
         Map *_map;
         LoadMap *_loadMap;
