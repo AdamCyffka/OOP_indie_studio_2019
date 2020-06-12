@@ -15,6 +15,7 @@
 #include "global.hpp"
 
 namespace pt = boost::property_tree;
+namespace fs = boost::filesystem;
 
 //SAVE GAME
 
@@ -119,14 +120,15 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     saveBombMap(core, &root);
 
     //Write save in save file
-    pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
+    try {
+        pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
+    }
+    catch (pt::json_parser_error)
+    {
+        std::cerr << "Saves directory doesn't exist" << std::endl;
+        return;
+    }
     return;
-
-    //Others elements for load
-    cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
-    core.setGState(Core::game);
-	core.hideGameLayers();
-	core.getGameCore()->init(core.getSelect()->getPreviews(), core.getSelect()->getEntityTypes(), core.getControls()->getEntityType());
 }
 
 //END SAVE GAME
