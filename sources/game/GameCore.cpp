@@ -104,10 +104,10 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 		} else {
 			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber);
 			entity->setInput(Key_mouvement::None);
+			_core->getInput()->setJoystick(_core->getWindow());
 			if (controlTypes.at(i - 1) == EntityType::ControlType::Keyboard)
 				_core->getInput()->setDevice(i, Controller);
 			else if (controlTypes.at(i - 1) == EntityType::ControlType::Controller) {
-				_core->getInput()->setJoystick(_core->getWindow());
 				_core->getInput()->setDevice(i, Keyboard);
 			}
 		}

@@ -63,14 +63,12 @@ const SEvent::SJoystickEvent Input::changeController(Input *receiver, int contro
 
 void Input::playerJoystick(Input *receiver, int controller, int player)
 {
-
 	f32 moveHorizontal = 0.f;
 	f32 moveVertical = 0.f;
 	const SEvent::SJoystickEvent &joystickData = changeController(receiver, controller);
 	const f32 DEAD_ZONE = 0.05f;
-	
-	if (joystickInfo.size() > 0) {
 
+	if (joystickInfo.size() > 0) {
 		 moveHorizontal = (f32)joystickData.Axis[SEvent::SJoystickEvent::AXIS_X] / 32767.f;
         if(fabs(moveHorizontal) < DEAD_ZONE)
             moveHorizontal = 0.f;
@@ -209,7 +207,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 
 	if (_player.find(0) != _player.end() && !_player[0])
             throw LoadingException("could not find : _player[0]");
-	if (_player.find(0) != _player.end() && _player[0] == Keyboard) {
+	if (_player[0] == Keyboard) {
 		playerOneKeyboard(receiver, event);
 	} else if (_player[0] == Controller) {
 		playerJoystick(receiver, controller, player);
@@ -220,7 +218,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player.find(1) != _player.end() && !_player[1])
-            throw LoadingException("could not find : _player[0]");
+            throw LoadingException("could not find : _player[1]");
 	if (_player[1] == Keyboard) {
 		playerTwoKeyboard(receiver, event);
 	} else if (_player[1] == Controller) {
@@ -232,7 +230,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player.find(2) != _player.end() && !_player[2])
-            throw LoadingException("could not find : _player[0]");
+            throw LoadingException("could not find : _player[2]");
 	if (_player[2] == Keyboard) {
 		playerThreeKeyboard(receiver, event);
 	} else if (_player[2] == Controller) {
@@ -244,7 +242,7 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	player++;
 
 	if (_player.find(3) != _player.end() && !_player[3])
-            throw LoadingException("could not find : _player[0]");
+            throw LoadingException("could not find : _player[3]");
 	if (_player[3] == Keyboard) {
 		playerFourKeyboard(receiver, event);
 	} else if (_player[3] == Controller) {
