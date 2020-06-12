@@ -24,6 +24,7 @@ void Bomber::killEntity(IEntity *entity)
     entity->setIsAlive(false);
     if (Character *character = entity->getCharacter()) {
         character->setState(Character::state::dying);
+        _core->getMusicEngine()->add2D(character->getModelInfos().dyingSoundFilename, false, false, true, irrklang::ESM_AUTO_DETECT, true);
         boost::this_thread::sleep_for(boost::chrono::milliseconds(2500));
         character->setVisibility(false);
     }

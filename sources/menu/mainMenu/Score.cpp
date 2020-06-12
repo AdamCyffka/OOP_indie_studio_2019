@@ -127,7 +127,7 @@ void Score::spawnEntities()
         i->setState(Character::state::idle);
     }
     _previews[_ranking.at(0)]->setState(Character::state::victory);
-    _music->add2D(_previews[_ranking.at(0)]->getModelInfos().victorySoundFilename, true, false, true, irrklang::ESM_AUTO_DETECT, true);
+    _music->add2D(_previews[_ranking.at(0)]->getModelInfos().victorySoundFilename, false, false, true, irrklang::ESM_AUTO_DETECT, true);
 }
 
 std::vector<Character *> Score::getPreviews()

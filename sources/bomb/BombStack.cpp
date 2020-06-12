@@ -81,7 +81,6 @@ std::vector<std::pair<std::pair<irr::scene::IMeshSceneNode *, bool>, bool>> &Bom
 
 void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 {
-    _core->getMusicEngine()->add2D("resources/sfx/bomb-drop.ogg", false, false, true, irrklang::ESM_AUTO_DETECT, true);
     for (auto &bomb : _stack) {
         if (bomb.second && bomb.first.second) {
             Point bombPosition2d = squareWhereObjectIs(bombPosition3d, map);
@@ -103,6 +102,7 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     int column = bombPosition.y;
     std::vector<Point> deadZone;
 
+    _core->getMusicEngine()->add2D("resources/sfx/bomb-explose.wav", false, false, true, irrklang::ESM_AUTO_DETECT, true);
     deadZone.push_back(Point(bombPosition));
     for (int y = line - 1; y >= line - firePower; y--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {
