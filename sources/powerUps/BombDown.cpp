@@ -52,7 +52,6 @@ void BombDown::spawn()
 void BombDown::die()
 {
 	_node->setVisible(false);
-	delete this;
 }
 
 void BombDown::update()

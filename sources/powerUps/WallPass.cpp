@@ -51,7 +51,6 @@ void WallPass::spawn()
 void WallPass::die()
 {
 	_node->setVisible(false);
-	delete this;
 }
 
 void WallPass::update()
