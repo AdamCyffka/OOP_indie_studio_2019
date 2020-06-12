@@ -139,7 +139,7 @@ void GameCore::run()
 		isOver();
 		return;
 	}
-	if (getRemainingEntities() == 1) {
+	if (getRemainingEntities() <= 1) {
 		for (auto it : _entities)
 			if (it->isAlive())
 				it->setWinNumber(it->getWinNumber() + 1);
