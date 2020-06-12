@@ -54,9 +54,6 @@ class Bomber {
         void clearMapAfterBlast(IEntity *, irr::core::vector3df);
         int getRemainingEntities();
 
-        //Remove and give bomb
-        void removeBombFromInventory(IEntity *it);
-
         //Dead handling
         void killEntity(IEntity *entity);
         std::vector<IEntity *> isKilledByBomb(std::vector<Point> deadZone, IEntity *killer, irr::core::vector3df bombPosition3d);

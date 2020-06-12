@@ -33,13 +33,6 @@ void Bomber::run(IEntity *it)
 {
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
     it->getBombStack()->putBomb(_map, bombPosition3d);
-    // if (it->getCharacter()->getModelInfos().name == "mario") {
-    //     auto &temp = it->getBombStack()->getStack();
-    //     std::cout << std::endl;
-    //     for (int i = 0; i < temp.size(); i++) {
-    //         std::cout << "bomb "<< i << " => disponnible :" << ((temp.at(i).second == true) ? "true | prête : " : "false | prête : ") << ((temp.at(i).first.second == true) ? "true" : "false") << std::endl;
-    //     }
-    // }
     boost::this_thread::sleep_for(boost::chrono::milliseconds(1500));
     blastNorth(it, bombPosition3d);
     blastSouth(it, bombPosition3d);
@@ -106,7 +99,6 @@ void Bomber::putBomb(IEntity *it)
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         setRadius(it->getFirePower() + 1);
         epicenter(it, bombPosition3d);
-        removeBombFromInventory(it);
         boost::thread thr = boost::thread(boost::bind(&Bomber::run, this, it));
         thr.detach();
     }
@@ -200,11 +192,6 @@ void Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d)
 void Bomber::clearMapAfterBlast(IEntity *it, irr::core::vector3df bombPosition3d)
 {
     _map->getBombMap()[squareWhereObjectIs(bombPosition3d, _map).x][squareWhereObjectIs(bombPosition3d, _map).y] = bombState::clear;
-}
-
-void Bomber::removeBombFromInventory(IEntity *it)
-{
-	it->setBombAmount(it->getBombAmount() - 1);
 }
 
 
