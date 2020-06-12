@@ -52,7 +52,6 @@ void BombPass::spawn()
 void BombPass::die()
 {
 	_node->setVisible(false);
-	delete this;
 }
 
 void BombPass::update()

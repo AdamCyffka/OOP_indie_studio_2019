@@ -52,7 +52,7 @@ void SpeedDown::spawn()
 void SpeedDown::die()
 {
 	_node->setVisible(false);
-	delete this;
+
 }
 
 void SpeedDown::update()
