@@ -37,6 +37,7 @@ void Music::add2D(const std::string &filename, bool loop, bool startPaused, bool
 		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr)
 			throw MusicException("music object doesn't exist");
 	}
+	setSoundVolume();
 }
 
 void Music::add3D(const std::string &filename, const irrklang::vec3df &vec, bool loop, bool startPaused, bool track, irrklang::E_STREAM_MODE mode, bool enableSFX)
@@ -55,6 +56,7 @@ void Music::add3D(const std::string &filename, const irrklang::vec3df &vec, bool
 		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr)
 			throw MusicException("music object doesn't exist");
 	}
+	setSoundVolume();
 }
 
 bool Music::isFinished(const std::string &filename, bool isSFX)
