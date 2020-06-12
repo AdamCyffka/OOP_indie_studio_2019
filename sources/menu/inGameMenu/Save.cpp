@@ -86,6 +86,12 @@ void Save::loadButtons()
     _buttons["back"]->setRelativePosition(irr::core::position2d<irr::s32>(852, 800));
 }
 
+void Save::run()
+{
+    for (int i = 4; i >= 1; i--)
+        _buttons["slot" + std::to_string(i)]->setText(getSaveName(i));
+}
+
 std::vector<Character *> Save::getPreviews()
 {
     return {};

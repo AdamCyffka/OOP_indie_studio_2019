@@ -389,12 +389,14 @@ void Core::helpCase()
 
 void Core::saveCase()
 {
+	_save->run();
 	hideGameLayers();
 	showGameLayer(_save);
 }
 
 void Core::loadCase()
 {
+	_load->run();
 	hideMenuLayers();
 	showMenuLayer(_load);
 }

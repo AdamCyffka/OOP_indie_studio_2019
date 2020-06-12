@@ -68,6 +68,12 @@ const wchar_t *getLoadName(int saveSlot)
     return L"-";
 }
 
+void Load::run()
+{
+    for (int i = 4; i >= 1; i--)
+        _buttons["slot" + std::to_string(i)]->setText(getLoadName(i));
+}
+
 void Load::loadButtons()
 {
 
