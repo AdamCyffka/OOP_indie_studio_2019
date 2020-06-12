@@ -8,6 +8,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "LoadingException.hpp"
 #include "Save.hpp"
 
 namespace pt = boost::property_tree;
@@ -25,7 +26,11 @@ Save::Save(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr
 void Save::loadTextures()
 {
     _textures["back"] = _driver->getTexture("resources/images/buttons/b.png");
+    if (_textures.find("back") == _textures.end() || !_textures["back"])
+		throw LoadingException("could not load texture : resources/images/buttons/b.png");
     _textures["slot"] = _driver->getTexture("resources/images/buttons/slot.png");
+	if (_textures.find("slot") == _textures.end() || !_textures["slot"])
+		throw LoadingException("could not load texture : resources/images/buttons/slot.png");
 }
 
 const wchar_t *getSaveName(int saveSlot)
