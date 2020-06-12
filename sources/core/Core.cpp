@@ -476,22 +476,6 @@ int Core::run()
 	while (_window->run() && _driver) {
 		_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
 
-		core::vector3df cameraPosition = _camera->getPosition();
-		core::vector3df cameraTargetPosition = _camera->getTarget();
-		core::stringw cameraPositionStr = L"CAMERA POSITION [";
-		cameraPositionStr += cameraPosition.X;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraPosition.Y;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraPosition.Z;
-		cameraPositionStr += L"] CAMERA TARGET POSITION [";
-		cameraPositionStr += cameraTargetPosition.X;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraTargetPosition.Y;
-		cameraPositionStr += L" ";
-		cameraPositionStr += cameraTargetPosition.Z;
-		cameraPositionStr += L"]";
-		_window->setWindowCaption(cameraPositionStr.c_str());
 		drawScene();
 
 		_smgr->drawAll();

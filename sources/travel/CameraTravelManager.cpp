@@ -95,7 +95,7 @@ void CameraTravelManager::doTravel(travel travel)
                 travel->start();
             } else {
                 _travels[gameToScore] = new StraightCameraTravel(_camera, _smgr,
-                    {-539.4f, 453.6f, 710.3f}, {151.6f, 385.4f, 878.8f}, {150.5f, 380.3f, 896.6f}, u32(2000));
+                    {-539.4f, 453.6f, 710.3f}, {164.7f, 389.3f, 859.2f}, {155.1f, 369.0f, 904.5f}, u32(2000));
                 if (auto travel = getTravel(gameToScore))
                     travel->start();
                 else
@@ -107,7 +107,7 @@ void CameraTravelManager::doTravel(travel travel)
                 travel->start();
             } else {
                 _travels[scoreToMenu] = new StraightCameraTravel(_camera, _smgr,
-                    {151.6f, 385.4f, 878.8f}, {-179.2f, 55.8f, -36.1f}, {-111.0f, 45.0f, -24.0f}, u32(2000));
+                    {164.7f, 389.3f, 859.2f}, {-179.2f, 55.8f, -36.1f}, {-111.0f, 45.0f, -24.0f}, u32(2000));
                 if (auto travel = getTravel(scoreToMenu))
                     travel->start();
                 else
