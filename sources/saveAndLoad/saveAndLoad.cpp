@@ -203,7 +203,7 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
     entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));
     entities[playerNB]->setEntityNumber(root->get<int>(path + "entityNumber", 0));
-    if (root->get<int>(path + "entityNumber", 0) < 0 || root->get<int>(path + "entityNumber", 0) > 3)
+    if (root->get<int>(path + "entityNumber", 0) < 1 || root->get<int>(path + "entityNumber", 0) > 4)
         throw saveAndLoadException("Invalid entityNumber");
     entities[playerNB]->setSpeed(root->get<int>(path + "speed", 2));
     if (root->get<int>(path + "speed", 2) < 1 || root->get<int>(path + "speed", 2) > 5)
@@ -239,6 +239,9 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 
     character->setSize(root->get<f32>(path + "size", 0));
     character->setVisibility(root->get<bool>(path + "visibility", 0));
+    if (!entities[playerNB]->isAlive()) {
+        character->setVisibility(false);
+    }
     //character->setAnimationSpeed(root->get<f32>(path + "animationSpeed", 0));
     //character->setTravelTime(root->get<u32>(path + "travelTime", 0));
 

@@ -187,7 +187,7 @@ bool AI::isSafe()
 void AI::canHitPlayers(std::vector<IEntity *> entities)
 {
 	Point point = squareWherePlayerIs(this, _map);
-	int hitDistance = 3;
+	int hitDistance = _firePower + 1;
 
 	for (auto it : entities)
 	{
