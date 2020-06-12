@@ -111,7 +111,6 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
     pt::ptree root;
 
-
     savePlayer(0, core, &root);
     savePlayer(1, core, &root);
     savePlayer(2, core, &root);
@@ -120,12 +119,28 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     saveBombMap(core, &root);
 
     //Write save in save file
-    try {
+    try
+    {
         pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
     }
     catch (pt::json_parser_error)
     {
         std::cerr << "Saves directory doesn't exist" << std::endl;
+        std::cout << "Try to create the directory..." << std::endl;
+        if (boost::filesystem::create_directory("saves"))
+        {
+            std::cout << "Directory created successfully..." << std::endl;
+            try
+            {
+                pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
+            }
+            catch (pt::json_parser_error)
+            {
+                std::cerr << "Impossible to create the save" << std::endl;
+            }
+        } else {
+            std::cerr << "Impossible to create the directory" << std::endl;
+        }
         return;
     }
     return;
@@ -243,7 +258,8 @@ void setCharacterValues(int playerNB, Core &core, pt::ptree *root)
 
     character->setSize(root->get<f32>(path + "size", 0));
     character->setVisibility(root->get<bool>(path + "visibility", 0));
-    if (!entities[playerNB]->isAlive()) {
+    if (!entities[playerNB]->isAlive())
+    {
         character->setVisibility(false);
     }
     //character->setAnimationSpeed(root->get<f32>(path + "animationSpeed", 0));
@@ -298,12 +314,11 @@ void checkSkins(Core &core, pt::ptree *root)
     players.push_back(root->get<std::string>("player2.character.modelName", ""));
     players.push_back(root->get<std::string>("player3.character.modelName", ""));
 
-    for (auto player: players)
+    for (auto player : players)
     {
         if (player.compare("") == 0)
             throw saveAndLoadException("Invalid player's model");
-        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("luigi_fire") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0
-        && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
+        if (player.compare("mario") != 0 && player.compare("waluigi") != 0 && player.compare("luigi") != 0 && player.compare("luigi_fire") != 0 && player.compare("dr_peach") != 0 && player.compare("dry_bones") != 0 && player.compare("lakitu") != 0 && player.compare("koopa") != 0 && player.compare("red_toad") != 0 && player.compare("yellow_toad") != 0 && player.compare("green_toad") != 0 && player.compare("blue_toad") != 0)
             throw saveAndLoadException("Invalid player's model");
     }
     if (players[0].compare(players[1]) == 0 || players[0].compare(players[2]) == 0 || players[0].compare(players[3]) == 0 || players[1].compare(players[2]) == 0 || players[1].compare(players[3]) == 0 || players[2].compare(players[3]) == 0)

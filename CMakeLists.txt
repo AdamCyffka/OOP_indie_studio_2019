@@ -105,7 +105,7 @@ ENDIF(MSVC)
 #########################################
 
 ######## Boost integration ############
-find_package(Boost 1.69.0 COMPONENTS thread chrono REQUIRED)
+find_package(Boost 1.69.0 COMPONENTS thread chrono filesystem REQUIRED)
 if (Boost_FOUND)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(bomberman ${Boost_LIBRARIES})
