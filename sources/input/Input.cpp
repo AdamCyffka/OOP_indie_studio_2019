@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Input.hpp"
+#include "LoadingException.hpp"
 
 using namespace irr;
 
@@ -206,7 +207,9 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	int controller = 1;
 	int player = 1;
 
-	if (_player[0] == Keyboard) {
+	if (_player.find(0) != _player.end() && !_player[0])
+            throw LoadingException("could not find : _player[0]");
+	if (_player.find(0) != _player.end() && _player[0] == Keyboard) {
 		playerOneKeyboard(receiver, event);
 	} else if (_player[0] == Controller) {
 		playerJoystick(receiver, controller, player);
@@ -216,6 +219,8 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	}
 	player++;
 
+	if (_player.find(1) != _player.end() && !_player[1])
+            throw LoadingException("could not find : _player[0]");
 	if (_player[1] == Keyboard) {
 		playerTwoKeyboard(receiver, event);
 	} else if (_player[1] == Controller) {
@@ -226,6 +231,8 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	}
 	player++;
 
+	if (_player.find(2) != _player.end() && !_player[2])
+            throw LoadingException("could not find : _player[0]");
 	if (_player[2] == Keyboard) {
 		playerThreeKeyboard(receiver, event);
 	} else if (_player[2] == Controller) {
@@ -236,6 +243,8 @@ bool Input::getPlayerInput(Input *receiver, const SEvent& event)
 	}
 	player++;
 
+	if (_player.find(3) != _player.end() && !_player[3])
+            throw LoadingException("could not find : _player[0]");
 	if (_player[3] == Keyboard) {
 		playerFourKeyboard(receiver, event);
 	} else if (_player[3] == Controller) {
