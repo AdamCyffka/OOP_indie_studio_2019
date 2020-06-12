@@ -8,6 +8,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/filesystem.hpp>
+#include <filesystem>
 #include "saveAndLoad.hpp"
 #include "EnumCheck.hpp"
 #include "saveAndLoadException.hpp"
@@ -109,6 +110,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
 {
     pt::ptree root;
 
+
     savePlayer(0, core, &root);
     savePlayer(1, core, &root);
     savePlayer(2, core, &root);
@@ -117,7 +119,7 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     saveBombMap(core, &root);
 
     //Write save in save file
-    pt::write_json("save" + std::to_string(slot) + ".json", root);
+    pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
     return;
 
     //Others elements for load
@@ -316,7 +318,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     pt::ptree root;
     try
     {
-        pt::read_json("save" + std::to_string(slot) + ".json", root);
+        pt::read_json("saves/save" + std::to_string(slot) + ".json", root);
     }
     catch (pt::json_parser::json_parser_error)
     {

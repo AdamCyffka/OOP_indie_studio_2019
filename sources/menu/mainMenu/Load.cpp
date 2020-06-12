@@ -40,7 +40,7 @@ const wchar_t *getLoadName(int saveSlot)
     try
     {
         pt::ptree root;
-        pt::read_json("save" + std::to_string(saveSlot) + ".json", root);
+        pt::read_json("saves/save" + std::to_string(saveSlot) + ".json", root);
         switch (saveSlot)
         {
             case 1:
