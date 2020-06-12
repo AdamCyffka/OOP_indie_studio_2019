@@ -19,7 +19,7 @@ class Player : public IEntity {
     public:
         Player(Character *character, const Key_mouvement &input, int entityNumber,
 		Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,
-		GameCore *gameCore, Bomber *bomb);
+		GameCore *gameCore, Bomber *bomb, Core *core);
 
 		void kill() final;
 	 	void run(Key_mouvement) final;
@@ -64,6 +64,7 @@ class Player : public IEntity {
 		BombStack * _bombStack;
 		Map *_map;
 		Bomber *_bomb;
+		Core *_core;
 		irr::video::IVideoDriver *_driver;
 		irr::scene::ISceneManager *_smgr;
 		core::vector3df _wantedPosition;

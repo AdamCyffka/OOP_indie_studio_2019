@@ -21,7 +21,7 @@ GameCore::GameCore(Core *core)
 	_isWaiting = -1;
 	_map = _core->getMap();
 	_loadMap = _core->getLoadMap();
-	_bomber = new Bomber(_map, _loadMap, this);
+	_bomber = new Bomber(_map, _loadMap, this, core);
 	_spawnAreas[1] = irr::core::vector3df{-450.0f, 308.0f, 780.0f};
 	_spawnAreas[2] = irr::core::vector3df{-450.0f, 308.0f, 620.0f};
 	_spawnAreas[3] = irr::core::vector3df{-550.0f, 308.0f, 780.0f};
@@ -97,12 +97,12 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
-			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, this, _bomber);
+			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, this, _bomber, _core);
 			entity->setInput(Key_mouvement::Ia);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::NoDevice)
 				_core->getInput()->setDevice(i, No_device);
 		} else {
-			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber);
+			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber, _core);
 			entity->setInput(Key_mouvement::None);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::Keyboard)
 				_core->getInput()->setDevice(i, Controller);

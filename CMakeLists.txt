@@ -23,9 +23,9 @@ add_executable(bomberman
         sources/menu/mainMenu/Credits.cpp
         sources/menu/mainMenu/Help.cpp
         sources/menu/mainMenu/Load.cpp
+        sources/menu/mainMenu/Score.cpp
         sources/menu/inGameMenu/gameOptions/GameControls.cpp
         sources/menu/inGameMenu/gameOptions/GameSounds.cpp
-        sources/menu/inGameMenu/Score.cpp
         sources/menu/inGameMenu/Pause.cpp
         sources/menu/inGameMenu/Save.cpp
         sources/menu/inGameMenu/Game.cpp

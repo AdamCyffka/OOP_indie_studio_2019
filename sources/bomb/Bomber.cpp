@@ -9,8 +9,9 @@
 #include <boost/chrono.hpp>
 #include "GameCore.hpp"
 #include "Bomber.hpp"
+#include "Core.hpp"
 
-Bomber::Bomber(Map *map, LoadMap *loadMap, GameCore *gameCore): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _gameCore(gameCore), _isBlast(false)
+Bomber::Bomber(Map *map, LoadMap *loadMap, GameCore *gameCore, Core *core): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _gameCore(gameCore), _isBlast(false), _core(core)
 {
 }
 

@@ -75,7 +75,7 @@ void loadSelect(Core *core)
 void loadScore(Core *core)
 {
 	if (!core->getScore() && core->getSelect())
-		core->setScore(new Score(core->getEnv(), core->getDriver(), core->getSmgr(), core->getSelect()->getPreviews()));
+		core->setScore(new Score(core->getEnv(), core->getDriver(), core->getSmgr(), core->getSelect()->getPreviews(), core->getMusicEngine()));
 	core->getSplash()->getBar()->setProgress(50);
 }
 

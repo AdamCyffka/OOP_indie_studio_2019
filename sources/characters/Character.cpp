@@ -10,10 +10,10 @@
 Character::Character(scene::ISceneManager *sManager, video::IVideoDriver *driver, modelInfos_t model, int travelTime, side orientation)
 : _sManager(sManager), _driver(driver), _model(model), _travelTime(travelTime), _orientation(orientation)
 {
-    scene::IAnimatedMesh *mesh = _sManager->getMesh(_model.filename.c_str());
+    scene::IAnimatedMesh *mesh = _sManager->getMesh(_model.modelFilename.c_str());
     _meshNode = _sManager->addAnimatedMeshSceneNode(mesh);
     if (!_meshNode)
-        throw CharacterException("Unable to create mesh with model " + _model.filename);
+        throw CharacterException("Unable to create mesh with model " + _model.modelFilename);
     _meshNode->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     for (std::size_t i = 0; i < _model.textures.size(); i++) {
         video::ITexture *texture = _driver->getTexture(_model.textures[i].c_str());
@@ -187,7 +187,7 @@ void Character::moveTo(core::vector3df position, u32 travelTime)
             animation->drop();
         } else {
             animation->drop();
-            throw CharacterException("Mesh \"" + _model.filename + "\" not found");
+            throw CharacterException("Mesh \"" + _model.modelFilename + "\" not found");
         }
     } else {
         throw CharacterException("Cannot create a fly straight animator from the scene manager");
@@ -207,12 +207,12 @@ void Character::changeModel(modelInfos_t model)
         _meshNode->remove();
         _meshNode = nullptr;
     }
-    irr::scene::IAnimatedMesh *mesh = _sManager->getMesh(_model.filename.c_str());
+    irr::scene::IAnimatedMesh *mesh = _sManager->getMesh(_model.modelFilename.c_str());
     if (!mesh)
-        throw CharacterException("Unable to create mesh with model " + _model.filename);
+        throw CharacterException("Unable to create mesh with model " + _model.modelFilename);
     _meshNode = _sManager->addAnimatedMeshSceneNode(mesh);
     if (!_meshNode)
-        throw CharacterException("Unable to add mesh with model " + _model.filename);
+        throw CharacterException("Unable to add mesh with model " + _model.modelFilename);
     _meshNode->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     for (std::size_t i = 0; i < _model.textures.size(); i++) {
         video::ITexture *texture = _driver->getTexture(_model.textures[i].c_str());

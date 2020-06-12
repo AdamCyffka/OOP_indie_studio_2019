@@ -13,11 +13,12 @@
 #include <utility>
 #include "hitbox.hpp"
 
+class Core;
 class IEntity;
 
 class BombStack {
     public:
-        BombStack(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr);
+        BombStack(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, Core *core);
         ~BombStack();
 
         void addBomb();
@@ -28,6 +29,7 @@ class BombStack {
 
     protected:
     private:
+        Core *_core;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
 

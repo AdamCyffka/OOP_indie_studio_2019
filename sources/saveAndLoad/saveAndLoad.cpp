@@ -214,9 +214,9 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     if (!Key_mouvementCheck::is_value(input))
         throw saveAndLoadException("Invalid Enum value");
     if (input == Key_mouvement::Ia)
-        entities[playerNB] = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore(), core.getGameCore()->getBomber());
+        entities[playerNB] = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore(), core.getGameCore()->getBomber(), &core);
     else
-        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber());
+        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber(), &core);
     entities[playerNB]->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
     entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));

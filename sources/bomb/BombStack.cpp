@@ -9,9 +9,11 @@
 #include "BombException.hpp"
 #include "AnimExplo.hpp"
 #include "IEntity.hpp"
+#include "Core.hpp"
 
-BombStack::BombStack(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr)
+BombStack::BombStack(irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, Core *core)
 {
+    _core = core;
     _driver = driver;
     _smgr = smgr;
     addBomb();
@@ -53,6 +55,7 @@ int BombStack::bombsAvailable()
 
 void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
 {
+    _core->getMusicEngine()->add2D("resources/sfx/bomb-drop.ogg", false, false, true, irrklang::ESM_AUTO_DETECT, true);
     for (auto bomb : _stack) {
         if (bomb.second == true) {
             Point bombPosition2d = squareWhereObjectIs(bombPosition3d, map);

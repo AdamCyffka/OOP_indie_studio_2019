@@ -10,8 +10,9 @@
 #include "LoadingException.hpp"
 #include "MenuException.hpp"
 
-Score::Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<Character *> previews)
+Score::Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<Character *> previews, Music *music)
 {
+    _music = music;
     _driver = driver;
     _env = env;
     _smgr = smgr;
@@ -126,6 +127,7 @@ void Score::spawnEntities()
         i->setState(Character::state::idle);
     }
     _previews[_ranking.at(0)]->setState(Character::state::victory);
+    _music->add2D(_previews[_ranking.at(0)]->getModelInfos().victorySoundFilename, true, false, true, irrklang::ESM_AUTO_DETECT, true);
 }
 
 std::vector<Character *> Score::getPreviews()

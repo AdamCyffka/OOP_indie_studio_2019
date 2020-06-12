@@ -13,7 +13,9 @@
 
 typedef struct modelInfos_s {
     std::string name;
-    std::string filename;
+    std::string modelFilename;
+    std::string dyingSoundFilename;
+    std::string victorySoundFilename;
     std::vector<std::string> textures;
     std::pair<int, int> idleLoop;
     std::pair<int, int> runningLoop;

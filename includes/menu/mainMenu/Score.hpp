@@ -14,11 +14,12 @@
 #include <vector>
 #include <utility>
 #include "Character.hpp"
+#include "Music.hpp"
 #include "IMenu.hpp"
 
 class Score : public IMenu {
     public:
-        Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,  std::vector<Character *> previews);
+        Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,  std::vector<Character *> previews, Music *music);
         ~Score() = default;
         void run();
 
@@ -37,6 +38,7 @@ class Score : public IMenu {
         irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
+        Music *_music;
 
 		std::map<std::string, irr::gui::IGUIImage *> _images;
 		std::map<std::string, irr::video::ITexture *> _textures;

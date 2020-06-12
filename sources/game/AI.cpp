@@ -11,12 +11,12 @@
 #include "Bomber.hpp"
 #include "Core.hpp"
 
-AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber)
+AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber, Core *core)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
-	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None), _gameCore(gameCore)
+	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None), _gameCore(gameCore), _core(core)
 {
 	setPowerUps();
-	_bombStack = new BombStack(_driver, _smgr);
+	_bombStack = new BombStack(_driver, _smgr, _core);
 	std::srand((unsigned int)(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 	_character->setState(Character::state::idle);
 }
