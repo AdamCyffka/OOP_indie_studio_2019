@@ -125,11 +125,11 @@ void GameSettings::loadButtons()
 		throw LoadingException("could not add button : minusFirePower");
 	_buttons["minusFirePower"]->setImage(_textures["minus"]);
 	_buttons["minusFirePower"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 500));
-	_buttons["firePowerValue"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, -1, L"");
-	if (_buttons.find("firePowerValue") == _buttons.end() || !_buttons["firePowerValue"])
+	_images["firePowerValue"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
+	if (_images.find("firePowerValue") == _images.end() || !_images["firePowerValue"])
 		throw LoadingException("could not add button : firePowerValue");
-	_buttons["firePowerValue"]->setImage(_textures["value1"]);
-	_buttons["firePowerValue"]->setRelativePosition(irr::core::position2d<irr::s32>(1510, 500));
+	_images["firePowerValue"]->setImage(_textures["value1"]);
+	_images["firePowerValue"]->setRelativePosition(irr::core::position2d<irr::s32>(1510, 500));
 
 	//bombamount
 	_images["bombAmount"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47));
@@ -148,11 +148,11 @@ void GameSettings::loadButtons()
 		throw LoadingException("could not add button : minusBombAmount");
 	_buttons["minusBombAmount"]->setImage(_textures["minus"]);
 	_buttons["minusBombAmount"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 400));
-	_buttons["bombAmountValue"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, -1, L"");
-	if (_buttons.find("bombAmountValue") == _buttons.end() || !_buttons["bombAmountValue"])
+	_images["bombAmountValue"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
+	if (_images.find("bombAmountValue") == _images.end() || !_images["bombAmountValue"])
 		throw LoadingException("could not add button : bombAmountValue");
-	_buttons["bombAmountValue"]->setImage(_textures["value1"]);
-	_buttons["bombAmountValue"]->setRelativePosition(irr::core::position2d<irr::s32>(1510, 400));
+	_images["bombAmountValue"]->setImage(_textures["value1"]);
+	_images["bombAmountValue"]->setRelativePosition(irr::core::position2d<irr::s32>(1510, 400));
 
 	//speed
 	_images["speed"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47));
@@ -171,11 +171,11 @@ void GameSettings::loadButtons()
 		throw LoadingException("could not add button : minusSpeed");
 	_buttons["minusSpeed"]->setImage(_textures["minus"]);
 	_buttons["minusSpeed"]->setRelativePosition(irr::core::position2d<irr::s32>(1450, 300));
-	_buttons["speedValue"] = _env->addButton(irr::core::rect<irr::s32>(0, 0, 47, 47), nullptr, -1, L"");
-	if (_buttons.find("speedValue") == _buttons.end() || !_buttons["speedValue"])
+	_images["speedValue"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 47, 47));
+	if (_images.find("speedValue") == _images.end() || !_images["speedValue"])
 		throw LoadingException("could not add button : speedValue");
-	_buttons["speedValue"]->setImage(_textures["value2"]);
-	_buttons["speedValue"]->setRelativePosition(irr::core::position2d<irr::s32>(1510, 300));
+	_images["speedValue"]->setImage(_textures["value2"]);
+	_images["speedValue"]->setRelativePosition(irr::core::position2d<irr::s32>(1510, 300));
 
 	//wallpass
 	_images["wallPass"] = _env->addImage(irr::core::rect<irr::s32>(0, 0, 215, 47));
@@ -239,19 +239,19 @@ void GameSettings::setFirePower(int firePower)
 	switch (_firePower)
 	{
 		case 1:
-			_buttons["firePowerValue"]->setImage(_textures["value1"]);
+			_images["firePowerValue"]->setImage(_textures["value1"]);
 			break;
 		case 2:
-			_buttons["firePowerValue"]->setImage(_textures["value2"]);
+			_images["firePowerValue"]->setImage(_textures["value2"]);
 			break;
 		case 3:
-			_buttons["firePowerValue"]->setImage(_textures["value3"]);
+			_images["firePowerValue"]->setImage(_textures["value3"]);
 			break;
 		case 4:
-			_buttons["firePowerValue"]->setImage(_textures["value4"]);
+			_images["firePowerValue"]->setImage(_textures["value4"]);
 			break;
 		case 5:
-			_buttons["firePowerValue"]->setImage(_textures["value5"]);
+			_images["firePowerValue"]->setImage(_textures["value5"]);
 			break;
 		default:
 			break;
@@ -273,16 +273,16 @@ void GameSettings::setBombAmount(int bombAmount)
 	switch (_bombAmount)
 	{
 		case 1:
-			_buttons["bombAmountValue"]->setImage(_textures["value1"]);
+			_images["bombAmountValue"]->setImage(_textures["value1"]);
 			break;
 		case 2:
-			_buttons["bombAmountValue"]->setImage(_textures["value2"]);
+			_images["bombAmountValue"]->setImage(_textures["value2"]);
 			break;
 		case 3:
-			_buttons["bombAmountValue"]->setImage(_textures["value3"]);
+			_images["bombAmountValue"]->setImage(_textures["value3"]);
 			break;
 		case 4:
-			_buttons["bombAmountValue"]->setImage(_textures["value4"]);
+			_images["bombAmountValue"]->setImage(_textures["value4"]);
 			break;
 		default:
 			break;
@@ -304,19 +304,19 @@ void GameSettings::setSpeed(int speed)
 	switch (_speed)
 	{
 		case 1:
-			_buttons["speedValue"]->setImage(_textures["value1"]);
+			_images["speedValue"]->setImage(_textures["value1"]);
 			break;
 		case 2:
-			_buttons["speedValue"]->setImage(_textures["value2"]);
+			_images["speedValue"]->setImage(_textures["value2"]);
 			break;
 		case 3:
-			_buttons["speedValue"]->setImage(_textures["value3"]);
+			_images["speedValue"]->setImage(_textures["value3"]);
 			break;
 		case 4:
-			_buttons["speedValue"]->setImage(_textures["value4"]);
+			_images["speedValue"]->setImage(_textures["value4"]);
 			break;
 		case 5:
-			_buttons["speedValue"]->setImage(_textures["value5"]);
+			_images["speedValue"]->setImage(_textures["value5"]);
 			break;
 		default:
 			break;
