@@ -16,7 +16,7 @@ AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDrive
 	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None), _gameCore(gameCore), _core(core)
 {
 	setPowerUps();
-	_bombStack = new BombStack(_driver, _smgr, _core);
+	_bombStack = new BombStack(_driver, _smgr, _bombAmount, _core);
 	std::srand((unsigned int)(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 	_character->setState(Character::state::idle);
 }
@@ -96,8 +96,9 @@ void AI::setBombAmount(int bombAmount)
 	_bombAmount += bombAmount;
 	if (_bombAmount > 4)
 		_bombAmount = 4;
-	if (_bombAmount < 1)
+	else if (_bombAmount < 1)
 		_bombAmount = 1;
+	_bombStack->setBombAmount(_bombAmount);
 }
 
 int AI::getBombAmount()

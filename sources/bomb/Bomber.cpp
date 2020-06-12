@@ -33,6 +33,13 @@ void Bomber::run(IEntity *it)
 {
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
     it->getBombStack()->putBomb(_map, bombPosition3d);
+    // if (it->getCharacter()->getModelInfos().name == "mario") {
+    //     auto &temp = it->getBombStack()->getStack();
+    //     std::cout << std::endl;
+    //     for (int i = 0; i < temp.size(); i++) {
+    //         std::cout << "bomb "<< i << " => disponnible :" << ((temp.at(i).second == true) ? "true | prête : " : "false | prête : ") << ((temp.at(i).first.second == true) ? "true" : "false") << std::endl;
+    //     }
+    // }
     boost::this_thread::sleep_for(boost::chrono::milliseconds(1500));
     blastNorth(it, bombPosition3d);
     blastSouth(it, bombPosition3d);
@@ -40,8 +47,7 @@ void Bomber::run(IEntity *it)
     blastWest(it, bombPosition3d);
     std::vector<Point> deadZone = it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
     clearMapAfterBlast(it, bombPosition3d);
-    giveNewBombInInventory(it);
-    std::vector<IEntity *> killedEntities = isKilledByBomb(deadZone);
+    std::vector<IEntity *> killedEntities = isKilledByBomb(deadZone, it, bombPosition3d);
     for (auto entity : killedEntities) {
         boost::thread thr = boost::thread(boost::bind(&Bomber::killEntity, this, entity));
     }
@@ -201,12 +207,8 @@ void Bomber::removeBombFromInventory(IEntity *it)
 	it->setBombAmount(it->getBombAmount() - 1);
 }
 
-void Bomber::giveNewBombInInventory(IEntity *it)
-{
-    it->setBombAmount(it->getBombAmount() + 1);
-}
 
-std::vector<IEntity *> Bomber::isKilledByBomb(std::vector<Point> deadZone)
+std::vector<IEntity *> Bomber::isKilledByBomb(std::vector<Point> deadZone, IEntity *killer, irr::core::vector3df bombPosition3d)
 {
     std::vector<IEntity *> toReturn;
     for (auto entity : _entities) {
@@ -214,6 +216,15 @@ std::vector<IEntity *> Bomber::isKilledByBomb(std::vector<Point> deadZone)
         for (Point zone : deadZone)
             if (characterPosition.x == zone.x && characterPosition.y == zone.y)
                 toReturn.push_back(entity);
+    }
+    Point bombPosition = squareWhereObjectIs(bombPosition3d, _map);
+    for (auto &bomb : killer->getBombStack()->getStack()) {
+        irr::core::vector3df centeredBombPosition3d = {MAP_DEFAULT_X + (-10.0f * bombPosition.x), MAP_DEFAULT_Y, MAP_DEFAULT_Z + (-10.0f * bombPosition.y)};
+        if (bomb.first.first->getPosition() == centeredBombPosition3d) {
+            bomb.first.first->setVisible(false);
+            bomb.first.second = true;
+            break;
+        }
     }
     return toReturn;
 }
