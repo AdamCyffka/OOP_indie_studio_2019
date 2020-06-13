@@ -10,6 +10,7 @@
 #include "GameCore.hpp"
 #include "Bomber.hpp"
 #include "Core.hpp"
+#include "BombException.hpp"
 
 Bomber::Bomber(Map *map, LoadMap *loadMap, GameCore *gameCore, Core *core): _radius(2), _delay(TIMER), _map(map), _loadMap(loadMap), _gameCore(gameCore), _isBlast(false), _core(core)
 {
@@ -95,8 +96,9 @@ bool Bomber::hasEnoughBombToPut(IEntity *it)
 
 void Bomber::putBomb(IEntity *it)
 {
+    if (!it)
+        throw BombException("could not recover entity to put bomb");
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
-
     if (canPutBomb(it) == true && hasEnoughBombToPut(it) == true) {
         setRadius(it->getFirePower() + 1);
         epicenter(it, bombPosition3d);
