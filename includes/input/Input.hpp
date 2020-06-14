@@ -63,10 +63,8 @@ class Input
         void playerTwoKeyboard(Input *receiver, const SEvent& event);
         void playerThreeKeyboard(Input *receiver, const SEvent& event);
         void playerFourKeyboard(Input *receiver, const SEvent& event);
-        void detectInput(Input *receiver, const SEvent& event);
 
         basic_key keyBoard(Input *receiver);
-        void definePlayer(Input *receiver);
         bool getPlayerInput(Input *receiver, const SEvent& event);
 	    Input();
         ~Input();

@@ -279,14 +279,6 @@ std::map<int, Key_mouvement> Input::getPlayerInputs()
 	return _playerInput;
 }
 
-void Input::detectInput(Input *receiver, const SEvent &event)
-{
-}
-
-void Input::definePlayer(Input *receiver)
-{
-}
-
 bool Input::isKeyDown(irr::EKEY_CODE keyCode)
 {
 	return KeyIsDown[keyCode];
