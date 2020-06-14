@@ -39,16 +39,12 @@ class GameCore {
 		void init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes);
         void run();
 
-        void setPause(bool);
         void reset();
 		void firstRound();
 		void nextRound();
 		void isOver();
 		int isWaiting() const;
         bool isInit() const;
-		bool nextBlockHasBomb(std::pair<int, int>, bool);
-		bool nextBlockHasWall(std::pair<int, int>);
-		bool nextBlockHasBlock(std::pair<int, int>, bool);
 		Bomber *getBomber();
 		Core *getCore();
 		void SelectPowerUp(IEntity *entity, int id);

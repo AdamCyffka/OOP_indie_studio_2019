@@ -52,7 +52,6 @@ void FireDown::spawn()
 void FireDown::die()
 {
 	_node->setVisible(false);
-	delete this;
 }
 
 void FireDown::update()

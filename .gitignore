@@ -37,6 +37,7 @@ x64
 *.sln
 *.vcxproj
 *.filters
+*.vcxproj.user
 
 # blender
 resources/models/planets/observatory/*.dae

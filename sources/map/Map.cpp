@@ -144,20 +144,3 @@ void Map::addWalls()
 			_bombMap[i][j] = block;
 		}
 }
-
-void Map::printMap()
-{
-	std::cout << "Main map" << std::endl;
-	for (auto &l : _map) {
-		for (auto &it : l.second)
-			std::cout << it.second << " ";
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	std::cout << "Bomb map" << std::endl;
-	for (auto &l : _bombMap) {
-		for (auto &it : l.second)
-			std::cout << it.second << " ";
-		std::cout << std::endl;
-	}
-}

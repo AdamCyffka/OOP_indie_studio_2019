@@ -11,12 +11,10 @@
 CameraTravelManager::CameraTravelManager(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr)
 : _smgr(smgr), _camera(camera)
 {
-    std::cout << "Camera travel manager created" << std::endl;
 }
 
 CameraTravelManager::~CameraTravelManager()
 {
-    std::cout << "Camera travel manager deleted" << std::endl;
 }
 
 ACameraTravel *CameraTravelManager::getTravel(travel travel) const

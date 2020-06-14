@@ -31,6 +31,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "waluigi", // NAME
             "resources/models/characters/waluigi/waluigi.md3", // MODEL MD3
+            "resources/sfx/waluigi-hit.wav", // DYING SOUND
+            "resources/sfx/waluigi.wav", // VICTORY SOUND
             {
                 "resources/models/characters/waluigi/Tex_0001_0.png", // TEXTURES
                 "resources/models/characters/waluigi/Tex_0002_0.png",
@@ -49,6 +51,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "dr_peach", // NAME
             "resources/models/characters/dr_peach/dr_peach.md3", // MODEL MD3
+            "resources/sfx/peach-hit.wav", // DYING SOUND
+            "resources/sfx/peach.wav", // VICTORY SOUND
             {
                 "resources/models/characters/dr_peach/dr.peach_crown_dif.png", // TEXTURES
                 "resources/models/characters/dr_peach/dr_peach_di.png"
@@ -66,6 +70,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "koopa", // NAME
             "resources/models/characters/koopa/koopa.md3", // MODEL MD3
+            "resources/sfx/koopa-hit.ogg", // DYING SOUND
+            "resources/sfx/koopa.ogg", // VICTORY SOUND
             {
                 "resources/models/characters/koopa/koopaBody.png", // TEXTURES
                 "resources/models/characters/koopa/koopaFace.png"
@@ -83,6 +89,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "lakitu", // NAME
             "resources/models/characters/lakitu/lakitu.md3", // MODEL MD3
+            "resources/sfx/lakitu-hit.ogg", // DYING SOUND
+            "resources/sfx/lakitu.ogg", // VICTORY SOUND
             {
                 "resources/models/characters/lakitu/lakituFace.png", // TEXTURES
                 "resources/models/characters/lakitu/lakituBody.png"
@@ -100,6 +108,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "mario", // NAME
             "resources/models/characters/mario/mario.md3", // MODEL MD3
+            "resources/sfx/mario-hit.wav", // DYING SOUND
+            "resources/sfx/mario.wav", // VICTORY SOUND
             {
                 "resources/models/characters/mario/mario_eye.0.png", // TEXTURES
                 "resources/models/characters/mario/mario_all.png"
@@ -117,6 +127,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "green_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
+            "resources/sfx/toad-hit.wav", // DYING SOUND
+            "resources/sfx/toad.wav", // VICTORY SOUND
             {
                 "resources/models/characters/toad/pc09_eye.0.png", // TEXTURES
                 "resources/models/characters/toad/pc09G_body_m2.png"
@@ -134,6 +146,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "red_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
+            "resources/sfx/toad-hit.wav", // DYING SOUND
+            "resources/sfx/toad.wav", // VICTORY SOUND
             {
                 "resources/models/characters/toad/pc09_eye.1.png", // TEXTURES
                 "resources/models/characters/toad/pc09_body_m2.png"
@@ -151,6 +165,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "blue_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
+            "resources/sfx/toad-hit.wav", // DYING SOUND
+            "resources/sfx/toad.wav", // VICTORY SOUND
             {
                 "resources/models/characters/toad/pc09_eye.2.png", // TEXTURES
                 "resources/models/characters/toad/pc09B_body_m2.png"
@@ -168,6 +184,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "yellow_toad", // NAME
             "resources/models/characters/toad/toad.md3", // MODEL MD3
+            "resources/sfx/toad-hit.wav", // DYING SOUND
+            "resources/sfx/toad.wav", // VICTORY SOUND
             {
                 "resources/models/characters/toad/pc09_eye.3.png", // TEXTURES
                 "resources/models/characters/toad/pc09Y_body_m2.png"
@@ -185,6 +203,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "dry_bones", // NAME
             "resources/models/characters/dry_bones/dry_bones.md3", // MODEL MD3
+            "resources/sfx/drybones-hit.wav", // DYING SOUND
+            "resources/sfx/drybones.wav", // VICTORY SOUND
             {
                 "resources/models/characters/dry_bones/Karon.png", // TEXTURES
                 "resources/models/characters/dry_bones/Karon2.png" // TEXTURES
@@ -202,6 +222,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "luigi", // NAME
             "resources/models/characters/luigi/classic/luigi.md3", // MODEL MD3
+            "resources/sfx/luigi-hit.wav", // DYING SOUND
+            "resources/sfx/luigi.wav", // VICTORY SOUND
             {
                 "resources/models/characters/luigi/classic/player_dw01_MarioHand_dif.png",
                 "resources/models/characters/luigi/classic/player_dw01_MarioHand_dif2.png",
@@ -222,6 +244,8 @@ const std::map<std::string, modelInfos_t> g_modelInfos = {
         { // MODELINFOS_T
             "luigi_fire", // NAME
             "resources/models/characters/luigi/fire/luigi.md3", // MODEL MD3
+            "resources/sfx/luigi-hit.wav", // DYING SOUND
+            "resources/sfx/luigi.wav", // VICTORY SOUND
             {
                 "resources/models/characters/luigi/fire/player_dw01_MarioHand_dif.png",
                 "resources/models/characters/luigi/fire/player_dw01_MarioHand_dif2.png",

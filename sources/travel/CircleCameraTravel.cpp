@@ -11,7 +11,6 @@
 CircleCameraTravel::CircleCameraTravel(scene::ICameraSceneNode *camera, scene::ISceneManager *smgr, core::vector3df center, core::vector3df targetPosition, float radius, float speed)
 : ACameraTravel(camera, smgr), _center(center), _radius(radius), _speed(speed), _targetPosition(targetPosition)
 {
-    std::cout << "Circle camera travel created." << std::endl;
 }
 
 CircleCameraTravel::~CircleCameraTravel()
@@ -19,7 +18,6 @@ CircleCameraTravel::~CircleCameraTravel()
     if (_anim)
         _anim->drop();
     _anim = nullptr;
-    std::cout << "Circle camera travel deleted." << std::endl;
 }
 
 void CircleCameraTravel::start()

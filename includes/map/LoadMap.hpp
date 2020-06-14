@@ -31,10 +31,6 @@ class LoadMap {
 		irr::gui::IGUIEnvironment *_env;
         irr::video::IVideoDriver *_driver;
         irr::scene::ISceneManager *_smgr;
-
-        irr::scene::ISceneNode *_skybox;
-        irr::scene::ISceneNode *_skydome;
-        irr::scene::ISceneNode *_castle;
 };
 
 #endif /* !LOADMAP_HPP_ */

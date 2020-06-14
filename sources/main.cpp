@@ -7,17 +7,9 @@
 
 #include <iostream>
 #include "Core.hpp"
-#include "GameCore.hpp"
-
-void exitMessage() {
-	std::cout << std::endl << "----- SUPER MARIO BOMBERMAN ------" << std::endl;
-	std::cout << "The program has been closed successfully" << std::endl;
-	std::cout << "----------------------------------" << std::endl;
-}
 
 int main(int ac, char **av)
 {
-	atexit(exitMessage);
 #ifdef __linux__
 	if (!getenv("DISPLAY")) {
 		std::cerr << "Error : some environment variable are missing." << std::endl;

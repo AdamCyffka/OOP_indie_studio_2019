@@ -19,25 +19,18 @@
 
 #define TIMER (3)
 
+class Core;
 class GameCore;
 
 class Bomber {
     public:
-        Bomber(Map *, LoadMap *, GameCore *);
+        Bomber(Map *, LoadMap *, GameCore *, Core *);
         ~Bomber();
         void run(IEntity *it);
 
-        //Radius
-        void setRadius(int radius);
-        int getRadius() const;
 
         //Recover entities
         void setEntities(std::vector<IEntity *> entities);
-        std::vector<IEntity *> getEntities() const;
-
-        //Blast
-        void setIsBlast(bool isBlast);
-        bool getIsBlast() const;
 
          //Error handling
         bool canPutBomb(IEntity *);
@@ -46,28 +39,22 @@ class Bomber {
         //Pose bomb and blast
         void putBomb(IEntity *);
         void epicenter(IEntity *, irr::core::vector3df);
-        void blastNorth(IEntity *, irr::core::vector3df);
-        void blastSouth(IEntity *, irr::core::vector3df);
-        void blastEast(IEntity *, irr::core::vector3df);
-        void blastWest(IEntity *, irr::core::vector3df);
+        int blastNorth(IEntity *, irr::core::vector3df, int radius);
+        int blastSouth(IEntity *, irr::core::vector3df, int radius);
+        int blastEast(IEntity *, irr::core::vector3df, int radius);
+        int blastWest(IEntity *, irr::core::vector3df, int radius);
         void clearMapAfterBlast(IEntity *, irr::core::vector3df);
-        int getRemainingEntities();
-
-        //Remove and give bomb
-        void removeBombFromInventory(IEntity *it);
-        void giveNewBombInInventory(IEntity *it);
 
         //Dead handling
         void killEntity(IEntity *entity);
-        std::vector<IEntity *> isKilledByBomb(std::vector<Point> deadZone);
+        std::vector<IEntity *> isKilledByBomb(std::vector<Point> deadZone, IEntity *killer, irr::core::vector3df bombPosition3d);
     private:
         Map *_map;
         LoadMap *_loadMap;
-        BombStack *_bombStack;
         GameCore *_gameCore;
+        Core *_core;
         std::vector<IEntity *> _entities;
         int _delay;
-        int _radius;
         bool _isBlast;
     protected:
 };

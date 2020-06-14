@@ -90,7 +90,7 @@ std::map<std::string, irr::gui::IGUIImage *> Pause::getImages()
 
 void Pause::run()
 {
-	if (_core->getGameCore()->getRemainingEntities() == 1) {
+	if (_core->getGameCore()->getRemainingEntities() <= 1) {
 		if (_core->getGameCore()->gameOver())
 		{
 			_core->getGameCore()->isOver();

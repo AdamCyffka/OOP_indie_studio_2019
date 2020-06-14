@@ -52,7 +52,6 @@ void FireFull::spawn()
 void FireFull::die()
 {
 	_node->setVisible(false);
-	delete this;
 }
 
 void FireFull::update()

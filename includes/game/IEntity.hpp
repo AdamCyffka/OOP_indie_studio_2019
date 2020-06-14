@@ -30,7 +30,6 @@ class IEntity {
     public:
         virtual ~IEntity() = default;
 
-        virtual void kill() = 0;
         virtual void run(Key_mouvement) = 0;
     	virtual void putBomb() = 0;
 		virtual void setPowerUps() = 0;

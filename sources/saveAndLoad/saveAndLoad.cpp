@@ -124,21 +124,15 @@ void saveGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     }
     catch (pt::json_parser_error)
     {
-        std::cerr << "Saves directory doesn't exist" << std::endl;
-        std::cout << "Try to create the directory..." << std::endl;
         if (boost::filesystem::create_directory("saves"))
         {
-            std::cout << "Directory created successfully..." << std::endl;
             try
             {
                 pt::write_json("saves/save" + std::to_string(slot) + ".json", root);
             }
             catch (pt::json_parser_error)
             {
-                std::cerr << "Impossible to create the save" << std::endl;
             }
-        } else {
-            std::cerr << "Impossible to create the directory" << std::endl;
         }
         return;
     }
@@ -206,6 +200,7 @@ void loadBombMap(Core &core, pt::ptree *root)
 
 void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
 {
+
     std::vector<IEntity *> &entities = core.getGameCore()->getEntities();
     const std::vector<Character *> &characters = core.getSelect()->getPreviews();
     std::string path = "player" + std::to_string(playerNB) + ".";
@@ -214,9 +209,9 @@ void setPlayerValues(int playerNB, Core &core, pt::ptree *root)
     if (!Key_mouvementCheck::is_value(input))
         throw saveAndLoadException("Invalid Enum value");
     if (input == Key_mouvement::Ia)
-        entities[playerNB] = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore(), core.getGameCore()->getBomber());
+        entities[playerNB] = new AI(characters[playerNB], playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore()->getEntities(), core.getGameCore(), core.getGameCore()->getBomber(), &core, true);
     else
-        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber());
+        entities[playerNB] = new Player(characters[playerNB], input, playerNB + 1, core.getMap(), core.getDriver(), core.getSmgr(), core.getGameCore(), core.getGameCore()->getBomber(), &core, true);
     entities[playerNB]->setIsAlive(root->get<bool>(path + "isAlive", 0));
     entities[playerNB]->setBombPass(root->get<bool>(path + "bombPass", 0));
     entities[playerNB]->setWallPass(root->get<bool>(path + "wallPass", 0));
@@ -350,6 +345,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         loadPlayer(1, core, &root);
         loadPlayer(2, core, &root);
         loadPlayer(3, core, &root);
+        core.getGameCore()->getBomber()->setEntities(core.getGameCore()->getEntities());
         loadMap(core, &root);
         loadBombMap(core, &root);
     }
@@ -363,12 +359,12 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     core.getLoadMap()->emptyGameMap(-440, 308, 790);
     core.getLoadMap()->loadGameMap(-440, 308, 790);
     //End of load now start the game
-    std::cout << "Save correct" << std::endl;
     core.getMusicEngine()->stop("resources/music/menu.mp3", false);
     core.getMusicEngine()->add2D("resources/music/game.mp3", true, false, true, irrklang::ESM_AUTO_DETECT);
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideGameLayers();
+
     return;
 
     //Others elements for load

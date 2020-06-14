@@ -30,13 +30,14 @@ void Music::add2D(const std::string &filename, bool loop, bool startPaused, bool
 		track = true;
 	if (enableSFX) {
 		_sfx[filename] = _engine->play2D(filename.c_str(), loop, startPaused, track, mode, enableSFX);
-		if ((track || startPaused || enableSFX) && _sfx[filename] == nullptr)
-			throw MusicException("sfx object doesn't exist");
+		if ((track || startPaused || enableSFX) && _sfx.at(filename) == nullptr)
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
 		_musics[filename] = _engine->play2D(filename.c_str(), loop, startPaused, track, mode, enableSFX);
-		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr)
-			throw MusicException("music object doesn't exist");
+		if ((track || startPaused || enableSFX) && _musics.at(filename) == nullptr)
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
+	setSoundVolume();
 }
 
 void Music::add3D(const std::string &filename, const irrklang::vec3df &vec, bool loop, bool startPaused, bool track, irrklang::E_STREAM_MODE mode, bool enableSFX)
@@ -48,13 +49,14 @@ void Music::add3D(const std::string &filename, const irrklang::vec3df &vec, bool
 		track = true;
 	if (enableSFX) {
 		_sfx[filename] = _engine->play3D(filename.c_str(), vec, loop, startPaused, track, mode, enableSFX);
-		if ((track || startPaused || enableSFX) && _sfx[filename] == nullptr)
-			throw MusicException("sfx object doesn't exist");
+		if ((track || startPaused || enableSFX) && _sfx.at(filename) == nullptr)
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
 		_musics[filename] = _engine->play3D(filename.c_str(), vec, loop, startPaused, track, mode, enableSFX);
-		if ((track || startPaused || enableSFX) && _musics[filename] == nullptr)
-			throw MusicException("music object doesn't exist");
+		if ((track || startPaused || enableSFX) && _musics.at(filename) == nullptr)
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
+	setSoundVolume();
 }
 
 bool Music::isFinished(const std::string &filename, bool isSFX)
@@ -63,15 +65,15 @@ bool Music::isFinished(const std::string &filename, bool isSFX)
 		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			_sfx[filename]->isFinished();
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			_musics[filename]->isFinished();
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 	return true;
 }
@@ -82,15 +84,15 @@ bool Music::getPause(const std::string &filename, bool isSFX)
 		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			_sfx[filename]->getIsPaused();
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			_musics[filename]->getIsPaused();
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 	return true;
 }
@@ -101,15 +103,15 @@ void Music::setPause(const std::string &filename, bool state, bool isSFX)
 		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			_sfx[filename]->setIsPaused(state);
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			_musics[filename]->setIsPaused(state);
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 }
 
@@ -119,15 +121,15 @@ void Music::stop(const std::string &filename, bool isSFX)
 		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			_sfx[filename]->stop();
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			_musics[filename]->stop();
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 }
 
@@ -137,15 +139,15 @@ void Music::set3DRadiusMin(const std::string &filename, irrklang::ik_f32 dist, b
 		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			_sfx[filename]->setMinDistance(dist);
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			_musics[filename]->setMinDistance(dist);
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 }
 
@@ -155,15 +157,15 @@ void Music::set3DRadiusMax(const std::string &filename, irrklang::ik_f32 dist, b
 		throw MusicException("Irkklang device doesn't exist");
 	}
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			_sfx[filename]->setMaxDistance(dist);
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			_musics[filename]->setMaxDistance(dist);
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 }
 
@@ -182,15 +184,15 @@ void Music::enableSoundEffect(const std::string &filename, musicNs::effect effec
 	}
 	irrklang::ISoundEffectControl *fx = nullptr;
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			fx = _sfx[filename]->getSoundEffectControl();
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			fx = _musics[filename]->getSoundEffectControl();
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 	if (!fx)
 		throw MusicException("music object cannot have special effects");
@@ -232,15 +234,15 @@ void Music::disableSoundEffect(const std::string &filename, musicNs::effect effe
 	}
 	irrklang::ISoundEffectControl *fx = nullptr;
 	if (isSFX) {
-		if (_sfx[filename])
+		if (_sfx.find(filename) != _sfx.end() && _sfx.at(filename))
 			fx = _sfx[filename]->getSoundEffectControl();
 		else
-			throw MusicException("sfx object doesn't exist");
+			throw MusicException("sfx object with " + filename + " doesn't exist");
 	} else {
-		if (_musics[filename])
+		if (_musics.find(filename) != _musics.end() && _musics[filename])
 			fx = _musics[filename]->getSoundEffectControl();
 		else
-			throw MusicException("music object doesn't exist");
+			throw MusicException("music object with " + filename + " doesn't exist");
 	}
 	if (!fx)
 		throw MusicException("sound effect could not get created");
