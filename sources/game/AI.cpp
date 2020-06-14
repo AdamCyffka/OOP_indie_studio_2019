@@ -495,10 +495,10 @@ void AI::checkMovement()
 		switch (_wantedMovement)
 		{
 		case Down:
-			checkMovementDown(eastB, west);
+			checkMovementDown(eastB, westB);
 			break;
 		case Up:
-			checkMovementUp(eastB, west);
+			checkMovementUp(eastB, westB);
 			break;
 		case Left:
 			checkMovementLeft(northB, southB);
