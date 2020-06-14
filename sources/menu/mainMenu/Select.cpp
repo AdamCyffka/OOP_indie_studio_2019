@@ -255,21 +255,6 @@ std::map<std::string, irr::gui::IGUIImage *> Select::getImages()
 	return _images;
 }
 
-std::vector<std::vector<std::vector<std::string>>> Select::getSelectRole()
-{
-    return _selectRole;
-}
-
-std::vector<std::vector<int>> Select::getNbRole()
-{
-    return _nbRole;
-}
-
-Character *Select::getPreview(int preview) const
-{
-    return _previews.at(preview);
-}
-
 const std::vector<EntityType::EntityType> &Select::getEntityTypes()
 {
 	_entitiesTypes.clear();

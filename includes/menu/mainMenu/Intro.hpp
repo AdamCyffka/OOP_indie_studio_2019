@@ -32,7 +32,6 @@ class Intro : public IMenu {
 		irr::video::IVideoDriver *_driver;
 		irr::scene::ISceneManager *_smgr;
 		Core *_core;
-		MyEventReceiver *_receiver;
 
 		std::map<std::string, irr::gui::IGUIImage *> _images;
 		std::map<std::string, irr::video::ITexture *> _textures;

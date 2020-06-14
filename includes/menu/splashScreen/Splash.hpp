@@ -21,7 +21,6 @@ class Splash : public IMenu {
 
 		void loadButtons();
 		void loadTextures();
-		void run();
         std::vector<Character *> getPreviews();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
 		std::map<std::string, irr::gui::IGUIImage *> getImages();

@@ -18,7 +18,6 @@ class StraightCameraTravel : public ACameraTravel {
         core::vector3df startPosition, core::vector3df stopPosition, core::vector3df targetPosition, u32 travelTime);
         ~StraightCameraTravel();
 
-        void updateTarget();
         void start() final;
         void stop() final;
     protected:

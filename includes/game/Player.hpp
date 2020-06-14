@@ -19,9 +19,8 @@ class Player : public IEntity {
     public:
         Player(Character *character, const Key_mouvement &input, int entityNumber,
 		Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,
-		GameCore *gameCore, Bomber *bomb, Core *core);
+		GameCore *gameCore, Bomber *bomb, Core *core, bool isSave);
 
-		void kill() final;
 	 	void run(Key_mouvement) final;
 	 	void putBomb() final;
 

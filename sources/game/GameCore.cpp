@@ -97,12 +97,12 @@ void GameCore::init(const std::vector<Character *> characters, const std::vector
 	for (int i = 1; i <= 4; ++i) {
 		IEntity *entity;
 		if (entityTypes.at(i - 1) == EntityType::EntityType::AI) {
-			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, this, _bomber, _core);
+			entity = new AI(characters.at(i - 1), i, _map, _core->getDriver(), _core->getSmgr(), _entities, this, _bomber, _core, false);
 			entity->setInput(Key_mouvement::Ia);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::NoDevice)
 				_core->getInput()->setDevice(i, No_device);
 		} else {
-			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber, _core);
+			entity = new Player(characters.at(i - 1), _core->getInput()->getPlayerInputs().at(i), i, _map, _core->getDriver(), _core->getSmgr(), this, _bomber, _core, false);
 			entity->setInput(Key_mouvement::None);
 			if (controlTypes.at(i - 1) == EntityType::ControlType::Keyboard)
 				_core->getInput()->setDevice(i, Controller);
@@ -149,10 +149,12 @@ void GameCore::run()
 	}
 	auto inputs = _core->getInput()->getPlayerInputs();
 	for (int i = 1; i <= 4; ++i) {
-		if (_entities.at(i - 1)->getInput() == Key_mouvement::Ia) {
+		if (_entities.at(i - 1)->getInput() == Key_mouvement::Ia && _entities.at(i - 1)->isAlive()) {
 			static_cast<AI *>(_entities.at(i - 1))->run(inputs.at(i), _entities);
-		} else
-			_entities.at(i - 1)->run(inputs.at(i));
+		} else {
+			if (_entities.at(i - 1)->isAlive())
+				_entities.at(i - 1)->run(inputs.at(i));
+		}
 		SelectPowerUp(_entities.at(i - 1), isPowerUpsTaken(_powerUps, _map, _entities.at(i - 1)));
 	}
 }
@@ -290,29 +292,9 @@ std::vector<IEntity *> &GameCore::getEntities()
 	return _entities;
 }
 
-void GameCore::setPause(bool state)
-{
-	_isPaused = state;
-}
-
 bool GameCore::isInit() const
 {
 	return _isInit;
-}
-
-bool GameCore::nextBlockHasBomb(std::pair<int, int> pos, bool powerUp)
-{
-	return _map->getBombMap()[pos.first][pos.second] == bomb && !powerUp;
-}
-
-bool GameCore::nextBlockHasWall(std::pair<int, int> pos)
-{
-	return _map->getMap()[pos.first][pos.second] == unbreakable;
-}
-
-bool GameCore::nextBlockHasBlock(std::pair<int, int> pos, bool powerUp)
-{
-	return _map->getMap()[pos.first][pos.second] == breakable && !powerUp;
 }
 
 Bomber *GameCore::getBomber()

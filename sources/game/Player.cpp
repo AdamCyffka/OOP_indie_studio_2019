@@ -9,18 +9,21 @@
 #include "GameCore.hpp"
 #include "Core.hpp"
 
-Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb, Core *core)
+Player::Player(Character *character, const Key_mouvement &input, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, GameCore *gameCore, Bomber *bomb, Core *core, bool isSave)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _gameCore(gameCore), _score(0), _winNumber(0), _character(character), _bomb(bomb), _input(input), _savedInput(None),
 	 _wantedPosition(irr::core::vector3df(0, 0, 0)), _core(core)
 {
-	setPowerUps();
+	if (!isSave)
+		setPowerUps();
+	else {
+		_firePower = 0;
+		_bombAmount = 0;
+		_speed = 0;
+		_wallPass = false;
+		_bombPass = false;
+	}
 	_bombStack = new BombStack(_driver, _smgr, _bombAmount, _core);
 	_character->setState(Character::state::idle);
-}
-
-void Player::kill()
-{
-	_character->setState(Character::dead);
 }
 
 void Player::run(Key_mouvement input)
@@ -55,8 +58,6 @@ void Player::run(Key_mouvement input)
 			case Ia:
 				break;
 			case None:
-				//_character->removeAnimators();
-				//_character->setState(Character::idle);
 				break;
 			}
 			_savedInput = input;

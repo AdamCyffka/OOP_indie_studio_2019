@@ -22,6 +22,8 @@ Bomber::~Bomber()
 
 void Bomber::killEntity(IEntity *entity)
 {
+	if (!entity->isAlive())
+		return;
     entity->setIsAlive(false);
     if (Character *character = entity->getCharacter()) {
         character->setState(Character::state::dying);
@@ -54,29 +56,9 @@ void Bomber::setRadius(int radius)
     this->_radius = radius;
 }
 
-int	Bomber::getRadius() const
-{
-    return (this->_radius);
-}
-
 void Bomber::setEntities(std::vector<IEntity *> entities)
 {
     this->_entities = entities;
-}
-
-std::vector<IEntity *> Bomber::getEntities() const
-{
-    return (this->_entities);
-}
-
-void Bomber::setIsBlast(bool isBlast)
-{
-    this->_isBlast = isBlast;
-}
-
-bool Bomber::getIsBlast() const
-{
-    return (this->_isBlast);
 }
 
 bool Bomber::canPutBomb(IEntity *it)
@@ -217,15 +199,4 @@ std::vector<IEntity *> Bomber::isKilledByBomb(std::vector<Point> deadZone, IEnti
         }
     }
     return toReturn;
-}
-
-int Bomber::getRemainingEntities()
-{
-	int count = 0;
-	for (auto it : _entities) {
-		if (it->isAlive()) {
-			count++;
-		}
-	}
-	return count;
 }

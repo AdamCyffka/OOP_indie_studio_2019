@@ -11,18 +11,22 @@
 #include "Bomber.hpp"
 #include "Core.hpp"
 
-AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber, Core *core)
+AI::AI(Character *character, int entityNumber, Map *map, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr, std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber, Core *core, bool isSave)
 	: _isAlive(false), _entityNumber(entityNumber), _map(map), _driver(driver), _smgr(smgr), _score(0), _entities(entities),
 	  _bomber(bomber), _winNumber(0), _character(character), _wantedMovement(Key_mouvement::None), _gameCore(gameCore), _core(core)
 {
-	setPowerUps();
+	if (!isSave)
+		setPowerUps();
+	else {
+		_firePower = 0;
+		_bombAmount = 0;
+		_speed = 0;
+		_wallPass = false;
+		_bombPass = false;
+	}
 	_bombStack = new BombStack(_driver, _smgr, _bombAmount, _core);
 	std::srand((unsigned int)(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 	_character->setState(Character::state::idle);
-}
-
-void AI::kill()
-{
 }
 
 void AI::run(Key_mouvement input)
@@ -180,11 +184,6 @@ BombStack *AI::getBombStack()
 	return _bombStack;
 }
 
-bool AI::isSafe()
-{
-	return 1;
-}
-
 void AI::canHitPlayers(std::vector<IEntity *> entities)
 {
 	Point point = squareWherePlayerIs(this, _map);
@@ -209,44 +208,6 @@ void AI::canHitPlayers(std::vector<IEntity *> entities)
 				}
 			}
 		}
-	}
-}
-
-IEntity *AI::canMoveToTarget(std::vector<IEntity *> entities)
-{
-	for (auto it : entities)
-	{
-		if (it->getEntityNumber() != this->getEntityNumber())
-		{
-			return it;
-		}
-	}
-	return nullptr;
-}
-
-void AI::actionWithTarget(IEntity *target)
-{
-	if (_character->getState() != Character::state::idle)
-		return;
-	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z && target->getCharacter()->getPosition().X == _character->getPosition().X)
-	{
-		return;
-	}
-	if (target->getCharacter()->getPosition().Z == _character->getPosition().Z)
-	{
-		int speedMult = 1;
-		if (_character->getPosition().X > target->getCharacter()->getPosition().X)
-			speedMult = -1;
-		_wantedPosition = core::vector3df(_character->getPosition().X + (1 * speedMult), _character->getPosition().Y, _character->getPosition().Z);
-		_character->moveTo(_wantedPosition, 800 - (_speed * 100));
-	}
-	else
-	{
-		int speedMult = 1;
-		if (_character->getPosition().Z > target->getCharacter()->getPosition().Z)
-			speedMult = -1;
-		_wantedPosition = core::vector3df(_character->getPosition().X, _character->getPosition().Y, _character->getPosition().Z + (1 * speedMult));
-		_character->moveTo(_wantedPosition, 800 - (_speed * 100));
 	}
 }
 

@@ -21,12 +21,10 @@ class Score : public IMenu {
     public:
         Score(irr::gui::IGUIEnvironment *env, irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,  std::vector<Character *> previews, Music *music);
         ~Score() = default;
-        void run();
 
         // Getter
 		std::map<std::string, irr::gui::IGUIImage *> getImages();
 		std::map<std::string, irr::gui::IGUIButton *> getButtons();
-        std::map<std::string, irr::video::ITexture *> getTextures();
         std::map<std::string, irr::gui::IGUICheckBox *> getCheckBox();
         std::vector<Character *> getPreviews();
 

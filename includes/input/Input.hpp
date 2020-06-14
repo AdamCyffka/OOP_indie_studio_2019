@@ -15,13 +15,13 @@
 
 using namespace irr;                    
 
-enum basic_key 
+enum basic_key
 {
     escape = 1,
     exit_game = 2
 };
 
-enum device 
+enum device
 {
     Keyboard = 1,
     Controller = 2,

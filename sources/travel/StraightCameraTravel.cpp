@@ -13,7 +13,6 @@ core::vector3df startPosition, core::vector3df stopPosition, core::vector3df tar
 : ACameraTravel(camera, smgr), _startPosition(startPosition), _stopPosition(stopPosition),
 _targetPosition(targetPosition), _travelTime(travelTime)
 {
-    std::cout << "Straight camera travel created." << std::endl;
 }
 
 StraightCameraTravel::~StraightCameraTravel()
@@ -21,7 +20,6 @@ StraightCameraTravel::~StraightCameraTravel()
     if (_anim)
         _anim->drop();
     _anim = nullptr;
-    std::cout << "Straight camera travel deleted." << std::endl;
 }
 
 void StraightCameraTravel::start()

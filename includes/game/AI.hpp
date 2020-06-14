@@ -19,9 +19,8 @@ class AI : public IEntity
 public:
 	AI(Character *character, int entityNumber, Map *map,
 	irr::video::IVideoDriver *driver, irr::scene::ISceneManager *smgr,
-	std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber, Core *core);
+	std::vector<IEntity *> entities, GameCore *gameCore, Bomber *bomber, Core *core, bool isSave);
 
-	void kill() final;
 	void run(Key_mouvement) final;
 	void run(Key_mouvement input, std::vector<IEntity *> entities);
 	void putBomb() final;
@@ -51,12 +50,7 @@ public:
 	Key_mouvement getInput() final;
 	void setInput(Key_mouvement input) final;
 
-	bool isSafe();
 	void canHitPlayers(std::vector<IEntity *> entities);
-	IEntity *canMoveToTarget(std::vector<IEntity *> entities);
-	bool canMoveToTargetX(IEntity *it);
-	bool canMoveToTargetZ(IEntity *it);
-	void actionWithTarget(IEntity *target);
 	void checkMovement();
 	void movePlayerWithWantedMovement();
 	void setWantedPositionRandom();
