@@ -11,6 +11,7 @@
 WallPass::WallPass(irr::scene::ISceneManager *smgr, irr::core::vector3df const &pos)
 {
 	_smgr = smgr;
+	_pos = pos;
 	_type = IPowerUps::PowerUpsType::WallPass;
 
 	if (!g_meshes[IPowerUps::PowerUpsType::WallPass])
