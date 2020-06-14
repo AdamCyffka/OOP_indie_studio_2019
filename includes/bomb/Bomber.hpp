@@ -39,10 +39,10 @@ class Bomber {
         //Pose bomb and blast
         void putBomb(IEntity *);
         void epicenter(IEntity *, irr::core::vector3df);
-        void blastNorth(IEntity *, irr::core::vector3df, int radius);
-        void blastSouth(IEntity *, irr::core::vector3df, int radius);
-        void blastEast(IEntity *, irr::core::vector3df, int radius);
-        void blastWest(IEntity *, irr::core::vector3df, int radius);
+        int blastNorth(IEntity *, irr::core::vector3df, int radius);
+        int blastSouth(IEntity *, irr::core::vector3df, int radius);
+        int blastEast(IEntity *, irr::core::vector3df, int radius);
+        int blastWest(IEntity *, irr::core::vector3df, int radius);
         void clearMapAfterBlast(IEntity *, irr::core::vector3df);
 
         //Dead handling

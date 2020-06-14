@@ -38,11 +38,12 @@ void Bomber::run(IEntity *it)
     irr::core::vector3df bombPosition3d = it->getCharacter()->getPosition();
     it->getBombStack()->putBomb(_map, bombPosition3d);
     boost::this_thread::sleep_for(boost::chrono::milliseconds(1500));
-    blastNorth(it, bombPosition3d, it->getFirePower() + 1);
-    blastSouth(it, bombPosition3d, it->getFirePower() + 1);
-    blastEast(it, bombPosition3d, it->getFirePower() + 1);
-    blastWest(it, bombPosition3d, it->getFirePower() + 1);
-    std::vector<Point> deadZone = it->getBombStack()->explodeBomb(_map, it, bombPosition3d);
+    std::vector<int> stopBlocks;
+    stopBlocks.push_back(blastNorth(it, bombPosition3d, it->getFirePower() + 1));
+    stopBlocks.push_back(blastSouth(it, bombPosition3d, it->getFirePower() + 1));
+    stopBlocks.push_back(blastWest(it, bombPosition3d, it->getFirePower() + 1));
+    stopBlocks.push_back(blastEast(it, bombPosition3d, it->getFirePower() + 1));
+    std::vector<Point> deadZone = it->getBombStack()->explodeBomb(_map, it, bombPosition3d, stopBlocks);
     clearMapAfterBlast(it, bombPosition3d);
     std::vector<IEntity *> killedEntities = isKilledByBomb(deadZone, it, bombPosition3d);
     for (auto entity : killedEntities) {
@@ -88,12 +89,13 @@ void Bomber::epicenter(IEntity *it, irr::core::vector3df bombPosition3d)
     _map->getBombMap()[squareWhereObjectIs(bombPosition3d, _map).x][squareWhereObjectIs(bombPosition3d, _map).y] = bombState::bomb;
 }
 
-void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
+int Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
 {
     auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
     auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
+    int i = 1;
 
-	for (int i = 1; i != radius; i++)
+	for (i; i != radius; i++)
 	{
 		if (_map->getMap()[xVisual + i][yVisual] == breakable)
 		{
@@ -106,14 +108,16 @@ void Bomber::blastSouth(IEntity *it, irr::core::vector3df bombPosition3d, int ra
 		} else if (_map->getMap()[xVisual + i][yVisual] == unbreakable)
 			break;
 	}
+    return i;
 }
 
-void Bomber::blastNorth(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
+int Bomber::blastNorth(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
 {
     auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
     auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
+    int i = 1;
 
-	for (int i = 1; i != radius; i++)
+	for (i; i != radius; i++)
 	{
 		if (_map->getMap()[xVisual - i][yVisual] == breakable)
 		{
@@ -126,14 +130,16 @@ void Bomber::blastNorth(IEntity *it, irr::core::vector3df bombPosition3d, int ra
 		} else if (_map->getMap()[xVisual - i][yVisual] == unbreakable)
 			break;
 	}
+    return i;
 }
 
-void Bomber::blastEast(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
+int Bomber::blastEast(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
 {
     auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
     auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
+    int i = 1;
 
-	for (int i = 1; i != radius; i++)
+	for (i; i != radius; i++)
 	{
 		if (_map->getMap()[xVisual][yVisual + i] == breakable)
 		{
@@ -146,14 +152,16 @@ void Bomber::blastEast(IEntity *it, irr::core::vector3df bombPosition3d, int rad
 		} else if (_map->getMap()[xVisual][yVisual + i] == unbreakable)
 			break;
 	}
+    return i;
 }
 
-void Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
+int Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d, int radius)
 {
     auto xVisual = squareWhereObjectIs(bombPosition3d, _map).x;
     auto yVisual = squareWhereObjectIs(bombPosition3d, _map).y;
+    int i = 1;
 
-	for (int i = 1; i != radius; i++)
+	for (i; i != radius; i++)
 	{
 		if (_map->getMap()[xVisual][yVisual - i] == breakable)
 		{
@@ -166,6 +174,7 @@ void Bomber::blastWest(IEntity *it, irr::core::vector3df bombPosition3d, int rad
 		} else if (_map->getMap()[xVisual][yVisual - i] == unbreakable)
 			break;
 	}
+    return i;
 }
 
 void Bomber::clearMapAfterBlast(IEntity *it, irr::core::vector3df bombPosition3d)
