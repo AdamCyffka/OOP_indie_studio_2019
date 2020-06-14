@@ -52,6 +52,10 @@ public:
 
 	void canHitPlayers(std::vector<IEntity *> entities);
 	void checkMovement();
+	void checkMovementDown(bool eastB, bool westB);
+	void checkMovementUp(bool eastB, bool westB);
+	void checkMovementRight(bool northB, bool southB);
+	void checkMovementLeft(bool northB, bool southB);
 	void movePlayerWithWantedMovement();
 	void setWantedPositionRandom();
 
