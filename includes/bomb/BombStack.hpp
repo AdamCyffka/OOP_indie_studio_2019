@@ -27,7 +27,7 @@ class BombStack {
         int bombsAvailable();
         std::vector<std::pair<std::pair<irr::scene::IMeshSceneNode *, bool>, bool>> &getStack();
         void putBomb(Map *map, irr::core::vector3df bombPosition3d);
-        std::vector<Point> explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d);
+        std::vector<Point> explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d, std::vector<int> stopBlocks);
 
     protected:
     private:

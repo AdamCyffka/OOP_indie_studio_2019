@@ -92,7 +92,7 @@ void BombStack::putBomb(Map *map, irr::core::vector3df bombPosition3d)
     }
 }
 
-std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d)
+std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::vector3df bombPosition3d, std::vector<int> stopBlocks)
 {
     int firePower = entity->getFirePower();
     Point bombPosition = squareWhereObjectIs(bombPosition3d, map);
@@ -100,11 +100,16 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     int line = bombPosition.x;
     int column = bombPosition.y;
     std::vector<Point> deadZone;
+    int i = 0;
 
     _core->getMusicEngine()->add2D("resources/sfx/bomb-explose.wav", false, false, true, irrklang::ESM_AUTO_DETECT, true);
+    std::cout << stopBlocks.at(0) << stopBlocks.at(1) << stopBlocks.at(2) << stopBlocks.at(3) << std::endl;
     deadZone.push_back(Point(bombPosition));
     for (int y = line - 1; y >= line - firePower; y--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {
+            std::cout << "y =  " << y << std::endl;
+            if (stopBlocks.at(0) == i)
+                break;
             if (map2D[y][column] != blockState::empty)
                 break;
             else if (map2D[y][column] == blockState::empty && y != line) {
@@ -112,9 +117,13 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
                 deadZone.push_back({y, column});
             }
         }
+        i++;
     }
+    i = 0;
     for (int y = line + 1; y <= line + firePower; y++) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {
+            if (stopBlocks.at(1) == i)
+                break;
             if (map2D[y][column] != blockState::empty)
                 break;
             else if (map2D[y][column] == blockState::empty && y != line) {
@@ -122,9 +131,13 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
                 deadZone.push_back({y, column});
             }
         }
+        i++;
     }
+    i = 0;
     for (int x = column - 1; x >= column - firePower; x--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(x) != map2D[line].end()) {
+            if (stopBlocks.at(2) == i)
+                break;
             if (map2D[line][x] != blockState::empty)
                 break;
             else if (map2D[line][x] == blockState::empty && x != column) {
@@ -132,9 +145,13 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
                 deadZone.push_back({line, x});
             }
         }
+        i++;
     }
+    i = 0;
     for (int x = column + 1; x <= column + firePower; x++) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(x) != map2D[line].end()) {
+            if (stopBlocks.at(3) == i)
+                break;
             if (map2D[line][x] != blockState::empty)
                 break;
             else if (map2D[line][x] == blockState::empty && x != column) {
@@ -142,6 +159,7 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
                 deadZone.push_back({line, x});
             }
         }
+        i++;
     }
     return deadZone;
 }
