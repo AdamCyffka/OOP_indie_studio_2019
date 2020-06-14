@@ -103,11 +103,9 @@ std::vector<Point> BombStack::explodeBomb(Map *map, IEntity *entity, irr::core::
     int i = 0;
 
     _core->getMusicEngine()->add2D("resources/sfx/bomb-explose.wav", false, false, true, irrklang::ESM_AUTO_DETECT, true);
-    std::cout << stopBlocks.at(0) << stopBlocks.at(1) << stopBlocks.at(2) << stopBlocks.at(3) << std::endl;
     deadZone.push_back(Point(bombPosition));
     for (int y = line - 1; y >= line - firePower; y--) {
         if (map2D.find(line) != map2D.end() && map2D[line].find(column) != map2D[line].end()) {
-            std::cout << "y =  " << y << std::endl;
             if (stopBlocks.at(0) == i)
                 break;
             if (map2D[y][column] != blockState::empty)
