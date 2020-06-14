@@ -90,6 +90,9 @@ void GameCore::nextRound()
 	_powerUps.clear();
 	_loadMap->emptyGameMap(-440.0, 308.0, 790.0);
 	_loadMap->loadGameMap(-440.0, 308.0, 790.0);
+	for (auto it : _entities) {
+		it->setBombAmount(0);
+	}
 }
 
 void GameCore::init(const std::vector<Character *> characters, const std::vector<EntityType::EntityType> entityTypes, std::vector<EntityType::ControlType> controlTypes)

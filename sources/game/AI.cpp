@@ -77,7 +77,6 @@ void AI::setPowerUps()
 {
 	_firePower = _gameCore->getCore()->getGameSettings()->getFirePower();
 	_bombAmount = _gameCore->getCore()->getGameSettings()->getBombAmount();
-	setBombAmount(0);
 	_speed = _gameCore->getCore()->getGameSettings()->getSpeed();
 	_wallPass = _gameCore->getCore()->getGameSettings()->isWallPass();
 	_bombPass = _gameCore->getCore()->getGameSettings()->isBombPass();
