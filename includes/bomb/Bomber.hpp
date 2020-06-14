@@ -28,7 +28,6 @@ class Bomber {
         ~Bomber();
         void run(IEntity *it);
 
-        void setRadius(int radius);
 
         //Recover entities
         void setEntities(std::vector<IEntity *> entities);
@@ -40,10 +39,10 @@ class Bomber {
         //Pose bomb and blast
         void putBomb(IEntity *);
         void epicenter(IEntity *, irr::core::vector3df);
-        void blastNorth(IEntity *, irr::core::vector3df);
-        void blastSouth(IEntity *, irr::core::vector3df);
-        void blastEast(IEntity *, irr::core::vector3df);
-        void blastWest(IEntity *, irr::core::vector3df);
+        void blastNorth(IEntity *, irr::core::vector3df, int radius);
+        void blastSouth(IEntity *, irr::core::vector3df, int radius);
+        void blastEast(IEntity *, irr::core::vector3df, int radius);
+        void blastWest(IEntity *, irr::core::vector3df, int radius);
         void clearMapAfterBlast(IEntity *, irr::core::vector3df);
 
         //Dead handling
@@ -56,7 +55,6 @@ class Bomber {
         Core *_core;
         std::vector<IEntity *> _entities;
         int _delay;
-        int _radius;
         bool _isBlast;
     protected:
 };
