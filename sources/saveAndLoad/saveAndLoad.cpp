@@ -345,6 +345,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
         loadPlayer(1, core, &root);
         loadPlayer(2, core, &root);
         loadPlayer(3, core, &root);
+        core.getGameCore()->getBomber()->setEntities(core.getGameCore()->getEntities());
         loadMap(core, &root);
         loadBombMap(core, &root);
     }
@@ -363,6 +364,7 @@ void loadGame(int slot, Core &core, CameraTravelManager *cameraTravelManager)
     cameraTravelManager->doTravel(CameraTravelManager::travel::selectToGame);
     core.setGState(Core::game);
     core.hideGameLayers();
+
     return;
 
     //Others elements for load

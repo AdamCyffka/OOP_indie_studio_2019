@@ -64,7 +64,7 @@ private:
 	irr::scene::ISceneManager *_smgr;
 	Character *_character;
 	Map *_map;
-	std::vector<IEntity *> _entities;
+	std::vector<IEntity *> &_entities;
 	Key_mouvement _wantedMovement;
 	core::vector3df _wantedPosition;
 	Bomber *_bomber;
