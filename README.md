@@ -14,4 +14,4 @@ Alternative: you can use the following command to generate and run the program w
 ## Preview
 
 To see a demo video, click here :
-https://www.youtube.com/watch?v=pZIOUnwbs-Y&t=1s
+https://youtu.be/pZIOUnwbs-Y
