@@ -1,12 +1,20 @@
-# Indie Studio
+# OOP_indie_studio_2019
 
 Welcome to our indie studio!
 A student project realized by 6 students.
 
-The IndieStudio is an Epitech project consisting in the development of a 3D Bomberman.
-This game was entirely developed in C++ with the libraries [Irrlicht] (http://irrlicht.sourceforge.net/) and [Irrklang] (https://www.ambiera.com/irrklang/).
+## Epitech Year End Project created by:
+- [@AdamCyffka](https://github.com/AdamCyffka)
+- [@Stiixii](https://github.com/Stiixii)
+- [@Kyrage](https://github.com/Kyrage)
+- [@Pavlograd](https://github.com/Pavlograd)
+- [@Valipss](https://github.com/Valipss)
+- [@Kiilse](https://github.com/Kiilse)
 
-## Installation
+The IndieStudio is an Epitech project consisting in the development of a 3D Bomberman.
+This game was entirely developed in C++ with the libraries [Irrlicht](http://irrlicht.sourceforge.net/) and [Irrklang](https://www.ambiera.com/irrklang/).
+
+### Installation
 
 Windows: generate the Visual Studio solution by using CMake, then make sure to set the target "bomberman" as the start-up project on Visual Studio.
 
@@ -18,7 +26,6 @@ make
 ```
 
 Once the game is installed, launch it with the command:
-
 ```
 ./bomberman
 ```
