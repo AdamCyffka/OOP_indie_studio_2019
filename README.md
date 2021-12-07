@@ -1,6 +1,4 @@
 # OOP_indie_studio_2019
-[![GitHub license](https://img.shields.io/github/license/AdamCyffka/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
-[![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://github.com/AdamCyffka/OOP_indie_studio_2019/releases)
 
 Welcome to our indie studio!
 A student project realized by 6 students.
