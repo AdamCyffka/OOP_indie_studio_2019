@@ -3,6 +3,8 @@
 Welcome to our indie studio!
 A student project realized by 6 students.
 
+![image (2)](https://user-images.githubusercontent.com/45879662/216765913-a8530ed1-4ef6-4973-a3f9-ff2cbf1bd53a.png)
+
 ## Epitech Year End Project created by:
 - [@AdamCyffka](https://github.com/AdamCyffka)
 - [@Stiixii](https://github.com/Stiixii)
@@ -42,4 +44,5 @@ Alternative: you can use the following command to generate and run the program w
 
 ## Preview
 
+(Video)  
 [![Regarder le trailer](https://img.youtube.com/vi/pZIOUnwbs-Y/mqdefault.jpg)](https://youtu.be/pZIOUnwbs-Y)
